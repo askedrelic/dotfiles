@@ -1,0 +1,85 @@
+set nocompatible				" Ditch strict vi compatibility
+set backspace=indent,eol,start	" More powerful backspacing
+set textwidth=0			" Don't wrap words by default
+set nobackup			" Don't keep a backup file
+"set nu					" Show line numbers
+set history=100			" keep 50 lines of command line history
+set ruler				" show the cursor position all the time
+set showcmd			" Show (partial) command in status line.
+set showmatch		" Show matching brackets.
+set ignorecase		" Do case insensitive matching
+set autowrite		" Automatically save before commands like :next and :make
+set nowrap          " We don't wrap lines, they become a LONG horizontal one (useful)  
+"set background=dark " Set background to dark to have nicer syntax highlighting.
+set scrolloff=3     " We keep 3 lines when scrolling
+set title           "show in title bad
+"       wildchar  the char used for "expansion" on the command line
+"                 default value is "<C-E>" but I prefer the tab key:
+set wildchar=<TAB>
+"       Allow jump commands for left/right motion to wrap to previous/next
+
+
+filetype plugin on
+
+" Suffixes that get lower priority when doing tab completion for filenames.
+" These are files we are not likely to want to edit or read.
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+
+syntax on
+colors subtle
+
+"make tabs be spaces instead
+set smarttab
+set expandtab
+set softtabstop=4
+set tabstop=4
+set shiftwidth=4
+set tabstop=4
+" Turn off the button bar in gvim
+set guioptions-=T
+set guioptions-=r
+set guifont=monospace\ 8
+set mousehide
+" Highlight search matches
+set hlsearch
+set incsearch "incremental search is better!
+
+""" Indentation
+set autoindent
+" For C-like programming, have automatic indentation:
+autocmd FileType c,cpp,slang set cindent
+
+" Return to the last position when previously editing this file
+autocmd BufReadPost *
+\ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+
+"BufExplorer
+map <C-b> :SBufExplorer<CR>
+let g:bufExplorerSplitBelow=1  "Below current
+let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
+                
+"MRU
+map  :MRU<CR>
+let MRU_Exclude_Files = '\Wtmp\W'        
+let MRU_Max_Entries = 50
+
+"aliases 
+map , <C-w><C-w> 
+map . :Explore<CR> 
+" Toggle search highlighting
+map <silent> <F1> :set invhlsearch<CR>
+" Toggle invisible characters
+map <silent> <F2> :set invlist<CR>
+
+"Laszlo
+au BufNewFile,BufRead *.lzx			setf lzx
+
+"Wikipedia
+au BufNewFile,BufRead *.wiki		setf Wikipedia
+
+"AS3
+au BufNewFile,BufRead *.as			setf actionscript
+
+"Drupal
+au BufNewFile,BufRead *.module      setf php
+au BufNewFile,BufRead *.inc      setf php
