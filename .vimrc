@@ -11,16 +11,15 @@ set ignorecase      " Do case insensitive matching
 set autowrite       " Automatically save before commands like :next and :make
 set nowrap          " We don't wrap lines, they become a LONG horizontal one (useful)  
 set background=dark " Set background to dark to have nicer syntax highlighting.
-set scrolloff=3     " We keep 3 lines when scrolling
+set scrolloff=2     " We keep 3 lines when scrolling
 set title           "show in title bad
 "       wildchar  the char used for "expansion" on the command line
 "                 default value is "<C-E>" but I prefer the tab key:
-set wildchar=<TAB>
-"       Allow jump commands for left/right motion to wrap to previous/next
+set wildchar=<TAB> "Allow jump commands for left/right motion to wrap to previous/next
+set splitbelow "new split windows are below
 
 
 filetype plugin on
-
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -35,8 +34,7 @@ set softtabstop=4 "backspace delete 4 spaces
 set tabstop=4 "4 space tab
 set shiftwidth=4 "indent length with < > 
 
-set mousehide
-" Highlight search matches
+set mousehide " Highlight search matches
 set hlsearch
 set incsearch "incremental search is better!
 
@@ -50,27 +48,24 @@ autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
 "BufExplorer
-map <C-b> :SBufExplorer<CR>
+map \b :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
 let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
                 
 "aliases 
 map , <C-w><C-w> 
-map . :Explore<CR> 
+map \e :Explore<CR> 
 " Toggle search highlighting
-map <silent> <F1> :set invhlsearch<CR>
+map <silent> <F2> :set invhlsearch<CR>
 " Toggle invisible characters
-map <silent> <F2> :set invlist<CR>
+map <silent> <F3> :set invlist<CR>
 
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
-
 "Wikipedia
 au BufNewFile,BufRead *.wiki        setf Wikipedia
-
 "AS3
 au BufNewFile,BufRead *.as          setf actionscript
-
 "Drupal
 au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc      setf php
