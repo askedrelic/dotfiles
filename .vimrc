@@ -2,6 +2,7 @@ set nocompatible                " Ditch strict vi compatibility
 set backspace=indent,eol,start  " More powerful backspacing
 set textwidth=0         " Don't wrap words by default
 set nobackup            " Don't keep a backup file
+set nowritebackup       " No backup write?
 "set nu                 " Show line numbers
 set history=100         " keep 50 lines of command line history
 set ruler               " show the cursor position all the time
@@ -17,6 +18,22 @@ set title           "show in title bad
 "                 default value is "<C-E>" but I prefer the tab key:
 set wildchar=<TAB> "Allow jump commands for left/right motion to wrap to previous/next
 set splitbelow "new split windows are below
+" report: show a report when N lines were changed. 0 means 'all' 
+set report=0
+" runtimepath: list of dirs to search for runtime files
+set runtimepath+=~/.vim  
+" shortmess: shorten messages where possible, especially to stop annoying
+" "already open" messages! 
+set shortmess=atIA 
+" showmode: show the current mode. Definitely. 
+set showmode 
+
+" lazyredraw: do not update screen while executing macros
+set lazyredraw 
+" ttyfast: are we using a fast terminal? Let's try it for a while. 
+set ttyfast
+" ttyscroll: redraw instead of scrolling? 
+set ttyscroll=0 
 
 
 filetype plugin on
@@ -51,7 +68,9 @@ autocmd BufReadPost *
 map \b :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
 let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
-                
+
+
+
 "aliases 
 map , <C-w><C-w> 
 map \e :Explore<CR> 
