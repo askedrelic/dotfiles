@@ -54,11 +54,6 @@ map <C-b> :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
 let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
                 
-"MRU
-map  :MRU<CR>
-let MRU_Exclude_Files = '\Wtmp\W'        
-let MRU_Max_Entries = 50
-
 "aliases 
 map , <C-w><C-w> 
 map . :Explore<CR> 
