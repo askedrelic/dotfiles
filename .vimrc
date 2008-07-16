@@ -1,16 +1,16 @@
-set nocompatible				" Ditch strict vi compatibility
-set backspace=indent,eol,start	" More powerful backspacing
-set textwidth=0			" Don't wrap words by default
-set nobackup			" Don't keep a backup file
-"set nu					" Show line numbers
-set history=100			" keep 50 lines of command line history
-set ruler				" show the cursor position all the time
-set showcmd			" Show (partial) command in status line.
-set showmatch		" Show matching brackets.
-set ignorecase		" Do case insensitive matching
-set autowrite		" Automatically save before commands like :next and :make
+set nocompatible                " Ditch strict vi compatibility
+set backspace=indent,eol,start  " More powerful backspacing
+set textwidth=0         " Don't wrap words by default
+set nobackup            " Don't keep a backup file
+"set nu                 " Show line numbers
+set history=100         " keep 50 lines of command line history
+set ruler               " show the cursor position all the time
+set showcmd         " Show (partial) command in status line.
+set showmatch       " Show matching brackets.
+set ignorecase      " Do case insensitive matching
+set autowrite       " Automatically save before commands like :next and :make
 set nowrap          " We don't wrap lines, they become a LONG horizontal one (useful)  
-"set background=dark " Set background to dark to have nicer syntax highlighting.
+set background=dark " Set background to dark to have nicer syntax highlighting.
 set scrolloff=3     " We keep 3 lines when scrolling
 set title           "show in title bad
 "       wildchar  the char used for "expansion" on the command line
@@ -26,26 +26,22 @@ filetype plugin on
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 syntax on
-colors subtle
+colors elflord
 
 "make tabs be spaces instead
-set smarttab
+"set smarttab 
 set expandtab
-set softtabstop=4
-set tabstop=4
-set shiftwidth=4
-set tabstop=4
-" Turn off the button bar in gvim
-set guioptions-=T
-set guioptions-=r
-set guifont=monospace\ 8
+set softtabstop=4 "backspace delete 4 spaces
+set tabstop=4 "4 space tab
+set shiftwidth=4 "indent length with < > 
+
 set mousehide
 " Highlight search matches
 set hlsearch
 set incsearch "incremental search is better!
 
 """ Indentation
-set autoindent
+set smartindent
 " For C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang set cindent
 
@@ -72,13 +68,13 @@ map <silent> <F1> :set invhlsearch<CR>
 map <silent> <F2> :set invlist<CR>
 
 "Laszlo
-au BufNewFile,BufRead *.lzx			setf lzx
+au BufNewFile,BufRead *.lzx         setf lzx
 
 "Wikipedia
-au BufNewFile,BufRead *.wiki		setf Wikipedia
+au BufNewFile,BufRead *.wiki        setf Wikipedia
 
 "AS3
-au BufNewFile,BufRead *.as			setf actionscript
+au BufNewFile,BufRead *.as          setf actionscript
 
 "Drupal
 au BufNewFile,BufRead *.module      setf php
