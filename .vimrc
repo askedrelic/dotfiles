@@ -72,6 +72,10 @@ map \b :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
 let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
 
+"newrw
+let g:netrw_hide              = 1
+let g:netrw_list_hide         = '.swp'
+let g:netrw_menu              = 0
 
 "aliases 
 map , <C-w><C-w> 
@@ -80,6 +84,8 @@ map \e :Explore<CR>
 map <silent> <F2> :set invhlsearch<CR>
 " Toggle invisible characters
 map <silent> <F3> :set invlist<CR>
+" Revert file
+map <silent> <F4> :e!<CR>
 
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
