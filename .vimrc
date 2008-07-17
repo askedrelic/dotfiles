@@ -18,6 +18,7 @@ set title           "show in title bad
 "                 default value is "<C-E>" but I prefer the tab key:
 set wildchar=<TAB> "Allow jump commands for left/right motion to wrap to previous/next
 set splitbelow "new split windows are below
+set splitright "new split windows are right
 " report: show a report when N lines were changed. 0 means 'all' 
 set report=0
 " runtimepath: list of dirs to search for runtime files
@@ -29,10 +30,10 @@ set shortmess=atIA
 set showmode 
 
 " lazyredraw: do not update screen while executing macros
-set lazyredraw 
+"set lazyredraw 
 " ttyfast: are we using a fast terminal? Let's try it for a while. 
 set ttyfast
-" ttyscroll: redraw instead of scrolling? 
+" ttyscroll: redraw instead of scrolling
 set ttyscroll=0 
 
 
@@ -40,9 +41,11 @@ filetype plugin on
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+" Bash style completion is awesome
+set wildmode=longest,list
 
 syntax on
-colors elflord
+colors torte
 
 "make tabs be spaces instead
 "set smarttab 
@@ -68,7 +71,6 @@ autocmd BufReadPost *
 map \b :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
 let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
-
 
 
 "aliases 
