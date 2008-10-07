@@ -54,12 +54,6 @@ alias bwmon='bwmon -b'
 alias xterm="xterm -bg black -fg white"
 alias mkisofs="mkisofs -r -R -J -l -f"
 
-### Compiling
-alias gcc='cowsay "Hello"; gcc'
-alias g++='cowsay "Hello"; g++'
-alias make='cowsay "Hello"; nice -n 10 make'
-alias javac='cowsay "Hello"; javac'
-
 ### Miniscripts
 alias wgetdir="wget -r -nH --no-parent"
 alias wgetmirror="wget --mirror -U Firefox/1.5 -p --html-extension --convert-links"
@@ -69,26 +63,3 @@ alias claudius="ssh -Y dinomite@dinomite.net"
 alias tycho="ssh -Y dinomite@tycho"
 alias augustus="ssh -Y dinomite@augustus.dinomite.net"
 alias congresslaw="ssh -Y dinomite@congresslaw.net"
-#CSH
-alias tempest="ssh -Y dinomite@tempest.csh.rit.edu"
-alias fury="ssh -Y dinomite@fury.csh.rit.edu"
-alias tonka="ssh -Y dinomite@tonka.csh.rit.edu"
-alias whitefox="ssh dinomite@whitefox.csh.rit.edu"
-alias neverforget="ssh -Y root@neverforget.csh.rit.edu"
-alias scorn="ssh -Y scorn.csh.rit.edu"
-alias jake="ssh -Y jake.csh.rit.edu"
-alias hactar="ssh -Y jake.csh.rit.edu"
-alias gcart="ssh gcart.csh.rit.edu"
-alias wariniraq="ssh -Y wariniraq.csh.rit.edu"
-alias katrina="ssh -Y root@katrina.csh.rit.edu"
-alias caligula="ssh -Y root@caligula.csh.rit.edu"
-#CS
-alias hilly="ssh -Y dgs4466@hilly.cs.rit.edu"
-alias queeg="ssh -Y dgs4466@queeg.cs.rit.edu"
-alias slartibartfast="ssh -Y dgs4466@slartibartfast.cs.rit.edu"
-alias paradox="ssh -Y dgs4466@paradox.cs.rit.edu"
-alias paranoia="ssh -Y dgs4466@paranoia.cs.rit.edu"
-#alias csproj="ssh -Y p334-01h@queeg.cs.rit.edu"
-#alias dbcproject='ssh -Y p485-01e@slartibartfast.cs.rit.edu'
-#RIT
-alias grace="ssh dgs5364@grace.rit.edu"
