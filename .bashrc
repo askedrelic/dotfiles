@@ -21,3 +21,5 @@ set visible-stats on
 source ~/.bash_global
 
 export PATH=$PATH:/usr/local/bin:/usr/local/mysql/bin/:/opt/local/bin:/opt/local/sbin
+
+export TEST="lol"
