@@ -34,7 +34,7 @@ set showmode
 " ttyfast: are we using a fast terminal? Let's try it for a while. 
 set ttyfast
 " ttyscroll: redraw instead of scrolling
-set ttyscroll=0 
+"set ttyscroll=0 
 
 
 filetype plugin on
