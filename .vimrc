@@ -98,5 +98,3 @@ au BufNewFile,BufRead *.as          setf actionscript
 "Drupal
 au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc      setf php
-
-#test
