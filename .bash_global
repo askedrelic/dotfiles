@@ -47,19 +47,13 @@ alias nslookup="nslookup -sil"
 alias ducks="du -ms *|sort -n"
 alias duckshid="du -ms .*|sort -n"
 alias watch="watch -d"
-alias BitchX="BitchX -b"
-alias wget="wget  -c"
-alias bwm-ng="bwm-ng -u bytes -T avg"
-alias bwmon='bwmon -b'
+alias wget="wget -c"
 alias xterm="xterm -bg black -fg white"
-alias mkisofs="mkisofs -r -R -J -l -f"
 
 ### Miniscripts
 alias wgetdir="wget -r -nH --no-parent"
 alias wgetmirror="wget --mirror -U Firefox/1.5 -p --html-extension --convert-links"
 
 ### Remote Machines
-alias claudius="ssh -Y dinomite@dinomite.net"
-alias tycho="ssh -Y dinomite@tycho"
-alias augustus="ssh -Y dinomite@augustus.dinomite.net"
-alias congresslaw="ssh -Y dinomite@congresslaw.net"
+alias asktherelic="ssh askedrelic@asktherelic.com"
+alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025"
