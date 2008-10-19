@@ -14,6 +14,7 @@ alias vi=vim
 alias vim=vim
 #single tab auto-completition
 set show-all-if-ambiguous on
+set completion-ignore-case on
 #auto-completion shows stats similiar to ls -F
 set visible-stats on
 

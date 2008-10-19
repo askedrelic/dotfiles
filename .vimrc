@@ -86,6 +86,8 @@ map <silent> <F2> :set invhlsearch<CR>
 map <silent> <F3> :set invlist<CR>
 " Revert file
 map <silent> <F4> :e!<CR>
+" paste mode
+set pastetoggle=<F5>
 
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
