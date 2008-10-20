@@ -40,6 +40,7 @@ alias c="clear"
 alias bc='bc -lq'
 alias man="man -a"
 alias logout="clear; logout"
+alias exit="clear; logout"
 alias searchy="apt-cache search"
 alias info="info --vi-keys"
 alias whois="whois"
