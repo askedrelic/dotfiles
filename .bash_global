@@ -57,3 +57,4 @@ alias wgetmirror="wget --mirror -U Firefox/1.5 -p --html-extension --convert-lin
 ### Remote Machines
 alias asktherelic="ssh askedrelic@asktherelic.com"
 alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025 -t screen -DR"
+alias loki="ssh askedrelic@loki.rh.rit.edu -D 7025 -t screen -DR"
