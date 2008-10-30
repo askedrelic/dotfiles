@@ -4,6 +4,9 @@ export HISTSIZE=20000
 shopt -s histappend
 # Concatenate multi-line commands
 shopt -s cmdhist
+# check the window size after each command and, if necessary,                                                                        
+# update the values of LINES and COLUMNS.                                                                                            
+shopt -s checkwinsize  
 # Ignore duplicates, ls without options and builtin commands
 HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:l:p:[bf]g:exit"
