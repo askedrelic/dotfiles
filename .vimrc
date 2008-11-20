@@ -9,14 +9,15 @@ set ruler               " show the cursor position all the time
 set showcmd         " Show (partial) command in status line.
 set showmatch       " Show matching brackets.
 set ignorecase      " Do case insensitive matching
+set smartcase       " Unless I really mean case sensitive
 set autowrite       " Automatically save before commands like :next and :make
 set nowrap          " We don't wrap lines, they become a LONG horizontal one (useful)  
 set background=dark " Set background to dark to have nicer syntax highlighting.
-set scrolloff=2     " We keep 3 lines when scrolling
+set scrolloff=2     " We keep 2 lines when scrolling
 set title           "show in title bad
 "       wildchar  the char used for "expansion" on the command line
 "                 default value is "<C-E>" but I prefer the tab key:
-set wildchar=<TAB> "Allow jump commands for left/right motion to wrap to previous/next
+set wildchar=<TAB> 
 set splitbelow "new split windows are below
 set splitright "new split windows are right
 " report: show a report when N lines were changed. 0 means 'all' 
@@ -24,7 +25,7 @@ set report=0
 " runtimepath: list of dirs to search for runtime files
 set runtimepath+=~/.vim  
 " shortmess: shorten messages where possible, especially to stop annoying
-" "already open" messages! 
+" 'already open' messages! 
 set shortmess=atIA 
 " showmode: show the current mode. Definitely. 
 set showmode 
@@ -47,21 +48,18 @@ set wildmode=longest,list
 syntax on
 colors torte
 
-"make tabs be spaces instead
-"set smarttab 
-set expandtab
+set smarttab "uhh
+set expandtab "insert spaces
 set softtabstop=4 "backspace delete 4 spaces
-set tabstop=4 "4 space tab
 set shiftwidth=4 "indent length with < > 
+set tabstop=4 "4 space tab
 
 set mousehide " Highlight search matches
 set hlsearch
 set incsearch "incremental search is better!
 
 """ Indentation
-set smartindent
-" For C-like programming, have automatic indentation:
-autocmd FileType c,cpp,slang set cindent
+"set smartindent
 
 " Return to the last position when previously editing this file
 autocmd BufReadPost *
@@ -91,10 +89,19 @@ set pastetoggle=<F5>
 
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
-"Wikipedia
-au BufNewFile,BufRead *.wiki        setf Wikipedia
-"AS3
-au BufNewFile,BufRead *.as          setf actionscript
 "Drupal
 au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc      setf php
+" For C-like programming, have automatic indentation:
+autocmd FileType c,cpp,slang set cindent
+
+
+"testing new stuff
+"Mappings to jump me to the beginning of functions
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
+
+set formatoptions=tcqron
+set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
