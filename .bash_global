@@ -49,7 +49,7 @@ alias duckshid="du -ms .*|sort -n"
 alias watch="watch -d"
 alias wget="wget -c"
 alias xterm="xterm -bg black -fg white"
-alias of="open -a finder ."
+alias of="open ."
 
 ### Miniscripts
 alias wgetdir="wget -r -nH --no-parent"
