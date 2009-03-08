@@ -12,7 +12,7 @@ PS1="\h:\W\$ "
 PROMPT_COMMAND='echo -ne "\033]0;${PWD}\007"'
 export PAGER=/usr/bin/less
 export BROWSER='firefox'
-export LS_OPTIONS='-F'
+export LS_OPTIONS='-F -h --color=auto'
 export CC=/usr/bin/gcc
 # Make perl localization work
 export LC_ALL=C
@@ -23,7 +23,7 @@ alias vi=vim
 alias vim=vim
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+#if [ -x /usr/bin/dircolors ]; then
     eval "`dircolors -b`"
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
@@ -32,7 +32,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
-fi
+#fi
 
 ### Standard Aliases
 alias ls='ls $LS_OPTIONS'
