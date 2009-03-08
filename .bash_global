@@ -17,9 +17,24 @@ export CC=/usr/bin/gcc
 # Make perl localization work
 export LC_ALL=C
 export LANGUAGE=en_US
+alias p="pwd"
+alias mate="mate -d"
+alias vi=vim
+alias vim=vim
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    eval "`dircolors -b`"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
 
 ### Standard Aliases
-#eval `dircolors`
 alias ls='ls $LS_OPTIONS'
 #alias rm="rm -i"
 alias ll="ls -l"
@@ -27,7 +42,7 @@ alias lo="ls -o"
 alias lh="ls -lh"
 alias la="ls -la"
 alias sl="ls"
-alias l="ls"
+alias l="ls -CF"
 alias s="ls"
 alias ..="cd .."
 alias ...="cd ../.."
