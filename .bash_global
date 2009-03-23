@@ -12,7 +12,7 @@ PS1="\h:\W\$ "
 PROMPT_COMMAND='echo -ne "\033]0;${PWD}\007"'
 export PAGER=/usr/bin/less
 export BROWSER='firefox'
-export LS_OPTIONS='-F -h --color=auto'
+export LS_OPTIONS='-F -h'
 export CC=/usr/bin/gcc
 # Make perl localization work
 export LC_ALL=C
@@ -22,8 +22,8 @@ alias mate="mate -d"
 alias vi=vim
 alias vim=vim
 
-# enable color support of ls and also add handy aliases
-#if [ -x /usr/bin/dircolors ]; then
+# enable color support of ls and also add handy aliases (Linux)
+if [ -x /usr/bin/dircolors ]; then
     eval "`dircolors -b`"
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
@@ -32,7 +32,7 @@ alias vim=vim
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
-#fi
+fi
 
 ### Standard Aliases
 alias ls='ls $LS_OPTIONS'
@@ -69,6 +69,7 @@ alias of="open ."
 ### Miniscripts
 alias wgetdir="wget -r -nH --no-parent"
 alias wgetmirror="wget --mirror -U Firefox/3.0 -p -erobots=off --html-extension --convert-links"
+
 # cdf: cd's to frontmost window of Finder
 cdf () 
 {
@@ -90,4 +91,4 @@ cdf ()
 ### Remote Machines
 alias asktherelic="ssh askedrelic@asktherelic.com"
 alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025 -t screen -DR"
-alias loki="ssh askedrelic@loki.rh.rit.edu -D 7025 -t screen -DR"
+alias loki="ssh askedrelic@loki.rh.rit.edu -D 7025"

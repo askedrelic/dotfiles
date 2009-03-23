@@ -25,11 +25,6 @@ set completion-ignore-case on
 #auto-completion shows stats similiar to ls -F
 set visible-stats on
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
-
 source ~/.bash_global
 
 # set PATH so it includes user's private bin if it exists
