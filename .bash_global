@@ -21,6 +21,8 @@ alias p="pwd"
 alias mate="mate -d"
 alias vi=vim
 alias vim=vim
+alias pine=alpine
+alias mail=alpine
 
 # enable color support of ls and also add handy aliases (Linux)
 if [ -x /usr/bin/dircolors ]; then
