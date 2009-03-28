@@ -30,6 +30,7 @@ shopt -s cdspell
 set visible-stats on
 
 source ~/.bash_global
+source ~/.svn_bash_completion
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
