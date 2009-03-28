@@ -92,6 +92,5 @@ cdf ()
 }
 
 ### Remote Machines
-alias asktherelic="ssh askedrelic@asktherelic.com"
-alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025 -t screen -DR"
+alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025"
 alias loki="ssh askedrelic@loki.rh.rit.edu -D 7025"
