@@ -4,6 +4,8 @@
 export HISTSIZE=20000
 # Append to the history, rather than overwriting it
 shopt -s histappend
+# Whenever displaying the prompt, write the previous line to disk:
+PROMPT_COMMAND='history -a'
 # Concatenate multi-line commands
 shopt -s cmdhist
 # check the window size after each command and, if necessary,                                                                        
@@ -22,6 +24,8 @@ export EDITOR="vim"
 #single tab auto-completition
 set show-all-if-ambiguous on
 set completion-ignore-case on
+#fix spelling errors in cd
+shopt -s cdspell
 #auto-completion shows stats similiar to ls -F
 set visible-stats on
 
