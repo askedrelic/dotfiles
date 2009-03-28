@@ -27,13 +27,9 @@ alias mail=alpine
 # enable color support of ls and also add handy aliases (Linux)
 if [ -x /usr/bin/dircolors ]; then
     eval "`dircolors -b`"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+    export LS_OPTIONS='-F -h --color'
+    alias dir='dir --color'
+    alias vdir='vdir --color'
 fi
 
 ### Standard Aliases
@@ -51,6 +47,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias grep="egrep --color"
+alias egrep='egrep --color'
 alias G="grep"
 alias paux="ps aux|grep -i"
 alias c="clear"
@@ -59,7 +56,6 @@ alias man="man -a"
 alias logout="clear; logout"
 alias searchy="apt-cache search"
 alias info="info --vi-keys"
-alias whois="whois"
 alias nslookup="nslookup -sil"
 alias ducks="du -ms *|sort -n"
 alias duckshid="du -ms .*|sort -n"
@@ -67,6 +63,7 @@ alias watch="watch -d"
 alias wget="wget -c"
 alias xterm="xterm -bg black -fg white"
 alias of="open ."
+
 
 ### Miniscripts
 alias wgetdir="wget -r -nH --no-parent"
