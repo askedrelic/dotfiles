@@ -1,1 +1,1 @@
-rsync -avz --stats --delete -e ssh Music/ askedrelic@loki.rh.rit.edu:./Musi
+rsync -avz --stats --delete -e ssh /Volumes/RUIN/Music/ askedrelic@loki.rh.rit.edu:./Musi

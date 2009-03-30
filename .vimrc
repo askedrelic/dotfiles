@@ -65,6 +65,10 @@ set incsearch "incremental search is better!
 autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
+"Switch between open buffers easily!
+nmap <tab> :bn<cr>
+nmap <s-tab> :bp<cr>
+
 "BufExplorer
 map \b :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
