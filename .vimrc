@@ -1,4 +1,22 @@
-set nocompatible                " Ditch strict vi compatibility
+
+"Laszlo
+au BufNewFile,BufRead *.lzx         setf lzx
+"Drupal
+au BufNewFile,BufRead *.module      setf php
+au BufNewFile,BufRead *.inc      setf php
+" For C-like programming, have automatic indentation:
+autocmd FileType c,cpp,slang set cindent
+
+
+"testing new stuff
+"Mappings to jump me to the beginning of functions
+map [[ ?{<CR>w99[{
+map ][ /}<CR>b99]}
+map ]] j0[[%/{<CR>
+map [] k$][%?}<CR>
+
+set formatoptions=tcqron
+set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
 set backspace=indent,eol,start  " More powerful backspacing
 set textwidth=0         " Don't wrap words by default
 set nobackup            " Don't keep a backup file
@@ -65,6 +83,10 @@ set incsearch "incremental search is better!
 autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
+"trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
+map <Esc>[Z <s-tab>
+ounmap <Esc>[Z
+
 "Switch between open buffers easily!
 nmap <tab> :bn<cr>
 nmap <s-tab> :bp<cr>
@@ -76,20 +98,28 @@ let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
 
 "newrw
 let g:netrw_hide              = 1
-let g:netrw_list_hide         = '.swp'
+let g:netrw_list_hide         = '^\.svn.*'
 let g:netrw_menu              = 0
+let g:netrw_silent            = 1
+let g:netrw_special_syntax    = 1
 
 "aliases 
 map , <C-w><C-w> 
 map \e :Explore<CR> 
 " Toggle search highlighting
-map <silent> <F2> :set invhlsearch<CR>
+" map <silent> <F2> :set invhlsearch<CR>
+map <silent> <f2> :set hls!<Bar>set hls?<CR>
 " Toggle invisible characters
 map <silent> <F3> :set invlist<CR>
 " Revert file
 map <silent> <F4> :e!<CR>
 " paste mode
 set pastetoggle=<F5>
+"set wrap
+map <silent> <F6> :set wrap!<Bar>set wrap?<CR>
+
+"file type stuff
+filetype plugin on 
 
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
