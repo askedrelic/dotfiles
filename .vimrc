@@ -1,19 +1,4 @@
-
-"Laszlo
-au BufNewFile,BufRead *.lzx         setf lzx
-"Drupal
-au BufNewFile,BufRead *.module      setf php
-au BufNewFile,BufRead *.inc      setf php
-" For C-like programming, have automatic indentation:
-autocmd FileType c,cpp,slang set cindent
-
-
-"testing new stuff
-"Mappings to jump me to the beginning of functions
-map [[ ?{<CR>w99[{
-map ][ /}<CR>b99]}
-map ]] j0[[%/{<CR>
-map [] k$][%?}<CR>
+filetype plugin indent on
 
 set formatoptions=tcqron
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
@@ -56,7 +41,6 @@ set ttyfast
 "set ttyscroll=0 
 
 
-filetype plugin on
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -118,8 +102,6 @@ set pastetoggle=<F5>
 "set wrap
 map <silent> <F6> :set wrap!<Bar>set wrap?<CR>
 
-"file type stuff
-filetype plugin on 
 
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
@@ -128,7 +110,11 @@ au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc      setf php
 " For C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang set cindent
-
+"" All files without a filetype are presumed to be plain text
+autocmd BufRead,BufNewFile *
+            \ if &filetype == '' |
+            \   setlocal filetype=text |
+            \ endif
 
 "testing new stuff
 "Mappings to jump me to the beginning of functions
@@ -136,6 +122,3 @@ map [[ ?{<CR>w99[{
 map ][ /}<CR>b99]}
 map ]] j0[[%/{<CR>
 map [] k$][%?}<CR>
-
-set formatoptions=tcqron
-set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
