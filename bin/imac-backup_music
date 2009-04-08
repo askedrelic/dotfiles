@@ -1,0 +1,6 @@
+#!/bin/bash
+# Backups itunes library to loki server
+# TODO: should change pieces into variables
+
+rsync -avz --stats --delete -e ssh /Volumes/RUIN/Music/ askedrelic@loki.rh.rit.edu:./music
+
