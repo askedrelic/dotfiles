@@ -27,6 +27,7 @@ autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
 "SETTINGS -------------------------------------------------
+set autoindent
 set encoding=utf-8 " This being the 21st century, I use Unicode
 set formatoptions=tcqron
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
