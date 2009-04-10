@@ -1,0 +1,4 @@
+MAILTO=askedrelic@gmail.com
+# m h  dom mon dow   command
+0 14 * * * cronic php5-cgi /home/askedrelic/code/dailyPost/main.php
+
