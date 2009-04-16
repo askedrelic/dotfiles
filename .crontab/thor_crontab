@@ -1,0 +1,1 @@
+0 5 * * * /usr/bin/find /Users//.Trash -mindepth 1 -maxdepth 1 -mtime +14 -exec rm -rf {} \;
