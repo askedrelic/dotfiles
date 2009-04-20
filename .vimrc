@@ -7,16 +7,11 @@ au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc      setf php
 " For C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang set cindent
-"" All files without a filetype are presumed to be plain text
-autocmd BufRead,BufNewFile *
-            \ if &filetype == '' |
-            \   setlocal filetype=text |
-            \ endif
 
 autocmd FileType text
             \ setlocal autoindent |
-            \ setlocal textwidth=79 |
-            \ setlocal formatoptions+=an
+            \ setlocal textwidth=80 |
+            \ setlocal formatoptions+=roan
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -29,7 +24,7 @@ autocmd BufReadPost *
 "SETTINGS -------------------------------------------------
 set autoindent
 set encoding=utf-8 " This being the 21st century, I use Unicode
-set formatoptions=tcqron
+set formatoptions=tcqron "code formating options?
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
 set backspace=indent,eol,start  " More powerful backspacing
 set textwidth=0            " Don't wrap words by default
