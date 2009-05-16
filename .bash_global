@@ -1,15 +1,11 @@
 ### Prompt variable
-PS1="\h:\W\$ "
-#PS1="\w \j,\$?\$ "
-#PS1="\u@\h \w\$ "
-#PS1="\033[1;37m\w\$\033[0m "
-#PS1=`echo -ne "\w\$ "`
-#PS1="\e]2;\w\a\w\$ "
-#PS1=`echo -ne "\[\033[01;32m\]\w\[\033[00m\]\$ "`
+#PS1="\h:\W\$ "
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 ### Standard variables
 #change the titlebar in xterms
 PROMPT_COMMAND='echo -ne "\033]0;${PWD}\007"'
+#PROMPT_COMMAND='RET=$?; if [[ $RET = 0 ]]; then echo -ne "\033[0;32m$RET\033[0m ;)"; else echo -ne "\033[0;31m$RET\033[0m :("; fi; echo -n " "'
 export PAGER=/usr/bin/less
 export BROWSER='firefox'
 export LS_OPTIONS='-F -h'
