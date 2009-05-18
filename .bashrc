@@ -38,4 +38,4 @@ if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-export PATH=$PATH:.:/usr/local/bin:/opt/local/bin:/opt/local/sbin
+export PATH=/usr/local/bin:$PATH:.:/opt/local/bin:/opt/local/sbin
