@@ -123,12 +123,7 @@ nmap <s-tab> :bp<cr>
 
 map , <C-w><C-w> 
 map \e :Explore<CR> 
-"
-"Mappings to jump me to the beginning of functions
-map [[ ?{<CR>w99[{
-map ][ /}<CR>b99]}
-map ]] j0[[%/{<CR>
-map [] k$][%?}<CR>
+
 
 " Toggle search highlighting
 " map <silent> <F2> :set invhlsearch<CR>
