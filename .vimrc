@@ -65,7 +65,7 @@ set ttyfast
 "set ttyscroll=0 
 
 syntax on
-colors torte
+colors ir_black
 
 "set smarttab "uhh
 "set expandtab "insert spaces
