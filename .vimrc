@@ -52,8 +52,8 @@ set equalalways " Multiple windows, when created, are equal in size
 set splitbelow splitright
  
 "Vertical split then hop to new buffer
-:noremap ,v :vsp^M^W^W<cr>
-:noremap ,h :split^M^W^W<cr>
+":noremap ,v :vsp^M^W^W<cr>
+":noremap ,h :split^M^W^W<cr>
 
 " Cursor highlights ***********************************************************
 set cursorline
@@ -64,7 +64,7 @@ set hlsearch " highlight search
 set incsearch " incremental search, search as you type
 set ignorecase " Ignore case when searching
 set smartcase " Ignore case when searching lowercase
-set mousehide " Highlight search matches
+set mousehide " hide mouse?
 
 " Colors **********************************************************************
 set background=dark
@@ -118,10 +118,10 @@ set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
 " Misc ************************************************************************
 set backspace=indent,eol,start
 set number " Show line numbers
+set showmatch              " Show matching brackets.
 set matchpairs+=<:>
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
-set showmatch              " Show matching brackets.
-set encoding=utf-8 " This being the 21st century, I use Unicode
+set encoding=utf-8         " This being the 21st century, I use Unicode
 set nobackup               " Don't keep a backup file
 set nowritebackup          " No backup write?
 set history=100            " keep 50 lines of command line history
