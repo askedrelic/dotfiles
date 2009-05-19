@@ -134,7 +134,7 @@ set previewheight=8        " Like File Explorer, preview window height is 8
 " lazyredraw: do not update screen while executing macros
 "set lazyredraw 
 " ttyfast: are we using a fast terminal? Let's try it for a while. 
-"set ttyfast
+set ttyfast
 " ttyscroll: redraw instead of scrolling
 "set ttyscroll=0
 
@@ -149,8 +149,6 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Aliases        *************************************************************
 "trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
-
-
 map <Esc>[Z <s-tab>
 ounmap <Esc>[Z
 
