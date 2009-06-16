@@ -91,7 +91,7 @@ hi ErrorMsg         guifg=white       guibg=#FF6C60     gui=BOLD      ctermfg=wh
 hi WarningMsg       guifg=white       guibg=#FF6C60     gui=BOLD      ctermfg=white       ctermbg=red         cterm=NONE
 
 " Message displayed in lower left, such as --INSERT--
-hi ModeMsg          guifg=black       guibg=#C6C5FE     gui=BOLD      ctermfg=black       ctermbg=cyan        cterm=BOLD
+hi ModeMsg          guifg=black       guibg=#EEEEEE     gui=BOLD      ctermfg=white        ctermbg=black       cterm=BOLD
 
 if version >= 700 " Vim 7.x specific colors
   hi CursorLine     guifg=NONE        guibg=#121212     gui=NONE      ctermfg=NONE        ctermbg=NONE        cterm=BOLD
