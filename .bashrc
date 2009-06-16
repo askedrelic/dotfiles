@@ -151,7 +151,7 @@ alias logout="clear; logout"
 alias searchy="apt-cache search"
 alias info="info --vi-keys"
 alias nslookup="nslookup -sil"
-alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
+alias ducks='du -cks * | sort -rn | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$((size/1024)); done; done'
 alias watch="watch -d"
 alias wget="wget -c"
 alias py="python"

@@ -164,6 +164,7 @@ map \e :Explore<CR>
 " map <silent> <F2> :set invhlsearch<CR>
 map <silent> <f2> :set hls!<Bar>set hls?<CR>
 " Toggle invisible characters
+set listchars=trail:.,tab:>-,eol:$
 map <silent> <F3> :set invlist<CR>
 " Revert file
 map <silent> <F4> :e!<CR>
