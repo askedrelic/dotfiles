@@ -40,7 +40,7 @@ export HISTCONTROL=ignoreboth
 # Append to the history, rather than overwriting it
 shopt -s histappend
 # Whenever displaying the prompt, reload history and write the previous line to disk:
-PROMPT_COMMAND='history -n;history -a'
+export PROMPT_COMMAND='history -n;history -a'
 export HISTIGNORE="ls:l:cd:p:[bf]g:exit"
 export HISTSIZE=20000
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
@@ -80,7 +80,8 @@ export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
  
 # This runs before the prompt and sets the title of the xterm* window. If you set the title in the prompt
 # weird wrapping errors occur on some systems, so this method is superior
-export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*} ${PWD}"; echo -ne "\007"' # user@host path
+# export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*} ${PWD}"; echo -ne "\007"' # user@host path
+# Is this overriding prompt history command?
  
 export PS2='> ' # Secondary prompt
 export PS3='#? ' # Prompt 3
@@ -163,7 +164,7 @@ alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 ### Miniscripts
 alias wgetdir="wget -r -nH --no-parent"
 alias wgetmirror="wget --mirror -U Firefox/3.0 -p -erobots=off --html-extension --convert-links"
-alias tree="ls -R | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+alias simpletree="ls -R | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 
 
