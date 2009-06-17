@@ -1,7 +1,6 @@
 # This is an example resource file for rTorrent. Copy to
 # ~/.rtorrent.rc and enable/modify the options as needed. Remember to
 # uncomment the options you wish to enable.
-#
 
 # Maximum and minimum number of peers to connect to per torrent.
 #min_peers = 40
@@ -19,18 +18,18 @@ download_rate = 3000
 upload_rate = 500 
 
 # Default directory to save the downloaded torrents.
-directory = /Users/matthewbehrens/Downloads/torrents/_incomplete
-on_finished = move_complete,"execute=mv,-n,$d.get_base_path=,~/Downloads/torrents/_seed ;d.set_directory=~/Downloads/torrents/_seed"
-on_erase = move_complete,"execute=mv,-n,$d.get_base_path=,~/Downloads/torrents/_complete ;d.set_directory=~/Downloads/torrents/_complete"
+directory = /home/askedrelic/torrents/_incomplete
+on_finished = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/_seed ;d.set_directory=~/torrents/_seed"
+on_erase = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/_complete ;d.set_directory=~/torrents/_complete"
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
-session = /Users/matthewbehrens/Downloads/torrents/.session
+session = /home/askedrelic/torrents/.session
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
-schedule = watch_directory,5,5,"load_start=~/Downloads/torrents/_watch/*.torrent"
+schedule = watch_directory,5,5,"load_start=~/torrents/_watch/*.torrent"
 schedule = tied_directory,5,5,start_tied=
 schedule = untied_directory,5,5,remove_untied=
 
@@ -59,7 +58,7 @@ use_udp_trackers = yes
 #
 encryption = allow_incoming,try_outgoing,enable_retry
 
-#dht = off
+dht = off
 
 # Do not modify the following parameters unless you know what you're doing.
 #
