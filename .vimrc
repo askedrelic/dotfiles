@@ -157,7 +157,6 @@ nmap <tab> :bn<cr>
 nmap <s-tab> :bp<cr>
 
 map , <C-w><C-w> 
-map \e :Explore<CR> 
 
 
 " Toggle search highlighting
@@ -176,6 +175,12 @@ map <silent> <F6> :set wrap!<Bar>set wrap?<CR>
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
+"Taglist
+map \t :TlistToggle<CR>
+
+"NERDTree
+map \e :NERDTreeToggle<CR>
+let NERDTreeWinPos='right'
 
 "BufExplorer
 map \b :SBufExplorer<CR>
