@@ -171,10 +171,4 @@ alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 # Other files ----------------------------------------------------------------------------------------------
 source ~/.svn_bash_completion
 source ~/.bashrc_app_specific
-
-
-### Remote Machines
-alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025"
-alias loki="ssh askedrelic@loki.rh.rit.edu -D 7025"
-
-alias loki-mysql="ssh -L 3306:localhost:3306 askedrelic@loki.rh.rit.edu"
+source ~/.bashrc_machines
