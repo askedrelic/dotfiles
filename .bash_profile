@@ -4,6 +4,21 @@ export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0
 export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
 export PLATFORM="$MACHINE-$OS-$OSVERSION"
 # Note, default OS is assumed to be OSX
+
+# SSH Agent? ------------------------------------------------------------
+if [ -f ~/.agent.env ] ; then
+    . ~/.agent.env > /dev/null
+if ! kill -0 $SSH_AGENT_PID > /dev/null 2>&1; then
+    echo "Stale agent file found. Spawning new agent… "
+    eval `ssh-agent | tee ~/.agent.env`
+    ssh-add
+fi 
+else
+    echo "Starting ssh-agent"
+    eval `ssh-agent | tee ~/.agent.env`
+    ssh-add
+fi
+
  
  
 # Path ------------------------------------------------------------
