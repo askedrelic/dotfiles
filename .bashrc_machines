@@ -9,3 +9,5 @@ alias loki-mysql="ssh -L 3306:localhost:3306 askedrelic@loki.rh.rit.edu"
 alias jofur="ssh matthewbehrens@jofur.rh.rit.edu"
 
 alias asktherelic="ssh askedrelic@asktherelic.com"
+
+alias blueballs="ssh mattb@bluebrick.se.rit.edu"
