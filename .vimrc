@@ -166,6 +166,8 @@ au BufNewFile,BufRead *.lzx         setf lzx
 "Drupal
 au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc         setf php
+au BufNewFile,BufRead *.pl,*.pm,*.t     setf perl
+
 
 " For C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang        set cindent
