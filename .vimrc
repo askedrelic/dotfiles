@@ -189,8 +189,13 @@ autocmd FileType html set formatoptions+=tl
 set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 " Return to the last position when previously editing this file
+" When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
-\ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+\ if ! exists("g:leave_my_cursor_position_alone") |
+\ if line("'\"") > 0 && line ("'\"") <= line("$") |
+\ exe "normal g'\"" |
+\ endif |
+\ endif
 
 " Key stuff *******************************************************************
 " have the h and l cursor keys wrap between lines (like <Space> and <BkSpc> do
