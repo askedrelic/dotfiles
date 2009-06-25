@@ -6,6 +6,43 @@ set nocompatible
 " first clear any existing autocommands:
 autocmd!
 
+behave xterm
+if &term == "xterm"
+    let &term = "xtermc"
+
+    " Restore the screen when we're exiting
+    set rs
+    set t_ti= 7 [r [?47h 
+    set t_te= [?47l 8
+endif
+
+" General *********************************************************************
+" remember all of these between sessions, but only 10 search terms; also
+" remember info for 10 files, but never any on removable disks, don't remember
+" marks in files, don't rehighlight old search patterns, and only save up to
+" 100 lines of registers; including @10 in there should restrict input buffer
+" but it causes an error for me:
+set viminfo=/50,'50,f0,h,\"100
+
+set backspace=indent,eol,start
+set number " Show line numbers
+set showmatch              " Show matching brackets.
+" have % bounce between angled brackets, as well as t'other kinds:
+set matchpairs+=<:>
+set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
+set encoding=utf-8         " This being the 21st century, I use Unicode
+set nobackup               " Don't keep a backup file
+set nowritebackup          " No backup write?
+set history=100            " keep 50 lines of command line history
+set autowrite              " Automatically save before commands like :next and :make
+set report=0               " report: show a report when N lines were changed. 0 means 'all' 
+set runtimepath+=~/.vim    " runtimepath: list of dirs to search for runtime files
+set previewheight=8        " Like File Explorer, preview window height is 8
+
+" when using list, keep tabs at their full width and display `arrows':
+execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
+" (Character 187 is a right double-chevron, and 183 a mid-dot.)
+
 " Tabs **********************************************************************
 function! Tabstyle_tabs()
   " Using 4 column tabs
@@ -30,9 +67,9 @@ endfunction
 "set tabstop=4 "4 space tab
 
 " use indents of 2 spaces, and have them copied down lines:
-set shiftwidth=3
-set softtabstop=3
-set tabstop=3
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set shiftround
 set expandtab
 set autoindent
@@ -51,16 +88,19 @@ set showmode
 set showcmd
 set wildmode=longest,list  " Bash tab style completion is awesome
 
-"       wildchar  the char used for "expansion" on the command line
-"                 default value is "<C-E>" but I prefer the tab key:
+" wildchar  the char used for "expansion" on the command line default value is
+" "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
+set wildignore=*~,#*#,*.sw?,*.o,*.class,*.java.html,*.cgi.html,*.html.html,.viminfo,*.pdf
 " shortmess: shorten messages where possible, especially to stop annoying
-" 'already open' messages! 
-set shortmess+=atIAr
+" 'already open' messages!  
+" set shortmess=atIAr
+set shortmess=flnrxoOItTA
 
 " Windows *********************************************************************
 set equalalways " Multiple windows, when created, are equal in size
 set splitbelow splitright
+set noequalalways       " noea:  don't always keep windows at equal size
  
 "Vertical split then hop to new buffer
 ":noremap ,v :vsp^M^W^W<cr>
@@ -174,33 +214,6 @@ map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
 map <Enter> o<ESC>
 set fo-=r " do not insert a comment leader after an enter, (not working, fix!!)
 
-" Misc ************************************************************************
-" remember all of these between sessions, but only 10 search terms; also
-" remember info for 10 files, but never any on removable disks, don't remember
-" marks in files, don't rehighlight old search patterns, and only save up to
-" 100 lines of registers; including @10 in there should restrict input buffer
-" but it causes an error for me:
-set viminfo=/30,'30,f0,h,\"100
-
-set backspace=indent,eol,start
-set number " Show line numbers
-set showmatch              " Show matching brackets.
-" have % bounce between angled brackets, as well as t'other kinds:
-set matchpairs+=<:>
-set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
-set encoding=utf-8         " This being the 21st century, I use Unicode
-set nobackup               " Don't keep a backup file
-set nowritebackup          " No backup write?
-set history=100            " keep 50 lines of command line history
-set autowrite              " Automatically save before commands like :next and :make
-set report=0               " report: show a report when N lines were changed. 0 means 'all' 
-set runtimepath+=~/.vim    " runtimepath: list of dirs to search for runtime files
-set previewheight=8        " Like File Explorer, preview window height is 8
-
-" when using list, keep tabs at their full width and display `arrows':
-execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
-" (Character 187 is a right double-chevron, and 183 a mid-dot.)
-
 " Redraw *********************************************************************
 " lazyredraw: do not update screen while executing macros
 "set lazyredraw 
@@ -256,6 +269,9 @@ vnoremap Q gq
 " have Y behave analogously to D and C rather than to dd and cc (which is
 " already done by yy):
 noremap Y y$
+
+" Make p in Visual mode replace the selected text with the "" register.
+vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " have \tp ("toggle paste") toggle paste on/off and report the change, and
 " where possible also have <F4> do this both in normal and insert mode:
