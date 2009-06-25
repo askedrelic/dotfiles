@@ -1,8 +1,10 @@
 " -----------------------------------------------------------------------------
 " | VIM Settings                                                              |
 " -----------------------------------------------------------------------------
-
 set nocompatible
+
+" first clear any existing autocommands:
+autocmd!
 
 " Tabs **********************************************************************
 function! Tabstyle_tabs()
@@ -27,6 +29,13 @@ endfunction
 "set shiftwidth=4 "indent length with < > 
 "set tabstop=4 "4 space tab
 
+" use indents of 2 spaces, and have them copied down lines:
+set shiftwidth=3
+set softtabstop=3
+set tabstop=3
+set shiftround
+set expandtab
+set autoindent
 " Indenting *******************************************************************
 set ai " Automatically set the indent of a new line (local to buffer)
 set si " smartindent  (local to buffer)
@@ -37,15 +46,17 @@ set scrolloff=2 " top bottom scroll off
 set numberwidth=4
 set title  " show in title bar
 set ruler  " show the cursor position all the time
+" display the current mode and partially-typed commands in the status line:
+set showmode
 set showcmd
 set wildmode=longest,list  " Bash tab style completion is awesome
+
 "       wildchar  the char used for "expansion" on the command line
 "                 default value is "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
 " shortmess: shorten messages where possible, especially to stop annoying
 " 'already open' messages! 
-set shortmess=atIA 
-
+set shortmess+=atIAr
 
 " Windows *********************************************************************
 set equalalways " Multiple windows, when created, are equal in size
@@ -60,10 +71,15 @@ set cursorline
 "set cursorcolumn
 
 " Searching *******************************************************************
-set hlsearch " highlight search
-set incsearch " incremental search, search as you type
-set ignorecase " Ignore case when searching
-set smartcase " Ignore case when searching lowercase
+" highlight search
+set hlsearch 
+" make searches case-insensitive, unless they contain upper-case letters:
+set ignorecase
+set smartcase
+" show the `best match so far' as search strings are typed:
+set incsearch
+" assume the /g flag on :s substitutions to replace all matches in a line:
+set gdefault
 set mousehide " hide mouse?
 
 " Colors **********************************************************************
@@ -72,53 +88,104 @@ syntax on " syntax highlighting
 colorscheme ir_black
 
 " Line Wrapping ***************************************************************
+" don't make it look like there are line breaks where there aren't:
 set nowrap
 set linebreak " Wrap at word
 "set textwidth=0 " Don't wrap words by default
 
+
+" normally don't automatically format `text' as it is typed, IE only do this
+" with comments, at 79 characters:
+set formatoptions-=t
+set textwidth=79
+
+" treat lines starting with a quote mark as comments (for `Vim' files, such as
+" this very one!), and colons as well so that reformatting usenet messages from
+" `Tin' users works OK:
+set comments+=b:\"
+set comments+=n::
+
+
 " File Stuff ******************************************************************
-filetype plugin indent on
 " To show current filetype use: set filetype
+filetype plugin indent on
 
-autocmd FileType html :set filetype=xhtml " we couldn't care less about html
+set formatoptions=tcqron "code formating options?
 
-"Laszlo
-au BufNewFile,BufRead *.lzx         setf lzx
-"Drupal
-au BufNewFile,BufRead *.module      setf php
-au BufNewFile,BufRead *.inc         setf php
-" For C-like programming, have automatic indentation:
-autocmd FileType c,cpp,slang        set cindent
-
+" in human-language files, automatically format everything at 72 chars:
+autocmd FileType mail,human set formatoptions+=t textwidth=72
 "autocmd FileType text
 "            \ setlocal autoindent |
 "            \ setlocal textwidth=80 |
 "            \ setlocal formatoptions+=roan
 
+" we couldn't care less about html
+au BufNewFile,BufRead *.html        setf xhtml 
+"Laszlo
+au BufNewFile,BufRead *.lzx         setf lzx
+"Drupal
+au BufNewFile,BufRead *.module      setf php
+au BufNewFile,BufRead *.inc         setf php
+
+" For C-like programming, have automatic indentation:
+autocmd FileType c,cpp,slang        set cindent
+
+" for actual C (not C++) programming where comments have explicit end
+" characters, if starting a new line in the middle of a comment automatically
+" insert the comment leader characters:
+autocmd FileType c set formatoptions+=ro
+
+" for Perl programming, have things in braces indenting themselves:
+autocmd FileType perl set smartindent
+
+" for CSS, also have things in braces indented:
+autocmd FileType css set smartindent
+
+" for HTML, generally format text, but if a long line has been created leave it
+" alone when editing:
+autocmd FileType html set formatoptions+=tl
+
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
-set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 " Return to the last position when previously editing this file
 autocmd BufReadPost *
 \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
-set formatoptions=tcqron "code formating options?
+" Key stuff *******************************************************************
+" have the h and l cursor keys wrap between lines (like <Space> and <BkSpc> do
+" by default), and ~ covert case over line breaks; also have the cursor keys
+" wrap in insert mode:
+set whichwrap=h,l,~,[,]
+
+" page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
+" `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
+" or <BkSpc> (like in `Netscape Navigator'):
+noremap <Space> <PageDown>
+noremap <BS> <PageUp>
+noremap - <PageUp>
+" [<Space> by default is like l, <BkSpc> like h, and - like k.]
+
+
 
 " Insert New Line *************************************************************
 map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
 map <Enter> o<ESC>
-set fo-=r " do not insert a comment leader after an enter, (no work, fix!!)
-
-" Sessions ********************************************************************
-" Sets what is saved when you save a session
-" TODO TEST THIS?
-set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
+set fo-=r " do not insert a comment leader after an enter, (not working, fix!!)
 
 " Misc ************************************************************************
+" remember all of these between sessions, but only 10 search terms; also
+" remember info for 10 files, but never any on removable disks, don't remember
+" marks in files, don't rehighlight old search patterns, and only save up to
+" 100 lines of registers; including @10 in there should restrict input buffer
+" but it causes an error for me:
+set viminfo=/30,'30,f0,h,\"100
+
 set backspace=indent,eol,start
 set number " Show line numbers
 set showmatch              " Show matching brackets.
+" have % bounce between angled brackets, as well as t'other kinds:
 set matchpairs+=<:>
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
 set encoding=utf-8         " This being the 21st century, I use Unicode
@@ -129,6 +196,10 @@ set autowrite              " Automatically save before commands like :next and :
 set report=0               " report: show a report when N lines were changed. 0 means 'all' 
 set runtimepath+=~/.vim    " runtimepath: list of dirs to search for runtime files
 set previewheight=8        " Like File Explorer, preview window height is 8
+
+" when using list, keep tabs at their full width and display `arrows':
+execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
+" (Character 187 is a right double-chevron, and 183 a mid-dot.)
 
 " Redraw *********************************************************************
 " lazyredraw: do not update screen while executing macros
@@ -148,35 +219,74 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Aliases        *************************************************************
+" have <F1> prompt for a help topic, rather than displaying the introduction
+" page, and have it do this from any mode:
+nnoremap <F1> :help<Space>
+vmap <F1> <C-C><F1>
+omap <F1> <C-C><F1>
+map! <F1> <C-C><F1>
+
 "trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
 map <Esc>[Z <s-tab>
 ounmap <Esc>[Z
 
-"Switch between open buffers easily!
-nmap <tab> :bn<cr>
-nmap <s-tab> :bp<cr>
+" use <Ctrl>+N/<Ctrl>+P to cycle through files:
+nnoremap <C-N> :next<CR>
+nnoremap <C-P> :prev<CR>
+" [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
 
-map , <C-w><C-w> 
+" have the usual indentation keystrokes still work in visual mode:
+vnoremap <C-T> >
+vnoremap <C-D> <LT>
+vmap <Tab> <C-T>
+vmap <S-Tab> <C-D>
 
+" have <Tab> (and <Shift>+<Tab> where it works) change the level of
+" indentation:
+inoremap <Tab> <C-T>
+inoremap <S-Tab> <C-D>
+" [<Ctrl>+V <Tab> still inserts an actual tab character.]
 
-" Toggle search highlighting
-" map <silent> <F2> :set invhlsearch<CR>
-map <silent> <f2> :set hls!<Bar>set hls?<CR>
-" Toggle invisible characters
-set listchars=trail:.,tab:>-,eol:$
-map <silent> <F3> :set invlist<CR>
+nmap , <C-w><C-w>
+
+" have Q reformat the current paragraph (or selected text if there is any):
+nnoremap Q gqap
+vnoremap Q gq
+
+" have Y behave analogously to D and C rather than to dd and cc (which is
+" already done by yy):
+noremap Y y$
+
+" have \tp ("toggle paste") toggle paste on/off and report the change, and
+" where possible also have <F4> do this both in normal and insert mode:
+nnoremap \tp :set invpaste paste?<CR>
+nmap <F5> \tp
+imap <F5> <C-O>\tp
+set pastetoggle=<F5>
+
+" have \tl ("toggle list") toggle list on/off and report the change:
+nnoremap \tl :set invlist list?<CR>
+nmap <F3> \tl
+
+" have \th ("toggle highlight") toggle highlighting of search matches, and
+" report the change:
+nnoremap \th :set invhls hls?<CR>
+nmap <f2> :set hls!<Bar>set hls?<CR>
+
+"have \tn toggle numbers
+nnoremap \tn :set number!<Bar> set number?<CR>
+
 " Revert file
 map <silent> <F4> :e!<CR>
-" paste mode
-set pastetoggle=<F5>
 "set wrap
-map <silent> <F6> :set wrap!<Bar>set wrap?<CR>
+nnoremap \tw :set wrap!<Bar> set wrap?<CR>
+nmap <F6> \tw
 
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
 "Taglist
-map \t :TlistToggle<CR>
+map \a :TlistToggle<CR>
 
 "NERDTree
 map \e :NERDTreeToggle<CR>
