@@ -150,10 +150,7 @@ set comments+=n::
 " To show current filetype use: set filetype
 filetype plugin indent on
 
-set formatoptions=tcqron "code formating options?
-
-" in human-language files, automatically format everything at 72 chars:
-autocmd FileType mail,human set formatoptions+=t textwidth=72
+" set frmatoptions=tcqron code formating options?
 "autocmd FileType text
 "            \ setlocal autoindent |
 "            \ setlocal textwidth=80 |
@@ -205,22 +202,16 @@ set whichwrap=h,l,~,[,]
 " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
 " or <BkSpc> (like in `Netscape Navigator'):
 noremap <Space> <PageDown>
-noremap <BS> <PageUp>
 noremap - <PageUp>
 " [<Space> by default is like l, <BkSpc> like h, and - like k.]
 
-
-
-" Insert New Line *************************************************************
-map <S-Enter> O<ESC> " awesome, inserts new line without going into insert mode
-map <Enter> o<ESC>
-set fo-=r " do not insert a comment leader after an enter, (not working, fix!!)
 
 " Redraw *********************************************************************
 " lazyredraw: do not update screen while executing macros
 "set lazyredraw 
 " ttyfast: are we using a fast terminal? Let's try it for a while. 
 set ttyfast
+
 " ttyscroll: redraw instead of scrolling
 "set ttyscroll=0
 
@@ -234,6 +225,9 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Aliases        *************************************************************
+map <S-CR> O<ESC> " awesome, inserts new line without going into insert mode
+map <CR> o<ESC>
+set formatoptions-=or " do not insert a comment leader after an enter, (not working, fix!!)
 " have <F1> prompt for a help topic, rather than displaying the introduction
 " page, and have it do this from any mode:
 nnoremap <F1> :help<Space>
