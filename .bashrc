@@ -42,7 +42,7 @@ shopt -s histappend
 # Whenever displaying the prompt, reload history and write the previous line to disk:
 export PROMPT_COMMAND='history -n;history -a'
 export HISTIGNORE="ls:l:cd:p:[bf]g:exit"
-export HISTSIZE=20000
+export HISTSIZE=30000
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
 # Concatenate multi-line commands
 shopt -s cmdhist
