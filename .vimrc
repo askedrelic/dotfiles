@@ -38,6 +38,7 @@ set autowrite              " Automatically save before commands like :next and :
 set report=0               " report: show a report when N lines were changed. 0 means 'all' 
 set runtimepath+=~/.vim    " runtimepath: list of dirs to search for runtime files
 set previewheight=8        " Like File Explorer, preview window height is 8
+set ls=2            " allways show status line
 
 " when using list, keep tabs at their full width and display `arrows':
 execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
@@ -91,7 +92,8 @@ set wildmode=longest,list  " Bash tab style completion is awesome
 " wildchar  the char used for "expansion" on the command line default value is
 " "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
-set wildignore=*~,#*#,*.sw?,*.o,*.class,*.java.html,*.cgi.html,*.html.html,.viminfo,*.pdf
+
+set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,*.java.html,*.cgi.html,*.html.html,.viminfo,*.pdf
 " shortmess: shorten messages where possible, especially to stop annoying
 " 'already open' messages!  
 " set shortmess=atIAr
@@ -123,11 +125,16 @@ set gdefault
 set mousehide " hide mouse?
 
 " Colors **********************************************************************
+syntax on
 set background=dark
-syntax on " syntax highlighting
-let moria_style = 'black'
-colo moria
-" colorscheme ir_black
+if has("gui_running")
+    "set guifont=Consolas:h12.00  " use this font
+    set transparency=5    " Barely transparent
+    let moria_style = 'black'
+    colo moria
+else
+    colorscheme ir_black
+endif
 
 " Line Wrapping ***************************************************************
 " don't make it look like there are line breaks where there aren't:
@@ -151,6 +158,11 @@ set comments+=n::
 " File Stuff ******************************************************************
 " To show current filetype use: set filetype
 filetype plugin indent on
+
+" Filetypes (au = autocmd)
+au FileType helpfile set nonumber      " no line numbers when viewing help
+au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
+au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
 " set frmatoptions=tcqron code formating options?
 "autocmd FileType text
@@ -309,6 +321,9 @@ nmap \v :e $MYVIMRC<CR>
 "show indent stuff
 nmap \i :verbose set ai? cin? cink? cino? si? inde? indk?<CR>
 
+map \ft :%s/	/    /g<CR> "replace all tabs with 4 spaces
+
+
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
@@ -327,6 +342,8 @@ let Tlist_WinWidth = 40
 map \e :NERDTreeToggle<CR>
 let NERDTreeWinPos='right'
 let NERDTreeChDirMode='2'
+let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.swp$']
+let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 
 "BufExplorer
 map \b :SBufExplorer<CR>
