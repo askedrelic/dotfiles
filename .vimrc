@@ -125,7 +125,9 @@ set mousehide " hide mouse?
 " Colors **********************************************************************
 set background=dark
 syntax on " syntax highlighting
-colorscheme ir_black
+let moria_style = 'black'
+colo moria
+" colorscheme ir_black
 
 " Line Wrapping ***************************************************************
 " don't make it look like there are line breaks where there aren't:
@@ -216,12 +218,12 @@ noremap - <PageUp>
 "set lazyredraw 
 " ttyfast: are we using a fast terminal? Let's try it for a while. 
 set ttyfast
-
 " ttyscroll: redraw instead of scrolling
 "set ttyscroll=0
 
 " Omni Completion *************************************************************
-autocmd FileType html :set omnifunc=htmlcomplete#CompleteTags
+" set ofu=syntaxcomplete#Complete 
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
@@ -245,23 +247,23 @@ map <Esc>[Z <s-tab>
 ounmap <Esc>[Z
 
 " use <Ctrl>+N/<Ctrl>+P to cycle through files:
-nnoremap <C-N> :next<CR>
-nnoremap <C-P> :prev<CR>
+" nnoremap <C-N> :bn<CR>
+" nnoremap <C-P> :bp<CR>
 " [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
 
-" have the usual indentation keystrokes still work in visual mode:
-vnoremap <C-T> >
-vnoremap <C-D> <LT>
-vmap <Tab> <C-T>
-vmap <S-Tab> <C-D>
-
-" have <Tab> (and <Shift>+<Tab> where it works) change the level of
-" indentation:
-inoremap <Tab> <C-T>
-inoremap <S-Tab> <C-D>
-" [<Ctrl>+V <Tab> still inserts an actual tab character.]
-
 nmap , <C-w><C-w>
+
+" " have the usual indentation keystrokes still work in visual mode:
+" vnoremap <C-T> >
+" vnoremap <C-D> <LT>
+" vmap <Tab> <C-T>
+" vmap <S-Tab> <C-D>
+" 
+" " have <Tab> (and <Shift>+<Tab> where it works) change the level of
+" " indentation:
+" inoremap <Tab> <C-T>
+" inoremap <S-Tab> <C-D>
+" " [<Ctrl>+V <Tab> still inserts an actual tab character.]
 
 " have Q reformat the current paragraph (or selected text if there is any):
 nnoremap Q gqap
@@ -294,20 +296,37 @@ nmap <f2> :set hls!<Bar>set hls?<CR>
 nnoremap \tn :set number!<Bar> set number?<CR>
 
 " Revert file
-map <silent> <F4> :e!<CR>
+nnoremap \r :e!<CR>
+
 "set wrap
 nnoremap \tw :set wrap!<Bar> set wrap?<CR>
 nmap <F6> \tw
+
+"Easy edit of vimrc
+nmap \s :source $MYVIMRC<CR>
+nmap \v :e $MYVIMRC<CR>
+
+"show indent stuff
+nmap \i :verbose set ai? cin? cink? cino? si? inde? indk?<CR>
 
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
 "Taglist
 map \a :TlistToggle<CR>
+let Tlist_Show_One_File='1'
+let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself
+let Tlist_Sort_Type = "order" " sort by order or name
+let Tlist_Display_Prototype = 0 " do not show prototypes and not tags in the taglist window.
+let Tlist_Compart_Format = 1 " Remove extra information and blank lines from the taglist window.
+let Tlist_GainFocus_On_ToggleOpen = 1 " Jump to taglist window on open.
+let Tlist_Display_Tag_Scope = 1 " Show tag scope next to the tag name.
+let Tlist_WinWidth = 40
 
 "NERDTree
 map \e :NERDTreeToggle<CR>
 let NERDTreeWinPos='right'
+let NERDTreeChDirMode='2'
 
 "BufExplorer
 map \b :SBufExplorer<CR>
