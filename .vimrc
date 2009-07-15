@@ -100,7 +100,7 @@ set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,
 set shortmess=flnrxoOItTA
 
 " Windows *********************************************************************
-set equalalways " Multiple windows, when created, are equal in size
+" set equalalways " Multiple windows, when created, are equal in size
 set splitbelow splitright
 set noequalalways       " noea:  don't always keep windows at equal size
  
