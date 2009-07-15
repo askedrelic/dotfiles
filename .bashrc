@@ -170,5 +170,6 @@ alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 
 # Other files ----------------------------------------------------------------------------------------------
 source ~/.svn_bash_completion
+source ~/.django_bash_completion
 source ~/.bashrc_app_specific
 source ~/.bashrc_machines
