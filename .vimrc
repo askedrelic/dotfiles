@@ -17,32 +17,41 @@ if &term == "xterm"
 endif
 
 " General *********************************************************************
-" remember all of these between sessions, but only 10 search terms; also
-" remember info for 10 files, but never any on removable disks, don't remember
+" remember all of these between sessions, but only 50 search terms; also
+" remember info for 50 files, but never any on removable disks, don't remember
 " marks in files, don't rehighlight old search patterns, and only save up to
 " 100 lines of registers; including @10 in there should restrict input buffer
 " but it causes an error for me:
-set viminfo=/50,'50,f0,h,\"100
+set viminfo=/50,'50,f0,h
 
 set backspace=indent,eol,start
-set number " Show line numbers
-set showmatch              " Show matching brackets.
+" Show line numbers
+set number 
+" Show matching brackets.
+set showmatch              
 " have % bounce between angled brackets, as well as t'other kinds:
 set matchpairs+=<:>
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
-set encoding=utf-8         " This being the 21st century, I use Unicode
-set nobackup               " Don't keep a backup file
-set nowritebackup          " No backup write?
-set history=100            " keep 50 lines of command line history
-set autowrite              " Automatically save before commands like :next and :make
-set report=0               " report: show a report when N lines were changed. 0 means 'all' 
-set runtimepath+=~/.vim    " runtimepath: list of dirs to search for runtime files
-set previewheight=8        " Like File Explorer, preview window height is 8
-set ls=2            " allways show status line
-
+" This being the 21st century, I use Unicode
+set encoding=utf-8         
+" Don't keep a backup file
+set nobackup               
+" keep 100 lines of command line history
+set history=100            
+" Automatically save before commands like :next and :make
+set autowrite              
+" report: show a report when N lines were changed. 0 means 'all' 
+set report=0               
+" runtimepath: list of dirs to search for runtime files
+set runtimepath+=~/.vim    
+" Like File Explorer, preview window height is 8
+set previewheight=8        
+" always show status line
+set ls=2            
+"
 " when using list, keep tabs at their full width and display `arrows':
-execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
+execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
 
 " Tabs **********************************************************************
 function! Tabstyle_tabs()
@@ -61,34 +70,30 @@ function! Tabstyle_spaces()
   set expandtab
 endfunction
 
-"set smarttab "uhh
-"set expandtab "insert spaces
-"set softtabstop=4 "backspace delete 4 spaces
-"set shiftwidth=4 "indent length with < > 
-"set tabstop=4 "4 space tab
-
-" use indents of 2 spaces, and have them copied down lines:
+" Tabs should be converted to a group of 4 spaces.
+" indent length with < > 
 set shiftwidth=4
-set softtabstop=4
 set tabstop=4
-set shiftround
+"Insert spaces for tabs
 set expandtab
-set autoindent
-" Indenting *******************************************************************
-set ai " Automatically set the indent of a new line (local to buffer)
-set si " smartindent  (local to buffer)
+set smarttab
+set shiftround
 
 " Scrollbars/Status ***********************************************************
 set sidescrolloff=2
-set scrolloff=2 " top bottom scroll off
-set numberwidth=4
-set title  " show in title bar
-set ruler  " show the cursor position all the time
+" top bottom scroll off
+set scrolloff=2 
+" set numberwidth=4
+" show in title bar
+set title  
+" show the cursor position all the time
+set ruler  
 " display the current mode and partially-typed commands in the status line:
 set showmode
 set showcmd
-set wildmode=longest,list  " Bash tab style completion is awesome
 
+" Bash tab style completion is awesome
+set wildmode=longest,list  
 " wildchar  the char used for "expansion" on the command line default value is
 " "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
@@ -100,9 +105,11 @@ set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,
 set shortmess=flnrxoOItTA
 
 " Windows *********************************************************************
-" set equalalways " Multiple windows, when created, are equal in size
+" Multiple windows, when created, are equal in size
+set equalalways 
 set splitbelow splitright
-set noequalalways       " noea:  don't always keep windows at equal size
+" don't always keep windows at equal size
+" set noequalalways       
  
 "Vertical split then hop to new buffer
 ":noremap ,v :vsp^M^W^W<cr>
@@ -122,7 +129,8 @@ set smartcase
 set incsearch
 " assume the /g flag on :s substitutions to replace all matches in a line:
 set gdefault
-set mousehide " hide mouse?
+" hide mouse on search
+set mousehide 
 
 " Colors **********************************************************************
 syntax on
@@ -139,8 +147,10 @@ endif
 " Line Wrapping ***************************************************************
 " don't make it look like there are line breaks where there aren't:
 set nowrap
-set linebreak " Wrap at word
-"set textwidth=0 " Don't wrap words by default
+" Wrap at word
+set linebreak 
+" Don't wrap words by default
+"set textwidth=0 
 
 
 " normally don't automatically format `text' as it is typed, IE only do this
@@ -154,7 +164,6 @@ set textwidth=79
 set comments+=b:\"
 set comments+=n::
 
-
 " File Stuff ******************************************************************
 " To show current filetype use: set filetype
 filetype plugin indent on
@@ -164,21 +173,13 @@ au FileType helpfile set nonumber      " no line numbers when viewing help
 au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
 au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
-" set frmatoptions=tcqron code formating options?
-"autocmd FileType text
-"            \ setlocal autoindent |
-"            \ setlocal textwidth=80 |
-"            \ setlocal formatoptions+=roan
-
 " we couldn't care less about html
 au BufNewFile,BufRead *.html        setf xhtml 
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
-"Drupal
 au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc         setf php
-au BufNewFile,BufRead *.pl,*.pm,*.t     setf perl
-
+au BufNewFile,BufRead *.pl,*.pm,*.t setf perl
 
 " For C-like programming, have automatic indentation:
 autocmd FileType c,cpp,slang        set cindent
@@ -244,9 +245,11 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Aliases        *************************************************************
-map <S-CR> O<ESC> " awesome, inserts new line without going into insert mode
+"inserts new line without going into insert mode
+map <S-CR> O<ESC> 
 map <CR> o<ESC>
-set formatoptions-=or " do not insert a comment leader after an enter, (not working, fix!!)
+" do not insert a comment leader after an enter, (not working, fix!!)
+set formatoptions-=or 
 " have <F1> prompt for a help topic, rather than displaying the introduction
 " page, and have it do this from any mode:
 nnoremap <F1> :help<Space>
@@ -259,13 +262,12 @@ map <Esc>[Z <s-tab>
 ounmap <Esc>[Z
 
 " use <Ctrl>+N/<Ctrl>+P to cycle through files:
-" nnoremap <C-N> :bn<CR>
-" nnoremap <C-P> :bp<CR>
 " [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
-
+nnoremap <C-N> :bn<CR>
+nnoremap <C-P> :bp<CR>
 nmap , <C-w><C-w>
 
-" " have the usual indentation keystrokes still work in visual mode:
+" have the usual indentation keystrokes still work in visual mode:
 " vnoremap <C-T> >
 " vnoremap <C-D> <LT>
 " vmap <Tab> <C-T>
@@ -321,8 +323,12 @@ nmap \v :e $MYVIMRC<CR>
 "show indent stuff
 nmap \i :verbose set ai? cin? cink? cino? si? inde? indk?<CR>
 
-map \ft :%s/	/    /g<CR> "replace all tabs with 4 spaces
+"replace all tabs with 4 spaces
+map \ft :%s/	/    /g<CR> 
 
+"insert time!
+nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
+imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
