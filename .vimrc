@@ -24,6 +24,11 @@ endif
 " but it causes an error for me:
 set viminfo=/50,'50,f0,h
 
+" this allows you to have multiple files open
+" at once and change between them without
+" saving
+set hidden
+"make backspace work
 set backspace=indent,eol,start
 " Show line numbers
 set number 
@@ -105,11 +110,9 @@ set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,
 set shortmess=flnrxoOItTA
 
 " Windows *********************************************************************
-" Multiple windows, when created, are equal in size
-set equalalways 
 set splitbelow splitright
-" don't always keep windows at equal size
-" set noequalalways       
+" don't always keep windows at equal size (for minibufexplorer)
+set noequalalways       
  
 "Vertical split then hop to new buffer
 ":noremap ,v :vsp^M^W^W<cr>
@@ -330,6 +333,12 @@ map \ft :%s/	/    /g<CR>
 nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
 imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
+"move around windows with ctrl key!
+map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
@@ -355,6 +364,8 @@ let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 map \b :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
 let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
+
+ let g:miniBufExplModSelTarget = 1
 
 "newrw
 let g:netrw_hide              = 1
