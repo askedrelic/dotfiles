@@ -24,6 +24,19 @@ endif
 " but it causes an error for me:
 set viminfo=/50,'50,f0,h
 
+set statusline=   " clear the statusline for when vimrc is reloaded
+set statusline+=%f\                          " file name
+set statusline+=%h%m%r%w                     " flags
+set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
+set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
+set statusline+=%{&fileformat}]              " file format
+set statusline+=%=      "left/right separator
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=%b,0x%-8B\                   " current char
+set statusline+=%c,     "cursor column
+set statusline+=%l/%L   "cursor line/total lines
+set statusline+=\ %P    "percent through file
+
 " this allows you to have multiple files open
 " at once and change between them without
 " saving
@@ -309,6 +322,9 @@ nmap <F3> \tl
 nnoremap \th :set invhls hls?<CR>
 nmap <f2> :set hls!<Bar>set hls?<CR>
 
+"clear the fucking search buffer
+map \c :let @/ = ""<CR>
+
 "have \tn toggle numbers
 nnoremap \tn :set number!<Bar> set number?<CR>
 
@@ -345,12 +361,18 @@ map <C-L> <C-W>l
 "Taglist
 map \a :TlistToggle<CR>
 let Tlist_Show_One_File='1'
-let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill yourself
-let Tlist_Sort_Type = "order" " sort by order or name
-let Tlist_Display_Prototype = 0 " do not show prototypes and not tags in the taglist window.
-let Tlist_Compart_Format = 1 " Remove extra information and blank lines from the taglist window.
-let Tlist_GainFocus_On_ToggleOpen = 1 " Jump to taglist window on open.
-let Tlist_Display_Tag_Scope = 1 " Show tag scope next to the tag name.
+" if you are the last window, kill yourself
+let Tlist_Exist_OnlyWindow = 1 
+" sort by order or name
+let Tlist_Sort_Type = "order" 
+" do not show prototypes and not tags in the taglist window.
+let Tlist_Display_Prototype = 0 
+" Remove extra information and blank lines from the taglist window.
+let Tlist_Compart_Format = 1 
+" Jump to taglist window on open.
+let Tlist_GainFocus_On_ToggleOpen = 1 
+" Show tag scope next to the tag name.
+let Tlist_Display_Tag_Scope = 1 
 let Tlist_WinWidth = 40
 
 "NERDTree
@@ -361,11 +383,12 @@ let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.swp$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 
 "BufExplorer
-map \b :SBufExplorer<CR>
 let g:bufExplorerSplitBelow=1  "Below current
 let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
 
- let g:miniBufExplModSelTarget = 1
+map \b :TMiniBufExplorer<CR>
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplSplitBelow = 0
 
 "newrw
 let g:netrw_hide              = 1
