@@ -8,6 +8,12 @@ max_peers = 300
 
 # Same as above but for seeding completed torrents (-1 = same as downloading)
 #min_peers_seed = 10
+as
+das
+d
+asd
+as
+
 max_peers_seed = 80
 
 # Maximum number of simultanious uploads per torrent.
