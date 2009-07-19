@@ -153,7 +153,7 @@ syntax on
 set background=dark
 if has("gui_running")
     "set guifont=Consolas:h12.00  " use this font
-    set transparency=5    " Barely transparent
+    set transparency=6    " Barely transparent
     let moria_style = 'black'
     colo moria
 else
@@ -380,16 +380,16 @@ let Tlist_WinWidth = 40
 map \e :NERDTreeToggle<CR>
 let NERDTreeWinPos='right'
 let NERDTreeChDirMode='2'
-let NERDTreeIgnore=['\.vim$', '\~$', '\.pyc$', '\.swp$']
+let NERDTreeIgnore=['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 
-"BufExplorer
-let g:bufExplorerSplitBelow=1  "Below current
-let g:bufExplorerUseCurrentWindow=1  " Don't open in new window.
-
-map \b :TMiniBufExplorer<CR>
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplSplitBelow = 0
+"FuzzyFinder
+"gotta set up this dictionary first or vim gives an error
+let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'Bookmark':{}, 'Tag':{}, 'TaggedFile':{}}
+let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
+map <silent> \f :FuzzyFinderFile!<CR>
+map <silent> \F :FuzzyFinderMruFile!<CR>
+map <silent> \b :FuzzyFinderBuffer!<CR>
 
 "newrw
 let g:netrw_hide              = 1
