@@ -276,24 +276,71 @@ map! <F1> <C-C><F1>
 "trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
 map <Esc>[Z <s-tab>
 ounmap <Esc>[Z
-
+                
 " use <Ctrl>+N/<Ctrl>+P to cycle through files:
 " [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
 nnoremap <C-N> :bn<CR>
 nnoremap <C-P> :bp<CR>
+
+" swap windows
 nmap , <C-w><C-w>
 
-" have the usual indentation keystrokes still work in visual mode:
-" vnoremap <C-T> >
-" vnoremap <C-D> <LT>
-" vmap <Tab> <C-T>
-" vmap <S-Tab> <C-D>
-" 
-" " have <Tab> (and <Shift>+<Tab> where it works) change the level of
-" " indentation:
+"move around windows with ctrl key!
+map <C-H> <C-W>h
+map <C-J> <C-W>j
+map <C-K> <C-W>k
+map <C-L> <C-W>l
+
+" this might replace all of this http://www.vim.org/scripts/script.php?script_id=1643
+" Remap TAB to keyword completion
+function! InsertTabWrapper(direction)
+  let col = col('.') - 1
+  if !col || strpart(getline('.'), col-1, col) =~ '\s'     
+    return "\<tab>"
+  elseif "forward" == a:direction
+    return "\<c-n>"
+  elseif "backward" == a:direction
+    return "\<c-d>"
+  else
+    return "\<c-x>\<c-k>"
+  endif
+endfunction
+
+inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
+inoremap <S-Tab> <c-r>=InsertTabWrapper ("backward")<CR>
+inoremap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
+
+" toggle tab completion
+function! ToggleTabCompletion()
+  if mapcheck("\<tab>", "i") != ""
+    :iunmap <tab>
+    :iunmap <s-tab>
+    :iunmap <c-tab>
+    echo "tab completion off"
+  else
+    :imap <tab> <c-n>
+    :imap <s-tab> <c-p>
+    :imap <c-tab> <c-x><c-l>
+    echo "tab completion on"
+  endif
+endfunction
+
+map <Leader>tc :call ToggleTabCompletion()<CR>
+
+" tell complete to look in the dictionary
+set complete-=k complete+=k
+
+" load the dictionary according to syntax
+" au BufReadPost * if exists("b:current_syntax")
+" au BufReadPost * let &dictionary = substitute("C:\\vim\\vimfiles\\dict\\FT.dict", "FT", b:current_syntax, "")
+" au BufReadPost * endif
+
 " inoremap <Tab> <C-T>
 " inoremap <S-Tab> <C-D>
-" " [<Ctrl>+V <Tab> still inserts an actual tab character.]
+" " " [<Ctrl>+V <Tab> still inserts an actual tab character.]
+
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
 
 " have Q reformat the current paragraph (or selected text if there is any):
 nnoremap Q gqap
@@ -306,35 +353,26 @@ noremap Y y$
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
-" have \tp ("toggle paste") toggle paste on/off and report the change, and
-" where possible also have <F4> do this both in normal and insert mode:
+" toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
-nmap <F5> \tp
-imap <F5> <C-O>\tp
-set pastetoggle=<F5>
 
-" have \tl ("toggle list") toggle list on/off and report the change:
+"toggle list on/off and report the change:
 nnoremap \tl :set invlist list?<CR>
-nmap <F3> \tl
 
-" have \th ("toggle highlight") toggle highlighting of search matches, and
-" report the change:
+"toggle highlighting of search matches, and report the change:
 nnoremap \th :set invhls hls?<CR>
-nmap <f2> :set hls!<Bar>set hls?<CR>
 
-"clear the fucking search buffer
-":noremap <silent> <Space> :silent noh<Bar>echo<CR>
-map \c :let @/ = ""<CR>
-
-"have \tn toggle numbers
+"toggle numbers
 nnoremap \tn :set number!<Bar> set number?<CR>
 
-" Revert file
-nnoremap \r :e!<CR>
-
-"set wrap
+"toggle wrap
 nnoremap \tw :set wrap!<Bar> set wrap?<CR>
-nmap <F6> \tw
+
+"clear the fucking search buffer, not just remove the highlight
+map \c :let @/ = ""<CR>
+
+" Revert the current buffer
+nnoremap \r :e!<CR>
 
 "Easy edit of vimrc
 nmap \s :source $MYVIMRC<CR>
@@ -346,15 +384,9 @@ nmap \i :verbose set ai? cin? cink? cino? si? inde? indk?<CR>
 "replace all tabs with 4 spaces
 map \ft :%s/	/    /g<CR> 
 
-"insert time!
+"insert THE time!
 nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
 imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
-
-"move around windows with ctrl key!
-map <C-H> <C-W>h
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-L> <C-W>l
 
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
@@ -384,9 +416,12 @@ let NERDTreeIgnore=['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$'
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 
 "FuzzyFinder
-"gotta set up this dictionary first or vim gives an error
-let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'Bookmark':{}, 'Tag':{}, 'TaggedFile':{}}
-let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
+"Seriously FF, setting up your options sucks
+if !exists('g:FuzzyFinderOptions')
+    let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'Bookmark':{}, 'Tag':{}, 'TaggedFile':{}}
+    let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
+    let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
+endif
 map <silent> \f :FuzzyFinderFile!<CR>
 map <silent> \F :FuzzyFinderMruFile!<CR>
 map <silent> \b :FuzzyFinderBuffer!<CR>
