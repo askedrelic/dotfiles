@@ -93,8 +93,8 @@ endfunction
 set shiftwidth=4
 set tabstop=4
 "Insert spaces for tabs
-set expandtab
 set smarttab
+set expandtab
 set shiftround
 
 " Scrollbars/Status ***********************************************************
@@ -219,14 +219,16 @@ autocmd FileType html set formatoptions+=tl
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
-" Return to the last position when previously editing this file
-" When editing a file, always jump to the last cursor position
-autocmd BufReadPost *
-\ if ! exists("g:leave_my_cursor_position_alone") |
-\ if line("'\"") > 0 && line ("'\"") <= line("$") |
-\ exe "normal g'\"" |
-\ endif |
-\ endif
+"jump to last cursor position when opening a file
+"dont do it when writing a commit log entry
+autocmd BufReadPost * call SetCursorPosition()
+function! SetCursorPosition()
+  if &filetype !~ 'commit\c'
+    if line("'\"") > 0 && line("'\"") <= line("$")
+     exe "normal g`\""
+    endif
+  end
+endfunction
 
 " Key stuff *******************************************************************
 " have the h and l cursor keys wrap between lines (like <Space> and <BkSpc> do
@@ -261,11 +263,9 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Aliases        *************************************************************
-"inserts new line without going into insert mode
-map <S-CR> O<ESC> 
-map <CR> o<ESC>
-" do not insert a comment leader after an enter, (not working, fix!!)
-set formatoptions-=or 
+" Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
+imap jj <Esc>
+
 " have <F1> prompt for a help topic, rather than displaying the introduction
 " page, and have it do this from any mode:
 nnoremap <F1> :help<Space>
@@ -323,6 +323,7 @@ nnoremap \th :set invhls hls?<CR>
 nmap <f2> :set hls!<Bar>set hls?<CR>
 
 "clear the fucking search buffer
+":noremap <silent> <Space> :silent noh<Bar>echo<CR>
 map \c :let @/ = ""<CR>
 
 "have \tn toggle numbers
@@ -360,7 +361,9 @@ map <C-L> <C-W>l
 " -----------------------------------------------------------------------------
 "Taglist
 map \a :TlistToggle<CR>
-let Tlist_Show_One_File='1'
+" Jump to taglist window on open.
+let Tlist_GainFocus_On_ToggleOpen = 1 
+let Tlist_Close_OnSelect=1
 " if you are the last window, kill yourself
 let Tlist_Exist_OnlyWindow = 1 
 " sort by order or name
@@ -369,8 +372,6 @@ let Tlist_Sort_Type = "order"
 let Tlist_Display_Prototype = 0 
 " Remove extra information and blank lines from the taglist window.
 let Tlist_Compart_Format = 1 
-" Jump to taglist window on open.
-let Tlist_GainFocus_On_ToggleOpen = 1 
 " Show tag scope next to the tag name.
 let Tlist_Display_Tag_Scope = 1 
 let Tlist_WinWidth = 40
