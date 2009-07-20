@@ -156,6 +156,7 @@ if has("gui_running")
     set transparency=6    " Barely transparent
     let moria_style = 'black'
     colo moria
+    set lines=71 columns=261
 else
     colorscheme ir_black
 endif
@@ -351,7 +352,7 @@ vnoremap Q gq
 noremap Y y$
 
 " Make p in Visual mode replace the selected text with the "" register.
-vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+" vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
@@ -388,6 +389,18 @@ map \ft :%s/	/    /g<CR>
 nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
 imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
+"OSX only: Open a web-browser with the URL in the current line
+function! HandleURI()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+  echo s:uri
+  if s:uri != ""
+   exec "!open \"" . s:uri . "\""
+  else
+   echo "No URI found in line."
+  endif
+endfunction
+map <Leader>o :call HandleURI()<CR>
+
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
@@ -409,7 +422,7 @@ let Tlist_Display_Tag_Scope = 1
 let Tlist_WinWidth = 40
 
 "NERDTree
-map \e :NERDTreeToggle<CR>
+map <silent> \e :NERDTreeToggle<CR>
 let NERDTreeWinPos='right'
 let NERDTreeChDirMode='2'
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
@@ -422,7 +435,9 @@ if !exists('g:FuzzyFinderOptions')
     let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
     let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
 endif
-map <silent> \f :FuzzyFinderFile!<CR>
+let g:fuzzy_matching_limit = 60
+let g:fuzzy_ceiling = 20000
+map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderMruFile!<CR>
 map <silent> \b :FuzzyFinderBuffer!<CR>
 
