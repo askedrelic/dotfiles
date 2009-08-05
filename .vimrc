@@ -436,10 +436,10 @@ if !exists('g:FuzzyFinderOptions')
     let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
 endif
 let g:fuzzy_matching_limit = 60
-let g:fuzzy_ceiling = 20000
+let g:fuzzy_ceiling = 50000
 let g:fuzzy_ignore = "*.log;*.pyc;*.svn;"
 map <silent> \f :FuzzyFinderTextMate<CR>
-map <silent> \F :FuzzyFinderMruFile!<CR>
+map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 map <silent> \b :FuzzyFinderBuffer!<CR>
 
 "newrw
