@@ -1,6 +1,6 @@
 # Colors ----------------------------------------------
 if [ "$OS" = "linux" ] ; then
-  alias ls='ls --color=auto' # For linux, etc
+  alias ls='ls --color=auto -F -h' # For linux, etc
   alias dir='dir --color'
   alias vdir='vdir --color'
   eval "`dircolors -b`"
@@ -23,7 +23,6 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
-alias ls='ls -F -h'
 alias ll="ls -F -h -l"
 alias la="ls -F -h -la"
 alias lo="ls -F -h -o"
