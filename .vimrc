@@ -70,6 +70,9 @@ set ls=2
 " when using list, keep tabs at their full width and display `arrows':
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
 execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
+"check if file is written to elsewhere and ask to reload immediately, not when
+"saving
+au CursorHold * checktime
 
 " Tabs **********************************************************************
 function! Tabstyle_tabs()
