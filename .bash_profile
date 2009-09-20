@@ -36,8 +36,6 @@ export PATH=/usr/local/bin:$PATH:.:/opt/local/bin:/opt/local/sbin
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc
  
-test -r /sw/bin/init.sh && . /sw/bin/init.sh
- 
 # Hello Messsage --------------------------------------------------
 echo -e "Kernel Information: " `uname -smr`
 #echo -e "${COLOR_BROWN}`bash --version`"
