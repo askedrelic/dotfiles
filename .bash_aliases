@@ -80,7 +80,6 @@ alias watch="watch -d"
 alias wget="wget -c"
 alias py="python"
 alias pine=alpine
-alias path="tr : '\n' <<<$PATH"
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
@@ -90,4 +89,5 @@ alias wgetdir="wget -r -nH --no-parent"
 alias wgetmirror="wget --mirror -U Firefox/3.0 -p -erobots=off --html-extension --convert-links"
 alias simpletree="ls -R | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
-
+alias openapps='lsof -P -i -n'
+alias path="tr : '\n' <<<$PATH"
