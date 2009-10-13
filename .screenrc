@@ -70,7 +70,9 @@ termcapinfo xterm*|rxvt*|kterm*|Eterm* hs:ts=\E]0;:fs=\007:ds=\E]0;\007
 # use this for the hard status string
 hardstatus string "%h%? users: %u%?"
 
-# An alternative hardstatus to display a bar at the bottom listing the
+#fix for osx delete key?
+termcapinfo xterm-color kD=\E[3~
+
 # windownames and highlighting the current windowname in blue. (This is only
 # enabled if there is no hardstatus setting for your terminal)
 #

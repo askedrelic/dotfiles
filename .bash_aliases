@@ -80,6 +80,7 @@ alias watch="watch -d"
 alias wget="wget -c"
 alias py="python"
 alias pine=alpine
+alias rscreen="screen -R"
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
