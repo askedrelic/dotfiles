@@ -17,12 +17,9 @@ if &term == "xterm"
 endif
 
 " General *********************************************************************
-" remember all of these between sessions, but only 50 search terms; also
-" remember info for 50 files, but never any on removable disks, don't remember
-" marks in files, don't rehighlight old search patterns, and only save up to
-" 100 lines of registers; including @10 in there should restrict input buffer
-" but it causes an error for me:
-set viminfo=/50,'50,f0,h
+" save last 50 search history items, last 50 edit marks, don't remember search
+" highlight
+set viminfo=/50,'50,h
 
 set statusline=   " clear the statusline for when vimrc is reloaded
 set statusline+=%f\                          " file name
@@ -36,9 +33,8 @@ set statusline+=%b,0x%-8B\      " current char
 set statusline+=%c,%l/ "cursor column/total lines
 set statusline+=%L\ %P "total lines/percentage in file
 
-" this allows you to have multiple files open
-" at once and change between them without
-" saving
+" this allows you to have multiple files open at once and change between them
+" without saving
 set hidden
 "make backspace work
 set backspace=indent,eol,start
@@ -158,7 +154,7 @@ if has("gui_running")
     set transparency=6    " Barely transparent
     let moria_style = 'black'
     colo moria
-    set lines=71 columns=261
+    set lines=73 columns=260
 else
     colorscheme ir_black
 endif
@@ -168,13 +164,15 @@ endif
 set nowrap
 " Wrap at word
 set linebreak 
-" Don't wrap words by default
-"set textwidth=0 
 
+" have the h and l cursor keys wrap between lines (like <Space> and <BkSpc> do
+" by default), and ~ covert case over line breaks; also have the cursor keys
+" wrap in insert mode:
+set whichwrap=h,l,~,[,]
 
 " normally don't automatically format `text' as it is typed, IE only do this
 " with comments, at 79 characters:
-set formatoptions-=t
+set formatoptions-=to
 set textwidth=79
 
 " treat lines starting with a quote mark as comments (for `Vim' files, such as
@@ -233,28 +231,6 @@ function! SetCursorPosition()
   end
 endfunction
 
-" Key stuff *******************************************************************
-" have the h and l cursor keys wrap between lines (like <Space> and <BkSpc> do
-" by default), and ~ covert case over line breaks; also have the cursor keys
-" wrap in insert mode:
-set whichwrap=h,l,~,[,]
-
-" page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
-" `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
-" or <BkSpc> (like in `Netscape Navigator'):
-noremap <Space> <PageDown>
-noremap - <PageUp>
-" [<Space> by default is like l, <BkSpc> like h, and - like k.]
-
-
-" Redraw *********************************************************************
-" lazyredraw: do not update screen while executing macros
-"set lazyredraw 
-" ttyfast: are we using a fast terminal? Let's try it for a while. 
-set ttyfast
-" ttyscroll: redraw instead of scrolling
-"set ttyscroll=0
-
 " Omni Completion *************************************************************
 " set ofu=syntaxcomplete#Complete 
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -265,10 +241,25 @@ autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 autocmd FileType c set omnifunc=ccomplete#Complete
 
+" Redraw *********************************************************************
+" lazyredraw: do not update screen while executing macros
+"set lazyredraw 
+" ttyfast: are we using a fast terminal? Let's try it for a while. 
+set ttyfast
+" ttyscroll: redraw instead of scrolling
+"set ttyscroll=0
+
 " Aliases        *************************************************************
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
 imap jj <Esc>
 
+" page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
+" `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
+" or <BkSpc> (like in `Netscape Navigator'):
+noremap <Space> <PageDown>
+noremap - <PageUp>
+
+" [<Space> by default is like l, <BkSpc> like h, and - like k.]
 " have <F1> prompt for a help topic, rather than displaying the introduction
 " page, and have it do this from any mode:
 nnoremap <F1> :help<Space>
@@ -316,18 +307,17 @@ inoremap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
 " toggle tab completion
 function! ToggleTabCompletion()
   if mapcheck("\<tab>", "i") != ""
-    :iunmap <tab>
-    :iunmap <s-tab>
-    :iunmap <c-tab>
+    iunmap <tab>
+    iunmap <s-tab>
+    iunmap <c-tab>
     echo "tab completion off"
   else
-    :imap <tab> <c-n>
-    :imap <s-tab> <c-p>
-    :imap <c-tab> <c-x><c-l>
+    imap <tab> <c-n>
+    imap <s-tab> <c-p>
+    imap <c-tab> <c-x><c-l>
     echo "tab completion on"
   endif
 endfunction
-
 map <Leader>tc :call ToggleTabCompletion()<CR>
 
 " tell complete to look in the dictionary
@@ -340,7 +330,7 @@ set complete-=k complete+=k
 
 " inoremap <Tab> <C-T>
 " inoremap <S-Tab> <C-D>
-" " " [<Ctrl>+V <Tab> still inserts an actual tab character.]
+" [<Ctrl>+V <Tab> still inserts an actual tab character.]
 
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
@@ -354,7 +344,7 @@ vnoremap Q gq
 noremap Y y$
 
 " Make p in Visual mode replace the selected text with the "" register.
-" vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
@@ -370,7 +360,7 @@ nnoremap \tn :set number!<Bar> set number?<CR>
 
 "toggle wrap and easy movement keys while in wrap mode
 noremap <silent> <Leader>tw :call ToggleWrap()<CR>
-function ToggleWrap()
+function! ToggleWrap()
   if &wrap
     echo "Wrap OFF"
     setlocal nowrap
@@ -411,8 +401,10 @@ endfunction
 function! TYShowBreak()
   if &showbreak == ''
     set showbreak=>
+    echo "show break on"
   else
     set showbreak=
+    echo "show break off"
   endif
 endfunction
 nmap  <expr> \tb  TYShowBreak()
@@ -428,14 +420,10 @@ nmap \s :source $MYVIMRC<CR>
 nmap \v :e $MYVIMRC<CR>
 
 "show indent stuff
-nmap \i :verbose set ai? cin? cink? cino? si? inde? indk?<CR>
+nmap \I :verbose set ai? cin? cink? cino? si? inde? indk? formatoptions?<CR>
 
 "replace all tabs with 4 spaces
 map \ft :%s/	/    /g<CR> 
-
-"insert THE time!
-nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
-imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
@@ -448,6 +436,10 @@ function! HandleURI()
   endif
 endfunction
 map <Leader>o :call HandleURI()<CR>
+" Custom text inserts *********************************************************
+"insert THE time!
+nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
+imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
