@@ -159,6 +159,16 @@ else
     colorscheme ir_black
 endif
 
+" Omni Completion *************************************************************
+" set ofu=syntaxcomplete#Complete 
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType c set omnifunc=ccomplete#Complete
+
 " Line Wrapping ***************************************************************
 " don't make it look like there are line breaks where there aren't:
 set nowrap
@@ -172,7 +182,7 @@ set whichwrap=h,l,~,[,]
 
 " normally don't automatically format `text' as it is typed, IE only do this
 " with comments, at 79 characters:
-set formatoptions-=to
+set formatoptions=cq
 set textwidth=79
 
 " treat lines starting with a quote mark as comments (for `Vim' files, such as
@@ -209,6 +219,8 @@ autocmd FileType c set formatoptions+=ro
 " for Perl programming, have things in braces indenting themselves:
 autocmd FileType perl set smartindent
 
+autocmd FileType python set formatoptions-=t
+
 " for CSS, also have things in braces indented:
 autocmd FileType css set smartindent
 
@@ -231,15 +243,6 @@ function! SetCursorPosition()
   end
 endfunction
 
-" Omni Completion *************************************************************
-" set ofu=syntaxcomplete#Complete 
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Redraw *********************************************************************
 " lazyredraw: do not update screen while executing macros
@@ -257,7 +260,7 @@ imap jj <Esc>
 " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
 " or <BkSpc> (like in `Netscape Navigator'):
 noremap <Space> <PageDown>
-noremap - <PageUp>
+" noremap - <PageUp>
 
 " [<Space> by default is like l, <BkSpc> like h, and - like k.]
 " have <F1> prompt for a help topic, rather than displaying the introduction
@@ -334,6 +337,10 @@ set complete-=k complete+=k
 
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
+
+" insert new line without going into insert mode
+nnoremap - :put=''<CR>
+nnoremap + :put!=''<CR> 
 
 " have Q reformat the current paragraph (or selected text if there is any):
 nnoremap Q gqap
@@ -460,6 +467,8 @@ let Tlist_Compart_Format = 1
 " Show tag scope next to the tag name.
 let Tlist_Display_Tag_Scope = 1 
 let Tlist_WinWidth = 40
+" Show only current file
+let Tlist_Show_One_File = 1
 
 "NERDTree
 map <silent> \e :NERDTreeToggle<CR>
