@@ -35,6 +35,7 @@ alias svblame='sv blame'
 alias svdeletesvnfolders='find . -name ".svn" -exec rm -rf {} \;'
 alias svexcludeswpfiles='sv propset svn:ignore "*.swp" .'
 alias svdeleteall='sv status | grep "^\!" | awk "{print \$2}" | xargs svn delete'
+alias svlastlog='svn log -v -l 10'
  
 svgetinfo (){
    sv info $@
