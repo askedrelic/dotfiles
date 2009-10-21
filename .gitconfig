@@ -1,0 +1,15 @@
+[user]
+	email = askedrelic@loki.rh.rit.edu
+	name = askedrelic
+[color]
+        pager = true
+        ui = auto
+
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    st = status
+    last  = cat-file commit HEAD
+    st    = ls-files --exclude-per-directory=.gitignore \
+                    --exclude-from=.git/info/exclude \
+                    -t -o -u -s -m -d
+
