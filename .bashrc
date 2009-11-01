@@ -79,8 +79,18 @@ function xtitle { # change the title of your xterm* window
 
 
 # Other files ----------------------------------------------------------------------------------------------
-source ~/.svn_bash_completion
-source ~/.django_bash_completion
-source ~/.bash_app_specific
-source ~/.bash_machines
-source ~/.bash_aliases
+if [ -f ~/.svn_bash_completion ]; then
+    . ~/.svn_bash_completion
+fi
+if [ -f ~/.django_bash_completion]; then
+    . ~/.django_bash_completion
+fi
+if [ -f ~/.bash_app_specific]; then
+    . ~/.bash_app_specific
+fi
+if [ -f ~/.bash_machines]; then
+    . ~/.bash_machines
+fi
+if [ -f ~/.bash_aliases]; then
+    . ~/.bash_aliases
+fi

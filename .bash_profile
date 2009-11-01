@@ -18,8 +18,6 @@ else
     eval `ssh-agent | tee ~/.agent.env`
     ssh-add
 fi
-
- 
  
 # Path ------------------------------------------------------------
 if [ "$OS" = "darwin" ] ; then
@@ -41,8 +39,6 @@ echo -e "Kernel Information: " `uname -smr`
 #echo -e "${COLOR_BROWN}`bash --version`"
 echo -ne "${COLOR_GRAY}Uptime: "; uptime
 echo -ne "${COLOR_GRAY}Server time is: "; date
- 
- 
  
 # Notes: ----------------------------------------------------------
 # When you start an interactive shell (log in, open terminal or iTerm in OS X,
