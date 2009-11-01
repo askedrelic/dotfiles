@@ -226,7 +226,10 @@ autocmd FileType css set smartindent
 
 " for HTML, generally format text, but if a long line has been created leave it
 " alone when editing:
-autocmd FileType html set formatoptions+=tl
+autocmd FileType xhtml set formatoptions+=l
+autocmd FileType xhtml set formatoptions-=t
+autocmd FileType djangohtml set formatoptions+=l
+autocmd FileType djangohtml set formatoptions-=t
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
