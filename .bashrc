@@ -55,6 +55,10 @@ export LC_ALL=C
 export LANGUAGE=en_US
 export EDITOR="vim"
 
+# include dotfiles in globs
+# (to make `mv *` include them)
+shopt -s dotglob
+
 # Prompts ----------------------------------------------------------------------- 
 #PS1="\h:\W\$ "
 export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
