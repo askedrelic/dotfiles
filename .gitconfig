@@ -2,11 +2,24 @@
 	email = askedrelic@gmail.com
 	name = "Matt Behrens"
 [color]
-        pager = true
-        ui = auto
-
+    pager = true
+    ui = auto
 [alias]
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-    mylg = log -M --summary --stat --date=relative --abbrev-commit
     st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    who = shortlog -s --
+
+    #log
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    flg = log -M --summary --stat --date=relative --abbrev-commit
+    plg = log -p
+
+    #diff
+    changes=diff --name-status -r
+    diffstat=diff --stat -r
     last  = cat-file commit HEAD
+[pack]
+	threads = 0

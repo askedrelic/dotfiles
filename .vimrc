@@ -1,3 +1,8 @@
+"Vim file is organized into
+" 1. Vim Settings (many subcategories)
+" 2. Aliases and key functions
+" 3. Plugins
+
 " -----------------------------------------------------------------------------
 " | VIM Settings                                                              |
 " -----------------------------------------------------------------------------
@@ -6,11 +11,11 @@ set nocompatible
 " first clear any existing autocommands:
 autocmd!
 
+" Restore the screen when we're exiting and set correct terminal
 behave xterm
 if &term == "xterm"
     let &term = "xtermc"
 
-    " Restore the screen when we're exiting
     set rs
     set t_ti= 7 [r [?47h 
     set t_te= [?47l 8
@@ -21,6 +26,7 @@ endif
 " highlight
 set viminfo=/50,'50,h
 
+" Custom status line
 set statusline=   " clear the statusline for when vimrc is reloaded
 set statusline+=%f\                          " file name
 set statusline+=%h%m%r%w                     " flags
@@ -110,11 +116,12 @@ set showcmd
 
 " Bash tab style completion is awesome
 set wildmode=longest,list  
-" wildchar  the char used for "expansion" on the command line default value is
+" wildchar-the char used for "expansion" on the command line default value is
 " "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
-
+" ignore these files when completing
 set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,*.java.html,*.cgi.html,*.html.html,.viminfo,*.pdf
+
 " shortmess: shorten messages where possible, especially to stop annoying
 " 'already open' messages!  
 " set shortmess=atIAr
@@ -122,6 +129,7 @@ set shortmess=flnrxoOItTA
 
 " Windows *********************************************************************
 set splitbelow splitright
+"
 " don't always keep windows at equal size (for minibufexplorer)
 set noequalalways       
  
@@ -209,20 +217,20 @@ au BufNewFile,BufRead *.inc         setf php
 au BufNewFile,BufRead *.pl,*.pm,*.t setf perl
 
 " For C-like programming, have automatic indentation:
-autocmd FileType c,cpp,slang        set cindent
+au FileType c,cpp,slang        set cindent
 
 " for actual C (not C++) programming where comments have explicit end
 " characters, if starting a new line in the middle of a comment automatically
 " insert the comment leader characters:
-autocmd FileType c set formatoptions+=ro
+au FileType c set formatoptions+=ro
 
 " for Perl programming, have things in braces indenting themselves:
-autocmd FileType perl set smartindent
+au FileType perl set smartindent
 
-autocmd FileType python set formatoptions-=t
+au FileType python set formatoptions-=t
 
 " for CSS, also have things in braces indented:
-autocmd FileType css set smartindent
+au FileType css set smartindent
 
 " for HTML, generally format text, but if a long line has been created leave it
 " alone when editing:
@@ -246,7 +254,6 @@ function! SetCursorPosition()
   end
 endfunction
 
-
 " Redraw *********************************************************************
 " lazyredraw: do not update screen while executing macros
 "set lazyredraw 
@@ -255,7 +262,9 @@ set ttyfast
 " ttyscroll: redraw instead of scrolling
 "set ttyscroll=0
 
-" Aliases        *************************************************************
+" -----------------------------------------------------------------------------
+" | Aliases and custom key functions                                          |
+" -----------------------------------------------------------------------------
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
 imap jj <Esc>
 
@@ -291,7 +300,7 @@ map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-L> <C-W>l
 
-" this might replace all of this http://www.vim.org/scripts/script.php?script_id=1643
+" discussion of different tab functions http://www.vim.org/scripts/script.php?script_id=1643
 " Remap TAB to keyword completion
 function! InsertTabWrapper(direction)
   let col = col('.') - 1
@@ -429,7 +438,7 @@ nnoremap \r :e!<CR>
 nmap \s :source $MYVIMRC<CR>
 nmap \v :e $MYVIMRC<CR>
 
-"show indent stuff
+"show indent settings
 nmap \I :verbose set ai? cin? cink? cino? si? inde? indk? formatoptions?<CR>
 
 "replace all tabs with 4 spaces
@@ -446,6 +455,7 @@ function! HandleURI()
   endif
 endfunction
 map <Leader>o :call HandleURI()<CR>
+
 " Custom text inserts *********************************************************
 "insert THE time!
 nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
