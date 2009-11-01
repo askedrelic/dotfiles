@@ -27,8 +27,11 @@ OUT[11]=`ls ~/.bash_log*`
 for ((i=1; i<=${#OUT[@]}; i++))
     do 
         # echo ${OUT[$i]}
-        cp -r -v -f ${OUT[$i]} ${out_folder}
+        cp -R -v -f ${OUT[$i]} ${out_folder}
     done
+
+#rename vimrc for github highlighting
+mv $out_folder/.vimrc $out_folder/.vimrc.vim
 
 #copy bin/ specific files
 OUT[12]=`ls ~/bin/colors`
@@ -41,5 +44,5 @@ OUT[17]=`ls ~/bin/svnvimdiff`
 for ((i=12; i<=${#OUT[@]}; i++))
     do 
         # echo ${OUT[$i]}
-        cp -r -v -f ${OUT[$i]} ${out_folder}/bin
+        cp -R -v -f ${OUT[$i]} ${out_folder}/bin
     done
