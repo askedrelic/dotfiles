@@ -1,0 +1,35 @@
+# ignore common files not needed under revision control
+var
+.bash_history
+.rnd
+.viminfo
+*.pyc
+*.swp
+.gitconfig
+ 
+# ignore sensitive files
+.ssh
+ 
+# ignore OS X stuff
+._*
+.DS_Store
+.Trash
+.MacOSX
+.subversion
+Applications/
+Desktop/
+Documents/
+Downloads/
+Library/
+Movies/
+Music/
+Pictures/
+Projects/
+Public/
+Sites/
+Sources/
+Code/
+ 
+# ignore anything else
+.gem
+ 
