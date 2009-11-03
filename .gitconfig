@@ -1,9 +1,11 @@
 [user]
-	email = askedrelic@gmail.com
-	name = "Matt Behrens"
+    email = askedrelic@gmail.com
+    name = "Matt Behrens"
 [color]
     pager = true
     ui = auto
+[core]
+    excludesfile = /home/askedrelic/.gitignore
 [alias]
     st = status
     ci = commit
@@ -13,7 +15,7 @@
     who = shortlog -s --
 
     #log
-	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
     flg = log -M --summary --stat --date=relative --abbrev-commit
     plg = log -p
 
@@ -22,4 +24,4 @@
     diffstat=diff --stat -r
     last  = cat-file commit HEAD
 [pack]
-	threads = 0
+    threads = 0
