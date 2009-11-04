@@ -4,20 +4,35 @@
 [color]
     pager = true
     ui = auto
+  [color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+  [color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+  [color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
 [core]
     excludesfile = /home/askedrelic/.gitignore
+    autocrlf = true
+    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 [alias]
     st = status
     ci = commit
     br = branch
     co = checkout
     df = diff
-    who = shortlog -s --
 
     #log
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-    flg = log -M --summary --stat --date=relative --abbrev-commit
-    plg = log -p
+    logstat = log -M --summary --stat --date=relative --abbrev-commit
+    logpatch = log -p --date=relative --abbrev-commit
 
     #diff
     changes=diff --name-status -r
@@ -25,3 +40,5 @@
     last  = cat-file commit HEAD
 [pack]
     threads = 0
+[branch]
+    autosetupmerge = true

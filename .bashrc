@@ -50,6 +50,8 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 export PAGER=/usr/bin/less
+#fix color/control character issues with git
+export LESS="-ErX"
 # Make perl localization work
 export LC_ALL=C
 export LANGUAGE=en_US
