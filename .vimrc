@@ -29,18 +29,17 @@ set viminfo=/50,'50,h
 " Custom status line
 set statusline=   " clear the statusline for when vimrc is reloaded
 set statusline+=%f\                          " file name
-set statusline+=%h%m%r%w                     " flags
 set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
 set statusline+=%{&fileformat}]              " file format
-set statusline+=%=      "left/right separator
+set statusline+=%h%m%r%w                     " flags
+set statusline+=%=                           "left/right separator
 " set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
-set statusline+=%b,0x%-8B\      " current char
-set statusline+=%c,%l/ "cursor column/total lines
-set statusline+=%L\ %P "total lines/percentage in file
+set statusline+=%b,0x%-6B                    " current char
+set statusline+=%c,%l/                       "cursor column/total lines
+set statusline+=%L\ %P                       "total lines/percentage in file
 
-" this allows you to have multiple files open at once and change between them
-" without saving
+" allow you to have multiple files open and change between them without saving
 set hidden
 "make backspace work
 set backspace=indent,eol,start
@@ -48,7 +47,7 @@ set backspace=indent,eol,start
 set number 
 " Show matching brackets.
 set showmatch              
-" have % bounce between angled brackets, as well as t'other kinds:
+" have % bounce between angled brackets, as well as other kinds:
 set matchpairs+=<:>
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
 " This being the 21st century, I use Unicode
@@ -133,10 +132,6 @@ set splitbelow splitright
 " don't always keep windows at equal size (for minibufexplorer)
 set noequalalways       
  
-"Vertical split then hop to new buffer
-":noremap ,v :vsp^M^W^W<cr>
-":noremap ,h :split^M^W^W<cr>
-
 " Cursor highlights ***********************************************************
 set cursorline
 "set cursorcolumn
@@ -147,6 +142,7 @@ set hlsearch
 " make searches case-insensitive, unless they contain upper-case letters:
 set ignorecase
 set smartcase
+
 " show the `best match so far' as search strings are typed:
 set incsearch
 " assume the /g flag on :s substitutions to replace all matches in a line:
@@ -234,10 +230,10 @@ au FileType css set smartindent
 
 " for HTML, generally format text, but if a long line has been created leave it
 " alone when editing:
-autocmd FileType xhtml set formatoptions+=l
-autocmd FileType xhtml set formatoptions-=t
-autocmd FileType djangohtml set formatoptions+=l
-autocmd FileType djangohtml set formatoptions-=t
+au FileType xhtml set formatoptions+=l
+au FileType xhtml set formatoptions-=t
+au FileType djangohtml set formatoptions+=l
+au FileType djangohtml set formatoptions-=t
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -245,7 +241,7 @@ set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.i
 
 "jump to last cursor position when opening a file
 "dont do it when writing a commit log entry
-autocmd BufReadPost * call SetCursorPosition()
+au BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
   if &filetype !~ 'commit\c'
     if line("'\"") > 0 && line("'\"") <= line("$")
@@ -253,6 +249,13 @@ function! SetCursorPosition()
     endif
   end
 endfunction
+
+" tell complete to look in the dictionary
+set complete-=k complete+=k
+
+" if problems, check here
+" http://vim.wikia.com/wiki/Completion_using_a_syntax_file
+au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
 " Redraw *********************************************************************
 " lazyredraw: do not update screen while executing macros
@@ -274,7 +277,6 @@ imap jj <Esc>
 noremap <Space> <PageDown>
 " noremap - <PageUp>
 
-" [<Space> by default is like l, <BkSpc> like h, and - like k.]
 " have <F1> prompt for a help topic, rather than displaying the introduction
 " page, and have it do this from any mode:
 nnoremap <F1> :help<Space>
@@ -300,11 +302,16 @@ map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-L> <C-W>l
 
-" discussion of different tab functions http://www.vim.org/scripts/script.php?script_id=1643
-" Remap TAB to keyword completion
+" discussion of different tab functions
+" http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
+
+" Remap TAB to keyword completion and indenting. The tab key is a still a work
+" in progress.
 function! InsertTabWrapper(direction)
-  let col = col('.') - 1
-  if !col || strpart(getline('.'), col-1, col) =~ '\s'     
+  " alternate line checking
+  "" let col = col('.') - 1
+  " if !col || strpart(getline('.'), col-1, col) =~ '\s'     
+  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
     return "\<tab>"
   elseif "forward" == a:direction
     return "\<c-n>"
@@ -315,40 +322,34 @@ function! InsertTabWrapper(direction)
   endif
 endfunction
 
-inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
-inoremap <S-Tab> <c-r>=InsertTabWrapper ("backward")<CR>
-inoremap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
-
-" toggle tab completion
-function! ToggleTabCompletion()
-  if mapcheck("\<tab>", "i") != ""
-    iunmap <tab>
-    iunmap <s-tab>
-    iunmap <c-tab>
-    echo "tab completion off"
-  else
-    imap <tab> <c-n>
-    imap <s-tab> <c-p>
-    imap <c-tab> <c-x><c-l>
-    echo "tab completion on"
-  endif
-endfunction
-map <Leader>tc :call ToggleTabCompletion()<CR>
-
-" tell complete to look in the dictionary
-set complete-=k complete+=k
-
-" load the dictionary according to syntax
-" au BufReadPost * if exists("b:current_syntax")
-" au BufReadPost * let &dictionary = substitute("C:\\vim\\vimfiles\\dict\\FT.dict", "FT", b:current_syntax, "")
-" au BufReadPost * endif
-
-" inoremap <Tab> <C-T>
-" inoremap <S-Tab> <C-D>
 " [<Ctrl>+V <Tab> still inserts an actual tab character.]
+inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
+imap <S-Tab> <C-D>
+" imap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
 
+"change tab of current line in normal mode
+nnoremap <Tab> :><CR>
+nnoremap <S-Tab> :<<CR>
+
+"Change tab of selected lines while in visual mode
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
+
+" toggle tab completion
+" function! ToggleTabCompletion()
+"   if mapcheck("\<tab>", "i") != ""
+"     iunmap <tab>
+"     iunmap <s-tab>
+"     iunmap <c-tab>
+"     echo "tab completion off"
+"   else
+"     imap <tab> <c-n>
+"     imap <s-tab> <c-p>
+"     imap <c-tab> <c-x><c-l>
+"     echo "tab completion on"
+"   endif
+" endfunction
+" map <Leader>tc :call ToggleTabCompletion()<CR>
 
 " insert new line without going into insert mode
 nnoremap - :put=''<CR>
@@ -458,6 +459,7 @@ map <Leader>o :call HandleURI()<CR>
 
 " Custom text inserts *********************************************************
 "insert THE time!
+"TODO move this into some kind of autotext complete thing
 nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
 imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
@@ -478,7 +480,7 @@ let Tlist_Display_Prototype = 0
 " Remove extra information and blank lines from the taglist window.
 let Tlist_Compart_Format = 1 
 " Show tag scope next to the tag name.
-let Tlist_Display_Tag_Scope = 1 
+let Tlist_Display_Tag_Scope = 1
 let Tlist_WinWidth = 40
 " Show only current file
 let Tlist_Show_One_File = 1
