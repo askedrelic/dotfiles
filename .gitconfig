@@ -19,8 +19,7 @@
     changed = green
     untracked = cyan
 [core]
-    excludesfile = /home/askedrelic/.gitignore
-    whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	excludesfile = !sh echo ~/.gitconfig
 [alias]
     st = status
     ci = commit
