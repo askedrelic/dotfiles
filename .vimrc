@@ -17,7 +17,7 @@ if &term == "xterm"
     let &term = "xtermc"
 
     set rs
-    set t_ti= 7 [r [?47h 
+    set t_ti= 7 [r [?47h
     set t_te= [?47l 8
 endif
 
@@ -27,7 +27,7 @@ endif
 set viminfo=/50,'50,h
 
 " Custom status line
-set statusline=   " clear the statusline for when vimrc is reloaded
+set statusline=                              " clear the statusline for when vimrc is reloaded
 set statusline+=%f\                          " file name
 set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
 set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
@@ -44,28 +44,28 @@ set hidden
 "make backspace work
 set backspace=indent,eol,start
 " Show line numbers
-set number 
+set number
 " Show matching brackets.
-set showmatch              
+set showmatch
 " have % bounce between angled brackets, as well as other kinds:
 set matchpairs+=<:>
 set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
 " This being the 21st century, I use Unicode
-set encoding=utf-8         
+set encoding=utf-8
 " Don't keep a backup file
-set nobackup               
+set nobackup
 " keep 100 lines of command line history
-set history=100            
+set history=100
 " Automatically save before commands like :next and :make
-set autowrite              
-" report: show a report when N lines were changed. 0 means 'all' 
-set report=0               
+set autowrite
+" report: show a report when N lines were changed. 0 means 'all'
+set report=0
 " runtimepath: list of dirs to search for runtime files
-set runtimepath+=~/.vim    
+set runtimepath+=~/.vim
 " Like File Explorer, preview window height is 8
-set previewheight=8        
+set previewheight=8
 " always show status line
-set ls=2            
+set ls=2
 "
 " when using list, keep tabs at their full width and display `arrows':
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
@@ -82,7 +82,7 @@ function! Tabstyle_tabs()
   set tabstop=4
   set noexpandtab
 endfunction
- 
+
 function! Tabstyle_spaces()
   " Use 2 spaces
   set softtabstop=2
@@ -92,7 +92,7 @@ function! Tabstyle_spaces()
 endfunction
 
 " Tabs should be converted to a group of 4 spaces.
-" indent length with < > 
+" indent length with < >
 set shiftwidth=4
 set tabstop=4
 "Insert spaces for tabs
@@ -103,18 +103,18 @@ set shiftround
 " Scrollbars/Status ***********************************************************
 set sidescrolloff=2
 " top bottom scroll off
-set scrolloff=2 
+set scrolloff=2
 " set numberwidth=4
 " show in title bar
-set title  
+set title
 " show the cursor position all the time
-set ruler  
+set ruler
 " display the current mode and partially-typed commands in the status line:
 set showmode
 set showcmd
 
 " Bash tab style completion is awesome
-set wildmode=longest,list  
+set wildmode=longest,list
 " wildchar-the char used for "expansion" on the command line default value is
 " "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
@@ -122,7 +122,7 @@ set wildchar=<TAB>
 set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,*.java.html,*.cgi.html,*.html.html,.viminfo,*.pdf
 
 " shortmess: shorten messages where possible, especially to stop annoying
-" 'already open' messages!  
+" 'already open' messages!
 " set shortmess=atIAr
 set shortmess=flnrxoOItTA
 
@@ -130,15 +130,15 @@ set shortmess=flnrxoOItTA
 set splitbelow splitright
 "
 " don't always keep windows at equal size (for minibufexplorer)
-set noequalalways       
- 
+set noequalalways
+
 " Cursor highlights ***********************************************************
 set cursorline
 "set cursorcolumn
 
 " Searching *******************************************************************
 " highlight search
-set hlsearch 
+set hlsearch
 " make searches case-insensitive, unless they contain upper-case letters:
 set ignorecase
 set smartcase
@@ -148,7 +148,7 @@ set incsearch
 " assume the /g flag on :s substitutions to replace all matches in a line:
 set gdefault
 " hide mouse on search
-set mousehide 
+set mousehide
 
 " Colors **********************************************************************
 syntax on
@@ -164,7 +164,7 @@ else
 endif
 
 " Omni Completion *************************************************************
-" set ofu=syntaxcomplete#Complete 
+" set ofu=syntaxcomplete#Complete
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -177,7 +177,7 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 " don't make it look like there are line breaks where there aren't:
 set nowrap
 " Wrap at word
-set linebreak 
+set linebreak
 
 " have the h and l cursor keys wrap between lines (like <Space> and <BkSpc> do
 " by default), and ~ covert case over line breaks; also have the cursor keys
@@ -205,7 +205,7 @@ au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
 au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
 " we couldn't care less about html
-au BufNewFile,BufRead *.html        setf xhtml 
+au BufNewFile,BufRead *.html        setf xhtml
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
 au BufNewFile,BufRead *.module      setf php
@@ -259,8 +259,8 @@ au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'
 
 " Redraw *********************************************************************
 " lazyredraw: do not update screen while executing macros
-"set lazyredraw 
-" ttyfast: are we using a fast terminal? Let's try it for a while. 
+"set lazyredraw
+" ttyfast: are we using a fast terminal? Let's try it for a while.
 set ttyfast
 " ttyscroll: redraw instead of scrolling
 "set ttyscroll=0
@@ -287,7 +287,7 @@ map! <F1> <C-C><F1>
 "trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
 map <Esc>[Z <s-tab>
 ounmap <Esc>[Z
-                
+
 " use <Ctrl>+N/<Ctrl>+P to cycle through files:
 " [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
 nnoremap <C-N> :bn<CR>
@@ -310,7 +310,7 @@ map <C-L> <C-W>l
 function! InsertTabWrapper(direction)
   " alternate line checking
   "" let col = col('.') - 1
-  " if !col || strpart(getline('.'), col-1, col) =~ '\s'     
+  " if !col || strpart(getline('.'), col-1, col) =~ '\s'
   if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
     return "\<tab>"
   elseif "forward" == a:direction
@@ -353,7 +353,7 @@ vnoremap <S-Tab> <gv
 
 " insert new line without going into insert mode
 nnoremap - :put=''<CR>
-nnoremap + :put!=''<CR> 
+nnoremap + :put!=''<CR>
 
 " have Q reformat the current paragraph (or selected text if there is any):
 nnoremap Q gqap
@@ -385,7 +385,7 @@ function! ToggleWrap()
     echo "Wrap OFF"
     setlocal nowrap
     set virtualedit=all
-    silent! nunmap <buffer> k 
+    silent! nunmap <buffer> k
     silent! nunmap <buffer> j
     silent! nunmap <buffer> 0
     silent! nunmap <buffer> $
@@ -443,7 +443,7 @@ nmap \v :e $MYVIMRC<CR>
 nmap \I :verbose set ai? cin? cink? cino? si? inde? indk? formatoptions?<CR>
 
 "replace all tabs with 4 spaces
-map \ft :%s/	/    /g<CR> 
+map \ft :%s/	/    /g<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
@@ -469,16 +469,16 @@ imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 "Taglist
 map \a :TlistToggle<CR>
 " Jump to taglist window on open.
-let Tlist_GainFocus_On_ToggleOpen = 1 
+let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_OnSelect=1
 " if you are the last window, kill yourself
-let Tlist_Exist_OnlyWindow = 1 
+let Tlist_Exist_OnlyWindow = 1
 " sort by order or name
-let Tlist_Sort_Type = "order" 
+let Tlist_Sort_Type = "order"
 " do not show prototypes and not tags in the taglist window.
-let Tlist_Display_Prototype = 0 
+let Tlist_Display_Prototype = 0
 " Remove extra information and blank lines from the taglist window.
-let Tlist_Compart_Format = 1 
+let Tlist_Compart_Format = 1
 " Show tag scope next to the tag name.
 let Tlist_Display_Tag_Scope = 1
 let Tlist_WinWidth = 40
