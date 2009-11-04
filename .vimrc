@@ -2,20 +2,20 @@
 " 1. Vim Settings (many subcategories)
 " 2. Aliases and key functions
 " 3. Plugins
-
+"
 " -----------------------------------------------------------------------------
 " | VIM Settings                                                              |
 " -----------------------------------------------------------------------------
 set nocompatible
-
+ 
 " first clear any existing autocommands:
 autocmd!
-
+ 
 " Restore the screen when we're exiting and set correct terminal
 behave xterm
 if &term == "xterm"
     let &term = "xtermc"
-
+ 
     set rs
     set t_ti= 7 [r [?47h
     set t_te= [?47l 8
