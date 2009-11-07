@@ -11,7 +11,7 @@ var
 .ssh
  
 # ignore OS X stuff
-._*
+*._*
 .DS_Store
 .Trash
 .MacOSX

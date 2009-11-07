@@ -29,7 +29,7 @@ bind ' ' windowlist -b
 # ------------------------------------------------------------------------------
 # TERMINAL SETTINGS
 # ------------------------------------------------------------------------------
-caption always "%{= kc}%H (system load: %l)%-21=%{= .m}%D %d.%m.%Y %0c"
+caption always "%{= w}%-w%{= Bk} %n %t %{-}%+w %-="
 hardstatus on
 hardstatus alwayslastline
 

@@ -19,7 +19,7 @@
     changed = green
     untracked = cyan
 [core]
-	excludesfile = !sh echo ~/.gitconfig
+	excludesfile = /home/askedrelic/.gitignore
 [alias]
     st = status
     ci = commit
