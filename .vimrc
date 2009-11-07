@@ -21,6 +21,7 @@ if &term == "xterm"
     set t_te= [?47l 8
 endif
 
+
 " General *********************************************************************
 " save last 50 search history items, last 50 edit marks, don't remember search
 " highlight
@@ -66,7 +67,9 @@ set runtimepath+=~/.vim
 set previewheight=8
 " always show status line
 set ls=2
-"
+" Turn off bell, this could be more annoying, but I'm not sure how
+set vb t_vb= 
+
 " when using list, keep tabs at their full width and display `arrows':
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
 execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
@@ -75,30 +78,24 @@ execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
 au CursorHold * checktime
 
 " Tabs **********************************************************************
+
 function! Tabstyle_tabs()
-  " Using 4 column tabs
-  set softtabstop=4
-  set shiftwidth=4
-  set tabstop=4
-  set noexpandtab
+    " Using 4 column tabs
+    set softtabstop=4
+    set shiftwidth=4
+    set tabstop=4
+    set noexpandtab
 endfunction
 
 function! Tabstyle_spaces()
-  " Use 2 spaces
-  set softtabstop=2
-  set shiftwidth=2
-  set tabstop=2
-  set expandtab
+    " Use 4 spaces
+    set softtabstop=4
+    set shiftwidth=4
+    set tabstop=4
+    set expandtab
 endfunction
-
-" Tabs should be converted to a group of 4 spaces.
-" indent length with < >
-set shiftwidth=4
-set tabstop=4
-"Insert spaces for tabs
-set smarttab
-set expandtab
-set shiftround
+ 
+call Tabstyle_spaces()
 
 " Scrollbars/Status ***********************************************************
 set sidescrolloff=2
@@ -139,10 +136,10 @@ set cursorline
 " Searching *******************************************************************
 " highlight search
 set hlsearch
-" make searches case-insensitive, unless they contain upper-case letters:
+" make searches case-insensitive
 set ignorecase
+"unless they contain upper-case letters:
 set smartcase
-
 " show the `best match so far' as search strings are typed:
 set incsearch
 " assume the /g flag on :s substitutions to replace all matches in a line:
@@ -324,7 +321,7 @@ endfunction
 
 " [<Ctrl>+V <Tab> still inserts an actual tab character.]
 inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
-imap <S-Tab> <C-D>
+inoremap <S-Tab> <C-D>
 " imap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
 
 "change tab of current line in normal mode
@@ -352,8 +349,10 @@ vnoremap <S-Tab> <gv
 " map <Leader>tc :call ToggleTabCompletion()<CR>
 
 " insert new line without going into insert mode
-nnoremap - :put=''<CR>
-nnoremap + :put!=''<CR>
+nnoremap <S-Enter> :put!=''<CR>
+nnoremap <Enter> o<ESC>
+" set fo-=r " do not insert a comment leader after an enter, (no work, fix!!)
+
 
 " have Q reformat the current paragraph (or selected text if there is any):
 nnoremap Q gqap
@@ -416,6 +415,9 @@ function! ToggleWrap()
     inoremap <buffer> <silent> <End>  <C-o>g<End>
   endif
 endfunction
+
+"ctrl+i is getting rebound by something, not sure why, but this fixes
+noremap <C-I> <C-I>
 
 " toggle showbreak for long lines
 function! TYShowBreak()

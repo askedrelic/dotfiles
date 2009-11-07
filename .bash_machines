@@ -15,3 +15,5 @@ alias asktherelic-mysql="ssh -L 3306:localhost:3306 askedrelic@asktherelic.com"
 alias blueballs="ssh mattb@bluebrick.se.rit.edu"
 
 alias shackwiki.com="ssh shackfaq@shackwiki.com"
+
+alias windturbine="ssh user@129.21.50.216"

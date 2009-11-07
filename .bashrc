@@ -29,8 +29,8 @@ export HISTCONTROL=ignoreboth
 shopt -s histappend
 # Whenever displaying the prompt, reload history and write the previous line to disk:
 export PROMPT_COMMAND='history -n;history -a'
-export HISTIGNORE="ls:l:cd:p:[bf]g:exit"
-export HISTSIZE=30000
+export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:....."
+export HISTSIZE=15000
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
 # Concatenate multi-line commands
 shopt -s cmdhist
@@ -90,3 +90,4 @@ source ~/.django_bash_completion
 source ~/.bash_app_specific
 source ~/.bash_machines
 source ~/.bash_aliases
+source ~/.bash_help

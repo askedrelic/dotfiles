@@ -12,7 +12,9 @@ fi
 
 # History ----------------------------------------------------------------------------------------------
 alias h='history | tail -n 30'
-alias hf='history | G'
+hf(){
+  grep "$@" ~/.bash_history
+}
 
 # Navigation ----------------------------------------------------------------------------------------------
 cl() { cd $1; ls -la; }
@@ -51,6 +53,7 @@ cdf ()
     cd "$currFolderPath"
 }
 
+alias v=vim
 alias vi=vim
 alias vim=vim
 alias mate="mate -d"
@@ -59,6 +62,7 @@ alias mate="mate -d"
 alias grep="egrep --color"
 alias egrep='egrep --color'
 alias G="grep"
+alias f='find . -iname'
 
 gns(){ # Case insensitive, excluding svn folders
       find . -path '*/.svn' -prune -o -type f -print0 | xargs -0 grep -I -n -e "$1"
@@ -66,6 +70,9 @@ gns(){ # Case insensitive, excluding svn folders
 
 # Other aliases ----------------------------------------------------------------------------------------------
 #alias rm="rm -i"
+alias namoroka="/Applications/firefox/Namoroka.app/Contents/MacOS/firefox-bin -P namorka > /dev/null 2>&1 &"
+alias shiretoko="/Applications/firefox/Shiretoko.app/Contents/MacOS/firefox-bin -P default > /dev/null 2>&1 &"
+alias df='df -h' # Show disk usage
 alias m='more'
 alias paux="ps aux|grep -i"
 alias c="clear"
@@ -81,6 +88,7 @@ alias wget="wget -c"
 alias py="python"
 alias pine=alpine
 alias rscreen="screen -R"
+alias untar="tar xvzf"
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
@@ -92,3 +100,5 @@ alias simpletree="ls -R | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 alias openapps='lsof -P -i -n'
 alias path="tr : '\n' <<<$PATH"
+
+alias cp_folder="cp -Rpv" #copies folder and all sub files and folders, preserving security and dates
