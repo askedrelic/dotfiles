@@ -27,8 +27,12 @@
     co = checkout
     df = diff
 
-    #log
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    #simple log with branches
+    #git 1.5
+    lg = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%an, %cr)%Creset' --abbrev-commit --date=relative
+    #git 1.6
+    #lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %an %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
     logstat = log -M --summary --stat --date=relative --abbrev-commit
     logpatch = log -p --date=relative --abbrev-commit
 
