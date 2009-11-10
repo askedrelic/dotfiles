@@ -155,7 +155,15 @@ if has("gui_running")
     set transparency=6    " Barely transparent
     let moria_style = 'black'
     colo moria
-    set lines=73 columns=260
+    set lines=73 columns=263
+    " Turn off the button bar in gvim
+    set guioptions-=T
+    set guioptions-=m
+    " No scrollbars
+    set guioptions-=r
+    set guioptions-=l
+    set guioptions-=R
+    set guioptions-=L
 else
     colorscheme ir_black
 endif
@@ -232,15 +240,19 @@ au FileType xhtml set formatoptions-=t
 au FileType djangohtml set formatoptions+=l
 au FileType djangohtml set formatoptions-=t
 
+" Keep comments indented
+inoremap # #
+
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 "jump to last cursor position when opening a file
-"dont do it when writing a commit log entry
-au BufReadPost * call SetCursorPosition()
+"dont do it when writing a svn commit log entry
+"TODO do this for git commits?
+autocmd BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
-  if &filetype !~ 'commit\c'
+  if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
     if line("'\"") > 0 && line("'\"") <= line("$")
      exe "normal g`\""
     endif
@@ -501,8 +513,8 @@ if !exists('g:FuzzyFinderOptions')
     let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
     let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
 endif
-let g:fuzzy_matching_limit = 60
-let g:fuzzy_ceiling = 50000
+let g:fuzzy_matching_limit = 50
+let g:fuzzy_ceiling = 10000
 let g:fuzzy_ignore = "*.log;*.pyc;*.svn;"
 map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>

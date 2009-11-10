@@ -1,3 +1,7 @@
+# Bashrc
+# Settings for bash only.
+# File imports at the bottom.
+
 #Colors ------------------------------------------------------------
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
@@ -69,21 +73,10 @@ export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 # export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path, for root, need condition to use this for root
 # export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with user, host, and path
  
-# This runs before the prompt and sets the title of the xterm* window. If you set the title in the prompt
-# weird wrapping errors occur on some systems, so this method is superior
-# export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*} ${PWD}"; echo -ne "\007"' # user@host path
-# Is this overriding prompt history command?
- 
 export PS2='> ' # Secondary prompt
 export PS3='#? ' # Prompt 3
 export PS4='+' # Prompt 4
  
-function xtitle { # change the title of your xterm* window
-  unset PROMPT_COMMAND
-  echo -ne "\033]0;$1\007"
-}
-
-
 # Other files ----------------------------------------------------------------------------------------------
 source ~/.svn_bash_completion
 source ~/.django_bash_completion
