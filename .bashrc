@@ -25,12 +25,11 @@ export COLOR_BROWN='\033[0;33m'
 export COLOR_YELLOW='\033[1;33m'
 export COLOR_GRAY='\033[1;30m'
 export COLOR_LIGHT_GRAY='\033[0;37m'
+NC=$COLOR_NC
 alias colorslist="set | egrep 'COLOR_\w*'" # lists all the colors
 
 # History -----------------------------------------------------------------------
 export HISTCONTROL=ignoreboth
-# Append to the history, rather than overwriting it
-shopt -s histappend
 # Whenever displaying the prompt, reload history and write the previous line to disk:
 export PROMPT_COMMAND='history -n;history -a'
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:....."
@@ -38,6 +37,8 @@ export HISTSIZE=15000
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
 # Concatenate multi-line commands
 shopt -s cmdhist
+# Append to the history, rather than overwriting it
+shopt -s histappend histreedit histverify
 
 # Misc -------------------------------------------------------------------------
 #single tab auto-completition
@@ -46,9 +47,19 @@ set show-all-if-ambiguous on
 set completion-ignore-case on
 #auto-completion shows stats similiar to ls -F
 shopt -s cdspell
-set visible-stats on
 # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize  
+# Necessary for programmable completion.
+shopt -s extglob
+shopt -s sourcepath
+shopt -s no_empty_cmd_completion
+shopt -s cdable_vars
+shopt -s checkhash
+# include dotfiles in globs
+# (to make `mv *` include them)
+shopt -s dotglob
+
+set visible-stats on
 # Turn on advanced bash completion if the file exists (get it here: http://www.caliban.org/bash/index.shtml#completion)
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
@@ -61,9 +72,7 @@ export LC_ALL=C
 export LANGUAGE=en_US
 export EDITOR="vim"
 
-# include dotfiles in globs
-# (to make `mv *` include them)
-shopt -s dotglob
+export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
 # Prompts ----------------------------------------------------------------------- 
 #PS1="\h:\W\$ "
@@ -76,7 +85,7 @@ export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 export PS2='> ' # Secondary prompt
 export PS3='#? ' # Prompt 3
 export PS4='+' # Prompt 4
- 
+
 # Other files ----------------------------------------------------------------------------------------------
 source ~/.svn_bash_completion
 source ~/.django_bash_completion
