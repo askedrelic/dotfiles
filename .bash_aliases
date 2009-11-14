@@ -48,6 +48,7 @@ alias lu='ls -ltur'        # sort by and show access time, most recent last
 alias lt='ls -ltr'         # sort by date, most recent last
 alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
+alias l="la"
 
 function ll(){ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| \
                 egrep -v "^d|total "; }
