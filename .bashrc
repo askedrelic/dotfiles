@@ -43,8 +43,9 @@ shopt -s histappend histreedit histverify
 # Misc -------------------------------------------------------------------------
 #should be in .inputrc but wasn't working.
 #Fixes Ctrl-W to delete properly, following / or _ word boundaries
-stty werase undef
-bind '"\C-w": backward-kill-word'
+#TODO: Fix this, it's not working righ
+# stty werase undef
+# bind '"\C-w": backward-kill-word'
 
 #single tab auto-completition
 set show-all-if-ambiguous on
