@@ -72,7 +72,7 @@ if [ -f /etc/bash_completion ]; then
 fi
 export PAGER=/usr/bin/less
 #fix color/control character issues with git
-export LESS="-ErX"
+export LESS="-r"
 # Make perl localization work
 export LC_ALL=C
 export LANGUAGE=en_US
