@@ -1,16 +1,22 @@
 # ignore common files not needed under revision control
-var
-.bash_history
-.rnd
-.viminfo
 *.pyc
 *.swp
-.gitconfig
+var
+mbox
+.bash_history
+.htoprc
+.vimfuzzyfinder
+.rnd
+.viminfo
+.mysql_history
+.irssi/
+.aptitude/
  
 # ignore sensitive files
 .ssh
+.agent.env
  
-# ignore OS X stuff
+# ignore OSX/linux stuff
 *._*
 .DS_Store
 .Trash
@@ -29,7 +35,9 @@ Public/
 Sites/
 Sources/
 Code/
+code/
+src/
+public_html/
  
 # ignore anything else
 .gem
- 
