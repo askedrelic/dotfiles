@@ -26,10 +26,10 @@ if [ "$OS" = "darwin" ] ; then
 fi
  
 if [ -d ~/bin ]; then
-  export PATH=:~/bin:$PATH # add your bin folder to the path, if you have it. It's a good place to add all your scripts
+  export PATH=~/bin:$PATH # add your bin folder to the path, if you have it. It's a good place to add all your scripts
 fi
 
-export PATH=/usr/local/bin:$PATH:.:/opt/local/bin:/opt/local/sbin
+export PATH=$PATH:.:/usr/sbin:/sbin:/opt/local/bin:/opt/local/sbin
  
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc
