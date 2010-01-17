@@ -209,8 +209,6 @@ au FileType helpfile set nonumber      " no line numbers when viewing help
 au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
 au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
-" we couldn't care less about html
-au BufNewFile,BufRead *.html        setf xhtml
 "Laszlo
 au BufNewFile,BufRead *.lzx         setf lzx
 au BufNewFile,BufRead *.module      setf php
@@ -230,6 +228,9 @@ au FileType perl set smartindent
 
 au FileType python set formatoptions-=t
 
+" we couldn't care less about html
+au BufNewFile,BufRead *.htm,*.html  setf xml
+
 " for CSS, also have things in braces indented:
 au FileType css set smartindent
 
@@ -241,7 +242,7 @@ au FileType djangohtml set formatoptions+=l
 au FileType djangohtml set formatoptions-=t
 
 " Keep comments indented
-inoremap # #
+" inoremap # #
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -293,9 +294,6 @@ vmap <F1> <C-C><F1>
 omap <F1> <C-C><F1>
 map! <F1> <C-C><F1>
 
-"trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
-map <Esc>[Z <s-tab>
-ounmap <Esc>[Z
 
 " use <Ctrl>+N/<Ctrl>+P to cycle through files:
 " [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
@@ -314,6 +312,10 @@ map <C-L> <C-W>l
 " discussion of different tab functions
 " http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
 
+" "trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
+map <Esc>[Z <s-tab>
+ounmap <Esc>[Z
+
 " Remap TAB to keyword completion and indenting. The tab key is a still a work
 " in progress.
 function! InsertTabWrapper(direction)
@@ -331,18 +333,9 @@ function! InsertTabWrapper(direction)
   endif
 endfunction
 
-" [<Ctrl>+V <Tab> still inserts an actual tab character.]
-inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
-inoremap <S-Tab> <C-D>
 " imap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
 
-"change tab of current line in normal mode
-nnoremap <Tab> :><CR>
-nnoremap <S-Tab> :<<CR>
-
-"Change tab of selected lines while in visual mode
-vnoremap <Tab> >gv
-vnoremap <S-Tab> <gv
+"##### TAB BINDINGS AT END DUE TO COMPLICATIONS
 
 " toggle tab completion
 " function! ToggleTabCompletion()
@@ -361,8 +354,8 @@ vnoremap <S-Tab> <gv
 " map <Leader>tc :call ToggleTabCompletion()<CR>
 
 " insert new line without going into insert mode
-nnoremap <S-Enter> :put!=''<CR>
 nnoremap <Enter> o<ESC>
+nnoremap <S-Enter> :put!=''<CR>
 " set fo-=r " do not insert a comment leader after an enter, (no work, fix!!)
 
 
@@ -441,7 +434,7 @@ function! TYShowBreak()
     echo "show break off"
   endif
 endfunction
-nmap  <expr> \tb  TYShowBreak()
+nmap \tb  TYShowBreak()
 
 "clear the fucking search buffer, not just remove the highlight
 map \c :let @/ = ""<CR>
@@ -457,7 +450,7 @@ nmap \v :e $MYVIMRC<CR>
 nmap \I :verbose set ai? cin? cink? cino? si? inde? indk? formatoptions?<CR>
 
 "replace all tabs with 4 spaces
-map \ft :%s/	/    /g<CR>
+" map \ft :%s/	/    /g<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
@@ -469,13 +462,13 @@ function! HandleURI()
    echo "No URI found in line."
   endif
 endfunction
-map <Leader>o :call HandleURI()<CR>
+map \o :call HandleURI()<CR>
 
 " Custom text inserts *********************************************************
 "insert THE time!
 "TODO move this into some kind of autotext complete thing
-nmap <Leader>tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
-imap <Leader>tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
+nmap \tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
+imap \tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
@@ -526,3 +519,18 @@ let g:netrw_list_hide         = '^\.svn.*'
 let g:netrw_menu              = 0
 let g:netrw_silent            = 1
 let g:netrw_special_syntax    = 1
+
+"##### Bind these last because something is fucking up the <Tab> key bindings and I have no clue
+"change tab of current line in normal mode
+ounmap <Tab>
+
+nnoremap <S-Tab> :<<CR>
+nnoremap <Tab> :><CR>
+
+"Change tab of selected lines while in visual mode
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+
+" [<Ctrl>+V <Tab> still inserts an actual tab character.]
+inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
+imap <S-Tab> <C-D>

@@ -75,8 +75,6 @@ cdf ()
 }
 
 # Search ----------------------------------------------------------------------------------------------
-alias grep="egrep --color"
-alias egrep='egrep --color'
 alias G="grep"
 alias f='find . -iname'
 
@@ -93,7 +91,7 @@ alias vim=vim
 alias j='jobs -l'
 alias which='type -a'
 alias df='df -h' # Show disk usage
-alias paux="ps aux|grep -i"
+alias paux="ps -A|grep -i"
 alias c="clear"
 alias bc='bc -lq'
 alias man="man -a"
