@@ -7,15 +7,15 @@
 " | VIM Settings                                                              |
 " -----------------------------------------------------------------------------
 set nocompatible
- 
+
 " first clear any existing autocommands:
 autocmd!
- 
+
 " Restore the screen when we're exiting and set correct terminal
 behave xterm
 if &term == "xterm"
     let &term = "xtermc"
- 
+
     set rs
     set t_ti= 7 [r [?47h
     set t_te= [?47l 8
@@ -94,7 +94,7 @@ function! Tabstyle_spaces()
     set tabstop=4
     set expandtab
 endfunction
- 
+
 call Tabstyle_spaces()
 
 " Scrollbars/Status ***********************************************************
@@ -421,9 +421,6 @@ function! ToggleWrap()
   endif
 endfunction
 
-"ctrl+i is getting rebound by something, not sure why, but this fixes
-noremap <C-I> <C-I>
-
 " toggle showbreak for long lines
 function! TYShowBreak()
   if &showbreak == ''
@@ -522,13 +519,15 @@ let g:netrw_special_syntax    = 1
 
 "##### Bind these last because something is fucking up the <Tab> key bindings and I have no clue
 "change tab of current line in normal mode
-ounmap <Tab>
+" vunmap <Tab>
+map <Tab> :><CR>
+"ctrl+i is getting rebound by something, not sure why, but this fixes
+nunmap <C-I>
 
-nnoremap <S-Tab> :<<CR>
-nnoremap <Tab> :><CR>
+nmap <S-Tab> :<<CR>
 
 "Change tab of selected lines while in visual mode
-vnoremap <Tab> >gv
+vmap <Tab> >gv
 vnoremap <S-Tab> <gv
 
 " [<Ctrl>+V <Tab> still inserts an actual tab character.]
