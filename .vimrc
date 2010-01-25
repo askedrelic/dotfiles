@@ -285,7 +285,7 @@ imap jj <Esc>
 " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
 " or <BkSpc> (like in `Netscape Navigator'):
 noremap <Space> <PageDown>
-" noremap - <PageUp>
+noremap - <PageUp>
 
 " have <F1> prompt for a help topic, rather than displaying the introduction
 " page, and have it do this from any mode:
@@ -316,6 +316,20 @@ map <C-L> <C-W>l
 map <Esc>[Z <s-tab>
 ounmap <Esc>[Z
 
+"---TAB BINDINGS
+"Tab and Ctrl-i are bound to the same internal key with vim, therefore
+"they cannot be bound to different commands in normal mode :(
+"IE bind Tab to indent and Ctrl-I to 'move into movement stack'
+nmap <S-Tab> :<<CR>
+
+"Change tab of selected lines while in visual mode
+vmap <Tab> >gv
+vnoremap <S-Tab> <gv
+
+" [<Ctrl>+V <Tab> still inserts an actual tab character.]
+inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
+imap <S-Tab> <C-D>
+
 " Remap TAB to keyword completion and indenting. The tab key is a still a work
 " in progress.
 function! InsertTabWrapper(direction)
@@ -334,8 +348,6 @@ function! InsertTabWrapper(direction)
 endfunction
 
 " imap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
-
-"##### TAB BINDINGS AT END DUE TO COMPLICATIONS
 
 " toggle tab completion
 " function! ToggleTabCompletion()
@@ -357,7 +369,6 @@ endfunction
 nnoremap <Enter> o<ESC>
 nnoremap <S-Enter> :put!=''<CR>
 " set fo-=r " do not insert a comment leader after an enter, (no work, fix!!)
-
 
 " have Q reformat the current paragraph (or selected text if there is any):
 nnoremap Q gqap
@@ -516,20 +527,3 @@ let g:netrw_list_hide         = '^\.svn.*'
 let g:netrw_menu              = 0
 let g:netrw_silent            = 1
 let g:netrw_special_syntax    = 1
-
-"##### Bind these last because something is fucking up the <Tab> key bindings and I have no clue
-"change tab of current line in normal mode
-" vunmap <Tab>
-map <Tab> :><CR>
-"ctrl+i is getting rebound by something, not sure why, but this fixes
-nunmap <C-I>
-
-nmap <S-Tab> :<<CR>
-
-"Change tab of selected lines while in visual mode
-vmap <Tab> >gv
-vnoremap <S-Tab> <gv
-
-" [<Ctrl>+V <Tab> still inserts an actual tab character.]
-inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
-imap <S-Tab> <C-D>
