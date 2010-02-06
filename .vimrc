@@ -168,16 +168,6 @@ else
     colorscheme ir_black
 endif
 
-" Omni Completion *************************************************************
-" set ofu=syntaxcomplete#Complete
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-
 " Line Wrapping ***************************************************************
 " don't make it look like there are line breaks where there aren't:
 set nowrap
@@ -201,19 +191,31 @@ set comments+=b:\"
 set comments+=n::
 
 " File Stuff ******************************************************************
-" To show current filetype use: set filetype
 filetype plugin indent on
 
-" Filetypes (au = autocmd)
-au FileType helpfile set nonumber      " no line numbers when viewing help
-au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
-au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
-
-"Laszlo
+" When opening a file
 au BufNewFile,BufRead *.lzx         setf lzx
 au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc         setf php
 au BufNewFile,BufRead *.pl,*.pm,*.t setf perl
+
+" we couldn't care less about html
+au BufNewFile,BufRead *.htm,*.html  setf xml
+
+" Omni Completion 
+" set ofu=syntaxcomplete#Complete
+au FileType html set omnifunc=htmlcomplete#CompleteTags
+au FileType python set omnifunc=pythoncomplete#Complete
+au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+au FileType css set omnifunc=csscomplete#CompleteCSS
+au FileType xml set omnifunc=xmlcomplete#CompleteTags
+au FileType php set omnifunc=phpcomplete#CompletePHP
+au FileType c set omnifunc=ccomplete#Complete
+
+" no line numbers when viewing help
+au FileType helpfile set nonumber
+au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
+au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
 " For C-like programming, have automatic indentation:
 au FileType c,cpp,slang        set cindent
@@ -228,9 +230,6 @@ au FileType perl set smartindent
 
 au FileType python set formatoptions-=t
 
-" we couldn't care less about html
-au BufNewFile,BufRead *.htm,*.html  setf xml
-
 " for CSS, also have things in braces indented:
 au FileType css set smartindent
 
@@ -242,7 +241,7 @@ au FileType djangohtml set formatoptions+=l
 au FileType djangohtml set formatoptions-=t
 
 " Keep comments indented
-" inoremap # #
+inoremap # #
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -250,7 +249,7 @@ set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.i
 
 "jump to last cursor position when opening a file
 "dont do it when writing a svn commit log entry
-"TODO do this for git commits?
+"TODO fix this for git commits?
 autocmd BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
   if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
@@ -454,8 +453,14 @@ nnoremap \r :e!<CR>
 nmap \s :source $MYVIMRC<CR>
 nmap \v :e $MYVIMRC<CR>
 
-"show indent settings
-nmap \I :verbose set ai? cin? cink? cino? si? inde? indk? formatoptions?<CR>
+" Easy unload of buffer
+map \q :bd<CR>
+
+" Easy quit of vim
+map \Q :qall<CR>
+
+" Show eeeeeeverything!
+nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
 
 "replace all tabs with 4 spaces
 " map \ft :%s/	/    /g<CR>
