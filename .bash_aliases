@@ -1,25 +1,5 @@
-# Colors ----------------------------------------------
-if [ `uname` = Darwin ]; then
-    export LS_OPTIONS='-F'
-else
-    if [ `uname` = FreeBSD ]; then
-        export LS_OPTIONS='-G'
-    else
-        # Probably Linux with GNU utils
-        export LS_OPTIONS='--color=auto'
-    fi
-fi
+#Aliases and scripts
 
-# if [ "$OS" = "linux" ] ; then
-#   alias ls='ls --color=auto -F -h' # For linux, etc
-#   alias dir='dir --color'
-#   alias vdir='vdir --color'
-#   eval "`dircolors -b`"
-#   # ls colors, see: http://www.linux-sxs.org/housekeeping/lscolors.html
-#   #export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90' #LS_COLORS is not supported by the default ls command in OS-X
-# else
-#   alias ls='ls -G' # OS-X SPECIFIC - the -G command in OS-X is for colors, in Linux it's no groups
-# fi
 
 # History ----------------------------------------------------------------------------------------------
 alias h='history | tail -n 30'
@@ -90,13 +70,13 @@ alias vim=vim
 
 alias j='jobs -l'
 alias which='type -a'
-alias df='df -h' # Show disk usage
+# Show disk usage
+alias df='df -h'
 alias paux="ps -A|grep -i"
 alias c="clear"
 alias bc='bc -lq'
 alias man="man -a"
 alias logout="clear; logout"
-alias searchy="apt-cache search"
 alias info="info --vi-keys"
 alias nslookup="nslookup -sil"
 alias watch="watch -d"
@@ -105,12 +85,14 @@ alias py="python"
 alias pine=alpine
 alias rscreen="screen -R"
 alias free="free -m"
-alias tree='tree -Csu'     # nice alternative to 'recursive ls'
+# nice alternative to 'recursive ls'
+alias tree='tree -Csu'
+
+alias birth="sudo aptitude install $1"
+alias searchy="apt-cache search"
 
 #osx personal aliases
 alias mate="mate -d"
-alias namoroka="/Applications/firefox/Namoroka.app/Contents/MacOS/firefox-bin -P namorka > /dev/null 2>&1 &"
-alias shiretoko="/Applications/firefox/Shiretoko.app/Contents/MacOS/firefox-bin -P default > /dev/null 2>&1 &"
 
 # Miniscripts -----------------------------------------------------------------------------------------------
 # Shows most used commands, from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
@@ -132,7 +114,7 @@ alias own="sudo chown -R $USER"
 alias bin="cd ~/bin/"
 
 #for when 'tree' isn't installed
-alias simpletree="ls -R | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+alias simpletree="ls -aR | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
 alias ducks='du -cks * | sort -rn | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$((size/1024)); done; done'
 alias wgetdir="wget -r -nH --no-parent"
@@ -163,8 +145,7 @@ function extract()      # Handy Extract Program.
      fi
 }
 
-#TODO: fix this for OSX
-function ps() { /bin/ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
+function ps() { /bin/ps $@ -u $USER -o pid,%cpu,%mem,command ; }
 function pp() { ps -f | awk '!/awk/ && $0~var' var=${1:-".*"} ; }
 
 alias atop='watch -n 3 "free; echo; uptime; echo; ps aux  --sort=-%cpu | head -n 11; echo; who"'

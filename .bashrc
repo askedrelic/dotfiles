@@ -28,10 +28,21 @@ export COLOR_LIGHT_GRAY='\033[0;37m'
 NC=$COLOR_NC
 alias colorslist="set | egrep 'COLOR_\w*'" # lists all the colors
 
+if [ `uname` = Darwin ]; then
+    export LS_OPTIONS='-F'
+else
+    if [ `uname` = FreeBSD ]; then
+        export LS_OPTIONS='-G'
+    else
+        # Probably Linux with GNU utils
+        export LS_OPTIONS='--color=auto'
+    fi
+fi
+
 # History -----------------------------------------------------------------------
 export HISTCONTROL=ignoreboth
 # Whenever displaying the prompt, reload history and write the previous line to disk:
-export PROMPT_COMMAND='history -n;history -a'
+export PROMPT_COMMAND='history -a;history -n'
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:....."
 export HISTSIZE=15000
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
@@ -41,12 +52,6 @@ shopt -s cmdhist
 shopt -s histappend histreedit histverify
 
 # Misc -------------------------------------------------------------------------
-#should be in .inputrc but wasn't working.
-#Fixes Ctrl-W to delete properly, following / or _ word boundaries
-#TODO: Fix this, it's not working righ
-# stty werase undef
-# bind '"\C-w": backward-kill-word'
-
 #single tab auto-completition
 set show-all-if-ambiguous on
 #fix spelling errors in cd
@@ -76,8 +81,8 @@ export LESS="-FXRS"
 # Make perl localization work
 export LC_ALL=C
 export LANGUAGE=en_US
-export EDITOR="vim"
 
+export EDITOR="vim"
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
 # Prompts ----------------------------------------------------------------------- 
@@ -93,9 +98,14 @@ export PS3='#? ' # Prompt 3
 export PS4='+' # Prompt 4
 
 # Other files ----------------------------------------------------------------------------------------------
-source ~/.svn_bash_completion
-source ~/.django_bash_completion
-source ~/.bash_app_specific
+#my imports
 source ~/.bash_machines
 source ~/.bash_aliases
+
+#app specific imports
+source ~/.svn_bash_completion
+source ~/.django_bash_completion
+
+#crazy imports
+source ~/.bash_app_specific
 source ~/.bash_help
