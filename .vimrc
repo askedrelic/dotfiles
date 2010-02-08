@@ -27,6 +27,11 @@ endif
 " highlight
 set viminfo=/50,'50,h
 
+" where to put backup files
+set backupdir=~/.vim/backup
+" directory to place swap files in
+set directory=~/.vim/tmp
+
 " Custom status line
 set statusline=                              " clear the statusline for when vimrc is reloaded
 set statusline+=%f\                          " file name
@@ -95,6 +100,9 @@ function! Tabstyle_spaces()
     set expandtab
 endfunction
 
+" when at 3 spaces, and I hit > ... go to 4, not 5
+set shiftround 
+
 call Tabstyle_spaces()
 
 " Scrollbars/Status ***********************************************************
@@ -110,6 +118,8 @@ set ruler
 set showmode
 set showcmd
 
+" turn on command line completion wild style
+set wildmenu 
 " Bash tab style completion is awesome
 set wildmode=longest,list
 " wildchar-the char used for "expansion" on the command line default value is
@@ -136,6 +146,8 @@ set cursorline
 " Searching *******************************************************************
 " highlight search
 set hlsearch
+" case inferred by default
+set infercase 
 " make searches case-insensitive
 set ignorecase
 "unless they contain upper-case letters:
@@ -218,12 +230,16 @@ au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
 au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
 " For C-like programming, have automatic indentation:
-au FileType c,cpp,slang        set cindent
+au FileType c,cpp,slang set cindent
 
 " for actual C (not C++) programming where comments have explicit end
 " characters, if starting a new line in the middle of a comment automatically
 " insert the comment leader characters:
 au FileType c set formatoptions+=ro
+
+" Ruby
+au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2 
+au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 
 " for Perl programming, have things in braces indenting themselves:
 au FileType perl set smartindent
@@ -242,6 +258,7 @@ au FileType djangohtml set formatoptions-=t
 
 " Keep comments indented
 inoremap # #
+
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -267,8 +284,8 @@ set complete-=k complete+=k
 au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
 " Redraw *********************************************************************
-" lazyredraw: do not update screen while executing macros
-"set lazyredraw
+" do not update screen while executing macros
+set lazyredraw
 " ttyfast: are we using a fast terminal? Let's try it for a while.
 set ttyfast
 " ttyscroll: redraw instead of scrolling
@@ -464,6 +481,7 @@ nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetyp
 
 "replace all tabs with 4 spaces
 " map \ft :%s/	/    /g<CR>
+" use :retab instead
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
