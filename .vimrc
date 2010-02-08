@@ -501,6 +501,9 @@ map \o :call HandleURI()<CR>
 nmap \tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
 imap \tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
 
+iab _AUTHOR Author: Matt Behrens <askedrelic@gmail.com>
+
+
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
