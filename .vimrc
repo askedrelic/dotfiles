@@ -94,10 +94,11 @@ endfunction
 
 function! Tabstyle_spaces()
     " Use 4 spaces
-    set softtabstop=4
+    set expandtab
+    set autoindent
     set shiftwidth=4
     set tabstop=4
-    set expandtab
+    set softtabstop=4
 endfunction
 
 " when at 3 spaces, and I hit > ... go to 4, not 5
