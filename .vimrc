@@ -27,6 +27,11 @@ endif
 " highlight
 set viminfo=/50,'50,h
 
+" where to put backup files
+set backupdir=~/.vim/backup
+" directory to place swap files in
+set directory=~/.vim/tmp
+
 " Custom status line
 set statusline=                              " clear the statusline for when vimrc is reloaded
 set statusline+=%f\                          " file name
@@ -95,6 +100,9 @@ function! Tabstyle_spaces()
     set expandtab
 endfunction
 
+" when at 3 spaces, and I hit > ... go to 4, not 5
+set shiftround 
+
 call Tabstyle_spaces()
 
 " Scrollbars/Status ***********************************************************
@@ -110,6 +118,8 @@ set ruler
 set showmode
 set showcmd
 
+" turn on command line completion wild style
+set wildmenu 
 " Bash tab style completion is awesome
 set wildmode=longest,list
 " wildchar-the char used for "expansion" on the command line default value is
@@ -136,6 +146,8 @@ set cursorline
 " Searching *******************************************************************
 " highlight search
 set hlsearch
+" case inferred by default
+set infercase 
 " make searches case-insensitive
 set ignorecase
 "unless they contain upper-case letters:
@@ -168,16 +180,6 @@ else
     colorscheme ir_black
 endif
 
-" Omni Completion *************************************************************
-" set ofu=syntaxcomplete#Complete
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
-
 " Line Wrapping ***************************************************************
 " don't make it look like there are line breaks where there aren't:
 set nowrap
@@ -201,35 +203,48 @@ set comments+=b:\"
 set comments+=n::
 
 " File Stuff ******************************************************************
-" To show current filetype use: set filetype
 filetype plugin indent on
 
-" Filetypes (au = autocmd)
-au FileType helpfile set nonumber      " no line numbers when viewing help
-au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
-au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
-
-"Laszlo
+" When opening a file
 au BufNewFile,BufRead *.lzx         setf lzx
 au BufNewFile,BufRead *.module      setf php
 au BufNewFile,BufRead *.inc         setf php
 au BufNewFile,BufRead *.pl,*.pm,*.t setf perl
 
+" we couldn't care less about html
+au BufNewFile,BufRead *.htm,*.html  setf xml
+
+" Omni Completion 
+" set ofu=syntaxcomplete#Complete
+au FileType html set omnifunc=htmlcomplete#CompleteTags
+au FileType python set omnifunc=pythoncomplete#Complete
+au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+au FileType css set omnifunc=csscomplete#CompleteCSS
+au FileType xml set omnifunc=xmlcomplete#CompleteTags
+au FileType php set omnifunc=phpcomplete#CompletePHP
+au FileType c set omnifunc=ccomplete#Complete
+
+" no line numbers when viewing help
+au FileType helpfile set nonumber
+au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
+au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
+
 " For C-like programming, have automatic indentation:
-au FileType c,cpp,slang        set cindent
+au FileType c,cpp,slang set cindent
 
 " for actual C (not C++) programming where comments have explicit end
 " characters, if starting a new line in the middle of a comment automatically
 " insert the comment leader characters:
 au FileType c set formatoptions+=ro
 
+" Ruby
+au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2 
+au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
+
 " for Perl programming, have things in braces indenting themselves:
 au FileType perl set smartindent
 
 au FileType python set formatoptions-=t
-
-" we couldn't care less about html
-au BufNewFile,BufRead *.htm,*.html  setf xml
 
 " for CSS, also have things in braces indented:
 au FileType css set smartindent
@@ -242,7 +257,8 @@ au FileType djangohtml set formatoptions+=l
 au FileType djangohtml set formatoptions-=t
 
 " Keep comments indented
-" inoremap # #
+inoremap # #
+
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -250,7 +266,7 @@ set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.i
 
 "jump to last cursor position when opening a file
 "dont do it when writing a svn commit log entry
-"TODO do this for git commits?
+"TODO fix this for git commits?
 autocmd BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
   if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
@@ -268,8 +284,8 @@ set complete-=k complete+=k
 au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
 " Redraw *********************************************************************
-" lazyredraw: do not update screen while executing macros
-"set lazyredraw
+" do not update screen while executing macros
+set lazyredraw
 " ttyfast: are we using a fast terminal? Let's try it for a while.
 set ttyfast
 " ttyscroll: redraw instead of scrolling
@@ -457,11 +473,18 @@ nnoremap \r :e!<CR>
 nmap \s :source $MYVIMRC<CR>
 nmap \v :e $MYVIMRC<CR>
 
-"show indent settings
-nmap \I :verbose set ai? cin? cink? cino? si? inde? indk? formatoptions?<CR>
+" Easy unload of buffer
+map \q :bd<CR>
+
+" Easy quit of vim
+map \Q :qall<CR>
+
+" Show eeeeeeverything!
+nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
 
 "replace all tabs with 4 spaces
 " map \ft :%s/	/    /g<CR>
+" use :retab instead
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
@@ -480,6 +503,9 @@ map \o :call HandleURI()<CR>
 "TODO move this into some kind of autotext complete thing
 nmap \tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
 imap \tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
+
+iab _AUTHOR Author: Matt Behrens <askedrelic@gmail.com>
+
 
 " -----------------------------------------------------------------------------
 " | Pluggins                                                                  |
