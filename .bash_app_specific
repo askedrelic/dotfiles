@@ -69,7 +69,6 @@ alias gtshowcommands="echo -e '${COLOR_LIGHT_PURPLE}Available commands:
    
 alias gt='git'
 alias gtclone='gt clone'
-alias gtcommit='gt commit -a -v'
 alias gtadd='gt add'
 alias gtaddall='gt add .'
 alias gtdiff='gt diff'
@@ -81,8 +80,21 @@ alias gtmove='gt mv'
 alias gtshow='gt show'
 alias gtblame='gt blame'
 alias gtlog='gt log'
-alias gtlogstat='gt log --stat'
-alias gtstatus='gt status'
+
+#mine
+alias gts='git status'
+alias gtb='git branch -a -v'
+alias gtd='git diff'
+# gc message => git commit -a -m "Message"
+function gc {
+  git commit -a -m $1
+}
+# gcp message => git commit -a -m "Message" ; git push
+function gcp {
+  git commit -a -m $1; git push
+}
+
+
  
  
 # MySQL ------------------------------------------------

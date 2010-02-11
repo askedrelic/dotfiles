@@ -102,7 +102,7 @@ alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 alias webshare="python -m SimpleHTTPServer 9000"
 
 # Get all IPs OSX/Linux compatable
-alias getip="ifconfig | perl -nle'/inet (\S+)/ && print $1'"
+alias myip='curl "http://www.networksecuritytoolkit.org/nst/cgi-bin/ip.cgi"'
 
 #copies folder and all sub files and folders, preserving security and dates
 alias cp_folder="cp -Rpv"
