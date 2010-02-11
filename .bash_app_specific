@@ -85,9 +85,9 @@ alias gtlog='gt log'
 alias gts='git status'
 alias gtb='git branch -a -v'
 alias gtd='git diff'
-# gc message => git commit -a -m "Message"
+alias gtr='git remote -v'
 function gc {
-  git commit -a -m $1
+  git commit -m $1
 }
 # gcp message => git commit -a -m "Message" ; git push
 function gcp {
