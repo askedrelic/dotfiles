@@ -88,7 +88,7 @@ alias free="free -m"
 # nice alternative to 'recursive ls'
 alias tree='tree -Csu'
 
-alias birth="sudo aptitude install $1"
+alias birth="sudo aptitude install"
 alias searchy="apt-cache search"
 
 #osx personal aliases
