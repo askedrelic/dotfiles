@@ -487,6 +487,9 @@ nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetyp
 " map \ft :%s/	/    /g<CR>
 " use :retab instead
 
+"clear spaces at end of line
+nmap \l :%s/\s\+$//
+
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
   let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')

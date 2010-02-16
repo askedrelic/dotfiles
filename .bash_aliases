@@ -8,15 +8,33 @@ hf(){
 }
 
 # Navigation ----------------------------------------------------------------------------------------------
+#Silent pushd/popd functions below
+alias cd='pushd'
+alias b="popd"
+pushd() {
+    #If cd has no argument, goto home dir, like with normal cd
+    if [ ! -n "$1" ]
+    then
+        cd ~
+    else
+
+        builtin pushd "$@" > /dev/null
+    fi
+}
+popd() {
+    builtin popd "$@" > /dev/null
+}
+
 cl() { cd $1; ls -la; }
 alias ~="cd ~"
 alias u="cd .."
+alias d="dirs -v"
+alias p="pwd"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
-alias p="pwd"
 
 alias ls='ls $LS_OPTIONS -Fh'
 
