@@ -4,28 +4,29 @@
 [color]
     pager = true
     ui = auto
-  [color "branch"]
+[color "branch"]
     current = yellow reverse
     local = yellow
     remote = green
-  [color "diff"]
+[color "diff"]
     meta = yellow bold
     frag = magenta bold
     old = red bold
     new = green bold
     whitespace = red reverse
-  [color "status"]
+[color "status"]
     added = yellow
     changed = green
     untracked = cyan
 [core]
+    #Only 1.6.6 allows ~ references
 	excludesfile = ~/.gitignore
 [alias]
     st = status
-    ci = commit
+    ci = commit -v
+    cm = commit -m
     br = branch
     co = checkout
-    df = diff
 
     #simple log with branches
     #git 1.5
@@ -37,6 +38,10 @@
     logpatch = log -p --date=relative --abbrev-commit
 
     #diff
+    staged = diff --cached
+    unstaged = diff
+    both = diff HEAD
+
     changes=diff --name-status -r
     diffstat=diff --stat -r
     last  = cat-file commit HEAD

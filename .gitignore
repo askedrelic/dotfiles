@@ -15,6 +15,7 @@ mbox
 .irssi/
 .aptitude/
 .gem
+.vim/.netrwhist
  
 # ignore sensitive files
 .ssh*
