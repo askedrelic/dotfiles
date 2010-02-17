@@ -1,8 +1,11 @@
 # ignore common files not needed under revision control
+*._*
 *.pyc
 *.swp
 var
 mbox
+.DS_Store
+.subversion
 .bash_history
 .htoprc
 .vimfuzzyfinder
@@ -11,17 +14,13 @@ mbox
 .mysql_history
 .irssi/
 .aptitude/
+.gem
  
 # ignore sensitive files
-.ssh
+.ssh*
 .agent.env
- 
-# ignore OSX/linux stuff
-*._*
-.DS_Store
-.Trash
-.MacOSX
-.subversion
+
+# ignore common directories
 Applications/
 Desktop/
 Documents/
@@ -39,5 +38,32 @@ code/
 src/
 public_html/
  
-# ignore anything else
-.gem
+# ignore my OSX homedir
+Dropbox/
+TMPpref
+backups/
+.NERDTreeBookmarks
+.cache/
+.config/
+.cpan/
+.cups/
+.dropbox/
+.fontconfig/
+.fonts.cache-1
+.gdb_history
+.gitk
+.gstreamer-0.10/
+.gtk-bookmarks
+.irb_history
+.lesshst
+.mplayer/
+.nbprofiler/
+.netbeans/
+.spumux/
+.sqlite_history
+.svk/
+.termtter/
+.thumbnails/
+.Trash
+.MacOSX
+
