@@ -101,6 +101,7 @@ alias watch="watch -d"
 alias wget="wget -c"
 alias py="python"
 alias pine=alpine
+alias time="/usr/bin/time"
 alias rscreen="screen -R"
 alias free="free -m"
 # nice alternative to 'recursive ls'
