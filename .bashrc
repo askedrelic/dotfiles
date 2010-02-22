@@ -71,7 +71,8 @@ shopt -s checkhash
 shopt -s dotglob
 
 set visible-stats on
-# Turn on advanced bash completion if the file exists (get it here: http://www.caliban.org/bash/index.shtml#completion)
+# Turn on advanced bash completion if the file exists
+# (get it here: http://www.caliban.org/bash/index.shtml#completion)
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
@@ -84,6 +85,8 @@ export LANGUAGE=en_US
 
 export EDITOR="vim"
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
+
+# export GEM_HOME=/home/askedrelic/.gem/ruby/1.8
 
 # Prompts ----------------------------------------------------------------------- 
 #PS1="\h:\W\$ "
