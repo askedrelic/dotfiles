@@ -52,25 +52,23 @@ shopt -s cmdhist
 shopt -s histappend histreedit histverify
 
 # Misc -------------------------------------------------------------------------
-#single tab auto-completition
-set show-all-if-ambiguous on
-#fix spelling errors in cd
-set completion-ignore-case on
 #auto-completion shows stats similiar to ls -F
 shopt -s cdspell
 # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize  
+#glob in case insensitive manner
+shopt -s nocaseglob
 # Necessary for programmable completion.
 shopt -s extglob
 shopt -s sourcepath
 shopt -s no_empty_cmd_completion
+
 shopt -s cdable_vars
 shopt -s checkhash
 # include dotfiles in globs
 # (to make `mv *` include them)
 shopt -s dotglob
 
-set visible-stats on
 # Turn on advanced bash completion if the file exists
 # (get it here: http://www.caliban.org/bash/index.shtml#completion)
 if [ -f /etc/bash_completion ]; then
