@@ -16,6 +16,10 @@ mbox
 .aptitude/
 .gem
 .vim/.netrwhist
+.addressbook
+.pinerc
+
+#
  
 # ignore sensitive files
 .ssh*
@@ -37,6 +41,7 @@ Sources/
 Code/
 code/
 src/
+mail/
 public_html/
  
 # ignore my OSX homedir

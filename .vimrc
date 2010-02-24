@@ -505,8 +505,8 @@ map \o :call HandleURI()<CR>
 " Custom text inserts *********************************************************
 "insert THE time!
 "TODO move this into some kind of autotext complete thing
-nmap \tt :execute "normal i" . strftime("%x %X (%Z) ")<Esc>
-imap \tt <Esc>:execute "normal i" . strftime("%x %X (%Z) ")<Esc>i
+nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
+imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
 
 iab _AUTHOR Author: Matt Behrens <askedrelic@gmail.com>
 
