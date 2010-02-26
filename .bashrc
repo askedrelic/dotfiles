@@ -69,11 +69,6 @@ shopt -s checkhash
 # (to make `mv *` include them)
 shopt -s dotglob
 
-# Turn on advanced bash completion if the file exists
-# (get it here: http://www.caliban.org/bash/index.shtml#completion)
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
 export PAGER=/usr/bin/less
 #fix color/control character issues with git
 export LESS="-FXRS"
@@ -98,7 +93,12 @@ export PS2='> ' # Secondary prompt
 export PS3='#? ' # Prompt 3
 export PS4='+' # Prompt 4
 
-# Other files ----------------------------------------------------------------------------------------------
+# Imports ----------------------------------------------------------------------------------------------
+# Turn on advanced bash completion if the file exists
+# (get it here: http://www.caliban.org/bash/index.shtml#completion)
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
 #my imports
 source ~/.bash_machines
 source ~/.bash_aliases
@@ -106,6 +106,7 @@ source ~/.bash_aliases
 #app specific imports
 source ~/.svn_bash_completion
 source ~/.django_bash_completion
+source ~/.git_bash_completion
 
 #crazy imports
 source ~/.bash_app_specific
