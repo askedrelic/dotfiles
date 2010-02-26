@@ -488,7 +488,7 @@ nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetyp
 " use :retab instead
 
 "clear spaces at end of line
-nmap \l :%s/\s\+$//
+nmap \l :%s/\s\+$//<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
