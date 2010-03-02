@@ -95,7 +95,7 @@ export PS4='+' # Prompt 4
 
 # Imports ----------------------------------------------------------------------------------------------
 # Turn on advanced bash completion if the file exists
-# (get it here: http://www.caliban.org/bash/index.shtml#completion)
+# (get it here: http://bash-completion.alioth.debian.org/ )
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
