@@ -298,8 +298,11 @@ set ttyfast
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
 imap jj <Esc>
 
-" Map W to write, so you can hold down shift, hit : then W and not have to unshift
+" Map uppercase write and quit, I'm lazy with shift
 cab W w
+cab Q q
+cab WQ wq
+cab WQ! wq!
 
 " page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
 " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
@@ -313,7 +316,6 @@ nnoremap <F1> :help<Space>
 vmap <F1> <C-C><F1>
 omap <F1> <C-C><F1>
 map! <F1> <C-C><F1>
-
 
 " use <Ctrl>+N/<Ctrl>+P to cycle through files:
 " [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
@@ -488,7 +490,7 @@ nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetyp
 " use :retab instead
 
 "clear spaces at end of line
-nmap \l :%s/\s\+$//
+nmap \l :%s/\s\+$//<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
