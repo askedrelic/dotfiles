@@ -466,6 +466,12 @@ function! TYShowBreak()
 endfunction
 nmap \tb  TYShowBreak()
 
+" Allows vim to split window to a terminal, thanks to screen.
+" Requires screener.sh
+" From http://www.semicomplete.com/blog/geekery/flashback-2010-2003.html
+map \s :silent !screener.sh<CR>
+
+
 "clear the fucking search buffer, not just remove the highlight
 map \c :let @/ = ""<CR>
 
@@ -473,8 +479,8 @@ map \c :let @/ = ""<CR>
 nnoremap \r :e!<CR>
 
 "Easy edit of vimrc
-nmap \s :source $MYVIMRC<CR>
 nmap \v :e $MYVIMRC<CR>
+nmap \V :source $MYVIMRC<CR>
 
 " Easy unload of buffer
 map \q :bd<CR>
