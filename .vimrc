@@ -516,7 +516,7 @@ map \o :call HandleURI()<CR>
 nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
 imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
 
-iab _AUTHOR Author: Matt Behrens <askedrelic@gmail.com>
+iab _AUTHOR Matt Behrens <askedrelic@gmail.com>
 
 
 " -----------------------------------------------------------------------------
