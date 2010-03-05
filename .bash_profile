@@ -20,17 +20,17 @@ else
 fi
  
 # Path ------------------------------------------------------------
-if [ "$OS" = "darwin" ] ; then
-  export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:$PATH # OS-X Specific, with MacPorts and MySQL installed
+# if [ "$OS" = "darwin" ] ; then
+  #export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:$PATH # OS-X Specific, with MacPorts and MySQL installed
   #export PATH=/opt/local/bin:/opt/local/sbin:$PATH # OS-X Specific, with MacPorts installed
-fi
+# fi
  
 if [ -d ~/bin ]; then
   #add your bin folder to the path, if you have it. It's a good place to add all your scripts
   export PATH=:~/bin:$PATH 
 fi
 
-export PATH=$PATH:.:/usr/sbin:/sbin:/opt/local/bin:/opt/local/sbin
+export PATH=$PATH:.:/sbin:/usr/sbin
  
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc
