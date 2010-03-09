@@ -44,7 +44,7 @@
 
     changes=diff --name-status -r
     diffstat=diff --stat -r
-    last  = cat-file commit HEAD
+    last = show HEAD
 [pack]
     threads = 0
 [branch]
