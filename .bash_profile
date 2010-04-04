@@ -28,27 +28,34 @@ if [ -f "${SSH_ENV}" ]; then
 else
   start_agent;
 fi
- 
+
 # Path ------------------------------------------------------------
 # if [ "$OS" = "darwin" ] ; then
 # fi
- 
-if [ -d ~/bin ]; then
-  #add your bin folder to the path, if you have it. It's a good place to add all your scripts
-  export PATH=:~/bin:$PATH 
+
+#add /usr/local/bin for homebrew, before everything else
+if [ -d /usr/local/bin ]; then
+  export PATH=/usr/local/bin:$PATH
 fi
 
-export PATH=$PATH:.:/sbin:/usr/sbin
- 
+#add your bin folder to the path, if you have it. It's a good place to add all your scripts
+if [ -d ~/bin ]; then
+  export PATH=~/bin:$PATH
+fi
+
+#add local dir last
+export PATH=$PATH:.
+# export PATH=$PATH:.:/sbin:/usr/sbin
+
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc
- 
+
 # Hello Messsage --------------------------------------------------
 echo -e "Kernel Information: " `uname -smr`
 #echo -e "${COLOR_BROWN}`bash --version`"
 echo -ne "${COLOR_GRAY}Uptime: "; uptime
 echo -ne "${COLOR_GRAY}Server time is: "; date
- 
+
 # Notes: ----------------------------------------------------------
 # When you start an interactive shell (log in, open terminal or iTerm in OS X,
 # or create a new tab in iTerm) the following files are read and run, in this order:

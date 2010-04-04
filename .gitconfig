@@ -27,6 +27,7 @@
     cm = commit -m
     br = branch
     co = checkout
+    ls = ls-files
 
     #simple log with branches
     #git 1.5
