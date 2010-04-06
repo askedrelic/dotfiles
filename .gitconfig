@@ -40,7 +40,7 @@
 
     #diff
     staged = diff --cached
-    unstaged = diff
+    unstaged = diff --patience
     both = diff HEAD
 
     changes=diff --name-status -r
