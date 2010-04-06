@@ -99,6 +99,10 @@ export PS4='+' # Prompt 4
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+#osx brew install of bash completion
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
+fi
 #my imports
 source ~/.bash_machines
 source ~/.bash_aliases
