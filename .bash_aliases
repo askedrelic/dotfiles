@@ -48,6 +48,9 @@ alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
 alias l="la"
 
+# CD to bin
+alias bin="cd ~/bin/"
+
 function ll(){ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| \
                 egrep -v "^d|total "; }
 
@@ -81,17 +84,26 @@ gns(){ # Case insensitive, excluding svn folders
   }
 
 # Other aliases ----------------------------------------------------------------------------------------------
-#alias rm="rm -i"
+#used to be called 'which', probably shouldn't override default linux programs
+alias whereis='type -a'
+
+# Show disk usage
+alias df='df -h'
+
+#apt shortcuts
+alias birth="sudo aptitude install"
+alias searchy="apt-cache search"
+
 alias v=vim
 alias vi=vim
 alias vim=vim
-
-alias j='jobs -l'
-alias which='type -a'
-# Show disk usage
-alias df='df -h'
-alias paux="ps -A|grep -i"
 alias c="clear"
+alias j='jobs -l'
+alias py="python"
+alias rscreen="screen -R"
+alias pine=alpine
+
+alias paux="ps -A|grep -i"
 alias bc='bc -lq'
 alias man="man -a"
 alias logout="clear; logout"
@@ -99,15 +111,8 @@ alias info="info --vi-keys"
 alias nslookup="nslookup -sil"
 alias watch="watch -d"
 alias wget="wget -c"
-alias py="python"
-alias pine=alpine
-alias rscreen="screen -R"
 alias free="free -m"
-# nice alternative to 'recursive ls'
-alias tree='tree -Csu'
-
-alias birth="sudo aptitude install"
-alias searchy="apt-cache search"
+alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 
 #osx personal aliases
 alias mate="mate -d"
@@ -117,7 +122,7 @@ alias mate="mate -d"
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
 # Share current dir
-alias webshare="python -m SimpleHTTPServer 9000"
+alias webshare="echo 'now sharing cur directory at port 9000'; python -m SimpleHTTPServer 9000"
 
 # Get all IPs OSX/Linux compatable
 alias myip='curl "http://www.networksecuritytoolkit.org/nst/cgi-bin/ip.cgi"'
@@ -128,17 +133,20 @@ alias cp_folder="cp -Rpv"
 # chown curren dir
 alias own="sudo chown -R $USER"
 
-# CD to bin
-alias bin="cd ~/bin/"
-
+#TODO: combine tree/simpletree
+# nice alternative to 'recursive ls'
+alias tree='tree -Csu'
 #for when 'tree' isn't installed
 alias simpletree="ls -aR | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
+#great for finding the current "real" size of all folders/files
 alias ducks='du -cks * | sort -rn | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$((size/1024)); done; done'
+
 alias wgetdir="wget -r -nH --no-parent"
 alias wgetmirror="wget --mirror -U Firefox/3.0 -p -erobots=off --html-extension --convert-links"
-alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 alias openapps='lsof -P -i -n'
+
+#prints the path in a useful fashion
 alias path="tr : '\n' <<<$PATH"
 
 function extract()      # Handy Extract Program.
