@@ -67,7 +67,7 @@ set autowrite
 " report: show a report when N lines were changed. 0 means 'all'
 set report=0
 " runtimepath: list of dirs to search for runtime files
-set runtimepath+=~/.vim
+set runtimepath=~/.vim,$VIMRUNTIME
 " Like File Explorer, preview window height is 8
 set previewheight=8
 " always show status line
@@ -218,7 +218,6 @@ au BufNewFile,BufRead *.htm,*.html  setf xml
 " Omni Completion 
 " set ofu=syntaxcomplete#Complete
 au FileType html set omnifunc=htmlcomplete#CompleteTags
-au FileType python set omnifunc=pythoncomplete#Complete
 au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 au FileType css set omnifunc=csscomplete#CompleteCSS
 au FileType xml set omnifunc=xmlcomplete#CompleteTags
@@ -245,7 +244,27 @@ au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 " for Perl programming, have things in braces indenting themselves:
 au FileType perl set smartindent
 
-au FileType python set formatoptions-=t
+augroup Python
+    let python_highlight_all = 1
+    let python_slow_sync = 1
+    " au BufNewFile,BufRead *.py       source $HOME/.vim/syntax/python.vim
+    " au! Syntax python source $HOME/.vim/syntax/python.vim
+    " au FileType python set formatoptions-=t
+    "See $VIMRUNTIME/ftplugin/python.vim
+    au!
+    "smart indent really only for C like languages
+    "See $VIMRUNTIME/indent/python.vim
+    au FileType python set nosmartindent autoindent
+    " Allow gf command to open files in $PYTHONPATH
+    au FileType python let &path = &path . "," . substitute($PYTHONPATH, ';', ',', 'g')
+    if v:version >= 700
+        "See $VIMRUNTIME/autoload/pythoncomplete.vim
+        "<C-x><C-o> to autocomplete
+        au FileType python set omnifunc=pythoncomplete#Complete
+        "Don't show docs in preview window
+        au FileType python set completeopt-=preview
+    endif
+augroup END
 
 " for CSS, also have things in braces indented:
 au FileType css set smartindent
@@ -402,6 +421,15 @@ noremap Y y$
 
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+
+"allow deleting selection without updating the clipboard (yank buffer)
+vnoremap x "_x
+vnoremap X "_X
+
+"don't move the cursor after pasting
+"(by jumping to back start of previously changed text)
+noremap p p`[
+noremap P P`[
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
