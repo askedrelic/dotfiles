@@ -122,7 +122,7 @@ alias mate="mate -d"
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
 # Share current dir
-alias webshare="echo 'now sharing cur directory at port 9000'; python -m SimpleHTTPServer 9000"
+alias sharethisdir="echo 'now sharing cur directory at port 9000'; python -m SimpleHTTPServer 9000"
 
 # Get all IPs OSX/Linux compatable
 alias myip='curl "http://www.networksecuritytoolkit.org/nst/cgi-bin/ip.cgi"'
