@@ -112,8 +112,6 @@ source ~/.bash_aliases
 source ~/.svn_bash_completion
 source ~/.django_bash_completion
 source ~/.git_bash_completion
-#virtualenvwrapper 2.2
-source ~/bin/virtualenvwrapper.sh
 
 #crazy imports
 source ~/.bash_app_specific
