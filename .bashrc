@@ -100,8 +100,15 @@ if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 #osx brew install of bash completion
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
+if [ `uname` = Darwin ]; then
+    if [ -f `brew --prefix`/etc/bash_completion ]; then
+        . `brew --prefix`/etc/bash_completion
+    fi
+fi
+
+#virtualenv wrapper
+if [ -f `which virtualenvwrapper.sh` ]; then
+    . `which virtualenvwrapper.sh`
 fi
 
 #my imports
