@@ -43,6 +43,11 @@ if [ -d ~/bin ]; then
   export PATH=~/bin:$PATH
 fi
 
+#add local ruby gems
+if [ -d ~/.gem/ruby/1.8/bin ]; then
+  export PATH=~/.gem/ruby/1.8/bin:$PATH
+fi
+
 #add local dir last
 export PATH=$PATH:.
 # export PATH=$PATH:.:/sbin:/usr/sbin

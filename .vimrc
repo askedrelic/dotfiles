@@ -338,8 +338,8 @@ map! <F1> <C-C><F1>
 
 " use <Ctrl>+N/<Ctrl>+P to cycle through files:
 " [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
-nnoremap <C-N> :bn<CR>
-nnoremap <C-P> :bp<CR>
+" nnoremap <C-N> :bn<CR>
+" nnoremap <C-P> :bp<CR>
 
 " swap windows
 nmap , <C-w><C-w>
@@ -349,6 +349,28 @@ map <C-H> <C-W>h
 map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-L> <C-W>l
+
+"tabs!
+nnoremap \1 :tabn 1<CR>
+nnoremap \2 :tabn 2<CR>
+nnoremap \3 :tabn 3<CR>
+nnoremap \4 :tabn 4<CR>
+nnoremap \5 :tabn 5<CR>
+nnoremap \6 :tabn 6<CR>
+nnoremap \7 :tabn 7<CR>
+nnoremap \8 :tabn 8<CR>
+nnoremap \9 :tabn 9<CR>
+nnoremap <D-1> :tabn 1<CR>
+nnoremap <D-2> :tabn 2<CR>
+nnoremap <D-3> :tabn 3<CR>
+nnoremap <D-4> :tabn 4<CR>
+nnoremap <D-5> :tabn 5<CR>
+nnoremap <D-6> :tabn 6<CR>
+nnoremap <D-7> :tabn 7<CR>
+nnoremap <D-8> :tabn 8<CR>
+nnoremap <D-9> :tabn 9<CR>
+nnoremap <C-N> :tabn<CR>
+nnoremap <C-P> :tabp<CR>
 
 " discussion of different tab functions
 " http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion

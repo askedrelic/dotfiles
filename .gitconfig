@@ -50,3 +50,5 @@
     threads = 0
 [branch]
     autosetupmerge = true
+[github]
+	user = askedrelic
