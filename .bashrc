@@ -107,9 +107,10 @@ if [ `uname` = Darwin ]; then
 fi
 
 #virtualenv wrapper
-if [ -f `which virtualenvwrapper.sh` ]; then
-    . `which virtualenvwrapper.sh`
-fi
+#broken on linux?
+# if [ -f `which virtualenvwrapper.sh` ]; then
+#     . `which virtualenvwrapper.sh`
+# fi
 
 #my imports
 source ~/.bash_machines
