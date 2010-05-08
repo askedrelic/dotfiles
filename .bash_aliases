@@ -36,7 +36,9 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-alias ls='ls $LS_OPTIONS -Fh'
+# alias ls='ls $LS_OPTIONS -Fh'
+# better regular ls
+alias ls='tree --dirsfirst -ChAFL 1'
 
 alias la='ls -Al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
@@ -47,12 +49,10 @@ alias lt='ls -ltr'         # sort by date, most recent last
 alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
 alias l="la"
+alias ll = 'ls'
 
 # CD to bin
 alias bin="cd ~/bin/"
-
-function ll(){ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| \
-                egrep -v "^d|total "; }
 
 #OSX: Open a Finder window at your current location
 alias of="open ."
