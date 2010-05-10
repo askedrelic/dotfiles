@@ -49,7 +49,7 @@ alias lt='ls -ltr'         # sort by date, most recent last
 alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
 alias l="la"
-alias ll = 'ls'
+alias ll='ls'
 
 # CD to bin
 alias bin="cd ~/bin/"
