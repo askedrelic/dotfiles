@@ -36,10 +36,8 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-# alias ls='ls $LS_OPTIONS -Fh'
-# better regular ls
-alias ls='tree --dirsfirst -ChAFL 1'
-
+#ls and it's options
+alias ls='ls $LS_OPTIONS -Fh'
 alias la='ls -Al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
 alias lk='ls -lSr'         # sort by size, biggest last
@@ -48,8 +46,9 @@ alias lu='ls -ltur'        # sort by and show access time, most recent last
 alias lt='ls -ltr'         # sort by date, most recent last
 alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
+
+alias ll='tree --dirsfirst -ChAFL 1'
 alias l="la"
-alias ll='ls'
 
 # CD to bin
 alias bin="cd ~/bin/"
