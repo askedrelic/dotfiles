@@ -441,6 +441,9 @@ vnoremap Q gq
 " already done by yy):
 noremap Y y$
 
+" dulpicate line in visual mode
+vmap D y'>p
+
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
@@ -452,6 +455,9 @@ vnoremap X "_X
 "(by jumping to back start of previously changed text)
 noremap p p`[
 noremap P P`[
+
+" change first word of current line
+map <silent> <C-h> ^cw
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
