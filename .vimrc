@@ -45,6 +45,8 @@ set statusline+=%b,0x%-6B                    " current char
 set statusline+=%c,%l/                       "cursor column/total lines
 set statusline+=%L\ %P                       "total lines/percentage in file
 
+match CursorColumn '\%120v.*' " Error format when a line is longer than 120
+
 " allow you to have multiple files open and change between them without saving
 set hidden
 "make backspace work
