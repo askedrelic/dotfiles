@@ -5,7 +5,7 @@
 #Colors ------------------------------------------------------------
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-export CLICOLOR=1 
+export CLICOLOR=1
 
 # Setup some colors to use later in interactive shell or scripts
 export COLOR_NC='\033[0m' # No Color
@@ -55,7 +55,7 @@ shopt -s histappend histreedit histverify
 #auto-completion shows stats similiar to ls -F
 shopt -s cdspell
 # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
-shopt -s checkwinsize  
+shopt -s checkwinsize
 #glob in case insensitive manner
 shopt -s nocaseglob
 # Necessary for programmable completion.
@@ -68,6 +68,11 @@ shopt -s checkhash
 # include dotfiles in globs
 # (to make `mv *` include them)
 shopt -s dotglob
+
+# bash completion settings (actually, these are readline settings)
+bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
+bind "set bell-style none" # no bell
+bind "set show-all-if-ambiguous On" # show list automatically, without double tab
 
 export PAGER=/usr/bin/less
 #fix color/control character issues with git, enable wrapping
@@ -82,23 +87,27 @@ export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
 # export GEM_HOME=/home/askedrelic/.gem/ruby/1.8
 
-# Prompts ----------------------------------------------------------------------- 
+# Prompts -----------------------------------------------------------------------
 #PS1="\h:\W\$ "
 export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 #export PS1="\[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path
 
 # export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path, for root, need condition to use this for root
 # export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with user, host, and path
- 
+
 export PS2='> ' # Secondary prompt
 export PS3='#? ' # Prompt 3
 export PS4='+' # Prompt 4
 
 # Imports ----------------------------------------------------------------------------------------------
 # Turn on advanced bash completion if the file exists
-# (get it here: http://bash-completion.alioth.debian.org/ )
+# Get it here: http://www.caliban.org/bash/index.shtml#completion) or
+# on OSX: sudo port install bash-completion
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+fi
+if [ -f /opt/local/etc/bash_completion ]; then
+    . /opt/local/etc/bash_completion
 fi
 
 #osx brew install of bash completion
@@ -107,6 +116,7 @@ if [ `uname` = Darwin ]; then
         . `brew --prefix`/etc/bash_completion
     fi
 fi
+
 
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
