@@ -582,6 +582,8 @@ iab _AUTHOR Matt Behrens <askedrelic@gmail.com>
 " -----------------------------------------------------------------------------
 "Taglist
 map \a :TlistToggle<CR>
+"If launching mvim without proper PATH
+let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 " Jump to taglist window on open.
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_OnSelect=1
