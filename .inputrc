@@ -1,12 +1,4 @@
-# do not make noise
-set bell-style none
-
 set visible-stats on
-
-#single tab auto-completition
-set show-all-if-ambiguous on
-#fix spelling errors in cd
-set completion-ignore-case on
 
 # Be 8 bit clean.
 set input-meta on

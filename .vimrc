@@ -45,6 +45,8 @@ set statusline+=%b,0x%-6B                    " current char
 set statusline+=%c,%l/                       "cursor column/total lines
 set statusline+=%L\ %P                       "total lines/percentage in file
 
+match CursorColumn '\%120v.*' " Error format when a line is longer than 120
+
 " allow you to have multiple files open and change between them without saving
 set hidden
 "make backspace work
@@ -441,6 +443,9 @@ vnoremap Q gq
 " already done by yy):
 noremap Y y$
 
+" dulpicate line in visual mode
+vmap D y'>p
+
 " Make p in Visual mode replace the selected text with the "" register.
 vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
@@ -452,6 +457,9 @@ vnoremap X "_X
 "(by jumping to back start of previously changed text)
 noremap p p`[
 noremap P P`[
+
+" change first word of current line
+map <silent> <C-h> ^cw
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
@@ -574,6 +582,8 @@ iab _AUTHOR Matt Behrens <askedrelic@gmail.com>
 " -----------------------------------------------------------------------------
 "Taglist
 map \a :TlistToggle<CR>
+"If launching mvim without proper PATH
+let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 " Jump to taglist window on open.
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_OnSelect=1

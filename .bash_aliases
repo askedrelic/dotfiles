@@ -76,7 +76,7 @@ cdf ()
 
 # Search ----------------------------------------------------------------------------------------------
 alias G="grep"
-alias f='find . -iname'
+alias f='find -E . -iname'
 
 gns(){ # Case insensitive, excluding svn folders
       find . -path '*/.svn' -prune -o -type f -print0 | xargs -0 grep -I -n -e "$1"
@@ -84,7 +84,7 @@ gns(){ # Case insensitive, excluding svn folders
 
 # Other aliases ----------------------------------------------------------------------------------------------
 #used to be called 'which', probably shouldn't override default linux programs
-alias whereis='type -a'
+alias what='type -a'
 
 #goto the source dir of any python module
 cdp () {
