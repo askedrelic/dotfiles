@@ -86,6 +86,13 @@ gns(){ # Case insensitive, excluding svn folders
 #used to be called 'which', probably shouldn't override default linux programs
 alias whereis='type -a'
 
+#goto the source dir of any python module
+cdp () {
+    cd "$(python -c "import os.path as _, ${1}; \
+        print _.dirname(_.realpath(${1}.__file__[:-1]))"
+    )"
+}
+
 # Show disk usage
 alias df='df -h'
 
