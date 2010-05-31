@@ -75,7 +75,8 @@ cdf ()
 }
 
 # Search ----------------------------------------------------------------------------------------------
-alias G="grep"
+alias a="ack"
+alias g="grep"
 alias f='find -E . -iname'
 
 gns(){ # Case insensitive, excluding svn folders
