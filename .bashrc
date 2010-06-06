@@ -102,31 +102,24 @@ export PS4='+' # Prompt 4
 # Imports ----------------------------------------------------------------------------------------------
 # Turn on advanced bash completion if the file exists
 # Get it here: http://www.caliban.org/bash/index.shtml#completion) or
-# on OSX: sudo port install bash-completion
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+# via OSX/macports: sudo port install bash-completion
 if [ -f /opt/local/etc/bash_completion ]; then
     . /opt/local/etc/bash_completion
 fi
-
-#osx brew install of bash completion
+#osx brew install of bash-completion
 if [ `uname` = Darwin ]; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         . `brew --prefix`/etc/bash_completion
     fi
 fi
 
-
+#local bashrc changes
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
-
-#virtualenv wrapper
-#broken on linux?
-# if [ -f `which virtualenvwrapper.sh` ]; then
-#     . `which virtualenvwrapper.sh`
-# fi
 
 #my imports
 source ~/.bash_machines

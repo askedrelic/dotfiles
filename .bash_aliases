@@ -1,11 +1,8 @@
 #Aliases and scripts
 
-
 # History ----------------------------------------------------------------------------------------------
 alias h='history | tail -n 30'
-hf(){
-  grep "$@" ~/.bash_history
-}
+hf(){ grep "$@" ~/.bash_history }
 
 # Navigation ----------------------------------------------------------------------------------------------
 #Silent pushd/popd functions below
