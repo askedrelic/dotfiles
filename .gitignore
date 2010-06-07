@@ -19,6 +19,7 @@ mbox
 .addressbook
 .pinerc
 .Xauthority
+.bash_local
 
 # ignore sensitive files
 .ssh*
