@@ -170,7 +170,7 @@ if has("gui_running")
     set transparency=6    " Barely transparent
     let moria_style = 'black'
     colo moria
-    set lines=73 columns=271
+    " set lines=73 columns=271
     " Turn off the button bar in gvim
     set guioptions-=T
     set guioptions-=m
