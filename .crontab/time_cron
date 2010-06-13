@@ -1,0 +1,2 @@
+#update time
+0 4 * * * /usr/sbin/ntpdate pool.ntp.org
