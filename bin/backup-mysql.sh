@@ -57,6 +57,6 @@ do
     # do all inone job in pipe,
     # connect to mysql using mysqldump for select mysql database
     # and pipe it out to gz file in backup dir :)
-        $MYSQLDUMP -u $MyUSER -h $MyHOST -p$MyPASS $db | $GZIP -9 > $FILE
+        $MYSQLDUMP -u $MyUSER -h $MyHOST -p$MyPASS $db --skip-lock-tables | $GZIP -9 > $FILE
     fi
 done
