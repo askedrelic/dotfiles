@@ -21,8 +21,6 @@ pushd() {
 popd() {
     builtin popd "$@" > /dev/null
 }
-
-cl() { cd $1; ls -la; }
 alias ~="cd ~"
 alias u="cd .."
 alias d="dirs -v"
@@ -33,7 +31,10 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-#ls and it's options
+#cd and ls
+cl() { cd $1; ls -la; }
+
+#ls and its options
 alias ls='ls $LS_OPTIONS -Fh'
 alias la='ls -Al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
@@ -47,16 +48,15 @@ alias lo="ls -o"
 alias ll='tree --dirsfirst -ChAFL 1'
 alias l="la"
 
-# CD to bin
+#CD to bin
 alias bin="cd ~/bin/"
 
 #OSX: Open a Finder window at your current location
 alias of="open ."
 
 #OSX: cd's to frontmost window of Finder
-cdf () 
-{
-    currFolderPath=$( /usr/bin/osascript <<"    EOT"
+cdf() {
+    currFolderPath=$( /usr/bin/osascript << EOT
         tell application "Finder"
             try
                 set currFolder to (folder of the front window as alias)
@@ -65,20 +65,44 @@ cdf ()
             end try
             POSIX path of currFolder
         end tell
-    EOT
+EOT
     )
     echo "cd to \"$currFolderPath\""
     cd "$currFolderPath"
 }
 
+
+#OSX: change frontmost Finder window to the cwd
+fdc() {
+    if [ -n "$1" ]; then
+        if [ "${1%%/*}" = "" ]; then
+            thePath="$1"
+        else
+            thePath=`pwd`"$1"
+        fi
+    else
+        thePath=`pwd`
+    fi
+
+    /usr/bin/osascript << EOT
+        set myPath to ( POSIX file "$thePath" as alias )
+        try
+            tell application "Finder" to set the (folder of the front window) to myPath
+        on error -- no open folder windows
+            tell application "Finder" to open myPath
+        end try
+EOT
+}
+
 # Search ----------------------------------------------------------------------------------------------
 alias a="ack"
 alias g="grep"
-alias f='find -E . -iname'
+#use findr.sh wrapper script; see ~/bin/findr.sh
+alias f='findr.sh'
 
 gns(){ # Case insensitive, excluding svn folders
       find . -path '*/.svn' -prune -o -type f -print0 | xargs -0 grep -I -n -e "$1"
-  }
+}
 
 # Other aliases ----------------------------------------------------------------------------------------------
 #used to be called 'which', probably shouldn't override default linux programs
