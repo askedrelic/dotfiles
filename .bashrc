@@ -1,4 +1,5 @@
 # Bashrc
+#
 # Settings for bash only.
 # File imports at the bottom.
 
@@ -9,6 +10,7 @@ export CLICOLOR=1
 
 # Setup some colors to use later in interactive shell or scripts
 export COLOR_NC='\033[0m' # No Color
+export NC=$COLOR_NC
 export COLOR_WHITE='\033[1;37m'
 export COLOR_BLACK='\033[0;30m'
 export COLOR_BLUE='\033[0;34m'
@@ -25,7 +27,6 @@ export COLOR_BROWN='\033[0;33m'
 export COLOR_YELLOW='\033[1;33m'
 export COLOR_GRAY='\033[1;30m'
 export COLOR_LIGHT_GRAY='\033[0;37m'
-NC=$COLOR_NC
 alias colorslist="set | egrep 'COLOR_\w*'" # lists all the colors
 
 if [ `uname` = Darwin ]; then
@@ -110,7 +111,7 @@ if [ -f /opt/local/etc/bash_completion ]; then
     . /opt/local/etc/bash_completion
 fi
 #osx brew install of bash-completion
-if [ `uname` = Darwin ]; then
+if [ -e /usr/local/bin/brew ]; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         . `brew --prefix`/etc/bash_completion
     fi
@@ -124,12 +125,19 @@ fi
 #my imports
 source ~/.bash_machines
 source ~/.bash_aliases
-
-#app specific imports
-source ~/.svn_bash_completion
-source ~/.django_bash_completion
-source ~/.git_bash_completion
-
 #crazy imports
 source ~/.bash_app_specific
 source ~/.bash_help
+
+# import any local bash completion scripts
+# for file in ~/.bash_completion; do
+#     #ignore directory itself
+#     if [ -f $file ]; then
+#         # source $file
+#         echo
+#     fi
+# done
+
+# source ~/.svn_bash_completion
+# source ~/.django_bash_completion
+# source ~/.git_bash_completion
