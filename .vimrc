@@ -617,7 +617,7 @@ if !exists('g:FuzzyFinderOptions')
 endif
 let g:fuzzy_matching_limit = 50
 let g:fuzzy_ceiling = 10000
-let g:fuzzy_ignore = "*.log;*.pyc;*.svn;"
+let g:fuzzy_ignore = "*.log;*.pyc;*.svn;*.gif;*.png;*.jpg;*.jpeg"
 map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 map <silent> \b :FuzzyFinderBuffer!<CR>
