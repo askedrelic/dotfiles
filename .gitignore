@@ -42,7 +42,6 @@ Code/
 code/
 src/
 mail/
-public_html/
 .ipython/
  
 # ignore my OSX homedir
