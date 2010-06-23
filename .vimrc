@@ -459,7 +459,7 @@ noremap p p`[
 noremap P P`[
 
 " change first word of current line
-map <silent> <C-h> ^cw
+" map <silent> <C-h> ^cw
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
