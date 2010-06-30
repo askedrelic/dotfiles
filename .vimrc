@@ -479,7 +479,7 @@ function! ToggleWrap()
   if &wrap
     echo "Wrap OFF"
     setlocal nowrap
-    set virtualedit=
+    setlocal virtualedit=
     "set match for long lines
     match CursorColumn '\%120v.*'
     silent! nunmap <buffer> k
@@ -497,7 +497,7 @@ function! ToggleWrap()
   else
     echo "Wrap ON"
     setlocal wrap linebreak nolist
-    set virtualedit=all
+    setlocal virtualedit=all
     setlocal display+=lastline
     "remove long line matching
     match CursorColumn ''

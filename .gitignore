@@ -1,5 +1,4 @@
 # ignore common files not needed under revision control
-*._*
 *.pyc
 *.swp
 var
@@ -76,6 +75,3 @@ backups/
 .virtualenvs/
 .yolk/
 .local/
-
-
-#ignore my linux homedir
