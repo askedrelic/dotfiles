@@ -106,7 +106,6 @@ gns(){ # Case insensitive, excluding svn folders
 
 # Other aliases ----------------------------------------------------------------------------------------------
 #used to be called 'which', probably shouldn't override default linux programs
-alias what='type -a'
 
 #goto the source dir of any python module
 cdp () {
@@ -132,6 +131,8 @@ alias py="python"
 alias rscreen="screen -R"
 alias pine=alpine
 
+#show all types
+alias type="type -a"
 alias paux="ps -A|grep -i"
 alias bc='bc -lq'
 alias man="man -a"

@@ -84,6 +84,8 @@ export LC_ALL=C
 export LANGUAGE=en_US
 
 export EDITOR="vim"
+#assume on OSX and using homebrew to install macvim
+export VIM_APP_DIR=/usr/local/Cellar/macvim/HEAD
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
 # export GEM_HOME=/home/askedrelic/.gem/ruby/1.8
