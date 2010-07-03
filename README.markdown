@@ -1,24 +1,26 @@
 Homedir
 ========
 
-A mostly complete listing of my home directory. SSH aliases and other private scripts are missing.
+My public facing homedir, lovingly grown over many years and lots of wasted time. I often get more wrapped up in the process of tweaking things versus actually completing things!
 
-Things of most interest:
+Areas of interest:
 
-* Vimrc
+* .bin/ 
+	* Random scripts I've written and collected
+	* youtube-dl - download youtube videos
+	* prettyJSON.py - format JSON
+	* findr.sh - makes GNU find much more useful for most situations
+	* cloc.pl - SLOC analyzer
 
-	* Well organized and well commented
+* .vim/ and .vimrc
+	* Reasonably organized, well commented vimrc. Vim is my main IDE, so I'm always tweaking vim.
+	* NERDTree - good filesystem browser
+	* taglist - essential source code browser
+	* fuzzyfinder - similar to textmate's fuzzy file finder, this is a hack of ruby scripts and fuzzyfinder vim plugin. great for finding files!
 	
-	* Interesting plugins: Taglist, NERDTree, FuzzyFinder
-
-* Bash profile/rc (reasonably organized)
-
-	* Reasonably organized
-	
-* Other random things
-
-	* django, svn bash completion script
-	
-	* input.rc has this cool hack I use to scroll through my history
-	
-	* Bash, git, svn alias and tricks?
+* .bash_profile and .bashrc
+	*.bash_profile should be loaded first, sets up the ENV and PATH
+	*.bashrc sets ENV variables and settings, loads other customizations
+	*.bash_aliases is shorter scripts and command aliases
+	*.bash_machines is shortcuts to all my machines
+	* input.rc has some cool hacks for viewing history and setting up the terminal
