@@ -3,6 +3,9 @@
 # Settings for bash only.
 # File imports at the bottom.
 
+# If not running interactively, don't do anything, to stop bind errors
+[ -z "$PS1" ] && return
+
 #Colors ------------------------------------------------------------
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
