@@ -39,7 +39,7 @@ gui=
 opts=
 
 # GUI mode, implies forking
-case "$name" in m*|g*|rm*|rg*) gui=true ;; esac
+case "$name" in g*|rm*|rg*) gui=true ;; esac
 
 # Restricted mode
 case "$name" in r*) opts="$opts -Z";; esac

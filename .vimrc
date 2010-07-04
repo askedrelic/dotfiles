@@ -459,7 +459,7 @@ noremap p p`[
 noremap P P`[
 
 " change first word of current line
-map <silent> <C-h> ^cw
+" map <silent> <C-h> ^cw
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
@@ -479,7 +479,9 @@ function! ToggleWrap()
   if &wrap
     echo "Wrap OFF"
     setlocal nowrap
-    set virtualedit=all
+    setlocal virtualedit=
+    "set match for long lines
+    match CursorColumn '\%120v.*'
     silent! nunmap <buffer> k
     silent! nunmap <buffer> j
     silent! nunmap <buffer> 0
@@ -495,8 +497,10 @@ function! ToggleWrap()
   else
     echo "Wrap ON"
     setlocal wrap linebreak nolist
-    set virtualedit=
+    setlocal virtualedit=all
     setlocal display+=lastline
+    "remove long line matching
+    match CursorColumn ''
     noremap  <buffer> <silent> k gk
     noremap  <buffer> <silent> j gj
     noremap  <buffer> <silent> 0 g0
@@ -617,7 +621,7 @@ if !exists('g:FuzzyFinderOptions')
 endif
 let g:fuzzy_matching_limit = 50
 let g:fuzzy_ceiling = 10000
-let g:fuzzy_ignore = "*.log;*.pyc;*.svn;"
+let g:fuzzy_ignore = "*.log;*.pyc;*.svn;*.gif;*.png;*.jpg;*.jpeg"
 map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 map <silent> \b :FuzzyFinderBuffer!<CR>
