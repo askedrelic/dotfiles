@@ -123,8 +123,8 @@ alias searchy="apt-cache search"
 
 alias v=vim
 alias vi=vim
-alias vim='~/bin/mvim'   
-alias mvim='~/bin/mvim -g'
+# alias vim='~/bin/mvim'   
+# alias mvim='~/bin/mvim -g'
 alias c="clear"
 alias j='jobs -l'
 alias py="python"
