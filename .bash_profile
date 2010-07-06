@@ -43,12 +43,11 @@ else
 fi
 
 # Path ------------------------------------------------------------
-# if [ "$OS" = "darwin" ] ; then
-# fi
+# Add my paths, in reverse priority, so that they are prepend properly
 
-#add your bin folder to the path, if you have it. It's a good place to add all your scripts
-if [ -d ~/bin ]; then
-  export PATH=~/bin:$PATH
+#add local ruby gems
+if [ -d ~/.gem/ruby/1.8/bin ]; then
+  export PATH=~/.gem/ruby/1.8/bin:$PATH
 fi
 
 #add /usr/local/bin for OSX/homebrew
@@ -56,9 +55,9 @@ if [ -d /usr/local/bin ]; then
   export PATH=/usr/local/bin:$PATH
 fi
 
-#add local ruby gems
-if [ -d ~/.gem/ruby/1.8/bin ]; then
-  export PATH=~/.gem/ruby/1.8/bin:$PATH
+# Local bin should always be first priority
+if [ -d ~/bin ]; then
+  export PATH=~/bin:$PATH
 fi
 
 #add local dir last

@@ -12,6 +12,9 @@ alias jofur="ssh matthewbehrens@jofur.rh.rit.edu"
 alias asktherelic="ssh askedrelic@asktherelic.com"
 alias asktherelic-mysql="ssh -L 3306:localhost:3306 askedrelic@asktherelic.com"
 
+alias slicehost="ssh askedrelic@174.143.148.193"
+alias linode="ssh askedrelic@69.164.198.163"
+
 alias blueballs="ssh mattb@bluebrick.se.rit.edu"
 
 alias shackwiki.com="ssh shackfaq@shackwiki.com"
