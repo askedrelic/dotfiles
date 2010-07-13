@@ -612,6 +612,59 @@ let NERDTreeChDirMode='2'
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 
+" neocomplcache.vim"{{{
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+" Set auto completion length.
+let g:neocomplcache_auto_completion_start_length = 2
+" Set manual completion length.
+let g:neocomplcache_manual_completion_start_length = 0
+" Set minimum keyword length.
+let g:neocomplcache_min_keyword_length = 3
+let g:neocomplcache_enable_cursor_hold_i = 1
+let g:neocomplcache_cursor_hold_i_time = 250
+let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_lock_buffer_name_pattern = '\*neoui\*\|\[neoui\]'
+
+" Define dictionary.
+let g:neocomplcache_dictionary_filetype_lists = {
+      \ 'default' : ''
+      \ }
+
+let g:neocomplcache_omni_function_list = {
+      \ 'python' : 'pythoncomplete#Complete',
+      \ 'ruby' : 'rubycomplete#Complete',
+      \ }
+
+" Define keyword pattern.
+if !exists('g:neocomplcache_keyword_patterns')
+  let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+"let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+
+if !exists('g:neocomplcache_same_filetype_lists')
+  let g:neocomplcache_same_filetype_lists = {}
+endif
+"let g:neocomplcache_same_filetype_lists.perl = 'ref'
+
+if !exists('g:neocomplcache_vim_completefuncs')
+  let g:neocomplcache_vim_completefuncs = {}
+endif
+
 "FuzzyFinder
 "Seriously FF, setting up your options sucks
 if !exists('g:FuzzyFinderOptions')
