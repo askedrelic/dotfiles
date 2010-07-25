@@ -130,6 +130,10 @@ fi
 #my imports
 source ~/.bash_machines
 source ~/.bash_aliases
+
+#local version of autojump
+source ~/.autojump.bash
+
 #crazy imports
 source ~/.bash_app_specific
 source ~/.bash_help

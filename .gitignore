@@ -1,24 +1,28 @@
 # ignore common files not needed under revision control
+mbox
+.aptitude/
+.DS_Store
+.rnd
+.gem
+.gemrc
+.addressbook
+.htoprc
+.heroku
+.neocon/
+
+.pinerc
+.viminfo
+.vim/.netrwhist
+.vimfuzzyfinder
+.bash_history
+.mysql_history
+.bash_local
+.autojump_errors
+.autojump_py
+.autojump_py.bak
+
 *.pyc
 *.swp
-var
-mbox
-.DS_Store
-.subversion
-.bash_history
-.htoprc
-.vimfuzzyfinder
-.rnd
-.viminfo
-.mysql_history
-.irssi/
-.aptitude/
-.gem
-.vim/.netrwhist
-.addressbook
-.pinerc
-.Xauthority
-.bash_local
 
 # ignore sensitive files
 .ssh*
