@@ -93,6 +93,9 @@ export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
 # export GEM_HOME=/home/askedrelic/.gem/ruby/1.8
 
+#Python 
+export PIP_RESPECT_VIRTUALENV=true
+
 # Prompts -----------------------------------------------------------------------
 #PS1="\h:\W\$ "
 export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
