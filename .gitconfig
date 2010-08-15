@@ -37,11 +37,12 @@
 
     logstat = log -M --summary --stat --date=relative --abbrev-commit
     logpatch = log -p --date=relative --abbrev-commit
+    logword = log -p --date=relative --abbrev-commit --word-diff
 
     #diff
-    staged = diff --cached
-    unstaged = diff --patience
-    both = diff HEAD
+    staged = diff --cached --word-diff
+    unstaged = diff --patience --word-diff
+    both = diff HEAD --word-diff
 
     changes=diff --name-status -r
     diffstat=diff --stat -r
