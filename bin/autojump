@@ -22,8 +22,9 @@ from sys import argv,exit,stderr
 import os
 import signal
 max_keyweight=1000
+max_stored_paths=600
 completion_separator='__'
-dead_dirs=False #global variable (evil ;-) to know if we should save the dict at the end
+config_dir=os.environ.get("AUTOJUMP_DATA_DIR",os.path.expanduser("~"))
 
 def signal_handler(arg1,arg2):
     print "Received SIGINT, trying to continue"
@@ -35,30 +36,6 @@ def uniqadd(list,key):
 
 def dicadd(dic,key,increment=1):
     dic[key]=dic.get(key,0.)+increment
-
-def match(path,pattern,path_dict,ignore_case=False,only_end=False):
-    try:
-        if os.path.realpath(os.curdir)==path : return False
-    except OSError: #sometimes the current path doesn't exist anymore. In that case, jump if possible.
-        pass
-    if only_end:
-        match_string = "/".join(path.split('/')[-1-pattern.count('/'):])
-    else:
-        match_string = path
-    #import re
-    #if re.search(pattern,match_string),re.IGNORECASE if ignore_case else 0) is None:
-    match=(match_string.lower().find(pattern.lower()) != -1)\
-            if ignore_case\
-            else (match_string.find(pattern) != -1)
-    if not match:
-        return False
-    else: 
-        if os.path.exists(path) : return True
-        else: #clean up dead directories
-            del path_dict[path]
-            global dead_dirs
-            dead_dirs=True
-            return False
 
 def save(path_dict,dic_file):
     f=open(dic_file+".tmp",'w')
@@ -83,12 +60,47 @@ def forget(path_dict,dic_file):
             path_dict[k]*=0.9*max_keyweight/keyweight
         save(path_dict,dic_file)
 
-def find_matches(dirs,patterns,path_dict,result_list,ignore_case,max_matches):
+def clean_dict(sorted_dirs,path_dict):
+    """Limits the sized of the path_dict to max_stored_paths. Returns True if keys were deleted"""
+    if len(sorted_dirs) > max_stored_paths:
+        #remove 25 more than needed, to avoid doing it every time
+        for dir,dummy in sorted_dirs[max_stored_paths-25:]:
+            del path_dict[dir]
+        return True
+    else: return False
+
+# catch all unavailable (python < 2.5)
+try:
+    all
+except:
+    def all(iterable):
+        for element in iterable:
+            if not element:
+                return False
+        return True
+
+def match(path,pattern,ignore_case=False,only_end=False):
+    try:
+        if os.path.realpath(os.curdir)==path : return False
+    except OSError: #sometimes the current path doesn't exist anymore. In that case, jump if possible.
+        pass
+    if only_end:
+        match_string = "/".join(path.split('/')[-1-pattern.count('/'):])
+    else:
+        match_string = path
+    if ignore_case:
+        match=(match_string.lower().find(pattern.lower()) != -1)
+    else:
+        match=(match_string.find(pattern) != -1)
+    #return true if there is a match and the path exists (useful in the case of external drives, for example)
+    return match and os.path.exists(path) 
+
+def find_matches(dirs,patterns,result_list,ignore_case,max_matches):
     """Find max_matches paths that match the pattern, and add them to the result_list"""
     for path,count in dirs:
         if len(result_list) >= max_matches : break
         #For the last pattern, only match the end of the pattern
-        if all(match(path,p,path_dict,ignore_case, only_end = (n==len(patterns)-1)) for n,p in enumerate(patterns)):
+        if all(match(path,p,ignore_case, only_end = (n==len(patterns)-1)) for n,p in enumerate(patterns)):
             uniqadd(result_list,path)
 
 def open_dic(dic_file,error_recovery=False):
@@ -112,7 +124,10 @@ except getopt.GetoptError, e:
     print "Unknown command line argument: %s" % e
     exit(1)
 
-dic_file=os.path.expanduser("~/.autojump_py")
+if config_dir == os.path.expanduser("~"):
+    dic_file=config_dir+"/.autojump_py"
+else:
+    dic_file=config_dir+"/autojump_py"
 path_dict=open_dic(dic_file)
 if ('-a','') in optlist:
     if(args[-1] != os.path.expanduser("~")): # home dir can be reached quickly by "cd" and may interfere with other directories
@@ -123,7 +138,7 @@ elif ('--stat','') in optlist:
     a.sort(key=lambda e:e[1])
     for path,count in a[-100:]:
         print "%.1f:\t%s" % (count,path)
-    print "Total key weight: %d" % sum(path_dict.values())
+    print "Total key weight: %d. Number of stored paths: %d" % (sum(path_dict.values()),len(a))
 elif ('--import','') in optlist:
     for i in open(args[-1]).readlines():
         dicadd(path_dict,i[:-1])
@@ -158,13 +173,14 @@ else:
 
         dirs=path_dict.items()
         dirs.sort(key=lambda e:e[1],reverse=True)
-        max_matches = 9 if completion else 1
-        find_matches(dirs,patterns,path_dict,results,False,max_matches)
-        dirs=path_dict.items() #we need to recreate the list since the first iteration potentially deletes paths
-        dirs.sort(key=lambda e:e[1],reverse=True)
+        if completion or userchoice != -1:
+            max_matches = 9
+        else:
+            max_matches = 1
+        find_matches(dirs,patterns,results,False,max_matches)
         if completion or not results: #if not found, try ignoring case. On completion always show all results
-            find_matches(dirs,patterns,path_dict,results,ignore_case=True,max_matches=max_matches) 
-        if dead_dirs and not completion: #save the dict if there were some non-existent directories in the database
+            find_matches(dirs,patterns,results,ignore_case=True,max_matches=max_matches) 
+        if not completion and clean_dict(dirs,path_dict): #keep the database to a reasonable size
             save(path_dict,dic_file)
 
         if completion and ('--bash', '') in optlist: quotes='"'
