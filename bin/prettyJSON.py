@@ -6,8 +6,9 @@ Convert JSON data to human-readable form.
 """
 
 import sys
-import simplejson as json
+#import simplejson as json
+import json
 
 
-print json.dumps(json.loads(sys.stdin.read()), indent=4)
+print json.dumps(json.loads(sys.argv[1]), indent=4)
 sys.exit(0)
