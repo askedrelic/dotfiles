@@ -177,7 +177,12 @@ alias wgetmirror="wget --mirror -U Firefox/3.0 -p -erobots=off --html-extension 
 alias openapps='lsof -P -i -n'
 
 #prints the path in a useful fashion
-alias path="tr : '\n' <<<$PATH"
+function path(){
+    old=$IFS
+    IFS=:
+    printf "%s\n" $PATH
+    IFS=$old
+}
 
 function extract()      # Handy Extract Program.
 {
