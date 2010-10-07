@@ -28,9 +28,13 @@ endif
 set viminfo=/50,'50,h
 
 " where to put backup files
-set backupdir=~/.vim/backup
+" set backupdir=~/.vim/backup
 " directory to place swap files in
-set directory=~/.vim/tmp
+" set directory=~/.vim/tmp
+
+" trying no backup
+set nobackup
+set noswapfile
 
 " Custom status line
 set statusline=                              " clear the statusline for when vimrc is reloaded
@@ -62,8 +66,10 @@ set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
 set encoding=utf-8
 " Don't keep a backup file
 set nobackup
-" keep 100 lines of command line history
-set history=100
+" keep 1000 lines of command line history
+set history=1000
+" keep 1000 undo levels
+set undolevels=1000
 " Automatically save before commands like :next and :make
 set autowrite
 " report: show a report when N lines were changed. 0 means 'all'
@@ -98,6 +104,7 @@ function! Tabstyle_spaces()
     " Use 4 spaces
     set expandtab
     set autoindent
+    set copyindent
     set shiftwidth=4
     set tabstop=4
     set softtabstop=4
@@ -319,6 +326,9 @@ set ttyfast
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
 imap jj <Esc>
 
+" save so many keystrokes!
+nnoremap ; :
+
 " Map uppercase write and quit, I'm lazy with shift
 cab W w
 cab Q q
@@ -536,6 +546,9 @@ map \s :silent !screener.sh<CR>
 
 "clear the fucking search buffer, not just remove the highlight
 map \c :let @/ = ""<CR>
+
+" remove highlighted search
+nmap <silent> ,/ :nohlsearch<CR>
 
 " Revert the current buffer
 nnoremap \r :e!<CR>
