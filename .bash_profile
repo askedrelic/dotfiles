@@ -60,10 +60,6 @@ if [ -d ~/bin ]; then
   export PATH=~/bin:$PATH
 fi
 
-#add local dir last
-export PATH=$PATH:.
-# export PATH=$PATH:.:/sbin:/usr/sbin
-
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc
 
