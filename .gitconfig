@@ -28,6 +28,7 @@
     br = branch
     co = checkout
     ls = ls-files
+    dt = difftool
 
     #simple log with branches
     #git 1.5
