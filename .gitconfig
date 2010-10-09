@@ -51,5 +51,7 @@
     threads = 0
 [branch]
     autosetupmerge = true
+[difftool]
+    prompt = false
 [github]
-	user = askedrelic
+    user = askedrelic
