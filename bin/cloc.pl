@@ -33,7 +33,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 # 1}}}
-my $VERSION = sprintf("%.2f", 1.51);
+my $VERSION = sprintf("%.2f", 1.52);
 my $URL     = "http://cloc.sourceforge.net";
 require 5.006;
 # use modules                                  {{{1
@@ -166,7 +166,8 @@ Usage: $script [options] <file(s)/dir(s)> | <report files>
                              source file(s) of <set1> and <set2>.  The inputs
                              may be pairs of files, directories, or archives.
                              Use --diff-alignment to generate a list showing
-                             which file pairs where compared.
+                             which file pairs where compared.  See also
+                             --ignore-whitespace.
    --force-lang=<lang>[,<ext>]
                              Process all files that have a <ext> extension 
                              with the counter for language <lang>.  For 
@@ -180,6 +181,8 @@ Usage: $script [options] <file(s)/dir(s)> | <report files>
                              specified multiple times (but that is only
                              useful when <ext> is given each time).  
                              See also --script-lang.
+   --ignore-whitespace       Ignore horizontal white space when comparing files
+                             with --diff.
    --read-binary-files       Process binary files in addition to text files.
                              This is usually a bad idea and should only be
                              attempted with text files that have embedded 
@@ -227,13 +230,16 @@ Usage: $script [options] <file(s)/dir(s)> | <report files>
                              of their path.
                              Directories named .cvs and .svn are always
                              excluded.
+   --exclude-ext=<ext1>[,<ext2>[...]]
+                             Do not count files having the given file name 
+                             extensions.
    --exclude-lang=<L1>[,L2,] Exclude the given comma separated languages
                              L1, L2, L3, et cetera, from being counted.
-   --exclude-list-file=<file>  Ignore files whose names appear in <file>.
-                             <file> should have one entry per line.  Relative
-                             path names will be resolved starting from the
-                             directory where cloc is invoked.  See also
-                             --list-file.
+   --exclude-list-file=<file>  Ignore files and/or directories whose names 
+                             appear in <file>.  <file> should have one entry 
+                             per line.  Relative path names will be resolved 
+                             starting from the directory where cloc is 
+                             invoked.  See also --list-file.
    --match-f=<regex>         Only count files whose basenames match the Perl 
                              regex.  For example
                                --match-f=^[Ww]idget
@@ -352,6 +358,8 @@ my (
 	$opt_sql_append           ,
 	$opt_sql_project          ,
 	$opt_inline               ,
+    $opt_exclude_ext          ,
+    $opt_ignore_whitespace    ,
    );
 my $getopt_success = GetOptions(
    "by_file|by-file"                         => \$opt_by_file             ,
@@ -402,6 +410,8 @@ my $getopt_success = GetOptions(
    "sql_project|sql-project=s"               => \$opt_sql_project         ,
    "sql_append|sql-append"                   => \$opt_sql_append          ,
    "inline"                                  => \$opt_inline              ,
+   "exclude_ext|exclude-ext=s"               => \$opt_exclude_ext         ,
+   "ignore_whitespace|ignore-whitespace"     => \$opt_ignore_whitespace   ,
   );
 $opt_by_file  = 1 if defined  $opt_by_file_by_lang;
 die "\n" unless $getopt_success;
@@ -412,12 +422,15 @@ my %Exclude_Language = ();
 my %Exclude_Dir      = ();
    %Exclude_Dir      = map { $_ => 1 } split(/,/, $opt_exclude_dir ) 
         if $opt_exclude_dir ;
-# Forcibly exclude .svn and .cvs directories.  The contents of these
+# Forcibly exclude .svn, .cvs, .hg directories.  The contents of these
 # directories often conflict with files of interest.
-$opt_exclude_dir     = 1;
-$Exclude_Dir{".svn"} = 1;
-$Exclude_Dir{".cvs"} = 1;
-$opt_diff            = 1 if $opt_diff_alignment;
+$opt_exclude_dir       = 1;
+$Exclude_Dir{".svn"}   = 1;
+$Exclude_Dir{".cvs"}   = 1;
+$Exclude_Dir{".hg"}    = 1;
+$opt_diff              = 1 if $opt_diff_alignment;
+$opt_exclude_ext       = "";
+$opt_ignore_whitespace = 0 unless $opt_ignore_whitespace;
 
 # Options defaults:
 $opt_progress_rate = 100 unless defined $opt_progress_rate;
@@ -532,6 +545,13 @@ foreach my $pair (@opt_script_lang) {
         unless $Recognized_Language_lc{$lang_lc}; 
 
     $Language_by_Script{$script_name} = $Recognized_Language_lc{$lang_lc};
+}
+
+# If user provided file extensions to ignore, add these to
+# the exclusion list.
+foreach my $ext (map { $_ => 1 } split(/,/, $opt_exclude_ext ) ) {
+    $ext = lc $ext if $ON_WINDOWS;
+    $Not_Code_Extension{$ext} = 1;
 }
 
 # If SQL output is requested, keep track of directory names generated by 
@@ -923,6 +943,14 @@ foreach (my $F = 0; $F < scalar @fh - 1; $F++) {
             }
         }
 
+        if ($opt_ignore_whitespace) {
+            # strip all whitespace from each line of source code
+            # and comments then use these stripped arrays in diffs
+            foreach (@code_L) { s/\s+//g }
+            foreach (@code_R) { s/\s+//g }
+            foreach (@comm_L) { s/\s+//g }
+            foreach (@comm_R) { s/\s+//g }
+        }
         # step 3: compute code diffs
         array_diff("$file_L v. $file_R"   ,   # in
                    \@code_L               ,   # in
@@ -939,6 +967,8 @@ foreach (my $F = 0; $F < scalar @fh - 1; $F++) {
                 ++$Delta_by_File{$file_L}{'code'}{$status};
             }
         }
+#use Data::Dumper;
+#print Dumper("code diffs:", \@diff_LL, \@diff_LR);
 
         # step 4: compute comment diffs
         array_diff("$file_L v. $file_R"   ,   # in
@@ -955,6 +985,8 @@ foreach (my $F = 0; $F < scalar @fh - 1; $F++) {
                 ++$Delta_by_File{$file_L}{'comment'}{$status};
             }
         }
+#print Dumper("comment diffs:", \@diff_LL, \@diff_LR);
+#die; here=  need to save original line number in diff result for html display
 
         # step 5: compute difference in blank lines (kind of pointless)
         my ($all_line_count_L,
@@ -971,7 +1003,7 @@ foreach (my $F = 0; $F < scalar @fh - 1; $F++) {
             my $D = $blank_count_R - $blank_count_L;
             $Delta_by_Language{$Lang_L}{'blank'}{'added'}   += $D;
         } else {
-            my $D = $blank_count_R - $blank_count_L;
+            my $D = $blank_count_L - $blank_count_R;
             $Delta_by_Language{$Lang_L}{'blank'}{'removed'} += $D;
         }
         if ($opt_by_file) {
@@ -979,7 +1011,7 @@ foreach (my $F = 0; $F < scalar @fh - 1; $F++) {
                 my $D = $blank_count_R - $blank_count_L;
                 $Delta_by_File{$file_L}{'blank'}{'added'}   += $D;
             } else {
-                my $D = $blank_count_R - $blank_count_L;
+                my $D = $blank_count_L - $blank_count_R;
                 $Delta_by_File{$file_L}{'blank'}{'removed'} += $D;
             }
         }
@@ -1039,15 +1071,23 @@ if ($opt_list_file) {
     #     File::Find's find() which in turn calls files()
 }
 if ($opt_exclude_list_file) {
-    # now reject a specific set of files
+    # now reject a specific set of files and/or directories
     my @reject_list   = read_list_file($opt_exclude_list_file);
+    my @file_reject_list = ();
+    foreach my $F_or_D (@reject_list) {
+        if (is_dir($F_or_D)) {
+            $Exclude_Dir{$F_or_D} = 1;
+        } elsif (is_file($F_or_D)) {
+            push @file_reject_list, $F_or_D;
+        }
+    }
 
     # Normalize file names for better comparison.
-    my %normalized_input  = normalize_file_names(@file_list);
-    my %normalized_reject = normalize_file_names(@reject_list);
-
+    my %normalized_input   = normalize_file_names(@file_list);
+    my %normalized_reject  = normalize_file_names(@file_reject_list);
+    my %normalized_exclude = normalize_file_names(keys %Exclude_Dir);
     foreach my $F (keys %normalized_input) {
-        if ($normalized_reject{$F}) {
+        if ($normalized_reject{$F} or is_excluded($F, \%normalized_exclude)) {
             my $orig_F = $normalized_input{$F};
             $Ignored{$orig_F} = "listed in exclusion file $opt_exclude_list_file";
             print "Ignoring $orig_F because it appears in $opt_exclude_list_file\n" 
@@ -1343,23 +1383,17 @@ my $sum_lines=1;
                         $elapsed_sec           ,
                         $sum_files/$elapsed_sec,
                         $sum_lines/$elapsed_sec) unless $opt_sum_reports;
-    if ($ALREADY_SHOWED_HEADER) {
-        push @results, "";
-    } else {
-        push @results, $header_line;
-        $ALREADY_SHOWED_HEADER = 1;
-    }
-    push @results, $hyphen_line;
+    push @results, output_header($header_line, $hyphen_line, $BY_FILE);
 
     # column headers
     if (!$opt_3 and $BY_FILE) {
         my $spacing_n = $spacing_1 - 11;
-        $data_line  = sprintf "%-${spacing_n}s ", $first_column;
+        $data_line  = sprintf "%-${spacing_n}s" , $first_column;
     } else {
         $data_line  = sprintf "%-${spacing_1}s ", $first_column;
     }
     if ($BY_FILE) {
-        $data_line .= sprintf "%${spacing_2}s "  , " "    ;
+        $data_line .= sprintf "%${spacing_2}s"   , ""     ;
     } else {
         $data_line .= sprintf "%${spacing_2}s "  , "files";
     }
@@ -1379,9 +1413,13 @@ my $sum_lines=1;
         push @results, "$lang_or_file";
         foreach my $S (qw(same modified added removed)) {
             my $indent = $spacing_1 - 2;
-            my $line .= sprintf "  %-${indent}s %${spacing_2}s %${spacing_2}s %${spacing_2}s %${spacing_2}s",
-                $S                                          ,
-                $rhhh_count->{$lang_or_file}{'nFiles'}{$S}  ,
+            my $line .= sprintf " %-${indent}s", $S;
+            if ($BY_FILE) {
+                $line .= sprintf "   ";
+            } else {
+                $line .= sprintf "  %${spacing_2}s", $rhhh_count->{$lang_or_file}{'nFiles'}{$S};
+            }
+            $line .= sprintf " %${spacing_2}s %${spacing_2}s %${spacing_2}s",
                 $rhhh_count->{$lang_or_file}{'blank'}{$S}   ,
                 $rhhh_count->{$lang_or_file}{'comment'}{$S} ,
                 $rhhh_count->{$lang_or_file}{'code'}{$S}    ;
@@ -1392,9 +1430,13 @@ my $sum_lines=1;
     push @results, "SUM:";
     foreach my $S (qw(same modified added removed)) {
         my $indent = $spacing_1 - 2;
-        my $line .= sprintf "  %-${indent}s %${spacing_2}s %${spacing_2}s %${spacing_2}s %${spacing_2}s",
-            $S                  ,
-            $sum{'nFiles'}{$S}  ,
+        my $line .= sprintf " %-${indent}s", $S;
+            if ($BY_FILE) {
+                $line .= sprintf "   ";
+            } else {
+                $line .= sprintf "  %${spacing_2}s", $sum{'nFiles'}{$S};
+            }
+        $line .= sprintf " %${spacing_2}s %${spacing_2}s %${spacing_2}s",
             $sum{'blank'}{$S}   ,
             $sum{'comment'}{$S} ,
             $sum{'code'}{$S}    ;
@@ -1495,6 +1537,39 @@ create table t        (
     #          from t group by Project, Language order by Project, Code desc;
     #
 } # 1}}}
+sub output_header   {                        # {{{1
+    my ($header_line, 
+        $hyphen_line,
+        $BY_FILE    ,)    = @_;
+    my @R = ();
+    if      ($opt_xml) {
+        push @R, "<?xml version=\"1.0\"?>";
+        push @R, '<?xml-stylesheet type="text/xsl" href="' .
+                        $opt_xsl . '"?>' if $opt_xsl;
+        push @R, "<results>";
+        push @R, "<header>$header_line</header>";
+        if ($BY_FILE) {
+            push @R, "<files>";
+        } else {
+            push @R, "<languages>";
+        }
+    } elsif ($opt_yaml) {
+        push @R, "---\n# $header_line";
+    } elsif ($opt_csv) {
+        # append the header to the end of the column headers
+        # to keep the output a bit cleaner from a spreadsheet
+        # perspective
+    } else {
+        if ($ALREADY_SHOWED_HEADER) {
+            push @R, "";
+        } else {
+            push @R, $header_line;
+            $ALREADY_SHOWED_HEADER = 1;
+        }
+        push @R, $hyphen_line;
+    }
+    return @R;
+} # 1}}}
 sub generate_report {                        # {{{1
     # returns an array of lines containing the results
     my ($version    , # in
@@ -1559,7 +1634,6 @@ sub generate_report {                        # {{{1
        $Style = "xml" if $opt_yaml;  # not a typo; just set to anything but txt
        $Style = "xml" if $opt_csv ;  # not a typo; just set to anything but txt
 
-    my $URL        = "http://cloc.sourceforge.net";
     my $hyphen_line = sprintf "%s", '-' x (79 + $column_1_offset);
        $hyphen_line = sprintf "%s", '-' x (68 + $column_1_offset) 
             if (!$opt_3) and (68 + $column_1_offset) > 79;
@@ -1582,32 +1656,7 @@ sub generate_report {                        # {{{1
                         $elapsed_sec           ,
                         $sum_files/$elapsed_sec,
                         $sum_lines/$elapsed_sec) unless $opt_sum_reports;
-    if      ($opt_xml) {
-        push @results, "<?xml version=\"1.0\"?>";
-        push @results, '<?xml-stylesheet type="text/xsl" href="' .
-                        $opt_xsl . '"?>' if $opt_xsl;
-        push @results, "<results>";
-        push @results, "<header>$header_line</header>";
-        if ($BY_FILE) {
-            push @results, "<files>";
-        } else {
-            push @results, "<languages>";
-        }
-    } elsif ($opt_yaml) {
-        push @results, "---\n# $header_line";
-    } elsif ($opt_csv) {
-        # append the header to the end of the column headers
-        # to keep the output a bit cleaner from a spreadsheet
-        # perspective
-    } else {
-        if ($ALREADY_SHOWED_HEADER) {
-            push @results, "";
-        } else {
-            push @results, $header_line;
-            $ALREADY_SHOWED_HEADER = 1;
-        }
-        push @results, $hyphen_line;
-    }
+    push @results, output_header($header_line, $hyphen_line, $BY_FILE);
 
     if ($Style eq "txt") {
         # column headers
@@ -2015,7 +2064,7 @@ sub make_file_list {                         # {{{1
                 }
             }
             push @file_list, "$file_or_dir";
-        } elsif (is_dir ($file_or_dir)) {
+        } elsif (is_dir($file_or_dir)) {
             push @dir_list, $file_or_dir;
         } else {
             push @{$raa_errors}, [$rh_Err->{'Neither file nor directory'} , $file_or_dir];
@@ -2112,6 +2161,7 @@ sub remove_duplicate_files {                 # {{{1
             $rh_unique_source_file->{$files_by_size{$bytes}[0]} = 1;
             next;
         } else {
+#print "equally sized files: ",join(", ", @{$files_by_size{$bytes}}), "\n";
             foreach my $F (different_files(\@{$files_by_size{$bytes}},
                                             $rh_Err     ,
                                             $raa_errors ,
@@ -2124,10 +2174,14 @@ sub remove_duplicate_files {                 # {{{1
 } # 1}}}
 sub files {                                  # {{{1
     # invoked by File::Find's find()   Populates global variable @file_list
-    if ($opt_exclude_dir) {
+    if ($opt_exclude_dir or $opt_exclude_list_file) {
         my $return = 0;
         foreach my $skip_dir (keys %Exclude_Dir) {
-            if ($File::Find::dir =~ m{/$skip_dir(/|$)} ) {
+            # File::Find::dir used to always start with / but
+            # newer versions (1.13) no longer do; have to correct for this
+            my $dir = $File::Find::dir;
+               $dir = "./$dir" unless $dir =~ m{^/};
+            if ($dir =~ m{/$skip_dir(/|$)} ) {
                 $Ignored{$File::Find::name} = "--exclude_dir=$skip_dir";
                 $return = 1;
                 last;
@@ -2137,7 +2191,7 @@ sub files {                                  # {{{1
     }
 	if ($opt_match_f    ) {	return unless /$opt_match_f/;     }
     if ($opt_not_match_f) {	return if     /$opt_not_match_f/; }
-		
+
     my $nBytes = -s     $_ ;
     if (!$nBytes and $opt_v > 5) {
         printf "files(%s)  zero size\n", $File::Find::name;
@@ -2190,6 +2244,15 @@ sub is_dir {                                 # {{{1
         return (-d $item);  # works on Unix, Linux, CygWin, z/OS
     }
 } # 1}}}
+sub is_excluded {                            # {{{1
+    my ($file       , # in
+        $excluded   , # in   hash of excluded directories
+       ) = @_;
+    my($filename, $filepath, $suffix) = fileparse($file);
+    foreach my $path (sort keys %{$excluded}) {
+        return 1 if ($filepath =~ m{^$path/}i);
+    }
+} # 1}}}
 sub classify_file {                          # {{{1
     my ($full_file   , # in
         $rh_Err      , # in   hash of error codes
@@ -2208,6 +2271,9 @@ sub classify_file {                          # {{{1
     if ($file =~ /\.(\w+)$/) { # has an extension
         print "$full_file extension=[$1]\n" if $opt_v > 2;
         my $extension = $1;
+           # Windows file names are case insensitive so map 
+           # all extensions to lowercase there.
+           $extension = lc $extension if $ON_WINDOWS;  
         if ($Not_Code_Extension{$extension} and 
            !$Forced_Extension{$extension}) {
            # If .1 (for example) is an extention that would ordinarily be
@@ -2325,7 +2391,7 @@ sub different_files {                        # {{{1
        ) = @_;
 
     print "-> different_files(@{$ra_files})\n" if $opt_v > 2;
-    my %file_hash = ();  # file_hash{ md5 hash } = file name
+    my %file_hash = ();  # file_hash{md5 hash} = [ file1, file2, ... ]
     foreach my $F (@{$ra_files}) {
         next if is_dir($F);  # needed for Windows
         my $IN = new IO::File $F, "r";
@@ -2335,15 +2401,32 @@ sub different_files {                        # {{{1
         } else {
             if ($HAVE_Digest_MD5) {
                 binmode $IN;
-                $file_hash{ Digest::MD5->new->addfile($IN)->hexdigest } = $F;
+                my $MD5 = Digest::MD5->new->addfile($IN)->hexdigest;
+                push @{$file_hash{$MD5}}, $F;
             } else {
                 # all files treated unique
-                $file_hash{ $F } = $F;
+                push @{$file_hash{$F}}, $F;
             }
             $IN->close;
         }
     }
-    my @unique = values %file_hash;
+
+    # Loop over file sets having identical MD5 sums.  Within
+    # each set, pick the file that most resembles known source 
+    # code.
+    my @unique = ();
+    for my $md5 (sort keys %file_hash) {
+        my $i_best = 0;
+        for (my $i = 1; $i < scalar(@{$file_hash{$md5}}); $i++) {
+            my $F = $file_hash{$md5}[$i];
+            my (@nul_a, %nul_h);
+            my $language = classify_file($F, $rh_Err, 
+                                        # don't save these errors; pointless
+                                        \@nul_a, \%nul_h);
+            $i_best = $i if $language ne "(unknown)";
+        }
+        push @unique, $file_hash{$md5}[$i_best];
+    }
     print "<- different_files(@unique)\n" if $opt_v > 2;
     return @unique;
 } # 1}}}
@@ -2407,7 +2490,7 @@ sub call_counter {                           # {{{1
         }
         write_file($stripped_file, @lines);
     }
-    if ($opt_html) {
+    if ($opt_html and !$opt_diff) {
         chomp(@original_lines);  # includes blank lines, comments
         chomp(@lines);           # no blank lines, no comments
 
@@ -2569,6 +2652,7 @@ sub remove_f77_comments {                    # {{{1
     my @save_lines = ();
     foreach (@{$ra_lines}) {
         next if m{^[*cC]};
+        next if m{^\s*!};
         push @save_lines, $_;
     }
 
@@ -2753,8 +2837,15 @@ sub remove_cobol_blanks {                    # {{{1
         if ($free_format) {
             push @save_lines, $_;
         } else {
-            push @save_lines, $_ unless m/^\d{6}\s*$/ or
-                              ($line =~ m/^\d{6}\s{66}/);
+            # Greg Toth:
+            #  (1) Treat lines with any alphanum in cols 1-6 and 
+            #      blanks in cols 7 through 71 as blank line, and
+            #  (2) Treat lines with any alphanum in cols 1-6 and 
+            #      slash (/) in col 7 as blank line (this is a 
+            #      page eject directive). 
+            push @save_lines, $_ unless m/^\d{6}\s*$/             or 
+                                        ($line =~ m/^.{6}\s{66}/) or 
+                                        ($line =~ m/^......\//);
         }
     }
     return @save_lines;
@@ -3036,6 +3127,7 @@ sub set_constants {                          # {{{1
             'frm'         => 'Visual Basic'          ,
             'gnumakefile' => 'make'                  ,
             'Gnumakefile' => 'make'                  ,
+            'groovy'      => 'Groovy'                ,
             'h'           => 'C/C++ Header'          ,
             'H'           => 'C/C++ Header'          ,
             'hh'          => 'C/C++ Header'          ,
@@ -3102,6 +3194,7 @@ sub set_constants {                          # {{{1
             'rhtml'       => 'Ruby HTML'             ,
             's'           => 'Assembly'              ,
             'S'           => 'Assembly'              ,
+            'scala'       => 'Scala'                 ,
             'sbl'         => 'Softbridge Basic'      ,
             'SBL'         => 'Softbridge Basic'      ,
             'sc'          => 'Lisp'                  ,
@@ -3132,6 +3225,7 @@ sub set_constants {                          # {{{1
             'XML'         => 'XML'                   ,
             'build'       => 'NAnt scripts'          ,
             'vim'         => 'vim script'            ,
+            'xaml'        => 'XAML'                  ,
             'xsd'         => 'XSD'                   ,
             'XSD'         => 'XSD'                   ,
             'xslt'        => 'XSLT'                  ,
@@ -3262,6 +3356,11 @@ sub set_constants {                          # {{{1
                                 [ 'remove_f90_comments' ,          ], 
                                 [ 'remove_inline'       , '\!.*$'  ],
                             ],
+    'Groovy'             => [   
+                                [ 'remove_matches'      , '^\s*//' ], 
+                                [ 'remove_inline'       , '//.*$'  ], 
+                                [ 'call_regexp_common'  , 'C'      ],
+                            ],
     'HTML'               => [   [ 'remove_html_comments',          ],
                                 [ 'call_regexp_common'  , 'HTML'   ], ],
     'Haskell'            => [   [ 'remove_haskell_comments', '>filename<' ], ],
@@ -3342,6 +3441,11 @@ sub set_constants {                          # {{{1
                             ], 
     'Ruby HTML'          => [   [ 'remove_html_comments',          ],
                                 [ 'call_regexp_common'  , 'HTML'   ], ],
+    'Scala'              => [   
+                                [ 'remove_matches'      , '^\s*//' ], 
+                                [ 'remove_inline'       , '//.*$'  ], 
+                                [ 'call_regexp_common'  , 'C'      ],
+                            ],
     'SKILL'              => [   
                                 [ 'call_regexp_common'  , 'C'      ], 
                                 [ 'remove_matches'      , '^\s*;'  ],
@@ -3412,6 +3516,8 @@ sub set_constants {                          # {{{1
                                 [ 'remove_inline'       , '#.*$'   ], 
                             ],
     'lex'                => [   [ 'call_regexp_common'  , 'C'      ], ],
+    'XAML'               => [   [ 'remove_html_comments',          ],
+                                [ 'call_regexp_common'  , 'HTML'   ], ],
     'XML'                => [   [ 'remove_html_comments',          ],
                                 [ 'call_regexp_common'  , 'HTML'   ], ],
     'XSD'                => [   [ 'remove_html_comments',          ],
@@ -3740,6 +3846,7 @@ sub set_constants {                          # {{{1
     'gpss'                         =>   1.74,
     'guest'                        =>   2.86,
     'guru'                         =>   1.63,
+    'Groovy'                       =>   4.10,
     'gw basic'                     =>   0.82,
     'Haskell'                      =>   2.11,
     'high c'                       =>   0.63,
@@ -3957,6 +4064,7 @@ sub set_constants {                          # {{{1
     'sas'                          =>   1.95,
     'savvy'                        =>   6.15,
     'sbasic'                       =>   0.88,
+    'Scala'                        =>   4.10,
     'sceptre'                      =>   1.13,
     'scheme'                       =>   1.51,
     'screen painter default'       =>  13.33,
@@ -4074,6 +4182,7 @@ sub set_constants {                          # {{{1
     'whip'                         =>   0.88,
     'wizard'                       =>   2.86,
     'xlisp'                        =>   1.25,
+    'XAML'                         =>   1.90,
     'yacc'                         =>   1.51,
     'yacc++'                       =>   1.51,
     'YAML'                         =>   0.90,
@@ -6020,6 +6129,9 @@ sub write_comments_to_html {                 # {{{1
         return;
     }
 
+    my $approx_line_count = scalar @{$rah_diff_L};
+    my $n_digits = 1 + int(log($approx_line_count)/2.30258509299405); # log_10
+
     my $html_out = html_header($filename);
 
     my $comment_line_number = 0;
@@ -6031,11 +6143,12 @@ sub write_comments_to_html {                 # {{{1
         }
         my $line_num = "";
         my $pre      = "";
-        my $post     = "</span>";
-die "undef rah_diff_R[$i]{type} " unless defined $rah_diff_R->[$i]{type};
+        my $post     = '</span> &nbsp;';
+warn "undef rah_diff_R[$i]{type} " unless defined $rah_diff_R->[$i]{type};
         if ($rah_diff_R->[$i]{type} eq 'nonexist') {
             ++$comment_line_number;
-            $line_num = '<span class="clinenum">' . $comment_line_number . $post;
+            $line_num = sprintf "\&nbsp; <span class=\"clinenum\"> %0${n_digits}d %s",
+                            $comment_line_number, $post;
             $pre = '<span class="comment">';
             $html_out .= $line_num;  
             $html_out .= $pre .  
@@ -6046,8 +6159,8 @@ die "undef rah_diff_R[$i]{type} " unless defined $rah_diff_R->[$i]{type};
         if      ($rah_diff_R->[$i]{type} eq 'code' and
                  $rah_diff_R->[$i]{desc} eq 'same') {
             # entire line remains as-is
-            $line_num = '<span class="linenum">' .
-                         $rah_diff_R->[$i]{lnum} . $post;
+            $line_num = sprintf "\&nbsp; <span class=\"linenum\"> %0${n_digits}d %s",
+                            $rah_diff_R->[$i]{lnum}, $post;
             $pre    = '<span class="normal">';
             $html_out .= $line_num;  
             $html_out .= $pre . 
@@ -6274,10 +6387,22 @@ sub remove_leading_dir {                     # {{{1
     my @D = (); # a matrix:   [ [ dir1, dir2 ],         # dir1/dir2/a.txt
                 #               [ dir1, dir2 ],         # dir1/dir2/b.txt
                 #               [ dir1, dir2 , dir3] ]  # dir1/dir2/dir3/c.txt
+    if ($ON_WINDOWS) {
+        foreach my $F (@filenames) {
+            $F =~ s{\\}{/}g;
+            $F = ucfirst($F) if $F =~ /^\w:/;  # uppercase drive letter
+        }
+    }
     foreach my $F (@filenames) {
         my ($Vol, $Dir, $File) = File::Spec->splitpath($F);
         my @x = File::Spec->splitdir( $Dir );
         pop @x unless $x[$#x]; # last entry usually null, remove it
+        if ($ON_WINDOWS) {
+            if (defined($Vol) and $Vol) {
+                # put the drive letter, eg, C:, at the front
+                unshift @x, uc $Vol;
+            }
+        }
 #print "F=$F, Dir=$Dir  x=[", join("][", @x), "]\n";
         push @D, [ @x ];
     }
