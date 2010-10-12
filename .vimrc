@@ -541,8 +541,7 @@ nmap \tb  TYShowBreak()
 " Allows vim to split window to a terminal, thanks to screen.
 " Requires screener.sh
 " From http://www.semicomplete.com/blog/geekery/flashback-2010-2003.html
-map \s :silent !screener.sh<CR>
-
+" map \s :silent !screener.sh<CR>
 
 "clear the fucking search buffer, not just remove the highlight
 map \c :let @/ = ""<CR>
@@ -554,8 +553,8 @@ nmap <silent> ,/ :nohlsearch<CR>
 nnoremap \r :e!<CR>
 
 "Easy edit of vimrc
-nmap \v :e $MYVIMRC<CR>
-nmap \V :source $MYVIMRC<CR>
+nmap \ev :e $MYVIMRC<CR>
+nmap \sv :source $MYVIMRC<CR>
 
 " Easy unload of buffer
 map \q :bd<CR>
@@ -572,6 +571,11 @@ nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetyp
 
 "clear spaces at end of line
 nmap \l :%s/\s\+$//<CR>
+
+" Quick alignment of text
+map \al :left<CR>
+map \ar :right<CR>
+map \ac :center<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
@@ -598,85 +602,48 @@ iab _AUTHOR Matt Behrens <askedrelic@gmail.com>
 " | Pluggins                                                                  |
 " -----------------------------------------------------------------------------
 "Taglist
-map \a :TlistToggle<CR>
+map \T :TlistClose<CR>:TlistToggle<CR>
+map \t :TlistToggle<CR>
 "If launching mvim without proper PATH
 let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
 " Jump to taglist window on open.
 let Tlist_GainFocus_On_ToggleOpen = 1
 let Tlist_Close_OnSelect=1
+" Show only current file
+let Tlist_Show_One_File = 1
 " if you are the last window, kill yourself
-let Tlist_Exist_OnlyWindow = 1
+let Tlist_Exit_OnlyWindow = 1
 " sort by order or name
 let Tlist_Sort_Type = "order"
-" do not show prototypes and not tags in the taglist window.
-let Tlist_Display_Prototype = 0
+" show prototypes and tags in the taglist window.
+let Tlist_Display_Prototype = 1
 " Remove extra information and blank lines from the taglist window.
 let Tlist_Compart_Format = 1
 " Show tag scope next to the tag name.
 let Tlist_Display_Tag_Scope = 1
 let Tlist_WinWidth = 40
-" Show only current file
-let Tlist_Show_One_File = 1
+
+" don't show scope info
+let Tlist_Display_Tag_Scope=0
+
+" shorten the time it takes to highlight the current tag (default is 4 secs)
+" note that this setting influences Vim's behaviour when saving swap files,
+" but we have already turned off swap files (earlier)
+set updatetime=1000
 
 "NERDTree
-map <silent> \e :NERDTreeToggle<CR>
+map <silent> \e :NERDTreeClose<CR>:NERDTreeToggle<CR>
+map <silent> \E :NERDTreeClose<CR>
+map <silent> \m :NERDTreeClose<CR>:NERDTreeFind<CR>
 let NERDTreeWinPos='right'
 let NERDTreeChDirMode='2'
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
 let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
+let NERDTreeHighlightCursorline=1
+" Show hidden files, too
+let NERDTreeShowFiles=1
+let NERDTreeShowHidden=1
 
-" neocomplcache.vim"{{{
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-let g:neocomplcache_enable_underbar_completion = 1
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-" Set auto completion length.
-let g:neocomplcache_auto_completion_start_length = 2
-" Set manual completion length.
-let g:neocomplcache_manual_completion_start_length = 0
-" Set minimum keyword length.
-let g:neocomplcache_min_keyword_length = 3
-let g:neocomplcache_enable_cursor_hold_i = 1
-let g:neocomplcache_cursor_hold_i_time = 250
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_lock_buffer_name_pattern = '\*neoui\*\|\[neoui\]'
-
-" Define dictionary.
-let g:neocomplcache_dictionary_filetype_lists = {
-      \ 'default' : ''
-      \ }
-
-let g:neocomplcache_omni_function_list = {
-      \ 'python' : 'pythoncomplete#Complete',
-      \ 'ruby' : 'rubycomplete#Complete',
-      \ }
-
-" Define keyword pattern.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
-
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
-endif
-"let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-
-if !exists('g:neocomplcache_same_filetype_lists')
-  let g:neocomplcache_same_filetype_lists = {}
-endif
-"let g:neocomplcache_same_filetype_lists.perl = 'ref'
-
-if !exists('g:neocomplcache_vim_completefuncs')
-  let g:neocomplcache_vim_completefuncs = {}
-endif
 
 "FuzzyFinder
 "Seriously FF, setting up your options sucks

@@ -29,6 +29,9 @@
     co = checkout
     ls = ls-files
     dt = difftool
+   
+    #figure out what a revision is
+    human = name-rev --name-only --refs=refs/heads/*
 
     #simple log with branches
     #git 1.5
