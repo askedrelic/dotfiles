@@ -95,14 +95,25 @@ EOT
 }
 
 # Search ----------------------------------------------------------------------------------------------
-alias a="ack"
-alias g="grep"
-#use findr.sh wrapper script; see ~/bin/findr.sh
-alias f='findr.sh'
-
-gns(){ # Case insensitive, excluding svn folders
-      find . -path '*/.svn' -prune -o -type f -print0 | xargs -0 grep -I -n -e "$1"
-}
+# Use ack for grepping and find if ack is available
+if type -P ack &>/dev/null ; then
+  g(){
+    ack "$@" --color-match=green --color-filename=blue --smart-case
+  }
+  gw(){
+    ack "$@" --color-match=green --color-filename=blue --word-regexp --smart-case
+  }
+  f(){
+    ack -i -g ".*$@[^\/]*$" | highlight blue ".*/" green "$@[^/]"
+  }
+else
+  g(){
+    grep -Ri "$1" *
+  }
+  f(){
+    find . -iname "$1"
+  }
+fi
 
 # Other aliases ----------------------------------------------------------------------------------------------
 #used to be called 'which', probably shouldn't override default linux programs
@@ -210,6 +221,10 @@ function ps() { /bin/ps $@ -u $USER -o pid,%cpu,%mem,command ; }
 function pp() { ps -f | awk '!/awk/ && $0~var' var=${1:-".*"} ; }
 
 alias atop='watch -n 3 "free; echo; uptime; echo; ps aux  --sort=-%cpu | head -n 11; echo; who"'
+
+if [ `uname` = Darwin ]; then
+    alias top='top -o cpu'
+fi
 
 function ii()   # Get current host related info.
 {
