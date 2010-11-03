@@ -3,12 +3,6 @@ alias fury="ssh askedrlc@fury.csh.rit.edu"
 alias scorn="ssh askedrlc@scorn.csh.rit.edu"
 #alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025"
 
-alias loki="ssh askedrelic@loki.rh.rit.edu"
-#alias loki="ssh askedrelic@loki.rh.rit.edu -D 7025"
-alias loki-mysql="ssh -L 3306:localhost:3306 askedrelic@loki.rh.rit.edu"
-
-alias jofur="ssh matthewbehrens@jofur.rh.rit.edu"
-
 alias asktherelic="ssh askedrelic@asktherelic.com"
 alias asktherelic-mysql="ssh -L 3306:localhost:3306 askedrelic@asktherelic.com"
 alias asktherelic-forward="ssh -nNT -R 1100:localhost:22 askedrelic@asktherelic.com &"
@@ -16,8 +10,6 @@ alias asktherelic-forward="ssh -nNT -R 1100:localhost:22 askedrelic@asktherelic.
 alias slicehost="ssh askedrelic@174.143.148.193"
 alias linode="ssh askedrelic@69.164.198.163"
 
-alias blueballs="ssh mattb@bluebrick.se.rit.edu"
-
 alias shackwiki.com="ssh shackfaq@shackwiki.com"
 
-alias windturbine="ssh user@129.21.50.216"
+alias boxee="ssh askdrelic@71.61.177.43 -p 44"
