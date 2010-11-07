@@ -45,8 +45,8 @@ fi
 
 # History -----------------------------------------------------------------------
 export HISTCONTROL=ignoreboth
-# Whenever displaying the prompt, reload history and write the previous line to disk:
-export PROMPT_COMMAND='history -a;history -n'
+# Whenever displaying the prompt, reload history and write the previous line to disk, and update the term title
+export PROMPT_COMMAND='history -a; history -n; echo -ne "\033]0; ${PWD/$HOME/~}\007"'
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:....."
 export HISTSIZE=15000
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
