@@ -15,12 +15,13 @@ gw "$1" --files-with-matches --count | highlight blue ".*/" red ":.*"
 
 echo
 echo "Set here --------------------------------------------------------------------------------------------" | highlight purple ".*"
-g "^\s*@?$1\s*="
+# g "^\s*@?$1\s*="
 
 echo
 echo "Defined here ----------------------------------------------------------------------------------------" | highlight purple ".*"
-g "^\s*def\s+$1\s+" --nogroup # where is it defined in ruby
-g "^\s*$1\s*:\s*function\(.*\){" --nogroup # where is it defined in javascript
+g "\s*def\s+$1\s+" --nogroup # where is it defined in ruby
+g "(function|class)\s*$1\s*(\(|\{)" --nogroup # where is it defined in php
+# g "\s*$1\s*:\s*function\s*\(.*\){" --nogroup # where is it defined in javascript
 
 echo
 echo "For more detail, use: g '$1'" | highlight purple "^.*:"

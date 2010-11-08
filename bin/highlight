@@ -5,7 +5,7 @@
 # Copyright 2008 by Andreas Schamanek <andreas@schamanek.net>
 # GPL licensed (see end of file) * Use at your own risk!
 #
-# Usage examples: 
+# Usage examples:
 #   tail -f somemaillog | mycolorize white '^From: .*' bell
 #   tail -f somemaillog | mycolorize white '^From: \/.*' green 'Folder: .*'
 #

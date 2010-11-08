@@ -98,13 +98,13 @@ EOT
 # Use ack for grepping and find if ack is available
 if type -P ack &>/dev/null ; then
   g(){
-    ack "$@" --color-match=green --color-filename=blue --smart-case
+    ack "$*" --color-match=green --color-filename=blue --smart-case
   }
   gw(){
-    ack "$@" --color-match=green --color-filename=blue --word-regexp --smart-case
+    ack "$*" --color-match=green --color-filename=blue --word-regexp --smart-case
   }
   f(){
-    ack -i -g ".*$@[^\/]*$" | highlight blue ".*/" green "$@[^/]"
+    ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
   }
 else
   g(){
