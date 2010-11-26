@@ -240,3 +240,6 @@ function ii()   # Get current host related info.
     echo -e "\n${COLOR_RED}Open connections :$NC "; netstat -pan --inet;
     echo
 }
+
+#simple password generating function
+alias mkpass='echo `</dev/random tr -dc A-Za-z0-9 | head -c8`'
