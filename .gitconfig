@@ -55,7 +55,12 @@
     threads = 0
 [branch]
     autosetupmerge = true
+[diff]
+    external = gitvimdiff
+    guitool = opendiff
 [difftool]
-    prompt = true
+    prompt = false
+[pager]
+    diff =
 [github]
     user = askedrelic
