@@ -51,12 +51,11 @@
 
     changes=diff --name-status -r
     diffstat=diff --stat -r
-    last = show HEAD
 [pack]
     threads = 0
 [branch]
     autosetupmerge = true
 [difftool]
-    prompt = false
+    prompt = true
 [github]
     user = askedrelic

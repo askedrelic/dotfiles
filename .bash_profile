@@ -60,6 +60,8 @@ if [ -d ~/bin ]; then
   export PATH=~/bin:$PATH
 fi
 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc
 
