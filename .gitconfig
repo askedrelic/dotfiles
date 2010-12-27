@@ -51,13 +51,14 @@
 
     changes=diff --name-status -r
     diffstat=diff --stat -r
+    ds=diff --stat -r
 [pack]
     threads = 0
 [branch]
     autosetupmerge = true
 [diff]
-    external = gitvimdiff
-    guitool = opendiff
+    # tool = gitvimdiff
+    # guitool = opendiff
 [difftool]
     prompt = false
 [pager]
