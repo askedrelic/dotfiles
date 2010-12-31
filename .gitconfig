@@ -52,12 +52,16 @@
 
     changes=diff --name-status -r
     diffstat=diff --stat -r
-    last = show HEAD
 [pack]
     threads = 0
 [branch]
     autosetupmerge = true
+[diff]
+    external = gitvimdiff
+    guitool = opendiff
 [difftool]
     prompt = false
+[pager]
+    diff =
 [github]
     user = askedrelic
