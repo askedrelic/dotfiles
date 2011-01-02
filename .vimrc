@@ -1,11 +1,20 @@
-"Vim file is organized into
-" 1. Vim Settings (many subcategories)
-" 2. Aliases and key functions
-" 3. Plugins
+" This Vim file is organized into
+" ### VIM Settings
+" ### General
+" ### Tabs
+" ### Scrollbars/Status
+" ### Windows
+" ### Cursor Highlights
+" ### Searching
+" ### Colors
+" ### Line Wrapping
+" ### File Stuff
+" ### Redraw
+" ### Aliases and custom key functions
+" ### Custom text inserts
+" ### Plugins
 "
-" -----------------------------------------------------------------------------
-" | VIM Settings                                                              |
-" -----------------------------------------------------------------------------
+" ### VIM Settings ###################################################
 set nocompatible
 
 " first clear any existing autocommands:
@@ -21,8 +30,13 @@ if &term == "xterm"
     set t_te= [?47l 8
 endif
 
+" And finally, load pathogen
+filetype off
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
 
-" General *********************************************************************
+
+" ### General ###################################################
 " save last 50 search history items, last 50 edit marks, don't remember search
 " highlight
 set viminfo=/50,'50,h
@@ -81,7 +95,7 @@ set previewheight=8
 " always show status line
 set ls=2
 " Turn off bell, this could be more annoying, but I'm not sure how
-set vb t_vb= 
+set vb t_vb=
 
 " when using list, keep tabs at their full width and display `arrows':
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
@@ -90,7 +104,7 @@ execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
 "saving
 au CursorHold * checktime
 
-" Tabs **********************************************************************
+" ### Tabs ###################################################
 
 function! Tabstyle_tabs()
     " Using 4 column tabs
@@ -111,11 +125,11 @@ function! Tabstyle_spaces()
 endfunction
 
 " when at 3 spaces, and I hit > ... go to 4, not 5
-set shiftround 
+set shiftround
 
 call Tabstyle_spaces()
 
-" Scrollbars/Status ***********************************************************
+" ### Scrollbars/Status ###################################################
 set sidescrolloff=2
 " top bottom scroll off
 set scrolloff=2
@@ -129,7 +143,7 @@ set showmode
 set showcmd
 
 " turn on command line completion wild style
-set wildmenu 
+set wildmenu
 " Bash tab style completion is awesome
 set wildmode=longest,list
 " wildchar-the char used for "expansion" on the command line default value is
@@ -143,21 +157,21 @@ set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,
 " set shortmess=atIAr
 set shortmess=flnrxoOItTA
 
-" Windows *********************************************************************
+" ### Windows ###################################################
 set splitbelow splitright
 "
 " don't always keep windows at equal size (for minibufexplorer)
 set noequalalways
 
-" Cursor highlights ***********************************************************
+" ### Cursor Highlights ###################################################
 set cursorline
 "set cursorcolumn
 
-" Searching *******************************************************************
+" ### Searching ###################################################
 " highlight search
 set hlsearch
 " case inferred by default
-set infercase 
+set infercase
 " make searches case-insensitive
 set ignorecase
 "unless they contain upper-case letters:
@@ -169,7 +183,7 @@ set gdefault
 " hide mouse on search
 set mousehide
 
-" Colors **********************************************************************
+" ### Colors ###################################################
 syntax on
 set background=dark
 if has("gui_running")
@@ -190,7 +204,7 @@ else
     colorscheme ir_black
 endif
 
-" Line Wrapping ***************************************************************
+" ### Line Wrapping ###################################################
 " don't make it look like there are line breaks where there aren't:
 set nowrap
 " Wrap at word
@@ -212,13 +226,13 @@ set textwidth=79
 set comments+=b:\"
 set comments+=n::
 
-" File Stuff ******************************************************************
+" ### File Stuff ###################################################
 filetype plugin indent on
 
 " we couldn't care less about html
 au BufNewFile,BufRead *.htm,*.html  setf xml
 
-" Omni Completion 
+" Omni Completion
 " set ofu=syntaxcomplete#Complete
 au FileType html set omnifunc=htmlcomplete#CompleteTags
 au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -240,7 +254,7 @@ au FileType c,cpp,slang set cindent
 au FileType c set formatoptions+=ro
 
 " Ruby
-au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2 
+au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
 au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 
 " for Perl programming, have things in braces indenting themselves:
@@ -285,7 +299,7 @@ set complete-=k complete+=k
 " http://vim.wikia.com/wiki/Completion_using_a_syntax_file
 au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
-" Redraw *********************************************************************
+" ### Redraw ###################################################
 " do not update screen while executing macros
 set lazyredraw
 " ttyfast: are we using a fast terminal? Let's try it for a while.
@@ -293,9 +307,7 @@ set ttyfast
 " ttyscroll: redraw instead of scrolling
 "set ttyscroll=0
 
-" -----------------------------------------------------------------------------
-" | Aliases and custom key functions                                          |
-" -----------------------------------------------------------------------------
+" ### Aliases and custom key functions ######################################
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
 imap jj <Esc>
 
@@ -562,7 +574,7 @@ function! HandleURI()
 endfunction
 map \o :call HandleURI()<CR>
 
-" Custom text inserts *********************************************************
+" ### Custom text inserts ###################################################
 "insert THE time!
 "TODO move this into some kind of autotext complete thing
 nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
@@ -570,9 +582,7 @@ imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
 
 iab AUTHOR Matt Behrens <askedrelic@gmail.com>
 
-" -----------------------------------------------------------------------------
-" | Pluggins                                                                  |
-" -----------------------------------------------------------------------------
+" ### Plugins ###################################################
 "Taglist
 map \T :TlistClose<CR>:TlistToggle<CR>
 map \t :TlistToggle<CR>
