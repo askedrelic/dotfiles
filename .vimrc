@@ -215,12 +215,6 @@ set comments+=n::
 " File Stuff ******************************************************************
 filetype plugin indent on
 
-" When opening a file
-au BufNewFile,BufRead *.lzx         setf lzx
-au BufNewFile,BufRead *.module      setf php
-au BufNewFile,BufRead *.inc         setf php
-au BufNewFile,BufRead *.pl,*.pm,*.t setf perl
-
 " we couldn't care less about html
 au BufNewFile,BufRead *.htm,*.html  setf xml
 
@@ -231,12 +225,11 @@ au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 au FileType css set omnifunc=csscomplete#CompleteCSS
 au FileType xml set omnifunc=xmlcomplete#CompleteTags
 au FileType php set omnifunc=phpcomplete#CompletePHP
+au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c set omnifunc=ccomplete#Complete
 
 " no line numbers when viewing help
 au FileType helpfile set nonumber
-au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
-au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
 " For C-like programming, have automatic indentation:
 au FileType c,cpp,slang set cindent
@@ -252,28 +245,6 @@ au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 
 " for Perl programming, have things in braces indenting themselves:
 au FileType perl set smartindent
-
-augroup Python
-    let python_highlight_all = 1
-    let python_slow_sync = 1
-    " au BufNewFile,BufRead *.py       source $HOME/.vim/syntax/python.vim
-    " au! Syntax python source $HOME/.vim/syntax/python.vim
-    " au FileType python set formatoptions-=t
-    "See $VIMRUNTIME/ftplugin/python.vim
-    au!
-    "smart indent really only for C like languages
-    "See $VIMRUNTIME/indent/python.vim
-    au FileType python set nosmartindent autoindent
-    " Allow gf command to open files in $PYTHONPATH
-    au FileType python let &path = &path . "," . substitute($PYTHONPATH, ';', ',', 'g')
-    if v:version >= 700
-        "See $VIMRUNTIME/autoload/pythoncomplete.vim
-        "<C-x><C-o> to autocomplete
-        au FileType python set omnifunc=pythoncomplete#Complete
-        "Don't show docs in preview window
-        au FileType python set completeopt-=preview
-    endif
-augroup END
 
 " for CSS, also have things in braces indented:
 au FileType css set smartindent
@@ -296,14 +267,16 @@ set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.i
 "jump to last cursor position when opening a file
 "dont do it when writing a svn commit log entry
 "TODO fix this for git commits?
-autocmd BufReadPost * call SetCursorPosition()
-function! SetCursorPosition()
-  if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
-    if line("'\"") > 0 && line("'\"") <= line("$")
-     exe "normal g`\""
-    endif
-  end
-endfunction
+"autocmd BufReadPost * call SetCursorPosition()
+"function! SetCursorPosition()
+"  if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
+"    if line("'\"") > 0 && line("'\"") <= line("$")
+"     exe "normal g`\""
+"    endif
+"  end
+"endfunction
+
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 
 " tell complete to look in the dictionary
 set complete-=k complete+=k
