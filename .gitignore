@@ -80,3 +80,4 @@ backups/
 .virtualenvs/
 .yolk/
 .local/
+.pythonbrew/*
