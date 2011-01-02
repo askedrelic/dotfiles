@@ -30,11 +30,6 @@ if &term == "xterm"
     set t_te= [?47l 8
 endif
 
-" And finally, load pathogen
-filetype off
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
-
 
 " ### General ###################################################
 " save last 50 search history items, last 50 edit marks, don't remember search
@@ -583,6 +578,11 @@ imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
 iab AUTHOR Matt Behrens <askedrelic@gmail.com>
 
 " ### Plugins ###################################################
+" First, load pathogen
+" filetype off
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
+
 "Taglist
 map \T :TlistClose<CR>:TlistToggle<CR>
 map \t :TlistToggle<CR>
