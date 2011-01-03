@@ -1,11 +1,20 @@
-"Vim file is organized into
-" 1. Vim Settings (many subcategories)
-" 2. Aliases and key functions
-" 3. Plugins
+" This Vim file is organized into
+" ### VIM Settings
+" ### General
+" ### Tabs
+" ### Scrollbars/Status
+" ### Windows
+" ### Cursor Highlights
+" ### Searching
+" ### Colors
+" ### Line Wrapping
+" ### File Stuff
+" ### Redraw
+" ### Aliases and custom key functions
+" ### Custom text inserts
+" ### Plugins
 "
-" -----------------------------------------------------------------------------
-" | VIM Settings                                                              |
-" -----------------------------------------------------------------------------
+" ### VIM Settings ###################################################
 set nocompatible
 
 " first clear any existing autocommands:
@@ -22,7 +31,7 @@ if &term == "xterm"
 endif
 
 
-" General *********************************************************************
+" ### General ###################################################
 " save last 50 search history items, last 50 edit marks, don't remember search
 " highlight
 set viminfo=/50,'50,h
@@ -81,7 +90,7 @@ set previewheight=8
 " always show status line
 set ls=2
 " Turn off bell, this could be more annoying, but I'm not sure how
-set vb t_vb= 
+set vb t_vb=
 
 " when using list, keep tabs at their full width and display `arrows':
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
@@ -90,7 +99,7 @@ execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
 "saving
 au CursorHold * checktime
 
-" Tabs **********************************************************************
+" ### Tabs ###################################################
 
 function! Tabstyle_tabs()
     " Using 4 column tabs
@@ -111,11 +120,11 @@ function! Tabstyle_spaces()
 endfunction
 
 " when at 3 spaces, and I hit > ... go to 4, not 5
-set shiftround 
+set shiftround
 
 call Tabstyle_spaces()
 
-" Scrollbars/Status ***********************************************************
+" ### Scrollbars/Status ###################################################
 set sidescrolloff=2
 " top bottom scroll off
 set scrolloff=2
@@ -129,35 +138,35 @@ set showmode
 set showcmd
 
 " turn on command line completion wild style
-set wildmenu 
+set wildmenu
 " Bash tab style completion is awesome
 set wildmode=longest,list
 " wildchar-the char used for "expansion" on the command line default value is
 " "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
 " ignore these files when completing
-set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,*.java.html,*.cgi.html,*.html.html,.viminfo,*.pdf
+set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,.viminfo,*.pdf
 
 " shortmess: shorten messages where possible, especially to stop annoying
 " 'already open' messages!
 " set shortmess=atIAr
 set shortmess=flnrxoOItTA
 
-" Windows *********************************************************************
+" ### Windows ###################################################
 set splitbelow splitright
 "
 " don't always keep windows at equal size (for minibufexplorer)
 set noequalalways
 
-" Cursor highlights ***********************************************************
+" ### Cursor Highlights ###################################################
 set cursorline
 "set cursorcolumn
 
-" Searching *******************************************************************
+" ### Searching ###################################################
 " highlight search
 set hlsearch
 " case inferred by default
-set infercase 
+set infercase
 " make searches case-insensitive
 set ignorecase
 "unless they contain upper-case letters:
@@ -169,7 +178,7 @@ set gdefault
 " hide mouse on search
 set mousehide
 
-" Colors **********************************************************************
+" ### Colors ###################################################
 syntax on
 set background=dark
 if has("gui_running")
@@ -190,7 +199,7 @@ else
     colorscheme ir_black
 endif
 
-" Line Wrapping ***************************************************************
+" ### Line Wrapping ###################################################
 " don't make it look like there are line breaks where there aren't:
 set nowrap
 " Wrap at word
@@ -212,31 +221,24 @@ set textwidth=79
 set comments+=b:\"
 set comments+=n::
 
-" File Stuff ******************************************************************
+" ### File Stuff ###################################################
 filetype plugin indent on
-
-" When opening a file
-au BufNewFile,BufRead *.lzx         setf lzx
-au BufNewFile,BufRead *.module      setf php
-au BufNewFile,BufRead *.inc         setf php
-au BufNewFile,BufRead *.pl,*.pm,*.t setf perl
 
 " we couldn't care less about html
 au BufNewFile,BufRead *.htm,*.html  setf xml
 
-" Omni Completion 
+" Omni Completion
 " set ofu=syntaxcomplete#Complete
 au FileType html set omnifunc=htmlcomplete#CompleteTags
 au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 au FileType css set omnifunc=csscomplete#CompleteCSS
 au FileType xml set omnifunc=xmlcomplete#CompleteTags
 au FileType php set omnifunc=phpcomplete#CompletePHP
+au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c set omnifunc=ccomplete#Complete
 
 " no line numbers when viewing help
 au FileType helpfile set nonumber
-au FileType helpfile nnoremap <buffer><cr> <c-]>   " Enter selects subject
-au FileType helpfile nnoremap <buffer><bs> <c-T>   " Backspace to go back
 
 " For C-like programming, have automatic indentation:
 au FileType c,cpp,slang set cindent
@@ -247,33 +249,11 @@ au FileType c,cpp,slang set cindent
 au FileType c set formatoptions+=ro
 
 " Ruby
-au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2 
+au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
 au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
 
 " for Perl programming, have things in braces indenting themselves:
 au FileType perl set smartindent
-
-augroup Python
-    let python_highlight_all = 1
-    let python_slow_sync = 1
-    " au BufNewFile,BufRead *.py       source $HOME/.vim/syntax/python.vim
-    " au! Syntax python source $HOME/.vim/syntax/python.vim
-    " au FileType python set formatoptions-=t
-    "See $VIMRUNTIME/ftplugin/python.vim
-    au!
-    "smart indent really only for C like languages
-    "See $VIMRUNTIME/indent/python.vim
-    au FileType python set nosmartindent autoindent
-    " Allow gf command to open files in $PYTHONPATH
-    au FileType python let &path = &path . "," . substitute($PYTHONPATH, ';', ',', 'g')
-    if v:version >= 700
-        "See $VIMRUNTIME/autoload/pythoncomplete.vim
-        "<C-x><C-o> to autocomplete
-        au FileType python set omnifunc=pythoncomplete#Complete
-        "Don't show docs in preview window
-        au FileType python set completeopt-=preview
-    endif
-augroup END
 
 " for CSS, also have things in braces indented:
 au FileType css set smartindent
@@ -288,7 +268,6 @@ au FileType djangohtml set formatoptions-=t
 " Keep comments indented
 inoremap # #
 
-
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -298,11 +277,11 @@ set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.i
 "TODO fix this for git commits?
 autocmd BufReadPost * call SetCursorPosition()
 function! SetCursorPosition()
-  if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
-    if line("'\"") > 0 && line("'\"") <= line("$")
-     exe "normal g`\""
-    endif
-  end
+ if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
+   if line("'\"") > 0 && line("'\"") <= line("$")
+    exe "normal g`\""
+   endif
+ end
 endfunction
 
 " tell complete to look in the dictionary
@@ -312,7 +291,7 @@ set complete-=k complete+=k
 " http://vim.wikia.com/wiki/Completion_using_a_syntax_file
 au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
-" Redraw *********************************************************************
+" ### Redraw ###################################################
 " do not update screen while executing macros
 set lazyredraw
 " ttyfast: are we using a fast terminal? Let's try it for a while.
@@ -320,13 +299,11 @@ set ttyfast
 " ttyscroll: redraw instead of scrolling
 "set ttyscroll=0
 
-" -----------------------------------------------------------------------------
-" | Aliases and custom key functions                                          |
-" -----------------------------------------------------------------------------
+" ### Aliases and custom key functions ######################################
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
 imap jj <Esc>
 
-" save so many keystrokes!
+" save even more keystrokes!
 nnoremap ; :
 
 " Map uppercase write and quit, I'm lazy with shift
@@ -589,17 +566,20 @@ function! HandleURI()
 endfunction
 map \o :call HandleURI()<CR>
 
-" Custom text inserts *********************************************************
+" ### Custom text inserts ###################################################
 "insert THE time!
 "TODO move this into some kind of autotext complete thing
-nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
-imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
+" nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
+" imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
 
 iab AUTHOR Matt Behrens <askedrelic@gmail.com>
 
-" -----------------------------------------------------------------------------
-" | Pluggins                                                                  |
-" -----------------------------------------------------------------------------
+" ### Plugins ###################################################
+" First, load pathogen
+" filetype off
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
+
 "Taglist
 map \T :TlistClose<CR>:TlistToggle<CR>
 map \t :TlistToggle<CR>

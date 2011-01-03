@@ -22,6 +22,7 @@
     #Only 1.6.6 allows ~ references
 	excludesfile = ~/.gitignore
     whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+	quotepath = false
 [alias]
     st = status
     ci = commit -v
