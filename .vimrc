@@ -63,34 +63,34 @@ match CursorColumn '\%120v.*' " Error format when a line is longer than 120
 " allow you to have multiple files open and change between them without saving
 set hidden
 "make backspace work
-set backspace=indent,eol,start
+set backspace     = indent,eol,start
 " Show line numbers
 set number
 " Show matching brackets.
 set showmatch
 " have % bounce between angled brackets, as well as other kinds:
-set matchpairs+=<:>
-set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
+set matchpairs   += <:>
+set comments      = s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
 " This being the 21st century, I use Unicode
-set encoding=utf-8
+set encoding      = utf-8
 " Don't keep a backup file
 set nobackup
 " keep 1000 lines of command line history
-set history=1000
+set history       = 1000
 " keep 1000 undo levels
-set undolevels=1000
+set undolevels    = 1000
 " Automatically save before commands like :next and :make
 set autowrite
 " report: show a report when N lines were changed. 0 means 'all'
-set report=0
+set report        = 0
 " runtimepath: list of dirs to search for runtime files
-set runtimepath=~/.vim,$VIMRUNTIME
+set runtimepath   = ~/.vim,$VIMRUNTIME
 " Like File Explorer, preview window height is 8
-set previewheight=8
+set previewheight = 8
 " always show status line
-set ls=2
+set ls            = 2
 " Turn off bell, this could be more annoying, but I'm not sure how
-set vb t_vb=
+set vb t_vb       =
 
 " when using list, keep tabs at their full width and display `arrows':
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
@@ -145,7 +145,7 @@ set wildmode=longest,list
 " "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
 " ignore these files when completing
-set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,*.java.html,*.cgi.html,*.html.html,.viminfo,*.pdf
+set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,.viminfo,*.pdf
 
 " shortmess: shorten messages where possible, especially to stop annoying
 " 'already open' messages!
@@ -268,7 +268,6 @@ au FileType djangohtml set formatoptions-=t
 " Keep comments indented
 inoremap # #
 
-
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
 set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
@@ -276,16 +275,14 @@ set suffixes=.bak,~,.svn,.git,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.i
 "jump to last cursor position when opening a file
 "dont do it when writing a svn commit log entry
 "TODO fix this for git commits?
-"autocmd BufReadPost * call SetCursorPosition()
-"function! SetCursorPosition()
-"  if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
-"    if line("'\"") > 0 && line("'\"") <= line("$")
-"     exe "normal g`\""
-"    endif
-"  end
-"endfunction
-
-au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+autocmd BufReadPost * call SetCursorPosition()
+function! SetCursorPosition()
+ if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
+   if line("'\"") > 0 && line("'\"") <= line("$")
+    exe "normal g`\""
+   endif
+ end
+endfunction
 
 " tell complete to look in the dictionary
 set complete-=k complete+=k
@@ -306,7 +303,7 @@ set ttyfast
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
 imap jj <Esc>
 
-" save so many keystrokes!
+" save even more keystrokes!
 nnoremap ; :
 
 " Map uppercase write and quit, I'm lazy with shift
@@ -572,8 +569,8 @@ map \o :call HandleURI()<CR>
 " ### Custom text inserts ###################################################
 "insert THE time!
 "TODO move this into some kind of autotext complete thing
-nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
-imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
+" nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
+" imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
 
 iab AUTHOR Matt Behrens <askedrelic@gmail.com>
 
