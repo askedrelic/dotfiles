@@ -51,51 +51,20 @@ fi
  
  
 # git ------------------------------------------------
-alias gtshowcommands="echo -e '${COLOR_LIGHT_PURPLE}Available commands:
-   ${COLOR_GREEN}gt
-   ${COLOR_GREEN}gt${COLOR_NC}commit ${COLOR_GRAY}Example: gtcommit -m \"Your message here\"
-   ${COLOR_GREEN}gt${COLOR_NC}add ${COLOR_GRAY}Example: gtadd your_file
-   ${COLOR_GREEN}gt${COLOR_NC}add${COLOR_GREEN}all${COLOR_NC} ${COLOR_GRAY}Note: adds all files not in repository [recursively]
-   ${COLOR_GREEN}gt${COLOR_NC}show
-   ${COLOR_GREEN}gt${COLOR_NC}diff
-   ${COLOR_GREEN}gt${COLOR_NC}push
-   ${COLOR_GREEN}gt${COLOR_NC}pull
-   ${COLOR_GREEN}gt${COLOR_NC}fetch
-   ${COLOR_GREEN}gt${COLOR_NC}blame
-   ${COLOR_GREEN}gt${COLOR_NC}log
-   ${COLOR_GREEN}gt${COLOR_NC}log${COLOR_GREEN}stat${COLOR_NC}
-   ${COLOR_GREEN}gt${COLOR_NC}status
-'"
-   
-alias gt='git'
-alias gtclone='gt clone'
-alias gtadd='gt add'
-alias gtaddall='gt add .'
-alias gtdiff='gt diff'
-alias gtpush='gt push'
-alias gtfetch='gt fetch'
-alias gtpull='gt pull'
-alias gtremove='gt rm'
-alias gtmove='gt mv'
-alias gtshow='gt show'
-alias gtblame='gt blame'
-alias gtlog='gt log'
+alias gs='git status '
+alias ga='git add '
+alias gr='git remote -v'
+alias gb='git branch -a -v'
+alias gc='git commit'
+alias gd='git diff'
+alias gk='gitk --all&'
+alias gx='gitx --all'
 
 #mine
-alias gts='git status'
-alias gtb='git branch -a -v'
+alias gts='gs'
+alias gtb='gb'
 alias gtd='git diff'
-alias gtr='git remote -v'
-function gc {
-  git commit -m $1
-}
-# gcp message => git commit -a -m "Message" ; git push
-function gcp {
-  git commit -a -m $1; git push
-}
-
-
- 
+alias gtr='gr'
  
 # MySQL ------------------------------------------------
 alias mqshowcommands="echo -e '${COLOR_LIGHT_PURPLE}Available commands:
