@@ -543,7 +543,7 @@ map \Q :qall<CR>
 nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
 
 "replace all tabs with 4 spaces
-" map \ft :%s/	/    /g<CR>
+ map \ft :%s/	/    /g<CR>
 " use :retab instead
 
 "clear spaces at end of line

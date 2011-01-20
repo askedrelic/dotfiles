@@ -41,9 +41,14 @@
     #git 1.6
     hist = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) %s [%Cblue%an%Creset]' --graph --abbrev-commit --date=relative
 
-    logstat = log -M --summary --stat --date=relative --abbrev-commit
-    logpatch = log -p --date=relative --abbrev-commit
-    logword = log -p --date=relative --abbrev-commit --word-diff
+    #graph log order by date
+    lgd = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %Cblue%an%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --date-order
+    #flat graph log order by date
+    logflat = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %Cblue%an%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --date-order --no-merges
+
+    logstat = log -M --summary --stat --date=relative --abbrev-commit --no-merges --date-order
+    logpatch = log -p --date=relative --abbrev-commit --no-merges --date-order
+    logword = log -p --date=relative --abbrev-commit --word-diff --no-merges --date-order
 
     #diff
     staged = diff --cached --word-diff
@@ -62,7 +67,7 @@
     autosetupmerge = true
 [diff]
     # tool = gitvimdiff
-    # guitool = opendiff
+    ; guitool = opendiff
 [difftool]
     prompt = false
 [pager]
