@@ -196,7 +196,8 @@ if has("gui_running")
     set guioptions-=R
     set guioptions-=L
 else
-    colorscheme ir_black
+    " colorscheme ir_black
+    colorscheme xoria256
 endif
 
 " ### Line Wrapping ###################################################
@@ -234,7 +235,7 @@ au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 au FileType css set omnifunc=csscomplete#CompleteCSS
 au FileType xml set omnifunc=xmlcomplete#CompleteTags
 au FileType php set omnifunc=phpcomplete#CompletePHP
-au FileType python set omnifunc=pythoncomplete#Complete
+" au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c set omnifunc=ccomplete#Complete
 
 " no line numbers when viewing help

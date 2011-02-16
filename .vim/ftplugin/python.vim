@@ -1,5 +1,5 @@
 " Wrapping and tabs.
-setl softtabstop=4 tabstop=4 shiftwidth=4 expandtab smarttab autoindent
+" setl formatoptions=croql
 
 " make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 "setl textwidth=79
@@ -8,7 +8,7 @@ setl softtabstop=4 tabstop=4 shiftwidth=4 expandtab smarttab autoindent
 let python_highlight_all = 1
 
 " Smart indenting
-setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+setl smartindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
 
 "Don't show docs in preview window
 setl completeopt-=preview
