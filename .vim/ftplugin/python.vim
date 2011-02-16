@@ -1,10 +1,11 @@
 " Wrapping and tabs.
-setl ts=4 sw=4 sta et sts=4 ai
+setl softtabstop=4 tabstop=4 shiftwidth=4 expandtab smarttab autoindent
+
+" make Python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+"setl textwidth=79
 
 " More syntax highlighting.
 let python_highlight_all = 1
-
-let python_slow_sync = 1
 
 " Smart indenting
 setl smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
