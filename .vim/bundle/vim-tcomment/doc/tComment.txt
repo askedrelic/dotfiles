@@ -1,36 +1,25 @@
-*tComment.txt*  tComment -- An easily extensible & universal comment plugin
+*tcomment.txt*  An easily extensible & universal comment plugin
+                Author: Thomas Link, micathom AT gmail com?subject=vim
 
-Author: Thomas Link, micathom AT gmail com?subject=vim
-
-tComment provides easy to use, file-type sensible comments for Vim. It 
+tcomment provides easy to use, file-type sensible comments for Vim. It 
 can handle embedded syntax.
 
-
-                                                    *tComment-Installation*
-Installation~
-Edit the vba file and type:
-
-    :so %
-
-See :help vimball for details. If you use vim 7.0, you may need to 
-update your vimball installation first.
-
-
-                                                    *tComment-Usage*
-Usage~
 TComment works like a toggle, i.e., it will comment out text that 
 contains uncommented lines, and it will remove comment markup for 
 already commented text (i.e. text that contains no uncommented lines).
 
 If the file-type is properly defined, TComment will figure out which 
-comment string to use. Otherwise you use |TCommentDefineType()| to 
+comment string to use. Otherwise you use |tcomment#DefineType()| to 
 override the default choice.
 
 TComment can properly handle an embedded syntax, e.g., ruby/python/perl 
 regions in vim scripts, HTML or JavaScript in php code etc.
 
+Demo:
+http://vimsomnia.blogspot.com/2010/11/tcomment-vim-plugin.html
 
-                                                    *tComment-Key-Bindings*
+
+                                                    *tcomment-maps*
 Key bindings~
 
 Most of the time the default toggle keys will do what you want (or to be 
@@ -48,9 +37,8 @@ and g:tcommentMapLeaderOp2):
     gC{motion}   :: Comment region
     gCc          :: Comment the current line
 
-                                                    *g:tcommentOpModeExtra*
 By default the cursor stays put. If you want the cursor to the end of 
-the commented text, set g:tcommentOpModeExtra to '>' (but this may not 
+the commented text, set |g:tcommentOpModeExtra| to '>' (but this may not 
 work properly with exclusive motions).
 
 Primary key maps:
@@ -77,132 +65,278 @@ A secondary set of key maps is defined for normal mode.
     <Leader>_n       :: :TCommentAs &filetype <QUERY COUNT>
     <Leader>_s       :: :TCommentAs &filetype_<QUERY COMMENT SUBTYPE>
 
-Keymaps are configurable via the following variables:
 
-                                                    *g:tcommentMapLeader1*
-g:tcommentMapLeader1    string (default: <c-_>)
-        Prefix for the keymaps. Set to '' to disable keymaps with this 
-        prefix.
-                                                    *g:tcommentMapLeader2*
-g:tcommentMapLeader2    string (default: <Leader>_)
-        Secondary prefix. (The reason for why there are two prefixes is 
-        that <c-_> appears preferable with gvim but can be difficult to 
-        type on the terminal. The secondary prefix isn't used for insert 
-        mode maps. Set to '' to disable keymaps with this prefix.
+-----------------------------------------------------------------------
+Install~
 
-                                                    *tComment-commands*
-Alternatively, you can type (? meaning "optional argument"):
+Edit the vba file and type: >
+
+    :so %
+
+See :help vimball for details. If you have difficulties or use vim 7.0, 
+please make sure, you have the current version of vimball (vimscript 
+#1502) installed or update your runtime.
+
+
+========================================================================
+Contents~
+
+        :TComment ........................... |:TComment|
+        :TCommentAs ......................... |:TCommentAs|
+        :TCommentRight ...................... |:TCommentRight|
+        :TCommentBlock ...................... |:TCommentBlock|
+        :TCommentInline ..................... |:TCommentInline|
+        :TCommentMaybeInline ................ |:TCommentMaybeInline|
+        g:tcommentBlankLines ................ |g:tcommentBlankLines|
+        g:tcommentOpModeExtra ............... |g:tcommentOpModeExtra|
+        g:tcommentOptions ................... |g:tcommentOptions|
+        g:tcommentGuessFileType ............. |g:tcommentGuessFileType|
+        g:tcommentGuessFileType_dsl ......... |g:tcommentGuessFileType_dsl|
+        g:tcommentGuessFileType_php ......... |g:tcommentGuessFileType_php|
+        g:tcommentGuessFileType_html ........ |g:tcommentGuessFileType_html|
+        g:tcommentGuessFileType_tskeleton ... |g:tcommentGuessFileType_tskeleton|
+        g:tcommentGuessFileType_vim ......... |g:tcommentGuessFileType_vim|
+        g:tcommentGuessFileType_django ...... |g:tcommentGuessFileType_django|
+        g:tcommentIgnoreTypes_php ........... |g:tcommentIgnoreTypes_php|
+        g:tcomment#syntax_substitute ........ |g:tcomment#syntax_substitute|
+        g:tcommentSyntaxMap ................. |g:tcommentSyntaxMap|
+        g:tcommentBlockC .................... |g:tcommentBlockC|
+        g:tcommentBlockC2 ................... |g:tcommentBlockC2|
+        g:tcommentInlineC ................... |g:tcommentInlineC|
+        g:tcommentBlockXML .................. |g:tcommentBlockXML|
+        g:tcommentInlineXML ................. |g:tcommentInlineXML|
+        tcomment#DefineType ................. |tcomment#DefineType()|
+        tcomment#Comment .................... |tcomment#Comment()|
+        tcomment#Operator ................... |tcomment#Operator()|
+        tcomment#OperatorLine ............... |tcomment#OperatorLine()|
+        tcomment#OperatorAnyway ............. |tcomment#OperatorAnyway()|
+        tcomment#OperatorLineAnyway ......... |tcomment#OperatorLineAnyway()|
+        tcomment#CommentAs .................. |tcomment#CommentAs()|
+
+
+========================================================================
+plugin/tcomment.vim~
 
                                                     *:TComment*
-    :?<range> TComment ?commentBegin ?commentEnd
-    :?<range> TComment! ?commentBegin ?commentEnd
-    NOTE: If there is a visual selection that begins and ends in the same 
-    line, then TCommentInline is used instead.
-
-    NOTE: The range is optional and defaults to the current line.
-
-                                                    *:TCommentInline*
-    :?<range> TCommentInline ?commentBegin ?commentEnd
-    :?<range> TCommentInline! ?commentBegin ?commentEnd
-    Use the {&ft}_inline comment style.
-
-                                                    *:TCommentBlock*
-    :?<range> TCommentBlock ?commentBegin ?commentEnd
-    :?<range> TCommentBlock! ?commentBegin ?commentEnd
-    Comment as "block", e.g. use the {&ft}_block comment style.
-    NOTE: This command is kind of crude. It doesn't indent or reformat 
-    the text.
+:[range]TComment[!] ?ARGS...
+    If there is a visual selection that begins and ends in the same line, 
+    then |:TCommentInline| is used instead.
+    The optional range defaults to the current line. With a bang '!', 
+    always comment the line.
+    
+    ARGS... are either (see also |tcomment#Comment()|):
+      1. a list of key=value pairs
+      2. 1-2 values for: ?commentBegin, ?commentEnd
 
                                                     *:TCommentAs*
-    :?<range> TCommentAs filetype
-    :?<range> TCommentAs! filetype
-    NOTE: TCommentAs requires g:tcomment_{filetype} to be defined.
-    NOTE: This command supports command line completion. See 'wildmode' 
-    and 'wildmenu' for how to get the most out of it.
+:[range]TCommentAs[!] commenttype ?ARGS...
+    TCommentAs requires g:tcomment_{filetype} to be defined.
+    With a bang '!', always comment the line.
+    
+    ARGS... are either (see also |tcomment#Comment()|):
+      1. a list of key=value pairs
+      2. 1-2 values for: ?commentBegin, ?commentEnd
 
                                                     *:TCommentRight*
-    :?<range> TCommentRight
-    :?<range> TCommentRight!
-    NOTE: This command comments out the text to the right of the cursor. 
-    If a visual selection was made (be it block-wise or not), all lines 
-    are commented out at from the current cursor position downwards.
-
-    The bang (!) variants always comment out the selected text and don't 
-    work as toggles.
-
-                                                    *TCommentDefineType()*
-    Using this command you can also use different comment styles with 
-    the TCommentDefineType(name, commentstring) function. This function 
-    takes two arguments:
-        name :: The name is either &filetype or {&filetype}_{style}. 
-            I.e., For block comments the {&filetype}_block and for 
-            inline comments the {&filetype}_inline styles are used.
-        comment string :: a string mostly as described in 
-            'commentstring'.
+:[range]TCommentRight[!] ?ARGS...
+    Comment the text to the right of the cursor. If a visual selection was 
+    made (be it block-wise or not), all lines are commented out at from 
+    the current cursor position downwards.
+    With a bang '!', always comment the line.
     
-    If you want to define, e.g., a fancy block comment style for html 
-    you put something like this into ~/.vim/after/plugin/tComment.vim:>
+    ARGS... are either (see also |tcomment#Comment()|):
+      1. a list of key=value pairs
+      2. 1-2 values for: ?commentBegin, ?commentEnd
 
-        call TCommentDefineType("html_fancy_block", "<!--%s  -->\n  -- ")
+                                                    *:TCommentBlock*
+:[range]TCommentBlock[!] ?ARGS...
+    Comment as "block", e.g. use the {&ft}_block comment style. The 
+    commented text isn't indented or reformated.
+    With a bang '!', always comment the line.
+    
+    ARGS... are either (see also |tcomment#Comment()|):
+      1. a list of key=value pairs
+      2. 1-2 values for: ?commentBegin, ?commentEnd
 
-<   The part after the newline character is used for marking "middle" 
-    lines.
+                                                    *:TCommentInline*
+:[range]TCommentInline[!] ?ARGS...
+    Use the {&ft}_inline comment style.
+    With a bang '!', always comment the line.
+    
+    ARGS... are either (see also |tcomment#Comment()|):
+      1. a list of key=value pairs
+      2. 1-2 values for: ?commentBegin, ?commentEnd
 
-    This comment style could then be accessed via (this command has 
-    command line completion): >
-
-        '<,'>TCommentAs html_fancy_block
-
-<   If you're editing a html file, this could best be done by the <c-_>s     
-    key map.
-
-
-Goals~
-- Maintain indentation of selected text; the comment markers are left 
-  aligned but the text on the right (i.e., the comment) is indented 
-  like the original text
-
-- Handle embedded syntax like php+html or html+javaScript+css; you 
-  have to set g:tcommentGuessFileType_{&filetype} to 1 or to the 
-  fall-back file-type in order to activate this feature for other file 
-  types than php or html
-  
-  tComment deduces the correct file type from the syntax name, similar 
-  to the way EnhancedCommentify.vim does it. In opposition to 
-  EnhancedCommentify.vim, it matches the syntax name against a list the 
-  known file types, so that it can deal with, e.g., embedded javaScript
-
-- Easy to customize/adapt for an yet unknown syntax by setting buffer 
-  local variables (b:commentStart, b:commentEnd, or b:commentstring), 
-  global variables (g:tcomment_{&ft} and g:tcomment_{&ft}_block), or the 
-  buffer local &commentstring option (which can be set on a vim 
-  |modeline|)
-
-- Use 'commentstring' or 'comments' as a fallback (i.e., if a file-type 
-  is properly defined, TComment will automatically support it)
-
-- Same short-cut for commenting text and for removing comment markup
-
-- The decision whether text should be commented or uncommented is made 
-  on the basis of the whole selection (not line by line); comments in 
-  code that should be commented aren't uncommented as it is the case 
-  with some other plug-ins
-
-As of version 1.5, the following file types are explicitly defined 
-(other file-types are most likely supported through the 'commentstring' 
-or 'comments' variables):
-
-    ada, apache, autoit, catalog, cpp, css, c, cfg, conf, desktop, 
-    docbk, dosbatch, dosini, dsl, dylan, eiffel, gtkrc, haskell, html, 
-    io, javaScript, java, lisp, m4, nroff, objc, ocaml, pascal, perl, 
-    php, prolog, ruby, r, scheme, sgml, sh, sql, spec, sps, tcl, tex, 
-    tpl, viki, vim, websec, xml, xslt, yaml
+                                                    *:TCommentMaybeInline*
+:[range]TCommentMaybeInline[!] ?ARGS...
+    With a bang '!', always comment the line.
+    
+    ARGS... are either (see also |tcomment#Comment()|):
+      1. a list of key=value pairs
+      2. 1-2 values for: ?commentBegin, ?commentEnd
 
 
-Credits~
-The way we check for embedded syntax was originally adapted 
-from/inspired by Meikel Brandmeyer's EnhancedCommentify.vim
-(vimscript #23) but has evolved since.
+========================================================================
+autoload/tcomment.vim~
+
+                                                    *g:tcommentBlankLines*
+g:tcommentBlankLines           (default: 1)
+    If true, comment blank lines too
+
+                                                    *g:tcommentOpModeExtra*
+g:tcommentOpModeExtra          (default: '')
+    Modifies how the operator works.
+      > ... Move the cursor to the end of the comment
+
+                                                    *g:tcommentOptions*
+g:tcommentOptions              (default: {})
+    Other key-value options used by |tcomment#Comment()|.
+    
+    Example: If you want to put the opening comment marker always in 
+    the first column regardless of the block's indentation, put this 
+    into your |vimrc| file: >
+      let g:tcommentOptions = {'col': 1}
+<
+
+                                                    *g:tcommentGuessFileType*
+g:tcommentGuessFileType        (default: 0)
+    Guess the file type based on syntax names always or for some fileformat only
+    If non-zero, try to guess filetypes.
+    tcomment also checks g:tcommentGuessFileType_{&filetype} for 
+    filetype specific values.
+    
+    Values:
+      0        ... don't guess
+      1        ... guess
+      FILETYPE ... assume this filetype
+
+                                                    *g:tcommentGuessFileType_dsl*
+g:tcommentGuessFileType_dsl    (default: 'xml')
+    For dsl documents, assumet filetype = xml.
+
+                                                    *g:tcommentGuessFileType_php*
+g:tcommentGuessFileType_php    (default: 'html')
+    In php documents, the php part is usually marked as phpRegion. We 
+    thus assume that the buffers default comment style isn't php but 
+    html.
+
+                                                    *g:tcommentGuessFileType_html*
+g:tcommentGuessFileType_html   (default: 1)
+
+                                                    *g:tcommentGuessFileType_tskeleton*
+g:tcommentGuessFileType_tskeleton (default: 1)
+
+                                                    *g:tcommentGuessFileType_vim*
+g:tcommentGuessFileType_vim    (default: 1)
+
+                                                    *g:tcommentGuessFileType_django*
+g:tcommentGuessFileType_django (default: 1)
+
+                                                    *g:tcommentIgnoreTypes_php*
+g:tcommentIgnoreTypes_php      (default: 'sql')
+    In php files, some syntax regions are wongly highlighted as sql 
+    markup. We thus ignore sql syntax when guessing the filetype in 
+    php files.
+
+                                                    *g:tcomment#syntax_substitute*
+g:tcomment#syntax_substitute   (default: {...})
+
+                                                    *g:tcommentSyntaxMap*
+g:tcommentSyntaxMap            (default: {...})
+    tcomment guesses filetypes based on the name of the current syntax 
+    region. This works well if the syntax names match 
+    /filetypeSomeName/. Other syntax names have to be explicitly 
+    mapped onto the corresponding filetype.
+
+                                                    *g:tcommentBlockC*
+g:tcommentBlockC               (default: {...})
+    Generic c-like block comments.
+
+                                                    *g:tcommentBlockC2*
+g:tcommentBlockC2              (default: {...})
+    Generic c-like block comments (alternative markup).
+
+                                                    *g:tcommentInlineC*
+g:tcommentInlineC              (default: "/* %s */")
+    Generic c-like comments.
+
+                                                    *g:tcommentBlockXML*
+g:tcommentBlockXML             (default: "<!--%s-->\n  ")
+    Generic xml-like block comments.
+
+                                                    *g:tcommentInlineXML*
+g:tcommentInlineXML            (default: "<!-- %s -->")
+    Generic xml-like comments.
+
+                                                    *tcomment#DefineType()*
+tcomment#DefineType(name, commentdef)
+    If you don't explicitly define a comment style, |:TComment| will use 
+    'commentstring' instead. We override the default values here in order 
+    to have a blank after the comment marker. Block comments work only if 
+    we explicitly define the markup.
+    
+    The comment definition can be either a string or a dictionary.
+    
+    If it is a string:
+    The format for block comments is similar to 'commentstrings' with the 
+    exception that the format strings for blocks can contain a second line 
+    that defines how "middle lines" (see :h format-comments) should be 
+    displayed.
+    
+    If it is a dictionary:
+    See the help on the args argument of |tcomment#Comment|.
+
+                                                    *tcomment#Comment()*
+tcomment#Comment(beg, end, ...)
+    tcomment#Comment(line1, line2, ?commentMode, ?commentAnyway, ?args...)
+    args... are either:
+      1. a list of key=value pairs where known keys are (see also 
+         |g:tcommentOptions|):
+            as=STRING     ... Use a specific comment definition
+            col=N         ... Start the comment at column N (in block mode; must 
+                              be smaller than |indent()|)
+            mode=STRING   ... See the notes below on the "commentMode" argument
+            begin=STRING  ... Comment prefix
+            end=STRING    ... Comment postfix
+            middle=STRING ... Middle line comments in block mode
+            rxbeg=N       ... Regexp to find the substring of "begin" that 
+                              should be multipied by "count"
+            rxend=N       ... The above for "end"
+            rxmid=N       ... The above for "middle"
+      2. 1-2 values for: ?commentPrefix, ?commentPostfix
+      3. a dictionary (internal use only)
+    
+    commentMode:
+      G ... guess the value of commentMode
+      B ... block (use extra lines for the comment markers)
+      i ... maybe inline, guess
+      I ... inline
+      R ... right (comment the line right of the cursor)
+      v ... visual
+      o ... operator
+    By default, each line in range will be commented by adding the comment 
+    prefix and postfix.
+
+                                                    *tcomment#Operator()*
+tcomment#Operator(type, ...)
+
+                                                    *tcomment#OperatorLine()*
+tcomment#OperatorLine(type)
+
+                                                    *tcomment#OperatorAnyway()*
+tcomment#OperatorAnyway(type)
+
+                                                    *tcomment#OperatorLineAnyway()*
+tcomment#OperatorLineAnyway(type)
+
+                                                    *tcomment#CommentAs()*
+tcomment#CommentAs(beg, end, commentAnyway, filetype, ?args...)
+    Where args is either:
+      1. A count NUMBER
+      2. An args list (see the notes on the "args" argument of 
+         |tcomment#Comment()|)
+    comment text as if it were of a specific filetype
 
 
-vim: tw=72
+
+vim:tw=78:fo=tcq2:isk=!-~,^*,^|,^":ts=8:ft=help:norl:

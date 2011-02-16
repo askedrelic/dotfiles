@@ -522,6 +522,7 @@ nmap \tb  TYShowBreak()
 
 "clear the fucking search buffer, not just remove the highlight
 map \c :let @/ = ""<CR>
+map \tc :let @/ = ""<CR>
 
 " remove highlighted search
 nmap <silent> ,/ :nohlsearch<CR>
@@ -550,9 +551,9 @@ nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetyp
 nmap \l :%s/\s\+$//<CR>
 
 " Quick alignment of text
-map \al :left<CR>
-map \ar :right<CR>
-map \ac :center<CR>
+" map \al :left<CR>
+" map \ar :right<CR>
+" map \ac :center<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
@@ -580,7 +581,22 @@ iab AUTHOR Matt Behrens <askedrelic@gmail.com>
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
-"Taglist
+"Tabularize align options
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a> :Tabularize /=><CR>
+  vmap <Leader>a> :Tabularize /=><CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+  nmap <Leader>a :Tabularize /
+  vmap <Leader>a :Tabularize /
+endif
+
+" tComment
+let g:tcommentMapLeader2 = '<Leader>c'
+
+" Taglist
 map \T :TlistClose<CR>:TlistToggle<CR>
 map \t :TlistToggle<CR>
 "If launching mvim without proper PATH
@@ -601,17 +617,15 @@ let Tlist_Compart_Format = 1
 " Show tag scope next to the tag name.
 let Tlist_Display_Tag_Scope = 1
 let Tlist_WinWidth = 40
-
 " don't show scope info
 let Tlist_Display_Tag_Scope=0
-
 " shorten the time it takes to highlight the current tag (default is 4 secs)
 " note that this setting influences Vim's behaviour when saving swap files,
 " but we have already turned off swap files (earlier)
 set updatetime=1000
 
 "NERDTree
-map <silent> \e :NERDTreeClose<CR>:NERDTreeToggle<CR>
+map <silent> \e :NERDTreeToggle<CR>
 map <silent> \E :NERDTreeClose<CR>
 map <silent> \m :NERDTreeClose<CR>:NERDTreeFind<CR>
 let NERDTreeWinPos='right'
@@ -623,8 +637,7 @@ let NERDTreeHighlightCursorline=1
 let NERDTreeShowFiles=1
 let NERDTreeShowHidden=1
 
-
-"FuzzyFinder
+" FuzzyFinder
 "Seriously FF, setting up your options sucks
 if !exists('g:FuzzyFinderOptions')
     let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'Bookmark':{}, 'Tag':{}, 'TaggedFile':{}}
@@ -638,7 +651,7 @@ map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 map <silent> \b :FuzzyFinderBuffer!<CR>
 
-"newrw
+" Netrw
 let g:netrw_hide              = 1
 let g:netrw_list_hide         = '^\.svn.*'
 let g:netrw_menu              = 0
