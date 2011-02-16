@@ -154,6 +154,7 @@ alias watch="watch -d"
 alias wget="wget -c"
 alias free="free -m"
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
+alias dig='dig +nocomments +nocmd +nostats'
 
 #osx personal aliases
 alias mate="mate -d"
