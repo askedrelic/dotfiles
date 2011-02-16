@@ -36,15 +36,12 @@
     human = name-rev --name-only --refs=refs/heads/*
 
     #simple log with branches
-    #git 1.5
-    # lg = log --graph --pretty=format:'%Cred%h%Creset - %s %Cgreen(%an, %cr)%Creset' --abbrev-commit --date=relative
-    #git 1.6
+    #git > 1.6
     hist = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) %s [%Cblue%an%Creset]' --graph --abbrev-commit --date=relative
+    histflat = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) %s [%Cblue%an%Creset]' --abbrev-commit --date=relative --date-order --no-merges
 
-    #graph log order by date
-    lgd = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %Cblue%an%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --date-order
-    #flat graph log order by date
-    logflat = log --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %Cblue%an%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --date-order --no-merges
+    histpatch = log -p --abbrev-commit --date=relative
+    histstat = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
 
     logstat = log -M --summary --stat --date=relative --abbrev-commit --no-merges --date-order
     logpatch = log -p --date=relative --abbrev-commit --no-merges --date-order
