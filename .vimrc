@@ -235,7 +235,7 @@ au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 au FileType css set omnifunc=csscomplete#CompleteCSS
 au FileType xml set omnifunc=xmlcomplete#CompleteTags
 au FileType php set omnifunc=phpcomplete#CompletePHP
-" au FileType python set omnifunc=pythoncomplete#Complete
+au FileType python set omnifunc=pythoncomplete#Complete
 au FileType c set omnifunc=ccomplete#Complete
 
 " no line numbers when viewing help
@@ -267,7 +267,7 @@ au FileType djangohtml set formatoptions+=l
 au FileType djangohtml set formatoptions-=t
 
 " Keep comments indented
-inoremap # #
+" inoremap # #
 
 " Suffixes that get lower priority when doing tab completion for filenames.
 " These are files we are not likely to want to edit or read.
@@ -286,7 +286,7 @@ function! SetCursorPosition()
 endfunction
 
 " tell complete to look in the dictionary
-set complete-=k complete+=k
+" set complete-=k complete+=k
 
 " if problems, check here
 " http://vim.wikia.com/wiki/Completion_using_a_syntax_file
@@ -435,7 +435,7 @@ noremap Y y$
 vmap D y'>p
 
 " Make p in Visual mode replace the selected text with the "" register.
-vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+" vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 "allow deleting selection without updating the clipboard (yank buffer)
 vnoremap x "_x
@@ -542,7 +542,7 @@ map \q :bd<CR>
 map \Q :qall<CR>
 
 " Show eeeeeeverything!
-nmap \I :verbose set ai? si? cin? cink? cino? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
+nmap \I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
 
 "replace all tabs with 4 spaces
  map \ft :%s/	/    /g<CR>
@@ -583,16 +583,14 @@ call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
 "Tabularize align options
-if exists(":Tabularize")
-  nmap <Leader>a= :Tabularize /=<CR>
-  vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a> :Tabularize /=><CR>
-  vmap <Leader>a> :Tabularize /=><CR>
-  nmap <Leader>a: :Tabularize /:\zs<CR>
-  vmap <Leader>a: :Tabularize /:\zs<CR>
-  nmap <Leader>a :Tabularize /
-  vmap <Leader>a :Tabularize /
-endif
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a> :Tabularize /=><CR>
+vmap <Leader>a> :Tabularize /=><CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>a :Tabularize /
+vmap <Leader>a :Tabularize /
 
 " tComment
 let g:tcommentMapLeader2 = '<Leader>c'

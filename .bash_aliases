@@ -98,10 +98,10 @@ EOT
 # Use ack for grepping and find if ack is available
 if type -P ack &>/dev/null ; then
   g(){
-    ack "$*" --color-match=green --color-filename=blue --smart-case
+    ack "$*" --all-types --color-match=green --color-filename=blue --smart-case
   }
   gw(){
-    ack "$*" --color-match=green --color-filename=blue --word-regexp --smart-case
+    ack "$*" --all-types --color-match=green --color-filename=blue --word-regexp --smart-case
   }
   f(){
     ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
@@ -116,8 +116,6 @@ else
 fi
 
 # Other aliases ----------------------------------------------------------------------------------------------
-#used to be called 'which', probably shouldn't override default linux programs
-
 #goto the source dir of any python module
 cdp () {
     cd "$(python -c "import os.path as _, ${1}; \
