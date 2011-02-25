@@ -104,8 +104,7 @@ if type -P ack &>/dev/null ; then
     ack "$*" --all-types --color-match=green --color-filename=blue --word-regexp --smart-case
   }
   f(){
-    #show types and force to search all file types, not just file types ack knows
-    ack --show-types -a -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
+    ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
   }
 else
   g(){
