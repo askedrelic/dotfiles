@@ -1,0 +1,3 @@
+settings = {
+  "fe-common/core" = { theme = "hv"; };
+};
