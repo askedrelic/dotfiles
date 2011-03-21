@@ -340,6 +340,10 @@ map <C-J> <C-W>j
 map <C-K> <C-W>k
 map <C-L> <C-W>l
 
+" Fix vertsplit window sizing
+nmap <C-Left> <C-W>><C-W>>
+nmap <C-Right> <C-W><<C-W><
+
 "tabs!
 nnoremap \1 :tabn 1<CR>
 nnoremap \2 :tabn 2<CR>
@@ -516,6 +520,11 @@ function! TYShowBreak()
 endfunction
 nmap \tb  TYShowBreak()
 
+
+" Force gm to go the middle of the ACTUAL line, not the screen line
+map gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
+
+
 " Allows vim to split window to a terminal, thanks to screen.
 " Requires screener.sh
 " From http://www.semicomplete.com/blog/geekery/flashback-2010-2003.html
@@ -571,8 +580,7 @@ map \o :call HandleURI()<CR>
 " ### Custom text inserts ###################################################
 "insert THE time!
 "TODO move this into some kind of autotext complete thing
-" nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
-" imap \tt <Esc>:execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>i
+nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
 
 iab AUTHOR Matt Behrens <askedrelic@gmail.com>
 
