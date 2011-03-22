@@ -600,9 +600,6 @@ vmap <Leader>a: :Tabularize /:\zs<CR>
 nmap <Leader>a :Tabularize /
 vmap <Leader>a :Tabularize /
 
-" tComment
-let g:tcommentMapLeader2 = '<Leader>c'
-
 " Taglist
 map \T :TlistClose<CR>:TlistToggle<CR>
 map \t :TlistToggle<CR>
