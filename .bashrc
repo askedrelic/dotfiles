@@ -48,7 +48,7 @@ export HISTCONTROL=ignoreboth
 # Whenever displaying the prompt, reload history and write the previous line to disk, and update the term title
 export PROMPT_COMMAND='history -a; history -n; echo -ne "\033]0; ${PWD/$HOME/~}\007"'
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:....."
-export HISTSIZE=15000
+export HISTSIZE=50000
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
 # Concatenate multi-line commands
 shopt -s cmdhist
