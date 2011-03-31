@@ -249,6 +249,9 @@ au FileType c,cpp,slang set cindent
 " insert the comment leader characters:
 au FileType c set formatoptions+=ro
 
+au BufNewFile,BufRead *.markdown set filetype=markdown
+au BufNewFile,BufRead *.markdown set formatoptions=croql
+
 " Ruby
 au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
 au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2
@@ -564,6 +567,12 @@ nmap \l :%s/\s\+$//<CR>
 " map \al :left<CR>
 " map \ar :right<CR>
 " map \ac :center<CR>
+
+" Replace current visually selected word
+vmap \r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
+
+" Show number of occurrences of currently visually selected word
+vmap \s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
