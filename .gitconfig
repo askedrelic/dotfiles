@@ -58,16 +58,18 @@
 
     type = cat-file -t
     dump = cat-file -p
+
+    ls-ignored = ls-files --others -i --exclude-standard
 [pack]
     threads = 0
 [branch]
     autosetupmerge = true
-[diff]
-    # tool = gitvimdiff
-    ; guitool = opendiff
-[difftool]
-    prompt = false
-[pager]
-    diff =
 [github]
     user = askedrelic
+[merge]
+    tool = p4merge
+[mergetool]
+    keepBackup = false
+    prompt = false
+[difftool]
+    prompt = false
