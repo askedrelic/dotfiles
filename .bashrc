@@ -78,17 +78,18 @@ bind "set completion-ignore-case on" # note: bind used instead of sticking these
 bind "set bell-style none" # no bell
 bind "set show-all-if-ambiguous On" # show list automatically, without double tab
 
-export PAGER=/usr/bin/less
+export PAGER=less
+
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"
-export LESS="-FXR"
+#export LESS="-FXR"
 # Make perl localization work
 export LC_ALL=C
 export LANGUAGE=en_US
 
 export EDITOR="vim"
 #assume on OSX and using homebrew to install macvim
-export VIM_APP_DIR=/usr/local/Cellar/macvim/HEAD
+#export VIM_APP_DIR=/usr/local/Cellar/macvim/HEAD
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
 # export GEM_HOME=/home/askedrelic/.gem/ruby/1.8
@@ -122,6 +123,9 @@ fi
 if [ -e /usr/local/bin/brew ]; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         . `brew --prefix`/etc/bash_completion
+    fi
+    if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
+        . `brew --prefix git`/etc/bash_completion.d/git-completion.bash
     fi
 fi
 

@@ -1,3 +1,9 @@
 settings = {
   "fe-common/core" = { theme = "hv"; };
+  core = {
+    real_name = "askedrelic";
+    user_name = "askedrelic";
+    nick = "askedrelic";
+  };
+  "fe-text" = { actlist_sort = "refnum"; };
 };
