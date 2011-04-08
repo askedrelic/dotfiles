@@ -58,18 +58,13 @@
 
     type = cat-file -t
     dump = cat-file -p
+
+    ls-ignored = ls-files --others -i --exclude-standard
 [pack]
     threads = 0
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
-[diff]
-    # tool = gitvimdiff
-    ; guitool = opendiff
-[difftool]
-    prompt = false
-[pager]
-    diff =
 [github]
     user = askedrelic
 [diff]
@@ -80,3 +75,10 @@
 [push]
     #When pushing without giving a refspec, push the current branch to its upstream branch.
     default = tracking
+[merge]
+    tool = p4merge
+[mergetool]
+    keepBackup = false
+    prompt = false
+[difftool]
+    prompt = false
