@@ -63,9 +63,18 @@
 [pack]
     threads = 0
 [branch]
+    #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
 [github]
     user = askedrelic
+[diff]
+    #Allow git diff to do basic rename and copy detection
+    renames = copies
+    #Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
+    mnemonicprefix = true
+[push]
+    #When pushing without giving a refspec, push the current branch to its upstream branch.
+    default = tracking
 [merge]
     tool = p4merge
 [mergetool]
