@@ -4,23 +4,30 @@
 
 # Maximum and minimum number of peers to connect to per torrent.
 #min_peers = 40
-max_peers = 200
+max_peers = 100
 
 # Same as above but for seeding completed torrents (-1 = same as downloading)
 #min_peers_seed = 10
-max_peers_seed = 30
+max_peers_seed = 20
 
 # Maximum number of simultanious uploads per torrent.
-max_uploads = 4
+max_uploads = 5
 
 # Global upload and download rate in KiB. "0" for unlimited.
-download_rate = 0 
+download_rate = 1000 
 upload_rate = 100
 
 # Default directory to save the downloaded torrents.
 directory = /home/askedrelic/torrents/incomplete
-on_finished = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/seed ;d.set_directory=~/torrents/seed"
-on_erase = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/complete ;d.set_directory=~/torrents/complete"
+
+# Move completed torrents
+# rtorrent 0.8.6
+system.method.set_key = event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/seed ;d.set_directory=~/torrents/seed"
+system.method.set_key = event.download.erased,move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/complete ;d.set_directory=~/torrents/complete"
+
+#rtorrent 0.8.2
+#on_finished = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/seed ;d.set_directory=~/torrents/seed"
+#on_erase = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/complete ;d.set_directory=~/torrents/complete"
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
@@ -46,6 +53,9 @@ port_random = no
 # fixed that causes lack of diskspace not to be properly reported.
 check_hash = yes
 
+# Lower max open files due to possible hash_check bug
+# max_open_files = 128 
+
 # Set whetever the client should try to connect to UDP trackers.
 use_udp_trackers = yes
 
@@ -59,6 +69,9 @@ use_udp_trackers = yes
 encryption = allow_incoming,try_outgoing,enable_retry,prefer_plaintext
 
 dht = off
+
+#Show downloads currently uploading or downloading in active view. Update every 30 seconds.
+schedule = filter_active,30,30,"view_filter = active,\"or={d.get_up_rate=,d.get_down_rate=}\""
 
 # Do not modify the following parameters unless you know what you're doing.
 #
