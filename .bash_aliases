@@ -97,21 +97,23 @@ EOT
 # Search ----------------------------------------------------------------------------------------------
 # Use ack for grepping and find if ack is available
 if type -P ack &>/dev/null ; then
-  g(){
+  g() {
     ack "$*" --all-types --color-match=green --color-filename=blue --smart-case
   }
-  gw(){
+  gw() {
     ack "$*" --all-types --color-match=green --color-filename=blue --word-regexp --smart-case
   }
-  f(){
-    ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
+  f() {
+    #ack 1.X doesn't support case insensitive file searching, switching back to find
+    #ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
+    find . -iname "*$**" | highlight blue ".*/" green "$*[^/]"
   }
 else
-  g(){
+  g() {
     grep -Ri "$1" *
   }
-  f(){
-    find . -iname "$1"
+  f() {
+    find . -iname "*$**" | highlight blue ".*/" green "$*[^/]"
   }
 fi
 
