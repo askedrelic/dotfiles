@@ -31,26 +31,28 @@
     co = checkout
     ls = ls-files
     dt = difftool
+    mt = mergetool
 
     #figure out what a revision is
     human = name-rev --name-only --refs=refs/heads/*
 
-    #simple log with branches
-    #git > 1.6
-    hist = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) %s [%Cblue%an%Creset]' --graph --abbrev-commit --date=relative
-    histflat = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) %s [%Cblue%an%Creset]' --abbrev-commit --date=relative --date-order --no-merges
+    #simple log with branches, requires git > 1.6
+    hist = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --graph --abbrev-commit --date=relative
+    h = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --graph --abbrev-commit --date=relative
 
-    histpatch = log -p --abbrev-commit --date=relative
-    histstat = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
+    hist-flat = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --abbrev-commit --date=relative --date-order --no-merges
+    hf = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --abbrev-commit --date=relative --date-order --no-merges
 
-    logstat = log -M --summary --stat --date=relative --abbrev-commit --no-merges --date-order
-    logpatch = log -p --date=relative --abbrev-commit --no-merges --date-order
-    logword = log -p --date=relative --abbrev-commit --word-diff --no-merges --date-order
+    hist-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
+
+    hist-patch = log -p --abbrev-commit --date=relative
+    hist-patch-word = log -p --abbrev-commit --date=relative
+    hist-stat = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
 
     #diff
-    staged = diff --cached --word-diff
-    unstaged = diff --patience --word-diff
-    both = diff HEAD --word-diff
+    staged = diff --patience --cached
+    unstaged = diff --patience
+    both = diff HEAD
 
     changes=diff --name-status -r
     diffstat=diff --stat -r
