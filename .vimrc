@@ -300,8 +300,6 @@ au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'
 set lazyredraw
 " ttyfast: are we using a fast terminal? Let's try it for a while.
 set ttyfast
-" ttyscroll: redraw instead of scrolling
-"set ttyscroll=0
 
 " ### Aliases and custom key functions ######################################
 " Professor VIM says '87% of users prefer jj over esc', jj abrams strongly disagrees
