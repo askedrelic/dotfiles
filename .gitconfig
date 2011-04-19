@@ -45,6 +45,7 @@
 
     hist-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 
+    hp = log -p --abbrev-commit --date=relative
     hist-patch = log -p --abbrev-commit --date=relative
     hist-patch-word = log -p --abbrev-commit --date=relative
     hist-stat = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
