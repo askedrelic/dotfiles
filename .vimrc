@@ -532,7 +532,7 @@ map gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
 " map \s :silent !screener.sh<CR>
 
 "clear the fucking search buffer, not just remove the highlight
-map \c :let @/ = ""<CR>
+map \c  :let @/ = ""<CR>
 map \tc :let @/ = ""<CR>
 
 " remove highlighted search
@@ -604,8 +604,8 @@ nmap <Leader>a> :Tabularize /=><CR>
 vmap <Leader>a> :Tabularize /=><CR>
 nmap <Leader>a: :Tabularize /:\zs<CR>
 vmap <Leader>a: :Tabularize /:\zs<CR>
-nmap <Leader>a :Tabularize /
-vmap <Leader>a :Tabularize /
+nmap <Leader>a  :Tabularize /
+vmap <Leader>a  :Tabularize /
 
 " Taglist
 map \T :TlistClose<CR>:TlistToggle<CR>
