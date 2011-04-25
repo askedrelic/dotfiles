@@ -38,11 +38,11 @@
     human = name-rev --name-only --refs=refs/heads/*
 
     #simple log with branches, requires git > 1.6
-    hist = log --pretty = format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --graph --abbrev-commit --date = relative
-    h    = log --pretty = format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --graph --abbrev-commit --date = relative
+    hist = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --graph --abbrev-commit --date=relative
+    h    = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --graph --abbrev-commit --date=relative
 
-    hist-flat = log --pretty = format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --abbrev-commit --date = relative --date-order --no-merges
-    hf        = log --pretty = format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --abbrev-commit --date = relative --date-order --no-merges
+    hist-flat = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --abbrev-commit --date = relative --date-order --no-merges
+    hf        = log --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset] %s ' --abbrev-commit --date = relative --date-order --no-merges
 
     hist-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 
