@@ -435,7 +435,8 @@ vnoremap Q gq
 
 " have Y behave analogously to D and C rather than to dd and cc (which is
 " already done by yy):
-noremap Y y$
+nnoremap Y y$
+vnoremap Y y$
 
 " dulpicate line in visual mode
 vmap D y'>p
@@ -449,8 +450,8 @@ vnoremap X "_X
 
 "don't move the cursor after pasting
 "(by jumping to back start of previously changed text)
-noremap p p`[
-noremap P P`[
+"noremap p p`[
+"noremap P P`[
 
 " change first word of current line
 " map <silent> <C-h> ^cw
@@ -550,7 +551,7 @@ nmap \sv :source $MYVIMRC<CR>
 map \q :bd<CR>
 
 " Easy quit of vim
-map \Q :qall<CR>
+map \Q :qall!<CR>
 
 " Show eeeeeeverything!
 nmap \I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
@@ -560,7 +561,7 @@ nmap \I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? f
 " use :retab instead
 
 "clear spaces at end of line
-nmap \l :%s/\s\+$//<CR>
+nmap \s :%s/\s\+$//<CR>
 
 " Quick alignment of text
 " map \al :left<CR>
@@ -571,7 +572,7 @@ nmap \l :%s/\s\+$//<CR>
 vmap \r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 
 " Show number of occurrences of currently visually selected word
-vmap \s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
+"vmap \s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
 
 "OSX only: Open a web-browser with the URL in the current line
 function! HandleURI()
@@ -595,8 +596,8 @@ iab AUTHOR Matt Behrens <askedrelic@gmail.com>
 " ### Plugins ###################################################
 " First, load pathogen
 " filetype off
-call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
 
 "Tabularize align options
 nmap <Leader>a= :Tabularize /=<CR>
@@ -669,3 +670,6 @@ let g:netrw_list_hide         = '^\.svn.*'
 let g:netrw_menu              = 0
 let g:netrw_silent            = 1
 let g:netrw_special_syntax    = 1
+
+"TaskList
+map \l <Plug>TaskList
