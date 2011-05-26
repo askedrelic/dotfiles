@@ -12,4 +12,4 @@ alias linode="ssh askedrelic@69.164.198.163"
 
 alias shackwiki.com="ssh shackfaq@shackwiki.com -p 7777"
 
-alias boxee="ssh askedrelic@71.206.192.87 -p 44"
+alias boxee="ssh askedrelic@24.131.17.82 -p 44"
