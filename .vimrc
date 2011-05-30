@@ -525,7 +525,7 @@ nmap \tb  TYShowBreak()
 
 
 " Force gm to go the middle of the ACTUAL line, not the screen line
-map gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
+nmap gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
 
 
 " Allows vim to split window to a terminal, thanks to screen.
