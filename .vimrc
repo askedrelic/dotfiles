@@ -609,33 +609,10 @@ vmap <Leader>a: :Tabularize /:\zs<CR>
 nmap <Leader>a  :Tabularize /
 vmap <Leader>a  :Tabularize /
 
-" Taglist
-map \T :TlistClose<CR>:TlistToggle<CR>
-map \t :TlistToggle<CR>
-"If launching mvim without proper PATH
-let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-" Jump to taglist window on open.
-let Tlist_GainFocus_On_ToggleOpen = 1
-let Tlist_Close_OnSelect=1
-" Show only current file
-let Tlist_Show_One_File = 1
-" if you are the last window, kill yourself
-let Tlist_Exit_OnlyWindow = 1
-" sort by order or name
-let Tlist_Sort_Type = "order"
-" show prototypes and tags in the taglist window.
-let Tlist_Display_Prototype = 1
-" Remove extra information and blank lines from the taglist window.
-let Tlist_Compart_Format = 1
-" Show tag scope next to the tag name.
-let Tlist_Display_Tag_Scope = 1
-let Tlist_WinWidth = 40
-" don't show scope info
-let Tlist_Display_Tag_Scope=0
-" shorten the time it takes to highlight the current tag (default is 4 secs)
-" note that this setting influences Vim's behaviour when saving swap files,
-" but we have already turned off swap files (earlier)
-set updatetime=1000
+" Tagbar
+map \t :TagbarOpenAutoClose<CR>
+" Open tagbar on the left
+let g:tagbar_left = 1
 
 "NERDTree
 map <silent> \e :NERDTreeToggle<CR>
