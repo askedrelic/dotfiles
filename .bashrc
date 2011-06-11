@@ -145,6 +145,9 @@ source ~/.autojump.bash
 source ~/.bash_app_specific
 source ~/.bash_help
 
+# django 1.3 complete
+. ~/.django_bash_completion
+
 # import any local bash completion scripts
 # for file in ~/.bash_completion; do
 #     #ignore directory itself
@@ -155,5 +158,4 @@ source ~/.bash_help
 # done
 
 # source ~/.svn_bash_completion
-# source ~/.django_bash_completion
 # source ~/.git_bash_completion
