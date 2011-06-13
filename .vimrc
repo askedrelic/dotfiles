@@ -91,7 +91,6 @@ set previewheight=8
 set ls=2
 " Turn off bell, this could be more annoying, but I'm not sure how
 set vb t_vb=
-
 " when using list, keep tabs at their full width and display `arrows':
 " (Character 187 is a right double-chevron, and 183 a mid-dot.)
 execute 'set listchars+=tab:' . nr2char(187) . nr2char(183)
@@ -144,8 +143,15 @@ set wildmode=longest,list
 " wildchar-the char used for "expansion" on the command line default value is
 " "<C-E>" but I prefer the tab key:
 set wildchar=<TAB>
-" ignore these files when completing
-set wildignore=*~,#*#,*.sw?,*.o,*.obj,*.bak,*.exe,*.pyc,*.DS_Store,*.db,*.class,.viminfo,*.pdf
+" Ignore these filenames during enhanced command line completion.
+set wildignore+=*.aux,*.out,*.toc " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif " binary images
+set wildignore+=*.luac " Lua byte code
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.pyc " Python byte code
+set wildignore+=*.spl " compiled spelling word lists
+set wildignore+=*.sw? " Vim swap files
+set wildignore+=*.DS_Store? " OSX bullshit
 
 " shortmess: shorten messages where possible, especially to stop annoying
 " 'already open' messages!
@@ -231,6 +237,7 @@ au BufNewFile,BufRead *.htm,*.html  setf xml
 
 " Omni Completion
 " set ofu=syntaxcomplete#Complete
+set completeopt=menu,menuone,longest
 au FileType html set omnifunc=htmlcomplete#CompleteTags
 au FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 au FileType css set omnifunc=csscomplete#CompleteCSS
@@ -343,8 +350,10 @@ map <C-K> <C-W>k
 map <C-L> <C-W>l
 
 " Fix vertsplit window sizing
-nmap <C-Left> <C-W>><C-W>>
-nmap <C-Right> <C-W><<C-W><
+nmap <C-Left> <C-W><<C-W><
+nmap <C-Right> <C-W>><C-W>>
+nmap <C-Up> <C-W>+
+nmap <C-Down> <C-W>-
 
 "tabs!
 nnoremap \1 :tabn 1<CR>
