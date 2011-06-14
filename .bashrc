@@ -6,6 +6,11 @@
 # If not running interactively, don't do anything, to stop bind errors
 [ -z "$PS1" ] && return
 
+# UTF-8 everything
+export LANG="en_US.utf8"
+export LANGUAGE="en_US.utf8"
+export LC_ALL="en_US.utf8"
+
 #Colors ------------------------------------------------------------
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
@@ -83,9 +88,6 @@ export PAGER=less
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"
 #export LESS="-FXR"
-# Make perl localization work
-export LC_ALL=C
-export LANGUAGE=en_US
 
 export EDITOR="vim"
 #assume on OSX and using homebrew to install macvim
