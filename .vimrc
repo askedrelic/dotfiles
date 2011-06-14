@@ -622,6 +622,12 @@ vmap <Leader>a  :Tabularize /
 map \t :TagbarOpenAutoClose<CR>
 " Open tagbar on the left
 let g:tagbar_left = 1
+" Sort tags by file order by default
+let g:tagbar_sort = 0
+" Remove empty lines by default
+let g:tagbar_compact = 1
+
+
 
 "NERDTree
 map <silent> \e :NERDTreeToggle<CR>
