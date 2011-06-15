@@ -86,3 +86,5 @@
     prompt     = false
 [difftool]
     prompt = false
+[grep]
+    extendedRegexp = true
