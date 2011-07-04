@@ -304,7 +304,8 @@ au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'
 
 " ### Redraw ###################################################
 " do not update screen while executing macros
-set lazyredraw
+" 2011/07/04 this causes the screen to not refresh on open. what?
+" set lazyredraw
 " ttyfast: are we using a fast terminal? Let's try it for a while.
 set ttyfast
 
