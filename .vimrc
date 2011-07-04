@@ -257,8 +257,7 @@ au FileType c,cpp,slang set cindent
 " insert the comment leader characters:
 au FileType c set formatoptions+=ro
 
-au BufNewFile,BufRead *.markdown set filetype=markdown
-au BufNewFile,BufRead *.markdown set formatoptions=croql
+au BufNewFile,BufRead *.markdown,*.md set filetype=markdown
 
 " Ruby
 au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2
