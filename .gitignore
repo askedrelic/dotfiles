@@ -82,3 +82,5 @@ backups/
 .local/
 .pythonbrew/*
 .venvburrito/*
+bin/mate
+
