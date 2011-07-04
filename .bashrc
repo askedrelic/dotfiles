@@ -7,9 +7,13 @@
 [ -z "$PS1" ] && return
 
 # UTF-8 everything
-export LANG="en_US.utf8"
-export LANGUAGE="en_US.utf8"
-export LC_ALL="en_US.utf8"
+#export LANG="en_US.utf8"
+#export LANGUAGE="en_US.utf8"
+#export LC_ALL="en_US.utf8"
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 
 #Colors ------------------------------------------------------------
 export TERM=xterm-color
