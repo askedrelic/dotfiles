@@ -34,7 +34,11 @@ import os
 MAX_KEYWEIGHT = 1000
 MAX_STORED_PATHS = 600
 COMPLETION_SEPARATOR = '__'
-CONFIG_DIR = os.environ.get("AUTOJUMP_DATA_DIR", os.path.expanduser("~"))
+if "AUTOJUMP_DATA_DIR" in os.environ:
+    CONFIG_DIR = os.environ.get("AUTOJUMP_DATA_DIR")
+else:
+    xdg_data_dir = os.environ.get('XDG_DATA_HOME') or os.path.join(os.environ['HOME'], '.local', 'share')
+    CONFIG_DIR=os.path.join(xdg_data_dir, 'autojump')
 
 def uniqadd(collection, key):
     """Adds a key to a list only if it is not already present"""
@@ -53,7 +57,7 @@ def save(path_dict, dic_file):
     # Otherwise, fail quietly
     if (not os.path.exists(dic_file)) or os.getuid() == os.stat(dic_file)[4]:
         temp = NamedTemporaryFile(dir=CONFIG_DIR, delete=False)
-        pickle.dump(path_dict, temp, -1)
+        pickle.dump(path_dict, temp, 2)
         temp.flush()
         os.fsync(temp)
         temp.close()
@@ -141,6 +145,13 @@ def open_dic(dic_file, error_recovery=False):
             return open_dic(dic_file, True)
         else: return {} #if everything fails, return an empty file
 
+def get_dic_file():
+    if CONFIG_DIR == os.path.expanduser("~"):
+        dic_file = CONFIG_DIR+"/.autojump_py"
+    else:
+        dic_file = CONFIG_DIR+"/autojump_py"
+    return dic_file
+
 def shell_utility():
     """Run this when autojump is called as a shell utility"""
     try:
@@ -150,10 +161,7 @@ def shell_utility():
         print("Unknown command line argument: %s" % ex)
         exit(1)
 
-    if CONFIG_DIR == os.path.expanduser("~"):
-        dic_file = CONFIG_DIR+"/.autojump_py"
-    else:
-        dic_file = CONFIG_DIR+"/autojump_py"
+    dic_file = get_dic_file()
     path_dict = open_dic(dic_file)
     if ('-a', '') in optlist:
         # The home dir can be reached quickly by "cd"
@@ -216,7 +224,7 @@ def shell_utility():
             if not completion and clean_dict(dirs, path_dict):
                 save(path_dict, dic_file)
 
-            if completion and ('--bash', '') in optlist: quotes = '"'
+            if completion and ('--bash', '') in optlist: quotes = "'"
             else: quotes = ""
 
             if userchoice != -1:
