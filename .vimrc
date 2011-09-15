@@ -350,8 +350,8 @@ map <C-K> <C-W>k
 map <C-L> <C-W>l
 
 " Fix vertsplit window sizing
-nmap <C-Left> <C-W><<C-W><
-nmap <C-Right> <C-W>><C-W>>
+nmap <C-Left> <C-W>><C-W>>
+nmap <C-Right> <C-W><<C-W><
 nmap <C-Up> <C-W>+
 nmap <C-Down> <C-W>-
 
