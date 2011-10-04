@@ -46,17 +46,16 @@ set nobackup
 set noswapfile
 
 " Custom status line
-set statusline=                              " clear the statusline for when vimrc is reloaded
-set statusline+=%f\                          " file name
-set statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
-set statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
-set statusline+=%{&fileformat}]              " file format
-set statusline+=%h%m%r%w                     " flags
-set statusline+=%=                           "left/right separator
-" set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
-set statusline+=%b,0x%-6B                    " current char
-set statusline+=%c,%l/                       "cursor column/total lines
-set statusline+=%L\ %P                       "total lines/percentage in file
+set statusline=                               " clear the statusline for when vimrc is reloaded
+set statusline+=%F%m%r%h%w\                   " filename and status flags
+set statusline+=[%{&ff},                      " fileformat
+set statusline+=%{strlen(&fenc)?&fenc:&enc},  " encoding
+set statusline+=%Y]                           " filetype
+set statusline+=%=                            " left/right separator
+"set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
+set statusline+=C[%03.3b,\%02.2B]\            " current ascii/hex char
+set statusline+=P[%03v,%p%%]\                 " cursor column/percentage position
+set statusline+=L[%L]                         " total lines in file
 
 match CursorColumn '\%120v.*' " Error format when a line is longer than 120
 
