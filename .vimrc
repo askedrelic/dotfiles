@@ -46,7 +46,7 @@ set noswapfile
 
 " Custom status line
 set statusline=                               " clear the statusline for when vimrc is reloaded
-set statusline+=%F%m%r%h%w\                   " filename and status flags
+set statusline+=%f%m%r%h%w\                   " filename and status flags
 set statusline+=[%{&ff},                      " fileformat
 set statusline+=%{strlen(&fenc)?&fenc:&enc},  " encoding
 set statusline+=%Y]                           " filetype
