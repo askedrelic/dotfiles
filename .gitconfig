@@ -53,6 +53,7 @@
 
     #diff
     staged     = diff --patience --cached
+    un         = diff --patience
     unstaged   = diff --patience
     both       = diff HEAD
 
