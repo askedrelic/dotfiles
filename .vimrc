@@ -629,7 +629,7 @@ let g:tagbar_compact = 1
 
 
 "NERDTree
-map <silent> \e :NERDTreeToggle<CR>
+map <silent> \e :NERDTreeMirror<CR>
 map <silent> \E :NERDTreeClose<CR>
 map <silent> \m :NERDTreeClose<CR>:NERDTreeFind<CR>
 let NERDTreeWinPos='right'
