@@ -30,7 +30,6 @@ if &term == "xterm"
     set t_te= [?47l 8
 endif
 
-
 " ### General ###################################################
 " save last 50 search history items, last 50 edit marks, don't remember search
 " highlight
@@ -166,6 +165,10 @@ set noequalalways
 " ### Cursor Highlights ###################################################
 set cursorline
 "set cursorcolumn
+
+"Highlight cursorline ONLY in the active window:
+au WinEnter * setlocal cursorline
+au WinLeave * setlocal nocursorline
 
 " ### Searching ###################################################
 " highlight search
@@ -452,6 +455,11 @@ vmap D y'>p
 " Make p in Visual mode replace the selected text with the "" register.
 " vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
+" Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
+" yanked stack (also, in visual mode)
+nmap <silent> <leader>d "_d
+vmap <silent> <leader>d "_d
+
 "allow deleting selection without updating the clipboard (yank buffer)
 vnoremap x "_x
 vnoremap X "_X
@@ -548,6 +556,12 @@ map \tc :let @/ = ""<CR>
 " remove highlighted search
 nmap <silent> ,/ :nohlsearch<CR>
 
+" search literally, without vim magic
+nnoremap / /\V
+nnoremap ? ?\V
+nnoremap <leader>/ /\v
+nnoremap <leader>? ?\v
+
 " Revert the current buffer
 nnoremap \r :e!<CR>
 
@@ -599,7 +613,8 @@ map \o :call HandleURI()<CR>
 "TODO move this into some kind of autotext complete thing
 nmap \tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
 
-iab AUTHOR Matt Behrens <askedrelic@gmail.com>
+iab _AUTHOR Matt Behrens <askedrelic@gmail.com>
+iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sollicitudin quam eget libero pulvinar id condimentum velit sollicitudin. Proin cursus scelerisque dui ac condimentum. Nullam quis tellus leo. Morbi consectetur, lectus a blandit tincidunt, tortor augue tincidunt nisi, sit amet rhoncus tortor velit eu felis.
 
 " ### Plugins ###################################################
 " First, load pathogen
@@ -625,7 +640,6 @@ let g:tagbar_left = 1
 let g:tagbar_sort = 0
 " Remove empty lines by default
 let g:tagbar_compact = 1
-
 
 
 "NERDTree
