@@ -643,9 +643,9 @@ let g:tagbar_compact = 1
 
 
 "NERDTree
-map <silent> \e :NERDTreeMirror<CR>
-map <silent> \E :NERDTreeClose<CR>
-map <silent> \m :NERDTreeClose<CR>:NERDTreeFind<CR>
+map <silent> \e :NERDTree<CR>
+map <silent> \E :NERDTreeToggle<CR>
+map <silent> \m :NERDTreeFind<CR>
 let NERDTreeWinPos='right'
 let NERDTreeChDirMode='2'
 let NERDTreeIgnore=['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
