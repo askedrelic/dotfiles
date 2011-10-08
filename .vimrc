@@ -192,9 +192,7 @@ set background=dark
 if has("gui_running")
     "set guifont=Consolas:h12.00  " use this font
     set guifont=Monaco:h12
-    set transparency=6    " Barely transparent
-    let moria_style = 'black'
-    colo moria
+    colo Tomorrow-Night-Eighties
     " set lines=73 columns=271
     " Turn off the button bar in gvim
     set guioptions-=T
