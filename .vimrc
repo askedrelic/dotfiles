@@ -198,8 +198,6 @@ au BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave
 au BufLeave,BufWinLeave,WinLeave,CmdwinLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 0)
 au InsertEnter,CursorHoldI * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Insert', 1)
 
-match CursorColumn '\%120v.*' " Error format when a line is longer than 120
-
 " allow you to have multiple files open and change between them without saving
 set hidden
 "make backspace work
@@ -593,13 +591,24 @@ vnoremap Y y$
 " dulpicate line in visual mode
 vmap D y'>p
 
+highlight OverTheLine cterm=underline gui=underline
+nnoremap <silent> <Leader>hl
+      \ :if exists('w:long_line_match') <Bar>
+      \   silent! call matchdelete(w:long_line_match) <Bar>
+      \   unlet w:long_line_match <Bar>
+      \ elseif &textwidth > 0 <Bar>
+      \   let w:long_line_match = matchadd('OverTheLine', '\%>'.&tw.'v.\+', -1) <Bar>
+      \ else <Bar>
+      \   let w:long_line_match = matchadd('OverTheLine', '\%>80v.\+', -1) <Bar>
+      \ endif<CR>
+
 " Make p in Visual mode replace the selected text with the "" register.
-" vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+" vnoremap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
 " yanked stack (also, in visual mode)
-nmap <silent> <leader>d "_d
-vmap <silent> <leader>d "_d
+nmap <silent> <Leader>d "_d
+vmap <silent> <Leader>d "_d
 
 "allow deleting selection without updating the clipboard (yank buffer)
 vnoremap x "_x
@@ -625,15 +634,17 @@ nnoremap \th :set invhls hls?<CR>
 "toggle numbers
 nnoremap \tn :set number!<Bar> set number?<CR>
 
+" toggle spelling
+nnoremap <leader>sp :set spell! spelllang=en_us spell?<CR>
+
 "toggle wrap and easy movement keys while in wrap mode
+"nnoremap <silent> <leader>w :set invwrap wrap?<CR>
 noremap <silent> <Leader>tw :call ToggleWrap()<CR>
 function! ToggleWrap()
   if &wrap
     echo "Wrap OFF"
     setlocal nowrap
     setlocal virtualedit=
-    "set match for long lines
-    match CursorColumn '\%120v.*'
     silent! nunmap <buffer> k
     silent! nunmap <buffer> j
     silent! nunmap <buffer> 0
@@ -651,8 +662,6 @@ function! ToggleWrap()
     setlocal wrap linebreak nolist
     setlocal virtualedit=all
     setlocal display+=lastline
-    "remove long line matching
-    match CursorColumn ''
     noremap  <buffer> <silent> k gk
     noremap  <buffer> <silent> j gj
     noremap  <buffer> <silent> 0 g0
@@ -683,7 +692,6 @@ nmap \tb  TYShowBreak()
 
 " Force gm to go the middle of the ACTUAL line, not the screen line
 nmap gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
-
 
 " Allows vim to split window to a terminal, thanks to screen.
 " Requires screener.sh
