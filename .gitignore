@@ -49,10 +49,10 @@ mail/
 .rvm/
  
 # ignore my OSX homedir
-Dropbox/
-TMPpref
-backups/
+.MacOSX
 .NERDTreeBookmarks
+.Trash
+.adobe/*
 .cache/
 .config/
 .cpan/
@@ -66,21 +66,25 @@ backups/
 .gtk-bookmarks
 .irb_history
 .lesshst
+.local/
 .mplayer/
 .nbprofiler/
 .netbeans/
+.parallels/
+.psql_history
+.pythonbrew/*
+.rediscli_history
 .spumux/
 .sqlite_history
 .svk/
 .termtter/
 .thumbnails/
-.Trash
-.MacOSX
-.parallels/
+.venvburrito/*
 .virtualenvs/
 .yolk/
-.local/
-.pythonbrew/*
-.venvburrito/*
+Dropbox/
+TMPpref
+backups/
 bin/mate
+bin/subl
 
