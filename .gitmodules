@@ -1,3 +1,6 @@
 [submodule ".vim/bundle/vim-room"]
 	path = .vim/bundle/vim-room
 	url = git://github.com/mikewest/vimroom.git
+[submodule ".vim/bundle/vim-utilsnips"]
+	path = .vim/bundle/vim-utilsnips
+	url = git://github.com/vim-scripts/UltiSnips.git
