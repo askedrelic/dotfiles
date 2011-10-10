@@ -70,6 +70,8 @@
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
+    #Always rebase!
+    autosetuprebase = always
 [github]
     user = askedrelic
 [diff]
