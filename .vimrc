@@ -805,6 +805,7 @@ let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', 
 let NERDTreeHighlightCursorline = 1
 let NERDTreeShowFiles           = 1 " Show hidden files, too
 let NERDTreeShowHidden          = 1
+let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
 " FuzzyFinder
 "Seriously FF, setting up your options sucks
