@@ -791,27 +791,22 @@ nmap <Leader>a  :Tabularize /
 vmap <Leader>a  :Tabularize /
 
 " Tagbar
+let g:tagbar_left    = 1 " Open tagbar on the left
+let g:tagbar_sort    = 0 " Sort tags by file order by default
+let g:tagbar_compact = 1 " Remove empty lines by default
 map \t :TagbarOpenAutoClose<CR>
-" Open tagbar on the left
-let g:tagbar_left = 1
-" Sort tags by file order by default
-let g:tagbar_sort = 0
-" Remove empty lines by default
-let g:tagbar_compact = 1
-
 
 "NERDTree
 map <silent> \e :NERDTree<CR>
 map <silent> \E :NERDTreeToggle<CR>
 map <silent> \m :NERDTreeFind<CR>
-let NERDTreeWinPos='right'
-let NERDTreeChDirMode='2'
-let NERDTreeIgnore=['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
-let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
-let NERDTreeHighlightCursorline=1
-" Show hidden files, too
-let NERDTreeShowFiles=1
-let NERDTreeShowHidden=1
+let NERDTreeWinPos              = 'right'
+let NERDTreeChDirMode           = '2'
+let NERDTreeIgnore              = ['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
+let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
+let NERDTreeHighlightCursorline = 1
+let NERDTreeShowFiles           = 1 " Show hidden files, too
+let NERDTreeShowHidden          = 1
 
 " FuzzyFinder
 "Seriously FF, setting up your options sucks
@@ -821,8 +816,8 @@ if !exists('g:FuzzyFinderOptions')
     let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
 endif
 let g:fuzzy_matching_limit = 50
-let g:fuzzy_ceiling = 10000
-let g:fuzzy_ignore = "*.log;*.pyc;*.svn;*.gif;*.png;*.jpg;*.jpeg"
+let g:fuzzy_ceiling        = 10000
+let g:fuzzy_ignore         = "*.log;*.pyc;*.svn;*.gif;*.png;*.jpg;*.jpeg"
 map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 "map <silent> \b :FuzzyFinderBuffer!<CR>
