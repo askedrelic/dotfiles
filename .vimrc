@@ -329,10 +329,11 @@ set mousehide
 " ### Colors ###################################################
 syntax on
 set background=dark
+" One unified gui/terminal colorscheme
+colo Tomorrow-Night-Eighties
+
 if has("gui_running")
-    "set guifont=Consolas:h12.00  " use this font
     set guifont=Monaco:h12
-    colo Tomorrow-Night-Eighties
     " set lines=73 columns=271
     set guioptions+=c " use console dialogs
     "set guioptions-=e " don't use gui tabs
@@ -343,9 +344,6 @@ if has("gui_running")
     set guioptions-=l
     set guioptions-=R
     set guioptions-=L
-else
-    " colorscheme ir_black
-    colorscheme xoria256
 endif
 
 " ### Line Wrapping ###################################################
