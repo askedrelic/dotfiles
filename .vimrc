@@ -689,7 +689,7 @@ nmap \tb  TYShowBreak()
 
 
 " Force gm to go the middle of the ACTUAL line, not the screen line
-nmap gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
+nmap <silent> gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
 
 " Allows vim to split window to a terminal, thanks to screen.
 " Requires screener.sh
@@ -729,8 +729,19 @@ nmap \I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? f
  map \ft :%s/	/    /g<CR>
 " use :retab instead
 
-"clear spaces at end of line
-nmap \s :%s/\s\+$//<CR>
+" Strip trailing whitespace
+function! <SID>StripTrailingWhitespaces()
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  %s/\s\+$//e
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+nmap <leader>s :call <SID>StripTrailingWhitespaces()<cr>
 
 " Quick alignment of text
 " map \al :left<CR>
