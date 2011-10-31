@@ -810,7 +810,7 @@ map <silent> \e :NERDTree<CR>
 map <silent> \E :NERDTreeToggle<CR>
 map <silent> \m :NERDTreeFind<CR>
 let NERDTreeWinPos              = 'right'
-let NERDTreeChDirMode           = '2'
+let NERDTreeChDirMode           = '0'
 let NERDTreeIgnore              = ['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
 let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let NERDTreeHighlightCursorline = 1
