@@ -825,9 +825,9 @@ if !exists('g:FuzzyFinderOptions')
     let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
     let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
 endif
-let g:fuzzy_matching_limit = 50
-let g:fuzzy_ceiling        = 30000
-let g:fuzzy_ignore         = "*.log;*.pyc;*.pyo;*.svn;*.gif;*.png;*.jpg;*.jpeg"
+let g:fuzzy_matching_limit = 10
+let g:fuzzy_ceiling        = 20000
+let g:fuzzy_ignore         = "*.log;*.pyc;*.pyo;*.svn;*.gif;*.png;*.jpg;*.jpeg;*.git;*.egg\/*"
 map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 "map <silent> \b :FuzzyFinderBuffer!<CR>
