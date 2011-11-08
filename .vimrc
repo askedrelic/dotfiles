@@ -515,8 +515,8 @@ nnoremap <C-N> :tabn<CR>
 nnoremap <C-P> :tabp<CR>
 
 " use Shift-N/Shift-P to switch buffers
-nnoremap <S-N> :bn<CR>
-nnoremap <S-P> :bp<CR>
+"nnoremap <S-N> :bn<CR>
+"nnoremap <S-P> :bp<CR>
 
 " discussion of different tab functions
 " http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
