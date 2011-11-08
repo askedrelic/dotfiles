@@ -474,10 +474,6 @@ vmap <F1> <C-C><F1>
 omap <F1> <C-C><F1>
 map! <F1> <C-C><F1>
 
-" use <Ctrl>+N/<Ctrl>+P to cycle through files:
-" [<Ctrl>+N by default is like j, and <Ctrl>+P like k.]
-" nnoremap <C-N> :bn<CR>
-" nnoremap <C-P> :bp<CR>
 
 " swap windows
 nmap , <C-w><C-w>
@@ -513,46 +509,52 @@ nnoremap <D-6> :tabn 6<CR>
 nnoremap <D-7> :tabn 7<CR>
 nnoremap <D-8> :tabn 8<CR>
 nnoremap <D-9> :tabn 9<CR>
+
+" use Ctrl-N/Ctrl-P to shift tabs
 nnoremap <C-N> :tabn<CR>
 nnoremap <C-P> :tabp<CR>
+
+" use Shift-N/Shift-P to switch buffers
+nnoremap <S-N> :bn<CR>
+nnoremap <S-P> :bp<CR>
 
 " discussion of different tab functions
 " http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
 
 " "trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
-map <Esc>[Z <s-tab>
-ounmap <Esc>[Z
+"map <Esc>[Z <s-tab>
+"ounmap <Esc>[Z
 
 "---TAB BINDINGS
 "Tab and Ctrl-i are bound to the same internal key with vim, therefore
 "they cannot be bound to different commands in normal mode :(
 "IE bind Tab to indent and Ctrl-I to 'move into movement stack'
-nmap <S-Tab> :<<CR>
+                        "nmap <S-Tab> :<<CR>
 
 "Change tab of selected lines while in visual mode
 vmap <Tab> >gv
-vnoremap <S-Tab> <gv
+vmap <S-Tab> <gv
 
 " [<Ctrl>+V <Tab> still inserts an actual tab character.]
-inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
-imap <S-Tab> <C-D>
+"inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
+"imap <S-Tab> <C-D>
 
 " Remap TAB to keyword completion and indenting. The tab key is a still a work
 " in progress.
-function! InsertTabWrapper(direction)
-  " alternate line checking
-  "" let col = col('.') - 1
-  " if !col || strpart(getline('.'), col-1, col) =~ '\s'
-  if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-    return "\<tab>"
-  elseif "forward" == a:direction
-    return "\<c-n>"
-  elseif "backward" == a:direction
-    return "\<c-d>"
-  else
-    return "\<c-x>\<c-k>"
-  endif
-endfunction
+"function! InsertTabWrapper(direction)
+  "" alternate line checking
+  """ let col = col('.') - 1
+  "" if !col || strpart(getline('.'), col-1, col) =~ '\s'
+  "if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+    "return "\<tab>"
+  "elseif "forward" == a:direction
+    "return "\<c-n>"
+  "elseif "backward" == a:direction
+    "return "\<c-d>"
+  "else
+    "return "\<c-x>\<c-k>"
+  "endif
+"endfunction
 
 " imap <C-Tab> <c-r>=InsertTabWrapper ("startkey")<CR>
 
@@ -602,20 +604,6 @@ nnoremap <silent> <Leader>hl
 
 " Make p in Visual mode replace the selected text with the "" register.
 " vnoremap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
-
-" Use ,d (or ,dd or ,dj or 20,dd) to delete a line without adding it to the
-" yanked stack (also, in visual mode)
-nmap <silent> <Leader>d "_d
-vmap <silent> <Leader>d "_d
-
-"allow deleting selection without updating the clipboard (yank buffer)
-vnoremap x "_x
-vnoremap X "_X
-
-"don't move the cursor after pasting
-"(by jumping to back start of previously changed text)
-"noremap p p`[
-"noremap P P`[
 
 " change first word of current line
 " map <silent> <C-h> ^cw
@@ -687,6 +675,13 @@ function! TYShowBreak()
 endfunction
 nmap \tb  TYShowBreak()
 
+" tab complete?
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+imap <C-@> <C-Space>
 
 " Force gm to go the middle of the ACTUAL line, not the screen line
 nmap <silent> gm :exe 'normal '.(virtcol('$')/2).'\|'<CR>
@@ -716,11 +711,11 @@ nnoremap \r :e!<CR>
 nmap \ev :e $MYVIMRC<CR>
 nmap \sv :source $MYVIMRC<CR>
 
-" Easy unload of buffer
-map \q :bd<CR>
+" Quit Vim
+map \q :qall!<CR>
 
-" Easy quit of vim
-map \Q :qall!<CR>
+" Kill buffer
+map \x :bd<CR>
 
 " Show eeeeeeverything!
 nmap \I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
@@ -828,6 +823,9 @@ endif
 let g:fuzzy_matching_limit = 10
 let g:fuzzy_ceiling        = 20000
 let g:fuzzy_ignore         = "*.log;*.pyc;*.pyo;*.svn;*.gif;*.png;*.jpg;*.jpeg;*.git;*.egg\/*"
+"let g:fuzzy_ignore         = "\v\~$|\.(o|exe|dll|bak|orig|sw[po]|pyc|pyo|log)$|(^|[/\\])\.(hg|git|bzr|*)($|[/\\])"
+"latest fufzzyfinder
+"let g:fuf_file_exclude="\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.(hg|git|bzr|*)($|[/\\])"
 map <silent> \f :FuzzyFinderTextMate<CR>
 map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 "map <silent> \b :FuzzyFinderBuffer!<CR>
@@ -841,3 +839,6 @@ let g:netrw_special_syntax    = 1
 
 "TaskList
 map \l <Plug>TaskList
+
+" MBE
+let g:miniBufExplSplitBelow=0
