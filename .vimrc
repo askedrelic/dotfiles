@@ -815,19 +815,20 @@ let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
 " FuzzyFinder
 "Seriously FF, setting up your options sucks
-if !exists('g:FuzzyFinderOptions')
-    let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'Bookmark':{}, 'Tag':{}, 'TaggedFile':{}}
-    let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
-    let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
-endif
-let g:fuzzy_matching_limit = 10
-let g:fuzzy_ceiling        = 20000
-let g:fuzzy_ignore         = "*.log;*.pyc;*.pyo;*.svn;*.gif;*.png;*.jpg;*.jpeg;*.git;*.egg\/*"
+"if !exists('g:FuzzyFinderOptions')
+    "let g:FuzzyFinderOptions = { 'Base':{}, 'Buffer':{}, 'File':{}, 'Dir':{}, 'MruFile':{}, 'MruCmd':{}, 'Bookmark':{}, 'Tag':{}, 'TaggedFile':{}}
+    "let g:FuzzyFinderOptions.File.excluded_path = '\v\~$|\.o$|\.exe$|\.bak$|\.swp$|((^|[/\\])\.{1,2}[/\\]$)|\.pyo$|\.pyc$|\.svn[/\\]$'
+    "let g:FuzzyFinderOptions.Base.key_open_vsplit = '<Space>'
+"endif
+"let g:fuzzy_matching_limit = 10
+"let g:fuzzy_ceiling        = 20000
+"let g:fuzzy_ignore         = "*.log;*.pyc;*.pyo;*.svn;*.gif;*.png;*.jpg;*.jpeg;*.git;*.egg\/*"
 "let g:fuzzy_ignore         = "\v\~$|\.(o|exe|dll|bak|orig|sw[po]|pyc|pyo|log)$|(^|[/\\])\.(hg|git|bzr|*)($|[/\\])"
 "latest fufzzyfinder
-"let g:fuf_file_exclude="\v\~$|\.(o|exe|dll|bak|orig|sw[po])$|(^|[/\\])\.(hg|git|bzr|*)($|[/\\])"
-map <silent> \f :FuzzyFinderTextMate<CR>
-map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
+let g:fuf_file_exclude = "\v\~$|\.(o|exe|dll|bak|orig|sw[po]|pyc|pyo|log)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])"
+"let g:fuf_coveragefile_exclude = "\v\~$|\.(o|exe|dll|bak|orig|sw[po]|pyc|pyo|log)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])"
+"map <silent> \f :FuzzyFinderTextMate<CR>
+"map <silent> \F :FuzzyFinderTextMateRefreshFiles<CR>:FuzzyFinderTextMate<CR>
 "map <silent> \b :FuzzyFinderBuffer!<CR>
 
 " Netrw
