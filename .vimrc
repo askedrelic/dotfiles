@@ -585,8 +585,8 @@ vnoremap Q gq
 
 " have Y behave analogously to D and C rather than to dd and cc (which is
 " already done by yy):
-nnoremap Y y$
-vnoremap Y y$
+nnoremap Y yt$
+vnoremap Y yt$
 
 " dulpicate line in visual mode
 vmap D y'>p
