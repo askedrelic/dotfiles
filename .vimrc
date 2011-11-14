@@ -336,7 +336,7 @@ if has("gui_running")
     set guifont=Monaco:h12
     " set lines=73 columns=271
     set guioptions+=c " use console dialogs
-    "set guioptions-=e " don't use gui tabs
+    set guioptions-=e " don't use gui tabs
     set guioptions-=T " don't show toolbar
     set guioptions-=r " No scrollbars
 
