@@ -58,7 +58,7 @@
     both       = diff HEAD
 
     changes    = diff --name-status -r
-    diffstat   = diff --stat -r
+    diff-stat  = diff --stat -r
     ds         = diff --stat -r
 
     type       = cat-file -t
