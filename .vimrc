@@ -522,8 +522,8 @@ nnoremap <C-P> :tabp<CR>
 " http://vim.wikia.com/wiki/Smart_mapping_for_tab_completion
 
 " "trick to fix shift-tab http://vim.wikia.com/wiki/Make_Shift-Tab_work
-"map <Esc>[Z <s-tab>
-"ounmap <Esc>[Z
+map <Esc>[Z <s-tab>
+ounmap <Esc>[Z
 
 "---TAB BINDINGS
 "Tab and Ctrl-i are bound to the same internal key with vim, therefore
@@ -577,7 +577,7 @@ vmap <S-Tab> <gv
 " insert new line without going into insert mode
 nnoremap <Enter> o<ESC>
 nnoremap <S-Enter> :put!=''<CR>
-" set fo-=r " do not insert a comment leader after an enter, (no work, fix!!)
+" set fo-=r " do not insert a comment leader after an enter, (no work, @TODO !!)
 
 " have Q reformat the current paragraph (or selected text if there is any):
 nnoremap Q gqap
@@ -603,10 +603,7 @@ nnoremap <silent> <Leader>hl
       \ endif<CR>
 
 " Make p in Visual mode replace the selected text with the "" register.
-" vnoremap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
-
-" change first word of current line
-" map <silent> <C-h> ^cw
+vnoremap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
 " toggle paste on/off
 nnoremap \tp :set invpaste paste?<CR>
@@ -662,18 +659,6 @@ function! ToggleWrap()
     inoremap <buffer> <silent> <End>  <C-o>g<End>
   endif
 endfunction
-
-" toggle showbreak for long lines
-function! TYShowBreak()
-  if &showbreak == ''
-    set showbreak=>
-    echo "show break on"
-  else
-    set showbreak=
-    echo "show break off"
-  endif
-endfunction
-nmap \tb  TYShowBreak()
 
 " tab complete?
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -754,7 +739,7 @@ function! HandleURI()
   let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
   echo s:uri
   if s:uri != ""
-   exec "!open \"" . s:uri . "\""
+   exec "silent !open \"" . s:uri . "\""
   else
    echo "No URI found in line."
   endif
