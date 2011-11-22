@@ -772,6 +772,8 @@ call pathogen#helptags()
 "Tabularize align options
 nmap <Leader>a= :Tabularize /=<CR>
 vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a* :Tabularize /=.*<CR>
+vmap <Leader>a* :Tabularize /=.*<CR>
 nmap <Leader>a> :Tabularize /=><CR>
 vmap <Leader>a> :Tabularize /=><CR>
 nmap <Leader>a: :Tabularize /:\zs<CR>
@@ -780,9 +782,10 @@ nmap <Leader>a  :Tabularize /
 vmap <Leader>a  :Tabularize /
 
 " Tagbar
-let g:tagbar_left    = 1 " Open tagbar on the left
-let g:tagbar_sort    = 0 " Sort tags by file order by default
-let g:tagbar_compact = 1 " Remove empty lines by default
+let g:tagbar_left      = 1 " Open tagbar on the left
+let g:tagbar_sort      = 0 " Sort tags by file order by default
+let g:tagbar_compact   = 1 " Remove empty lines by default
+let g:tagbar_foldlevel = 0 " Close folds default
 map \t :TagbarOpenAutoClose<CR>
 
 "NERDTree
