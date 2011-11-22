@@ -1,5 +1,10 @@
 #Aliases and scripts
 
+# QuickJump  ----------------------------------------------------------------------------------------------
+
+alias bin="cd ~/bin/"
+alias vimbundle="cd ~/.vim/bundle/"
+
 # History ----------------------------------------------------------------------------------------------
 alias h='history | tail -n 30'
 hf(){ grep "$@" ~/.bash_history; }
@@ -48,9 +53,6 @@ alias lo="ls -o"
 alias ll='tree --dirsfirst -ChAFL 1'
 alias l="la"
 
-#CD to bin
-alias bin="cd ~/bin/"
-
 #OSX: Open a Finder window at your current location
 alias of="open ."
 
@@ -70,7 +72,6 @@ EOT
     echo "cd to \"$currFolderPath\""
     cd "$currFolderPath"
 }
-
 
 #OSX: change frontmost Finder window to the cwd
 fdc() {
@@ -135,14 +136,10 @@ alias searchy="apt-cache search"
 alias v=vim
 alias vi=vim
 alias vg="vim -g"
-# alias vim='~/bin/mvim'   
-# alias mvim='~/bin/mvim -g'
 alias c="clear"
-# alias j='jobs -l'
 alias py="python"
 alias rscreen="screen -R"
 alias pine=alpine
-
 #show all types
 alias type="type -a"
 alias paux="ps -A|grep -i"
@@ -228,20 +225,6 @@ alias atop='watch -n 3 "free; echo; uptime; echo; ps aux  --sort=-%cpu | head -n
 if [ `uname` = Darwin ]; then
     alias top='top -o cpu'
 fi
-
-function ii()   # Get current host related info.
-{
-    echo -e "\nYou are logged on ${COLOR_RED}$HOSTNAME"
-    echo -e "\nAdditionnal information:$NC " ; uname -a
-    echo -e "\n${COLOR_RED}Users logged on:$NC " ; w -h
-    echo -e "\n${COLOR_RED}Current date :$NC " ; date
-    echo -e "\n${COLOR_RED}Machine stats :$NC " ; uptime
-    echo -e "\n${COLOR_RED}Memory stats :$NC " ; free
-    getip 2>&- ;
-    echo -e "\n${COLOR_RED}Local IP Address :$NC" ; getip;
-    echo -e "\n${COLOR_RED}Open connections :$NC "; netstat -pan --inet;
-    echo
-}
 
 #simple password generating function
 alias mkpass='echo `</dev/random tr -dc A-Za-z0-9 | head -c8`'
