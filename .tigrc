@@ -1,5 +1,4 @@
 # set - show
-set show-author          = abbreviated
 set show-date            = relative
 set show-rev-graph       = yes
 set show-refs            = yes
@@ -20,6 +19,5 @@ color cursor white black
 bind generic g move-first-line
 bind generic G move-last-line
 bind generic r refresh
-
-bind generic p previous
 bind generic n next
+bind generic p previous
