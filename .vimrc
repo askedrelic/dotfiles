@@ -826,8 +826,5 @@ let g:netrw_menu              = 0
 let g:netrw_silent            = 1
 let g:netrw_special_syntax    = 1
 
-"TaskList
-map \l <Plug>TaskList
-
 " MBE
 let g:miniBufExplSplitBelow=0
