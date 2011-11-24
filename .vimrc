@@ -44,7 +44,7 @@ function! General_Settings()
     set hidden
     "make backspace work
     set backspace=indent,eol,start
-    " Show matching brackets.
+    " Show matching brackets
     set showmatch
     " have % bounce between angled brackets, as well as other kinds:
     set matchpairs+=<:>
@@ -81,10 +81,12 @@ function! General_Settings()
 
     "check if file is written to elsewhere and ask to reload immediately, not when saving
     "au CursorHold * checktime
+    " automatically reload a file when it has changed externally
     set autoread
+    " automatically write the file a bunch of commands
     set autowrite
 
-    " turn on wild command line completion (for :e or something)
+    " turn on wild command line completion (for :e)
     set wildmenu
     " Bash tab style completion is awesome
     set wildmode=longest,list
@@ -281,12 +283,13 @@ call Tabs()
 function! Scrollbars()
     " show the cursor position all the time
     set ruler
-    " Show line numbers
+    " always show line numbers
     set number
     " show in terminal title bar
     set title
-    " display the current mode and partially-typed commands in the status line:
+    " display the current mode
     set showmode
+    " display partially-typed commands
     set showcmd
 
     " ### Windows #############################################################
@@ -533,6 +536,10 @@ function! File_Types()
         au FileType python setlocal define=^\s*\\(def\\\\|class\\)
         "au FileType python compiler nose
         au FileType man nnoremap <buffer> <cr> :q<cr>
+
+        " format comments correctly
+        au FileType python setlocal textwidth=80
+        au FileType python setlocal formatoptions=croqn
 
         " @note: Fuck smartindent, it forces inserting tabs. Use cindent instead
         au FileType python setlocal cindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
@@ -941,7 +948,6 @@ let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
 " FuzzyFinder
-let g:fuf_coveragefile_globPatterns = ['seatme/**/*', 'seatme/**/.*','www/**/*', 'www/**/.*',]
 map <silent> \f :FufCoverageFile<CR>
 map <silent> \F :FufRenewCache<CR>:FufCoverageFile<CR>
 
@@ -960,3 +966,8 @@ nmap <leader>c <Plug>CommentaryLine
 xmap <leader>c <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\%s
+
+" Read in a custom Vim configuration local to the working directory.
+if filereadable(".project.vim")
+    so .project.vim
+endif
