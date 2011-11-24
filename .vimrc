@@ -954,3 +954,9 @@ let g:netrw_special_syntax    = 1
 
 " MBE
 let g:miniBufExplSplitBelow=0
+
+" Commentary
+nmap <leader>c <Plug>CommentaryLine
+xmap <leader>c <Plug>Commentary
+au FileType htmldjango setlocal commentstring={#\ %s\ #}
+au FileType python.django setlocal commentstring=#\%s
