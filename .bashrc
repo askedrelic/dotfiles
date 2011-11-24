@@ -149,7 +149,6 @@ source ~/.autojump.bash
 
 #crazy imports
 source ~/.bash_app_specific
-source ~/.bash_help
 
 # django 1.3 complete
 . ~/.django_bash_completion
@@ -162,6 +161,3 @@ source ~/.bash_help
 #         echo
 #     fi
 # done
-
-# source ~/.svn_bash_completion
-# source ~/.git_bash_completion
