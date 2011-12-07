@@ -351,20 +351,20 @@ function! Colors()
     colo Tomorrow-Night-Eighties
 
     if has("gui_running")
-        "set guifont=Monaco:h12
-        set guifont=Menlo:h12
+        set guifont=Monaco:h12
+
+        " Orange :()
+        highlight SpellBad term=underline gui=undercurl guisp=Orange
 
         " set lines=73 columns=271
         set guioptions+=c " use console dialogs
         set guioptions-=e " don't use gui tabs
         set guioptions-=T " don't show toolbar
-        set guioptions-=r " No scrollbars
-        set guioptions-=m
-        set guioptions-=l
-        set guioptions-=R
-        set guioptions-=L
-
-        highlight SpellBad term=underline gui=undercurl guisp=Orange
+        set guioptions-=m " don't show menu bar
+        set guioptions-=l " don't show left-hand scrollbar
+        set guioptions-=L " don't show left-hand scrollbar
+        set guioptions-=r " don't show right-hand scrollbar
+        set guioptions-=R " don't show right-hand scrollbar
 
         " Use a line-drawing char for pretty vertical splits.
         set fillchars+=vert:│
@@ -383,8 +383,7 @@ function! Line_Wrapping()
     " wrap in insert mode:
     set whichwrap=h,l,~,[,]
 
-    " normally don't automatically format `text' as it is typed, IE only do this
-    " with comments, at 79 characters:
+    " only format comments at 80 chars by default, while typing
     set formatoptions=cq
     set textwidth=80
 endfunction
