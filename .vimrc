@@ -47,8 +47,8 @@ function! General_Settings()
     " Show matching brackets
     set showmatch
     " have % bounce between angled brackets, as well as other kinds:
-    set matchpairs+=<:>
-    set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
+    " set matchpairs+=<:>
+    " set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
     " This being the 21st century, I use Unicode
     set encoding=utf-8
     " Don't keep a backup or swap file
@@ -386,7 +386,7 @@ function! Line_Wrapping()
     " normally don't automatically format `text' as it is typed, IE only do this
     " with comments, at 79 characters:
     set formatoptions=cq
-    set textwidth=79
+    set textwidth=80
 endfunction
 call Line_Wrapping()
 
@@ -729,9 +729,6 @@ function! Insert_Mappings()
     " easier Line and File completemode
     inoremap <c-l> <c-x><c-l>
     inoremap <c-f> <c-x><c-f>
-
-    " HTML tag closing
-    inoremap <C-_> <Space><BS><Esc>:call InsertCloseTag()<cr>a
 endfunction
 call Insert_Mappings()
 
