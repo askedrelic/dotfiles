@@ -100,7 +100,6 @@ function! General_Settings()
     set wildignore+=*.pyc                            " Python byte code
     set wildignore+=*.spl                            " compiled spelling word lists
     set wildignore+=*.sw?                            " Vim swap files
-    set wildignore+=migrations                       " Django migrations
 endfunction
 call General_Settings()
 
@@ -472,12 +471,6 @@ function! File_Types()
         "     </tag>
         au FileType html,jinja,htmldjango nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
 
-        " Smarter pasting
-        au FileType html,jinja,htmldjango nnoremap <buffer> p :<C-U>YRPaste 'p'<CR>v`]=`]
-        au FileType html,jinja,htmldjango nnoremap <buffer> P :<C-U>YRPaste 'P'<CR>v`]=`]
-        au FileType html,jinja,htmldjango nnoremap <buffer> π :<C-U>YRPaste 'p'<CR>
-        au FileType html,jinja,htmldjango nnoremap <buffer> ∏ :<C-U>YRPaste 'P'<CR>
-
         " Django tags
         au FileType jinja,htmldjango inoremap <buffer> <c-t> {%<space><space>%}<left><left><left>
 
@@ -719,7 +712,7 @@ function! Visual_Mappings()
     vmap D y'>p
 
     " Make p in Visual mode replace the selected text with the "" register.
-    vmap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+    " vmap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
     " Replace current visually selected word
     vmap \r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
@@ -760,9 +753,6 @@ function! Tab_Mapping()
     " quick change indent of visual selected text blocks
     vmap <Tab> >gv
     vmap <S-Tab> <gv
-
-    " Find the nearest matching object
-    nmap <tab> %
 
     " [<Ctrl>+V <Tab> still inserts an actual tab character.]
     "inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
