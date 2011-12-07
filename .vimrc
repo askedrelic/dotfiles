@@ -401,9 +401,7 @@ function! File_Types()
     " complete using built in syntax? http://vim.wikia.com/wiki/Completion_using_a_syntax_file
     au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
-    " }}}
-    " CSS and LessCSS {{{
-
+    " CSS and LessCSS
     augroup ft_css
         au!
 
@@ -440,9 +438,7 @@ function! File_Types()
         au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
     augroup END
 
-    " }}}
-    " Django {{{
-
+    " Django
     augroup ft_django
         au!
 
@@ -451,20 +447,16 @@ function! File_Types()
         au BufNewFile,BufRead dashboard.py      normal! zR
         au BufNewFile,BufRead local_settings.py normal! zR
 
-        au BufNewFile,BufRead admin.py     setlocal filetype=python.django
-        au BufNewFile,BufRead urls.py      setlocal filetype=python.django
-        au BufNewFile,BufRead models.py    setlocal filetype=python.django
-        au BufNewFile,BufRead views.py     setlocal filetype=python.django
-        au BufNewFile,BufRead settings.py  setlocal filetype=python.django
-        au BufNewFile,BufRead settings.py  setlocal foldmethod=marker
-        au BufNewFile,BufRead forms.py     setlocal filetype=python.django
+        au BufNewFile,BufRead admin.py            setlocal filetype=python.django
+        au BufNewFile,BufRead urls.py             setlocal filetype=python.django
+        au BufNewFile,BufRead models.py           setlocal filetype=python.django
+        au BufNewFile,BufRead views.py            setlocal filetype=python.django
+        au BufNewFile,BufRead settings.py         setlocal filetype=python.django
+        au BufNewFile,BufRead forms.py            setlocal filetype=python.django
         au BufNewFile,BufRead common_settings.py  setlocal filetype=python.django
-        au BufNewFile,BufRead common_settings.py  setlocal foldmethod=marker
     augroup END
 
-    " }}}
-    " HTML and HTMLDjango {{{
-
+    " HTML and HTMLDjango
     augroup ft_html
         au!
 
@@ -493,6 +485,7 @@ function! File_Types()
         au FileType jinja,htmldjango inoremap <buffer> <c-f> {{<space><space>}}<left><left><left>
     augroup END
 
+    " Java
     augroup ft_java
         au!
 
@@ -500,12 +493,13 @@ function! File_Types()
         au FileType java setlocal foldmarker={,}
     augroup END
 
+    " Javascript
     augroup ft_javascript
         au!
 
-        au FileType javascript setlocal foldmethod=marker
-        au FileType javascript setlocal foldmarker={,}
         au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        "au FileType javascript setlocal foldmethod=marker
+        "au FileType javascript setlocal foldmarker={,}
     augroup END
 
     augroup ft_markdown
@@ -529,6 +523,7 @@ function! File_Types()
 
     augroup END
 
+    " Python
     augroup ft_python
         au!
 
@@ -541,10 +536,10 @@ function! File_Types()
         au FileType python setlocal textwidth=80
         au FileType python setlocal formatoptions=croqn
 
-        " @note: Fuck smartindent, it forces inserting tabs. Use cindent instead
+        " @NOTE Fuck smartindent, it forces inserting tabs. Use cindent instead
         au FileType python setlocal cindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
 
-        " @note This blows up omnifunc complete
+        " @NOTE This blows up omnifunc complete
         " `gf` jumps to the filename under the cursor.  Point at an import statement
         " and jump to it!
         " python << EOF
@@ -557,7 +552,7 @@ function! File_Types()
         " EOF
     augroup END
 
-    "Restructured text
+    " Restructured text
     augroup ft_rest
         au!
 
@@ -567,6 +562,7 @@ function! File_Types()
         au Filetype rst nnoremap <buffer> <localleader>4 yypVr`
     augroup END
 
+    " Ruby
     augroup ft_ruby
         au!
 
@@ -579,18 +575,16 @@ function! File_Types()
         au BufRead,BufNewFile Vagrantfile set ft=ruby
     augroup END
 
+    " Vim
     augroup ft_vim
         au!
 
-        "au FileType vim setlocal foldmethod=marker
         au FileType help setlocal textwidth=78 nonumber
         au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 
         " treat lines starting with a quote mark as comments (for `Vim' files, such as
-        " this very one!), and colons as well so that reformatting usenet messages from
-        " `Tin' users works OK:
+        " this very one!)
         au FileType vim setlocal comments+=b:\"
-        au FileType vim setlocal comments+=n::
     augroup END
 
     "jump to last cursor position when opening a file
@@ -890,7 +884,7 @@ function! Mini_Scripts()
     " Stolen from https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc#cl-835
     hi IndentGuides ctermbg=darkgrey guibg=#373737
     let g:indentguides_state = 0
-    function! IndentGuides() " {{{
+    function! IndentGuides()
         if g:indentguides_state
             let g:indentguides_state = 0
             2match None
@@ -898,7 +892,7 @@ function! Mini_Scripts()
             let g:indentguides_state = 1
             execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
         endif
-    endfunction " }}}
+    endfunction
     nnoremap <leader>ti :call IndentGuides()<cr>
 endfunction
 call Mini_Scripts()
