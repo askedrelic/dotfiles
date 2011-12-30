@@ -135,6 +135,11 @@ if [ -e /usr/local/bin/brew ]; then
     fi
 fi
 
+# startup virtualenv-burrito
+if [ -f $HOME/.venvburrito/startup.sh ]; then
+    . $HOME/.venvburrito/startup.sh
+fi
+
 #local bashrc changes
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
