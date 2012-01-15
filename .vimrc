@@ -948,6 +948,9 @@ au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\%s
 au FileType python setlocal commentstring=#\%s
 
+" LustyJuggler
+let g:LustyJugglerSuppressRubyWarning = 1
+
 " Read in a custom Vim configuration local to the working directory.
 if filereadable(".project.vim")
     so .project.vim
