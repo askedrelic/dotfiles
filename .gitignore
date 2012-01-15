@@ -87,3 +87,5 @@ backups/
 bin/mate
 bin/subl
 
+# ignore vim generated tags
+tags
