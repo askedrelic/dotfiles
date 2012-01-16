@@ -100,6 +100,8 @@ function! General_Settings()
     set wildignore+=*.pyc                            " Python byte code
     set wildignore+=*.spl                            " compiled spelling word lists
     set wildignore+=*.sw?                            " Vim swap files
+    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
+    set wildignore+=*/eggs/*,*/develop-eggs/*        " Python buildout
 endfunction
 call General_Settings()
 
@@ -928,8 +930,14 @@ let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
 " FuzzyFinder
-map <silent> \f :FufCoverageFile<CR>
-map <silent> \F :FufRenewCache<CR>:FufCoverageFile<CR>
+" map <silent> \h :FufHelpWithCursorWord<CR>
+" map <silent> \H :FufHelp<CR>
+" map <silent> \f :FufCoverageFile<CR>
+" map <silent> \F :FufRenewCache<CR>:FufCoverageFile<CR>
+
+" ctrlp.vim
+let g:ctrlp_map = '<c-f>'
+" let g:ctrlp_extensions = [tag', 'buffertag']
 
 " Netrw
 let g:netrw_hide              = 1
