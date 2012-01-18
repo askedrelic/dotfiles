@@ -937,7 +937,7 @@ let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
 " ctrlp.vim
 let g:ctrlp_map = '<c-f>'
-" let g:ctrlp_extensions = [tag', 'buffertag']
+" let g:ctrlp_extensions = ['tag', 'buffertag']
 
 " Netrw
 let g:netrw_hide              = 1
@@ -947,7 +947,7 @@ let g:netrw_silent            = 1
 let g:netrw_special_syntax    = 1
 
 " MBE
-let g:miniBufExplSplitBelow=0
+let g:miniBufExplSplitBelow   = 0
 
 " Commentary
 nmap <leader>c <Plug>CommentaryLine
@@ -958,8 +958,3 @@ au FileType python setlocal commentstring=#\%s
 
 " LustyJuggler
 let g:LustyJugglerSuppressRubyWarning = 1
-
-" Read in a custom Vim configuration local to the working directory.
-if filereadable(".project.vim")
-    so .project.vim
-endif
