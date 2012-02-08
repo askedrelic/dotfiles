@@ -256,3 +256,60 @@ if main_syntax == 'javascript'
 endif
 
 " vim: ts=4
+ptType                 Type
+  HiLink javaScriptNull                 Type
+  HiLink javaScriptNumber               Number
+  HiLink javaScriptFloat                Number
+  HiLink javaScriptBoolean              Boolean
+  HiLink javaScriptLabel                Label
+  HiLink javaScriptSpecial              Special
+  HiLink javaScriptSource               Special
+  HiLink javaScriptGlobalObjects        Special
+  HiLink javaScriptExceptions           Special
+
+  HiLink javaScriptDomErrNo             Constant
+  HiLink javaScriptDomNodeConsts        Constant
+  HiLink javaScriptDomElemAttrs         Label
+  HiLink javaScriptDomElemFuncs         PreProc
+
+  HiLink javaScriptHtmlElemAttrs        Label
+  HiLink javaScriptHtmlElemFuncs        PreProc
+
+  HiLink javaScriptCssStyles            Label
+
+  " Ajax Highlighting
+	HiLink javaScriptBrowserObjects     htmlString
+
+	HiLink javaScriptDOMObjects         htmlString
+	HiLink javaScriptDOMMethods         Exception
+	HiLink javaScriptDOMProperties      Type
+
+	HiLink javaScriptAjaxObjects        htmlH1
+	HiLink javaScriptAjaxMethods        Exception
+	HiLink javaScriptAjaxProperties     Type
+
+	HiLink javaScriptFuncName           Title
+
+	HiLink javaScriptHtmlEvents         Special
+	HiLink javaScriptHtmlElemProperties   Type
+
+	HiLink javaScriptEventListenerKeywords Keyword
+
+	HiLink javaScriptNumber            Number
+	HiLink javaScriptPropietaryObjects Constant
+
+  delcommand HiLink
+endif
+
+" Define the htmlJavaScript for HTML syntax html.vim
+"syntax clear htmlJavaScript
+"syntax clear javaScriptExpression
+syntax cluster  htmlJavaScript contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock,javaScriptParenError
+syntax cluster  javaScriptExpression contains=@javaScriptAll,javaScriptBracket,javaScriptParen,javaScriptBlock,javaScriptParenError,@htmlPreproc
+
+let b:current_syntax = "javascript"
+if main_syntax == 'javascript'
+  unlet main_syntax
+endif
+
+" vim: ts=4
