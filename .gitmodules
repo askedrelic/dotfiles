@@ -13,3 +13,6 @@
 [submodule ".vim/bundle/vim-tabular"]
 	path = .vim/bundle/vim-tabular
 	url = git://github.com/godlygeek/tabular.git
+[submodule ".vim/bundle/vim-pasta"]
+	path = .vim/bundle/vim-pasta
+	url = git://github.com/sickill/vim-pasta.git
