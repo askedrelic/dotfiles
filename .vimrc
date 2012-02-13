@@ -938,6 +938,7 @@ let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 " ctrlp.vim
 let g:ctrlp_map = '<c-f>'
 " let g:ctrlp_extensions = ['tag', 'buffertag']
+let g:ctrlp_jump_to_buffer = 0 " disable this
 
 " Netrw
 let g:netrw_hide              = 1
