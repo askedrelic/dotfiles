@@ -34,6 +34,11 @@
     dt = difftool
     mt = mergetool
 
+    # Commit all changes
+    ca = commit -a
+    # Switch to a branch, creating it if necessary
+    go = checkout -B
+
     #figure out what a revision is
     human = name-rev --name-only --refs=refs/heads/*
 
@@ -83,6 +88,8 @@
     #When pushing without giving a refspec, push the current branch to its upstream branch.
     default = tracking
 [merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true    
     tool = p4merge
 [mergetool]
     keepBackup = false
