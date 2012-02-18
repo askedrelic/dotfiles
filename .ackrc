@@ -1,0 +1,11 @@
+--smart-case
+--type-set=js=.js,.json
+--ignore-dir=external
+--ignore-dir=experimental
+--ignore-dir=fckeditor2.6.4
+--ignore-dir=ext-3.2.0
+--ignore-dir=yui
+--ignore-dir=blib
+--ignore-dir=images
+--ignore-dir=nbproject
+--ignore-dir=.scratch
