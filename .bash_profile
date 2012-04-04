@@ -50,6 +50,11 @@ if [ -d ~/.gem/ruby/1.8/bin ]; then
   export PATH=~/.gem/ruby/1.8/bin:$PATH
 fi
 
+#add local python programs
+if [ -d ~/Library/Python/2.7/bin ]; then
+  export PATH=~/Library/Python/2.7/bin:$PATH
+fi
+
 #add /usr/local/bin for OSX/homebrew
 if [ -d /usr/local/bin ]; then
   export PATH=/usr/local/bin:$PATH
