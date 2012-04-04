@@ -100,7 +100,7 @@ function! General_Settings()
     set wildignore+=*.pyc                            " Python byte code
     set wildignore+=*.spl                            " compiled spelling word lists
     set wildignore+=*.sw?                            " Vim swap files
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
+    " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
     set wildignore+=*/eggs/*,*/develop-eggs/*        " Python buildout
 endfunction
 call General_Settings()
@@ -959,3 +959,6 @@ au FileType python setlocal commentstring=#\%s
 
 " LustyJuggler
 let g:LustyJugglerSuppressRubyWarning = 1
+
+" Fugutive
+map <silent> \gs :Gstatus<CR>
