@@ -134,6 +134,9 @@ defaults write com.apple.Mail DisableSendAnimations -bool true
 # Disable Resume system-wide
 defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool false
 
+# Speed up expose animations
+defaults write com.apple.dock expose-animation-duration -float 0.15
+
 # Enable Dashboard dev mode (allows keeping widgets on the desktop)
 #defaults write com.apple.dashboard devmode -bool true
 
