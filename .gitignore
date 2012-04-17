@@ -46,6 +46,7 @@ code/
 mail/
 .ipython/
 .rvm/
+.ctrlp_cache/
  
 # ignore my OSX homedir
 .MacOSX
