@@ -961,4 +961,8 @@ au FileType python setlocal commentstring=#\%s
 let g:LustyJugglerSuppressRubyWarning = 1
 
 " Fugutive
+map <silent> \gc :Gcommit -v<CR>
+map <silent> \ge :Gedit<CR>
 map <silent> \gs :Gstatus<CR>
+map <silent> \gr :Gread<CR>
+map \gg :Ggrep 
