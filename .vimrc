@@ -929,6 +929,8 @@ let NERDTreeShowFiles           = 1 " Show hidden files, too
 let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
+let g:nerdtree_tabs_open_on_console_startup = 1 "always show nerdtree
+
 " FuzzyFinder
 " map <silent> \h :FufHelpWithCursorWord<CR>
 " map <silent> \H :FufHelp<CR>

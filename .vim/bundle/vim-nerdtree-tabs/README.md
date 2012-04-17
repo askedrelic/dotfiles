@@ -3,14 +3,28 @@
 
 ## Installation
 
-1. Copy the plugin into your vim config dir (via pathogen for example).
+1. If you haven't already, install NERDTree (see https://github.com/scrooloose/nerdtree)
 
-2. Map :NERDTreeTabsToggle command to some combo so you don't have to type it.
+2.  Install the plugin **through Pathogen**:
+
+        cd ~/.vim/bundle
+        git clone https://github.com/jistr/vim-nerdtree-tabs.git
+        
+    Or **through Vundle**:
+
+        Bundle 'jistr/vim-nerdtree-tabs'
+        
+    Or **through Janus**:
+
+        cd ~/.janus
+        git clone https://github.com/jistr/vim-nerdtree-tabs.git
+
+3. Map :NERDTreeTabsToggle command to some combo so you don't have to type it.
    Alternatively, you can use plug-mapping instead of a command, like this:
 
         map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
-3. Celebrate.
+4. Celebrate.
 
 ## Features
 
@@ -51,33 +65,43 @@ You can switch on/off some features of the plugin by setting global vars to 1
 (for on) or 0 (for off) in your vimrc. Here are the options and their default
 values:
 
-* `let g:nerdtree_tabs_open_on_gui_startup = 1`  
+* `g:nerdtree_tabs_open_on_gui_startup` (default: `1`)  
   Open NERDTree on gvim/macvim startup
 
-* `let g:nerdtree_tabs_open_on_console_startup = 0`  
+* `g:nerdtree_tabs_open_on_console_startup` (default: `0`)  
   Open NERDTree on console vim startup
 
-* `let g:nerdtree_tabs_open_on_new_tab = 1`  
+* `g:nerdtree_tabs_smart_startup_focus` (default: `1`)  
+  On startup, focus NERDTree if opening a directory, focus file if opening
+  a file.
+
+* `g:nerdtree_tabs_open_on_new_tab` (default: `1`)  
   Open NERDTree on new tab creation (if NERDTree was globally opened by
   :NERDTreeTabsToggle)
 
-* `let g:nerdtree_tabs_meaningful_tab_names = 1`  
+* `g:nerdtree_tabs_meaningful_tab_names` (default: `1`)  
   Unfocus NERDTree when leaving a tab for descriptive tab names
 
-* `let g:nerdtree_tabs_autoclose = 1`  
+* `g:nerdtree_tabs_autoclose` (default: `1`)  
   Close current tab if there is only one window in it and it's NERDTree
 
-* `let g:nerdtree_tabs_synchronize_view = 1`  
+* `g:nerdtree_tabs_synchronize_view` (default: `1`)  
   Synchronize view of all NERDTree windows (scroll and cursor position)
 
-* `let g:nerdtree_tabs_focus_on_files = 0`  
+* `g:nerdtree_tabs_focus_on_files` (default: `0`)  
   When switching into a tab, make sure that focus is on the file window,
   not in the NERDTree window. (Note that this can get annoying if you use
   NERDTree's feature "open in new tab silently", as you will lose focus on the
   NERDTree.)
 
+### Example
+
+To run NERDTreeTabs on console vim startup, put into your .vimrc:
+
+    let g:nerdtree_tabs_open_on_console_startup=1
+
 ## Credits
 
-* The tab autoclose feature is stolen from Carl Lerche & Yehuda Katz's
-  [Janus](https://github.com/carlhuda/janus). Thanks, guys!
+The tab autoclose feature is stolen from Carl Lerche & Yehuda Katz's
+[Janus](https://github.com/carlhuda/janus). Thanks, guys!
 
