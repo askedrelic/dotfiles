@@ -155,7 +155,7 @@ source ~/.autojump.bash
 #crazy imports
 source ~/.bash_app_specific
 
-# django 1.3 complete
+# django 1.4 complete
 . ~/.django_bash_completion
 
 # import any local bash completion scripts
