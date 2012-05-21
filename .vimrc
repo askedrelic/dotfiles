@@ -531,6 +531,8 @@ function! File_Types()
 
         " @NOTE Fuck smartindent, it forces inserting tabs. Use cindent instead
         au FileType python setlocal cindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
+        au FileType python setlocal cinkeys-=0#
+        au FileType python setlocal indentkeys-=0#
 
         " @NOTE This blows up omnifunc complete
         " `gf` jumps to the filename under the cursor.  Point at an import statement
