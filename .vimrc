@@ -941,7 +941,7 @@ let g:nerdtree_tabs_focus_on_files = 1
 
 " ctrlp.vim
 let g:ctrlp_map = '<c-f>'
-let g:ctrlp_extensions = ['tag', 'buffertag']
+" let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_jump_to_buffer = 0 " disable this
 
 " Netrw
