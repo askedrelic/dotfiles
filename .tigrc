@@ -5,7 +5,7 @@ set show-refs            = yes
 set show-line-numbers    = yes
 
 # set - etc
-set commit-encoding      = "UTF-8"
+# set commit-encoding      = "UTF-8"
 set horizontal-scroll    = 33%
 set split-view-height    = 70%
 set line-graphics        = "UTF-8"
