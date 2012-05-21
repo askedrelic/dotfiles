@@ -19,3 +19,6 @@
 [submodule ".vim/bundle/vim-fugitive"]
 	path = .vim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
+[submodule ".vim/bundle/vim-pyflakes"]
+	path = .vim/bundle/vim-pyflakes
+	url = https://github.com/mitechie/pyflakes-pathogen.git
