@@ -520,9 +520,8 @@ function! File_Types()
     " Python
     augroup ft_python
         au!
-
+        let python_highlight_all = 1
         au FileType python setlocal omnifunc=pythoncomplete#Complete
-        au FileType python setlocal define=^\s*\\(def\\\\|class\\)
         "au FileType python compiler nose
         au FileType man nnoremap <buffer> <cr> :q<cr>
 
