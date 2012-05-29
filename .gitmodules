@@ -22,3 +22,6 @@
 [submodule ".vim/bundle/vim-pyflakes"]
 	path = .vim/bundle/vim-pyflakes
 	url = https://github.com/mitechie/pyflakes-pathogen.git
+[submodule ".vim/bundle/vim-supertab"]
+	path = .vim/bundle/vim-supertab
+	url = https://github.com/ervandew/supertab
