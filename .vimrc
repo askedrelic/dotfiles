@@ -972,3 +972,6 @@ map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
 map \gg :Ggrep 
+
+" SuperTab
+let g:SuperTabLongestEnhanced = 1
