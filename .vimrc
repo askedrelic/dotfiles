@@ -662,8 +662,8 @@ function! Normal_Mappings()
     noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
     " search literally, without vim magic
-    nnoremap / /\V
-    nnoremap ? ?\V
+    nnoremap / /\v
+    nnoremap ? ?\v
     nnoremap <leader>/ /\v
     nnoremap <leader>? ?\v
 
@@ -930,7 +930,7 @@ let NERDTreeShowFiles           = 1 " Show hidden files, too
 let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
-let g:nerdtree_tabs_open_on_console_startup = 1 "always show nerdtree
+" let g:nerdtree_tabs_open_on_console_startup = 1 "always show nerdtree
 let g:nerdtree_tabs_focus_on_files = 1
 
 " FuzzyFinder
