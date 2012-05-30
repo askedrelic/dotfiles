@@ -105,157 +105,6 @@ function! General_Settings()
 endfunction
 call General_Settings()
 
-function! Status_Bar()
-    " Helper functions
-    function! GetFileName()
-        if &buftype == 'help'
-            return expand('%:p:t')
-        elseif &buftype == 'quickfix'
-            return '[Quickfix List]'
-        elseif bufname('%') == ''
-            return '[No Name]'
-        else
-            return expand('%:p:~:.')
-        endif
-    endfunction
-
-    function! GetState()
-        if &buftype == 'help'
-            return 'H'
-        elseif &readonly || &buftype == 'nowrite' || &modifiable == 0
-            return '-'
-        elseif &modified != 0
-            return '*'
-        else
-            return ''
-        endif
-    endfunction
-
-    function! GetFileFormat()
-        if &fileformat == '' || &fileformat == 'unix'
-            return ''
-        else
-            return &fileformat
-        endif
-    endfunction
-
-    function! GetFileEncoding()
-        if empty(&fileencoding) || &fileencoding == 'utf-8'
-            return ''
-        else
-            return &fileencoding
-        endif
-    endfunction
-
-    " Default statusline
-    let g:default_stl  = ""
-
-    let g:default_stl .= "<CUR>#[Mode] "
-    let g:default_stl .= "%{&paste ? 'PASTE [>] ' : ''}"
-    let g:default_stl .= "%{substitute(mode(), '', '^V', 'g')}"
-    let g:default_stl .= " #[ModeS][>>]</CUR>"
-
-    " File name
-    let g:default_stl .= "#[FileName] %{GetFileName()} "
-
-    let g:default_stl .= "#[ModFlag]%(%{GetState()} %)#[BufFlag]%w"
-    let g:default_stl .= "#[FileNameS][>>]" " Separator
-
-    " File type
-    let g:default_stl .= "<CUR>%(#[FileType] %{!empty(&ft) ? &ft : '--'}#[BranchS]%)</CUR>"
-
-    " Spellcheck language
-    let g:default_stl .= "<CUR>%(#[FileType]%{&spell ? ':' . &spelllang : ''}#[BranchS]%)</CUR>"
-
-    " Git branch
-    let g:default_stl .= "#[Branch]%("
-    let g:default_stl .= "%{substitute(fugitive#statusline(), '\\[GIT(\\([a-z0-9\\-_\\./:]\\+\\))\\]', '<CUR>:</CUR>\\1', 'gi')}"
-    let g:default_stl .= "%) "
-
-    " Padding/HL group
-    let g:default_stl .= "#[FunctionName] "
-
-    " Truncate here
-    let g:default_stl .= "%<"
-
-    " Current directory
-    let g:default_stl .= "%{fnamemodify(getcwd(), ':~')}"
-
-    " Right align rest
-    let g:default_stl .= "%= "
-
-    " File format
-    let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileFormat()} %)</CUR>'
-
-    " File encoding
-    let g:default_stl .= '<CUR>%(#[FileFormat]%{GetFileEncoding()} %)</CUR>'
-
-    " Tabstop/indent settings
-    let g:default_stl .= "#[ExpandTab] %{&expandtab ? 'S' : 'T'}"
-    let g:default_stl .= "#[LineColumn]:%{&tabstop}:%{&softtabstop}:%{&shiftwidth}"
-
-    " Unicode codepoint
-    let g:default_stl .= '<CUR>#[LineNumber] U+%04B</CUR>'
-
-    " Line/column/virtual column, Line percentage
-    let g:default_stl .= "#[LineNumber] %04(%l%)#[LineColumn]:%03(%c%V%) "
-
-    " Line/column/virtual column, Line percentage
-    let g:default_stl .= "#[LinePercent] %p%%"
-
-    " Current syntax group
-    let g:default_stl .= "%{exists('g:synid') && g:synid ? '[<] '.synIDattr(synID(line('.'), col('.'), 1), 'name').' ' : ''}"
-
-    " s:StatusLine()
-    function! s:StatusLine(new_stl, type, current)
-        let current = (a:current ? "" : "NC")
-        let type    = a:type
-        let new_stl = a:new_stl
-
-        " Prepare current buffer specific text
-        " Syntax: <CUR> ... </CUR>
-        let new_stl = substitute(new_stl, '<CUR>\(.\{-,}\)</CUR>', (a:current ? '\1' : ''), 'g')
-
-        " Prepare statusline colors
-        " Syntax: #[ ... ]
-        let new_stl = substitute(new_stl, '#\[\(\w\+\)\]',
-                            \ '%#StatusLine' . type . '\1' . current . '#', 'g')
-
-        " Prepare statusline arrows
-        " Syntax: [>] [>>] [<] [<<]
-        let new_stl = substitute(new_stl, '\[>\]',  '|', 'g')
-        let new_stl = substitute(new_stl, '\[>>\]', '',  'g')
-        let new_stl = substitute(new_stl, '\[<\]',  '|', 'g')
-        let new_stl = substitute(new_stl, '\[<<\]', '',  'g')
-
-        if &l:statusline ==# new_stl
-            " Statusline already set, nothing to do
-            return
-        endif
-
-        if empty(&l:statusline)
-            " No statusline is set, use new_stl
-            let &l:statusline = new_stl
-        else
-            " Check if a custom statusline is set
-            let plain_stl = substitute(&l:statusline, '%#StatusLine\w\+#', '', 'g')
-
-            if &l:statusline ==# plain_stl
-                " A custom statusline is set, don't modify
-                return
-            endif
-
-            " No custom statusline is set, use new_stl
-            let &l:statusline = new_stl
-        endif
-    endfunction
-
-    au BufEnter,BufWinEnter,WinEnter,CmdwinEnter,CursorHold,BufWritePost,InsertLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 1)
-    au BufLeave,BufWinLeave,WinLeave,CmdwinLeave * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Normal', 0)
-    au InsertEnter,CursorHoldI * call <SID>StatusLine((exists('b:stl') ? b:stl : g:default_stl), 'Insert', 1)
-endfunction
-call Status_Bar()
-
 function! Tabs()
     function! Tabstyle_tabs()
         " Using 4 column tabs
@@ -664,11 +513,11 @@ function! Normal_Mappings()
     " search literally, without vim magic
     nnoremap / /\v
     nnoremap ? ?\v
-    nnoremap <leader>/ /\v
-    nnoremap <leader>? ?\v
+    " nnoremap <leader>/ /\v
+    " nnoremap <leader>? ?\v
 
     "Easy edit of vimrc
-    nnoremap \ev :e $MYVIMRC<CR>
+    nnoremap \ev :e! $MYVIMRC<CR>
     nnoremap \sv :source $MYVIMRC<CR>
 
     " Quit Vim
@@ -717,10 +566,48 @@ function! Visual_Mappings()
     " vmap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
     " Replace current visually selected word
-    vmap \r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
+    " vmap \r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 
     " Show number of occurrences of currently visually selected word
     "vmap \s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
+    "
+    " from https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim#L337
+    function! CmdLine(str)
+        exe "menu Foo.Bar :" . a:str
+        emenu Foo.Bar
+        unmenu Foo
+    endfunction
+
+    function! VisualSelection(direction) range
+        let l:saved_reg = @"
+        execute "normal! vgvy"
+
+        let l:pattern = escape(@", '\\/.*$^~[]')
+        let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+        if a:direction == 'b'
+            execute "normal ?" . l:pattern . "^M"
+        elseif a:direction == 'gv'
+            call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+        elseif a:direction == 'replace'
+            call CmdLine("%s" . '/'. l:pattern . '/')
+        elseif a:direction == 'f'
+            execute "normal /" . l:pattern . "^M"
+        endif
+
+        let @/ = l:pattern
+        let @" = l:saved_reg
+    endfunction
+
+    " Visual mode pressing * or # searches for the current selection
+    " Super useful! From an idea by Michael Naumann
+    vnoremap <silent> * :call VisualSelection('f')<CR>
+    vnoremap <silent> # :call VisualSelection('b')<CR>
+    " When you press gv you vimgrep after the selected text
+    vnoremap <silent> gv :call VisualSelection('gv')<CR>
+    " When you press <leader>r you can search and replace the selected text
+    vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
+
 endfunction
 call Visual_Mappings()
 
@@ -971,7 +858,7 @@ map <silent> \ge :Gedit<CR>
 map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
-map \gg :Ggrep 
+map \gg :Ggrep
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
