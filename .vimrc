@@ -817,14 +817,10 @@ let NERDTreeShowFiles           = 1 " Show hidden files, too
 let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
-" let g:nerdtree_tabs_open_on_console_startup = 1 "always show nerdtree
-let g:nerdtree_tabs_focus_on_files = 1
-
-" FuzzyFinder
-" map <silent> \h :FufHelpWithCursorWord<CR>
-" map <silent> \H :FufHelp<CR>
-" map <silent> \f :FufCoverageFile<CR>
-" map <silent> \F :FufRenewCache<CR>:FufCoverageFile<CR>
+" don't show nerdtree by default
+let g:nerdtree_tabs_open_on_console_startup = 0
+let g:nerdtree_tabs_open_on_gui_startup     = 0
+let g:nerdtree_tabs_focus_on_files          = 1
 
 " ctrlp.vim
 let g:ctrlp_map = '<c-f>'
@@ -862,3 +858,6 @@ map \gg :Ggrep
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
+
+" PyFlakes
+let g:pyflakes_use_quickfix = 0
