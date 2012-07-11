@@ -492,7 +492,7 @@ function! Normal_Mappings()
     nnoremap <C-P> :tabp<CR>
 
     " insert new line without going into insert mode
-    nnoremap <Enter> o<ESC>
+    " nnoremap <Enter> o<ESC>
     nnoremap <S-Enter> :put!=''<CR>
 
     " Force gm to go the middle of the ACTUAL line, not the screen line
@@ -869,4 +869,4 @@ let g:SuperTabLongestEnhanced = 1
 let g:pyflakes_use_quickfix = 0
 
 " rainbow parens
-map <leader>tr :RainbowParenthesesToggle<CR>
+map <leader>tr :RainbowParenthesesToggleAll<CR>
