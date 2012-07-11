@@ -34,3 +34,6 @@
 [submodule ".vim/bundle/vim-rainbowparens"]
 	path = .vim/bundle/vim-rainbowparens
 	url = https://github.com/kien/rainbow_parentheses.vim.git
+[submodule ".vim/bundle/vim-syntastic"]
+	path = .vim/bundle/vim-syntastic
+	url = https://github.com/scrooloose/syntastic.git
