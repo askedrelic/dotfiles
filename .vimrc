@@ -829,7 +829,7 @@ let g:nerdtree_tabs_focus_on_files = 1
 " ctrlp.vim
 let g:ctrlp_map = '<c-f>'
 nmap <c-b> :CtrlPBuffer<CR>
-nmap <c-m> :CtrlPMRU<CR>
+" nmap <c-m> :CtrlPMRU<CR>
 " let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_jump_to_buffer = 0 " disable this
 
@@ -867,3 +867,6 @@ let g:SuperTabLongestEnhanced = 1
 
 " PyFlakes
 let g:pyflakes_use_quickfix = 0
+
+" rainbow parens
+map <leader>tr :RainbowParenthesesToggle<CR>
