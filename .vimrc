@@ -863,7 +863,7 @@ vmap <Leader>a  :Tabularize /
 let g:tagbar_left      = 1 " Open tagbar on the left
 let g:tagbar_sort      = 0 " Sort tags by file order by default
 let g:tagbar_compact   = 1 " Remove empty lines by default
-let g:tagbar_foldlevel = 0 " Close folds default
+" let g:tagbar_foldlevel = 0 " Close folds default
 map <leader>t :TagbarOpenAutoClose<CR>
 
 " NERDTree
@@ -933,3 +933,9 @@ let g:pyflakes_use_quickfix = 0
 
 " rainbow parens
 map <leader>tr :RainbowParenthesesToggleAll<CR>
+
+" syntasticlet g:syntastic_mode_map = {
+let g:syntastic_mode_map = { 'mode': 'passive',
+                              \ 'active_filetypes': [],
+                              \ 'passive_filetypes': [] }
+
