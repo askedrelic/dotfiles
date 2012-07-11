@@ -122,7 +122,66 @@ function! Tabs()
         set tabstop=4
         set softtabstop=4
     endfunction
+    function! Tabstyle_3spaces()
+        " Use 3 spaces
+        set expandtab
+        set autoindent
+        set copyindent
+        set shiftwidth=3
+        set tabstop=3
+        set softtabstop=3
+    endfunction
+    function! Tabstyle_2spaces()
+        " Use 2 spaces
+        set expandtab
+        set autoindent
+        set copyindent
+        set shiftwidth=2
+        set tabstop=2
+        set softtabstop=2
+    endfunction
     call Tabstyle_spaces()
+
+    command! -nargs=* Stab call Stab()
+    function! Stab()
+        let l:tabstop = 1 * input('set shiftwidth=')
+
+        if l:tabstop > 0
+            " do we want expandtab as well?
+            " let l:expandtab = confirm('set expandtab?', "&Yes\n&No\n&Cancel")
+            " if l:expandtab == 3
+            "     " abort?
+            "     return
+            " endif
+
+            let &l:sts = l:tabstop
+            let &l:ts = l:tabstop
+            let &l:sw = l:tabstop
+
+            setlocal expandtab
+        endif
+        setlocal expandtab
+
+        " show the selected options
+        try
+            echohl ModeMsg
+            echon 'set tabstop='
+            echohl Question
+            echon &l:ts
+            echohl ModeMsg
+            echon ' shiftwidth='
+            echohl Question
+            echon &l:sw
+            echohl ModeMsg
+            echon ' sts='
+            echohl Question
+            echon &l:sts . ' ' . (&l:et ? '  ' : 'no')
+            echohl ModeMsg
+            echon 'expandtab'
+        finally
+            echohl None
+        endtry
+    endfunction
 
     " when at 3 spaces, and I hit > ... go to 4, not 5
     set shiftround
@@ -310,6 +369,7 @@ function! File_Types()
         au!
 
         au BufNewFile,BufRead *.html setlocal filetype=htmldjango
+        call Tabstyle_2spaces()
 
         au FileType html setlocal omnifunc=htmlcomplete#CompleteTags
         " Use Shift-Return to turn this:
@@ -339,6 +399,7 @@ function! File_Types()
     " Javascript
     augroup ft_javascript
         au!
+        call Tabstyle_2spaces()
 
         au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         "au FileType javascript setlocal foldmethod=marker
@@ -845,6 +906,8 @@ let g:miniBufExplSplitBelow   = 0
 
 " Commentary
 nmap <leader>c <Plug>CommentaryLine
+nnoremap <C-C> <Plug>CommentaryLine
+" nnoremap <C-\> <Plug>CommentaryLine
 xmap <leader>c <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\%s
@@ -860,7 +923,7 @@ map <silent> \ge :Gedit<CR>
 map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
-map \gg :Ggrep
+map \gg :Ggrep<Space>
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
