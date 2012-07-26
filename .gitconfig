@@ -97,3 +97,5 @@
     prompt = false
 [grep]
     extendedRegexp = true
+[rebase]
+    autosquash = true
