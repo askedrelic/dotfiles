@@ -51,8 +51,11 @@ if [ -d ~/.gem/ruby/1.8/bin ]; then
 fi
 
 #add local python programs
-if [ -d ~/Library/Python/2.7/bin ]; then
-  export PATH=~/Library/Python/2.7/bin:$PATH
+#if [ -d ~/Library/Python/2.7/bin ]; then
+#  export PATH=~/Library/Python/2.7/bin:$PATH
+#fi
+if [ -d /usr/local/share/python ]; then
+  export PATH=/usr/local/share/python:$PATH
 fi
 
 #add /usr/local/bin for OSX/homebrew
