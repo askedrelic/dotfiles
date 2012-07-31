@@ -1,6 +1,9 @@
 [user]
     email = askedrelic@gmail.com
     name = Matt Behrens
+[apply]
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
 [color]
     pager = true
     ui    = auto
@@ -19,13 +22,14 @@
     changed   = green
     untracked = cyan
 [core]
-    #Only 1.6.6 allows ~ references
-    excludesfile = ~/.gitignore
-    whitespace   = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-    quotepath    = false
-    pager        = less -FRSX
+    excludesfile   = ~/.gitignore
+    attributesfile = ~/.gitattributes
+    # Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
+    whitespace     = space-before-tab,indent-with-non-tab,trailing-space
+    pager          = less -FRSX
 [alias]
     st = status
+    s  = status
     ci = commit -v
     cm = commit -m
     br = branch
@@ -53,13 +57,14 @@
 
     hp               = log -p --abbrev-commit --date=relative --color-words --abbrev
     hist-patch       = log -p --abbrev-commit --date=relative --color-words --abbrev
+    hs               = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
     hist-stat        = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
 
     #diff
-    staged     = diff --patience --cached
-    un         = diff --patience
-    unstaged   = diff --patience
-    both       = diff HEAD
+    staged     = diff --patience --cached --patch-with-stat
+    un         = diff --patience --patch-with-stat
+    unstaged   = diff --patience --patch-with-stat
+    both       = diff HEAD --patch-with-stat
 
     changes    = diff --name-status -r
     diff-stat  = diff --stat -r
@@ -69,8 +74,6 @@
     dump       = cat-file -p
 
     ls-ignored = ls-files --others -i --exclude-standard
-[pack]
-    threads = 0
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
@@ -99,3 +102,8 @@
     extendedRegexp = true
 [rebase]
     autosquash = true
+
+# Use `origin` as the default remote on the `master` branch in all cases
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
