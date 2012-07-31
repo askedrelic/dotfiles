@@ -63,6 +63,11 @@ if [ -d /usr/local/bin ]; then
   export PATH=/usr/local/bin:$PATH
 fi
 
+# source brew installed coreutils
+if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ]; then
+  export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+fi
+
 # Local bin should always be first priority
 if [ -d ~/bin ]; then
   export PATH=~/bin:$PATH

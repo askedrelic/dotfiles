@@ -41,15 +41,11 @@ export COLOR_GRAY='\033[1;30m'
 export COLOR_LIGHT_GRAY='\033[0;37m'
 alias colorslist="set | egrep 'COLOR_\w*'" # lists all the colors
 
-if [ `uname` = Darwin ]; then
-    export LS_OPTIONS='-F'
+if [ `uname` = FreeBSD ]; then
+    export LS_OPTIONS='-G'
 else
-    if [ `uname` = FreeBSD ]; then
-        export LS_OPTIONS='-G'
-    else
-        # Probably Linux with GNU utils
-        export LS_OPTIONS='--color=auto'
-    fi
+    # Probably have GNU utils installed
+    export LS_OPTIONS='--color=auto'
 fi
 
 # History -----------------------------------------------------------------------
@@ -105,26 +101,21 @@ export PIP_RESPECT_VIRTUALENV=true
 
 # Prompts -----------------------------------------------------------------------
 #PS1="\h:\W\$ "
-export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-#export PS1="\[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path
+# export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+# #export PS1="\[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path
 
-# export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path, for root, need condition to use this for root
-# export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with user, host, and path
+# # export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path, for root, need condition to use this for root
+# # export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with user, host, and path
 
-export PS2='> ' # Secondary prompt
-export PS3='#? ' # Prompt 3
-export PS4='+' # Prompt 4
+# export PS2='> ' # Secondary prompt
+# export PS3='#? ' # Prompt 3
+# export PS4='+' # Prompt 4
+source ~/.bash_prompt
 
 # Imports ----------------------------------------------------------------------------------------------
 # Turn on advanced bash completion if the file exists
-# Get it here: http://www.caliban.org/bash/index.shtml#completion) or
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
-# via OSX/macports: sudo port install bash-completion
-if [ -f /opt/local/etc/bash_completion ]; then
-    . /opt/local/etc/bash_completion
-fi
+[ -f /etc/bash_completion ] && source /etc/bash_completion
+
 #osx brew install of bash-completion
 if [ -e /usr/local/bin/brew ]; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
