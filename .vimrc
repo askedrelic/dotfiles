@@ -72,6 +72,8 @@ function! General_Settings()
     set shortmess=flnrxoOItTA
     " We have a modern terminal
     set ttyfast
+    " Don't try to highlight lines longer than 500 characters.
+    set synmaxcol=500
 
     " Use OSX Textmate style tabs and eol
     " tab:▸
@@ -122,24 +124,25 @@ function! Tabs()
         set tabstop=4
         set softtabstop=4
     endfunction
-    function! Tabstyle_3spaces()
-        " Use 3 spaces
-        set expandtab
-        set autoindent
-        set copyindent
-        set shiftwidth=3
-        set tabstop=3
-        set softtabstop=3
-    endfunction
+    " function! Tabstyle_3spaces()
+    "     " Use 3 spaces
+    "     set expandtab
+    "     set autoindent
+    "     set copyindent
+    "     set shiftwidth=3
+    "     set tabstop=3
+    "     set softtabstop=3
+    " endfunction
     function! Tabstyle_2spaces()
         " Use 2 spaces
-        set expandtab
-        set autoindent
-        set copyindent
-        set shiftwidth=2
-        set tabstop=2
-        set softtabstop=2
+        setlocal expandtab
+        setlocal autoindent
+        setlocal copyindent
+        setlocal shiftwidth=2
+        setlocal tabstop=2
+        setlocal softtabstop=2
     endfunction
+
     call Tabstyle_spaces()
 
     command! -nargs=* Stab call Stab()
@@ -294,8 +297,9 @@ function! Line_Wrapping()
     set whichwrap=h,l,~,[,]
 
     " only format comments at 80 chars by default, while typing
-    set formatoptions=cq
     set textwidth=80
+    " still deciding about comment format, comment autoformatting
+    set formatoptions=qrn1
 endfunction
 call Line_Wrapping()
 
@@ -369,7 +373,7 @@ function! File_Types()
         au!
 
         au BufNewFile,BufRead *.html setlocal filetype=htmldjango
-        call Tabstyle_2spaces()
+        " call Tabstyle_2spaces()
 
         au FileType html setlocal omnifunc=htmlcomplete#CompleteTags
         " Use Shift-Return to turn this:
@@ -392,14 +396,12 @@ function! File_Types()
     augroup ft_java
         au!
 
-        au FileType java setlocal foldmethod=marker
-        au FileType java setlocal foldmarker={,}
     augroup END
 
     " Javascript
     augroup ft_javascript
         au!
-        call Tabstyle_2spaces()
+        " call Tabstyle_2spaces()
 
         au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         "au FileType javascript setlocal foldmethod=marker
@@ -548,12 +550,12 @@ function! Normal_Mappings()
     nnoremap <D-8> :tabn 8<CR>
     nnoremap <D-9> :tabn 9<CR>
 
-    " use Ctrl-N/Ctrl-P to shift tabs
-    nnoremap <C-N> :tabn<CR>
-    nnoremap <C-P> :tabp<CR>
+    " easy tab movement
+    nnoremap { :tabp<CR>
+    nnoremap } :tabn<CR>
 
     " insert new line without going into insert mode
-    " nnoremap <Enter> o<ESC>
+    nnoremap <Enter> o<ESC>
     nnoremap <S-Enter> :put!=''<CR>
 
     " Force gm to go the middle of the ACTUAL line, not the screen line
@@ -888,9 +890,9 @@ let g:nerdtree_tabs_open_on_new_tab = 0
 let g:nerdtree_tabs_focus_on_files = 1
 
 " ctrlp.vim
-let g:ctrlp_map = '<c-f>'
+let g:ctrlp_map = '<c-n>'
 nmap <c-b> :CtrlPBuffer<CR>
-" nmap <c-m> :CtrlPMRU<CR>
+nmap <c-f> :CtrlPMRU<CR>
 " let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_jump_to_buffer = 0 " disable this
 
