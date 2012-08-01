@@ -73,6 +73,8 @@
     type       = cat-file -t
     dump       = cat-file -p
 
+    wip        = commit -am "WIP"
+
     ls-ignored = ls-files --others -i --exclude-standard
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
