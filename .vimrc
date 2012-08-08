@@ -883,11 +883,10 @@ let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 
 " don't show nerdtree by default
 let g:nerdtree_tabs_open_on_console_startup = 0
-let g:nerdtree_tabs_open_on_gui_startup     = 0
+let g:nerdtree_tabs_open_on_gui_startup     = 1
+let g:nerdtree_tabs_open_on_new_tab         = 1
+let g:nerdtree_tabs_smart_startup_focus     = 0
 let g:nerdtree_tabs_focus_on_files          = 1
-let g:nerdtree_tabs_smart_startup_focus = 0
-let g:nerdtree_tabs_open_on_new_tab = 0
-let g:nerdtree_tabs_focus_on_files = 1
 
 " ctrlp.vim
 let g:ctrlp_map = '<c-n>'
