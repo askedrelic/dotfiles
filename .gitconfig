@@ -73,6 +73,9 @@
 
     wip        = commit -am "WIP"
 
+    # my history, ignore quiting less error
+    me         = !git h --author="matt" || TRUE
+
     ls-ignored = ls-files --others -i --exclude-standard
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
