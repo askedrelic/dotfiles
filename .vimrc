@@ -869,10 +869,10 @@ let g:tagbar_compact   = 1 " Remove empty lines by default
 map <leader>t :TagbarOpenAutoClose<CR>
 
 " NERDTree
-map <silent> \n :NERDTreeTabsToggle<CR>
+map <silent> \n :NERDTreeMirrorToggle<CR>
 map <silent> \m :NERDTreeFind<CR>
 let NERDTreeWinPos              = 'right'
-let NERDTreeChDirMode           = '0'
+let NERDTreeChDirMode           = 0
 let NERDTreeIgnore              = ['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
 let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let NERDTreeHighlightCursorline = 1
@@ -887,6 +887,8 @@ let g:nerdtree_tabs_open_on_gui_startup     = 1
 let g:nerdtree_tabs_open_on_new_tab         = 1
 let g:nerdtree_tabs_smart_startup_focus     = 0
 let g:nerdtree_tabs_focus_on_files          = 1
+let g:nerdtree_tabs_meaningful_tab_names    = 1
+let g:nerdtree_tabs_synchronize_view        = 1
 
 " ctrlp.vim
 let g:ctrlp_map = '<c-n>'
