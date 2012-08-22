@@ -375,6 +375,9 @@ function! File_Types()
         au BufNewFile,BufRead *.html setlocal filetype=htmldjango
         " call Tabstyle_2spaces()
 
+        "hitting % on <ul> jumps to <li> instead of </ul>
+        au FileType html let b:match_words='<:>,<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>'
+
         au FileType html setlocal omnifunc=htmlcomplete#CompleteTags
         " Use Shift-Return to turn this:
         "     <tag>|</tag>
