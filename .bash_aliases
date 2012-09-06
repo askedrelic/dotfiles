@@ -154,6 +154,9 @@ alias free="free -m"
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 alias dig='dig +nocomments +nocmd +nostats'
 
+alias sourcetree='open -a SourceTree'
+alias st=sourcetree
+
 #osx personal aliases
 alias mate="mate -d"
 
