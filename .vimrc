@@ -103,7 +103,7 @@ function! General_Settings()
     set wildignore+=*.spl                            " compiled spelling word lists
     set wildignore+=*.sw?                            " Vim swap files
     " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
-    set wildignore+=*/eggs/*,*/develop-eggs/*        " Python buildout
+    " set wildignore+=*/eggs/*,*/develop-eggs/*        " Python buildout
 endfunction
 call General_Settings()
 
@@ -899,6 +899,7 @@ nmap <c-b> :CtrlPBuffer<CR>
 nmap <c-f> :CtrlPMRU<CR>
 " let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_jump_to_buffer = 0 " disable this
+let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|eggs)$'
 
 " Netrw
 let g:netrw_hide              = 1
