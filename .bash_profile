@@ -45,9 +45,14 @@ fi
 # Path ------------------------------------------------------------
 # Add my paths, in reverse priority, so that they are prepend properly
 
-#add local ruby gems
+#add local ruby gems (don't think this matters anymore)
 if [ -d ~/.gem/ruby/1.8/bin ]; then
   export PATH=~/.gem/ruby/1.8/bin:$PATH
+fi
+
+# add brew installed ruby gems
+if [ -d "$(brew --prefix ruby)/bin" ]; then
+  export PATH="$(brew --prefix ruby)/bin:$PATH"
 fi
 
 #add local python programs
