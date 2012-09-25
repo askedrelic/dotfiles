@@ -812,13 +812,13 @@ function! Mini_Scripts()
 
     " OSX only: Open a web-browser with the URL in the current line
     function! HandleURI()
-    let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
-    echo s:uri
-    if s:uri != ""
-    exec "silent !open \"" . s:uri . "\""
-    else
-    echo "No URI found in line."
-    endif
+        let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+        echo s:uri
+        if s:uri != ""
+            exec "silent !open \"" . s:uri . "\""
+        else
+            echo "No URI found in line."
+        endif
     endfunction
     map \o :call HandleURI()<CR>
 
