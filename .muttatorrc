@@ -1,0 +1,10 @@
+"1.1 (created: 2011/11/13 17:32:11)
+
+"source! /Users/askedrelic/.muttatorrc.local
+map = +
+map e :set<Space>remotecontent=true<Return>
+set gui=folderlist
+set layout=vertical
+set! mail.tabs.authHide=True
+
+" vim: set ft=muttator:
