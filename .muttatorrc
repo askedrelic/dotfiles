@@ -3,8 +3,15 @@
 "source! /Users/askedrelic/.muttatorrc.local
 map = +
 map e :set<Space>remotecontent=true<Return>
+map z za<Return>
 set gui=folderlist
 set layout=vertical
 set! mail.tabs.authHide=True
+set! mail.server.default.abbreviate=false
+" about 1gb
+set! browser.cache.memorycapacity=32768
+" If large messages or attachments are truncated, set mail.server.default.fetch_by_chunks = false to work around a size bug in Gmail.
+" http://kb.mozillazine.org/Using_Gmail_with_Thunderbird_and_Mozilla_Suite
+set! mail.server.default.fetch_by_chunks=false
 
 " vim: set ft=muttator:
