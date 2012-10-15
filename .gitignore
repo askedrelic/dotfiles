@@ -14,6 +14,7 @@ mbox
 .vim/.netrwhist
 .vimfuzzyfinder
 tags
+.hgignore_global
 
 .bash_history
 .mysql_history
@@ -45,6 +46,8 @@ mail/
 .pip/
 .rvm/
 .vagrant.d/
+.buildout/
+.python-eggs/
  
 # ignore my other stuff from OSX
 Calibre Library/
@@ -61,6 +64,7 @@ bin/subl
 .fonts/
 .gitk
 .heroku/
+.htoprc
 .kindle/
 .lesshst
 .local/
@@ -70,6 +74,8 @@ bin/subl
 .netbeans/
 .parallels/
 .pythonbrew/
+.s3cfg
 .venvburrito/
 .virtualenvs/
 .yolk/
+source/
