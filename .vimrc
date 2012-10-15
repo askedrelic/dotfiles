@@ -616,6 +616,8 @@ function! Normal_Mappings()
     " simple substitute
     nnoremap <leader>s :%s//<left>
 
+    " ehh whatelse to bind
+    nnoremap <leader>m :w<CR>:make<CR>
 
     " Quick alignment of text
     map \al :left<CR>
@@ -873,7 +875,7 @@ map <leader>t :TagbarOpenAutoClose<CR>
 
 " NERDTree
 map <silent> \n :NERDTreeMirrorToggle<CR>
-map <silent> \m :NERDTreeFind<CR>
+map <silent> \N :NERDTreeFind<CR>
 let NERDTreeWinPos              = 'right'
 let NERDTreeChDirMode           = 0
 let NERDTreeIgnore              = ['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
