@@ -577,8 +577,8 @@ function! Normal_Mappings()
     noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
     " search literally, without vim magic
-    nnoremap / /\v
-    nnoremap ? ?\v
+    nnoremap / /\V
+    nnoremap ? ?\V
     " nnoremap <leader>/ /\v
     " nnoremap <leader>? ?\v
 
