@@ -43,3 +43,6 @@
 [submodule ".vim/bundle/nerdcommenter"]
 	path = .vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter
+[submodule ".vim/bundle/ctagloader"]
+	path = .vim/bundle/ctagloader
+	url = git://github.com/vim-scripts/ctagloader.git
