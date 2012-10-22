@@ -46,3 +46,6 @@
 [submodule ".vim/bundle/ctagloader"]
 	path = .vim/bundle/ctagloader
 	url = git://github.com/vim-scripts/ctagloader.git
+[submodule ".vim/bundle/autotag"]
+	path = .vim/bundle/autotag
+	url = git://github.com/vim-scripts/AutoTag.git
