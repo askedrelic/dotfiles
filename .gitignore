@@ -13,6 +13,7 @@ mbox
 .viminfo
 .vim/.netrwhist
 .vimfuzzyfinder
+.NERDTreeBookmarks
 tags
 .hgignore_global
 
