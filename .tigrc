@@ -1,14 +1,15 @@
 # set - show
-set show-date            = relative
-set show-rev-graph       = yes
-set show-refs            = yes
-set show-line-numbers    = yes
+set show-date         = relative
+set show-rev-graph    = yes
+set show-refs         = yes
+set show-line-numbers = no
+set show-id           = yes
 
 # set - etc
 # set commit-encoding      = "UTF-8"
-set horizontal-scroll    = 33%
-set split-view-height    = 70%
-set line-graphics        = "UTF-8"
+set horizontal-scroll    = 35%
+set split-view-height    = 65%
+# set line-graphics        = "UTF-8"
 set line-number-interval = 1
 set tab-size             = 4
 
