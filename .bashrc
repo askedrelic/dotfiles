@@ -131,6 +131,12 @@ if [ -f $HOME/.venvburrito/startup.sh ]; then
     . $HOME/.venvburrito/startup.sh
 fi
 
+#mk django virtualenv
+if [ -f /usr/local/bin/mkdjangovirtualenv.sh ]; then
+    . /usr/local/bin/mkdjangovirtualenv.sh
+
+fi
+
 #local bashrc changes
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
