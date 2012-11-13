@@ -1,0 +1,7 @@
+Fabric==1.4.3
+Glances==1.4
+ipython==0.13
+mkdjangovirtualenv==0.0.4
+pip-tools==0.2.1
+restview==1.2.2
+Sphinx==1.1.3
