@@ -87,7 +87,7 @@ export PAGER=less
 
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"
-#export LESS="-FXR"
+export LESS="-FXR"
 
 export EDITOR="vim"
 #assume on OSX and using homebrew to install macvim
