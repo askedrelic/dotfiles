@@ -63,6 +63,11 @@ if [ -d /usr/local/share/python ]; then
   export PATH=/usr/local/share/python:$PATH
 fi
 
+# add brew installed node/npm modules
+if [ -d /usr/local/share/npm/bin ]; then
+  export PATH=/usr/local/share/npm/bin:$PATH
+fi
+
 #add /usr/local/bin for OSX/homebrew
 if [ -d /usr/local/bin ]; then
   export PATH=/usr/local/bin:$PATH
