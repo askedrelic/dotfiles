@@ -1027,4 +1027,5 @@ function! ToggleList(bufname, pfx)
 endfunction
 
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
-nmap <silent> <leader>' :call ToggleList("Quickfix List", 'c')<CR>
+nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
+let g:ackprg = 'ag --nogroup --nocolor --column'
