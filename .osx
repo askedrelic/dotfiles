@@ -209,3 +209,6 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 
 # Kill affected applications
 for app in Safari Finder Dock Mail; do killall "$app"; done
+
+# setup spectacle prefs
+cp ~/.readonly-config/Library/Preferences/com.divisiblebyzero.Spectacle.plist ~/Library/Preferences/com.divisiblebyzero.Spectacle.plist
