@@ -517,6 +517,10 @@ function! Normal_Mappings()
     cab WQ wq
     cab WQ! wq!
 
+    " map Ack.vim easier
+    cab a Ack
+    cab A Ack
+
     " save even more keystrokes!
     nnoremap ; :
 
@@ -980,7 +984,7 @@ map <silent> \ge :Gedit<CR>
 map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
-map \gg :Ggrep<Space>
+map \gg :Ack<Space>
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
