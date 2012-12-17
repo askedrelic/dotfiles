@@ -985,6 +985,7 @@ map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
 map \gg :Ack<Space>
+map \ga :Git add --patch -- %<CR>
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
