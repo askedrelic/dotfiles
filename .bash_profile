@@ -51,8 +51,10 @@ if [ -d ~/.gem/ruby/1.8/bin ]; then
 fi
 
 # add brew installed ruby gems
-if [ -d "$(brew --prefix ruby)/bin" ]; then
-  export PATH="$(brew --prefix ruby)/bin:$PATH"
+if [ -e /usr/local/bin/brew ]; then
+    if [ -d "$(brew --prefix ruby)/bin" ]; then
+    export PATH="$(brew --prefix ruby)/bin:$PATH"
+    fi
 fi
 
 #add local python programs
@@ -74,8 +76,10 @@ if [ -d /usr/local/bin ]; then
 fi
 
 # source brew installed coreutils
-if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ]; then
-  export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+if [ -e /usr/local/bin/brew ]; then
+    if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ]; then
+    export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+    fi
 fi
 
 # Local bin should always be first priority
