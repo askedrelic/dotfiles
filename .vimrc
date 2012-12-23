@@ -282,8 +282,14 @@ function! Colors()
         " Use a line-drawing char for pretty vertical splits.
         set fillchars+=vert:│
     endif
+
+    " better diff pastel green/yellow/red diff colors
+    hi DiffAdd      ctermfg=0 ctermbg=2 guibg=#cfffac
+    hi DiffDelete   ctermfg=0 ctermbg=1 guibg=#ffb6b0
+    hi DiffChange   ctermfg=0 ctermbg=3 guibg=#ffffcc
 endfunction
 call Colors()
+
 
 function! Line_Wrapping()
     " don't make it look like there are line breaks where there aren't:
@@ -591,13 +597,13 @@ function! Normal_Mappings()
     nnoremap \sv :source $MYVIMRC<CR>
 
     " Quit Vim
-    nnoremap \q :qall!<CR>
+    nnoremap \Q :qall!<CR>
+
+    " Kill buffer
+    nnoremap \q :bd<CR>
 
     " Revert the current buffer
     nnoremap \r :e!<CR>
-
-    " Kill buffer
-    nnoremap \x :bd<CR>
 
     " Show eeeeeeverything! http://www.youtube.com/watch?v=MrTsuvykUZk
     nnoremap \I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
@@ -939,12 +945,12 @@ let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 " let NERDTreeDirArrows=0
 
 " don't show nerdtree by default
-let g:nerdtree_tabs_open_on_console_startup = 0
-let g:nerdtree_tabs_open_on_gui_startup     = 1
-let g:nerdtree_tabs_open_on_new_tab         = 1
-let g:nerdtree_tabs_smart_startup_focus     = 0
-let g:nerdtree_tabs_focus_on_files          = 1
+let g:nerdtree_tabs_focus_on_files          = 0
 let g:nerdtree_tabs_meaningful_tab_names    = 1
+let g:nerdtree_tabs_open_on_console_startup = 0
+let g:nerdtree_tabs_open_on_gui_startup     = 0
+let g:nerdtree_tabs_open_on_new_tab         = 0
+let g:nerdtree_tabs_smart_startup_focus     = 1
 let g:nerdtree_tabs_synchronize_view        = 1
 
 " ctrlp.vim
@@ -985,6 +991,7 @@ map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
 map <silent> \gd :Gdiff<CR>
+map <silent> \gx :!gitx<CR>
 map \gg :Ack<Space>
 map \ga :Git add --patch -- %<CR>
 
