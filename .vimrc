@@ -984,6 +984,7 @@ map <silent> \ge :Gedit<CR>
 map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
+map <silent> \gd :Gdiff<CR>
 map \gg :Ack<Space>
 map \ga :Git add --patch -- %<CR>
 
