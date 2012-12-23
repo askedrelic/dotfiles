@@ -80,6 +80,8 @@
 
     # open all current changed files in vim
     edit = !vim -p `git diff HEAD --name-only`
+    e = !git edit
+    eg = !gvim -p `git diff HEAD --name-only`
 
     # remove the top commit, to unstaged index
     pop = reset HEAD^
@@ -100,7 +102,7 @@
     default = tracking
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
-    log = true    
+    log = true
     tool = p4merge
 [mergetool]
     keepBackup = false
