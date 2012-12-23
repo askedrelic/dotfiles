@@ -77,6 +77,12 @@
     me         = !git h --author="matt" || TRUE
 
     ls-ignored = ls-files --others -i --exclude-standard
+
+    # open all current changed files in vim
+    edit = !vim -p `git diff HEAD --name-only`
+
+    # remove the top commit, to unstaged index
+    pop = reset HEAD^
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
