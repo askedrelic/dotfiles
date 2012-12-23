@@ -117,7 +117,7 @@ source ~/.bash_prompt
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
 #osx brew install of bash-completion
-if [ -e /usr/local/bin/brew ]; then
+if $BREW_EXISTS; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         . `brew --prefix`/etc/bash_completion
     fi

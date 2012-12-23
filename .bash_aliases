@@ -138,7 +138,6 @@ alias v=vim
 alias vi=vim
 alias vg="vim -g"
 alias c="clear"
-alias py="python"
 alias rscreen="screen -R"
 alias pine=alpine
 #show all types
@@ -154,6 +153,9 @@ alias wget="wget -c"
 alias free="free -m"
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 alias dig='dig +nocomments +nocmd +nostats'
+
+# short python
+alias py="python"
 
 alias sourcetree='open -a SourceTree'
 alias st=sourcetree

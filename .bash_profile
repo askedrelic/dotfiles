@@ -19,6 +19,12 @@ export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0
 export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
 export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
+# setup homebrew
+export BREW_EXISTS=false
+if [ -e /usr/local/bin/brew ]; then
+  export BREW_EXISTS=true
+fi
+
 # SSH Agent ------------------------------------------------------------
 # from http://help.github.com/working-with-key-passphrases/
 SSH_ENV="$HOME/.ssh/environment"
@@ -51,7 +57,7 @@ if [ -d ~/.gem/ruby/1.8/bin ]; then
 fi
 
 # add brew installed ruby gems
-if [ -e /usr/local/bin/brew ]; then
+if $BREW_EXISTS; then
     if [ -d "$(brew --prefix ruby)/bin" ]; then
     export PATH="$(brew --prefix ruby)/bin:$PATH"
     fi
@@ -76,7 +82,7 @@ if [ -d /usr/local/bin ]; then
 fi
 
 # source brew installed coreutils
-if [ -e /usr/local/bin/brew ]; then
+if $BREW_EXISTS; then
     if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ]; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
     fi
