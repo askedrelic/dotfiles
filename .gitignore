@@ -49,6 +49,7 @@ mail/
 .vagrant.d/
 .buildout/
 .python-eggs/
+.npm/
  
 # ignore my other stuff from OSX
 Calibre Library/
