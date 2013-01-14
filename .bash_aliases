@@ -40,7 +40,7 @@ alias ......="cd ../../../../.."
 cl() { cd $1; ls -la; }
 
 #ls and its options
-alias ls='ls -Fh'
+alias ls="ls -Fh $LS_OPTIONS"
 alias la='ls -Al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
 alias lk='ls -lSr'         # sort by size, biggest last
