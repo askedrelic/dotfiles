@@ -909,8 +909,7 @@ iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sollicit
 
 " ### Plugins ###################################################
 " First, load pathogen
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+call pathogen#infect()
 
 "Tabularize align options
 nmap <Leader>a= :Tabularize /=<CR>
