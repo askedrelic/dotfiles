@@ -264,7 +264,8 @@ function! Colors()
     colo Tomorrow-Night-Eighties
 
     if has("gui_running")
-        set guifont=Monaco:h12
+        " set guifont=Monaco:h12
+        set guifont=Meslo\ LG\ M:h12
 
         " Orange :()
         highlight SpellBad term=underline gui=undercurl guisp=Orange
