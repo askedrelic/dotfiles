@@ -154,6 +154,8 @@ alias free="free -m"
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 alias dig='dig +nocomments +nocmd +nostats'
 
+alias gx='gitx'
+
 # short python
 alias py="python"
 
