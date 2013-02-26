@@ -1,1 +1,2 @@
 user = askedrelic@gmail.com
+password_command = get_keychain pianobar
