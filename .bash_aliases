@@ -99,7 +99,7 @@ EOT
 # Use ack for grepping and find if ack is available
 if type -P ack &>/dev/null ; then
   g() {
-    ack "$*" --smart-case
+    ag "$*" --smart-case
   }
   gw() {
     ag "$*" --smart-case --word-regexp
