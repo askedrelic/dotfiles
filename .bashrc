@@ -126,15 +126,15 @@ if $BREW_EXISTS; then
     fi
 fi
 
-# startup virtualenv-burrito
-if [ -f $HOME/.venvburrito/startup.sh ]; then
-    . $HOME/.venvburrito/startup.sh
-fi
+## startup virtualenv-burrito
+#if [ -f $HOME/.venvburrito/startup.sh ]; then
+#    . $HOME/.venvburrito/startup.sh
+#fi
 
-#mk django virtualenv
-if [ -f /usr/local/bin/mkdjangovirtualenv.sh ]; then
-    . /usr/local/bin/mkdjangovirtualenv.sh
-
+#ehh try real virtualenvwrapper
+if [ -f /usr/local/share/python/virtualenvwrapper.sh ]; then
+    . /usr/local/share/python/virtualenvwrapper.sh
+    export WORKON_HOME=~/.virtualenvs
 fi
 
 #local bashrc changes
