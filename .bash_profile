@@ -70,6 +70,9 @@ fi
 if [ -d /usr/local/share/python ]; then
   export PATH=/usr/local/share/python:$PATH
 fi
+if [ -d /usr/local/share/python3 ]; then
+  export PATH=/usr/local/share/python3:$PATH
+fi
 
 # add brew installed node/npm modules
 if [ -d /usr/local/share/npm/bin ]; then
