@@ -237,3 +237,15 @@ fi
 
 #simple password generating function
 alias mkpass='echo `</dev/random tr -dc A-Za-z0-9 | head -c8`'
+
+# simple menu system for python virtualenv
+menuvirtualenv() {
+    select env in `lsvirtualenv -b`; do
+        if [ -n "$env" ]; then
+            workon "$env"
+        fi;
+        break;
+    done;
+}
+alias vmenu='menuvirtualenv'
+alias vm='menuvirtualenv'
