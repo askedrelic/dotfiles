@@ -977,8 +977,8 @@ nnoremap <C-C> <Plug>CommentaryLine
 " nnoremap <C-\> <Plug>CommentaryLine
 xmap <leader>c <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
-au FileType python.django setlocal commentstring=#\%s
-au FileType python setlocal commentstring=#\%s
+au FileType python.django setlocal commentstring=#\ \%s
+au FileType python setlocal commentstring=#\ \%s
 
 " LustyJuggler
 let g:LustyJugglerSuppressRubyWarning = 1
