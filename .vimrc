@@ -32,6 +32,11 @@ function! General_Settings()
     " highlight
     set viminfo=/50,'50,h
 
+    " Local dirs
+    set backupdir=~/.vim/backups
+    set directory=~/.vim/swaps
+    set undodir=~/.vim/undo
+
     " where to put backup files
     " set backupdir=~/.vim/backup
     " directory to place swap files in
@@ -74,6 +79,19 @@ function! General_Settings()
     set ttyfast
     " Don't try to highlight lines longer than 500 characters.
     set synmaxcol=500
+    " Add vertical spaces to keep right and left aligned
+    set diffopt=filler
+    " Ignore whitespace changes (focus on code changes)
+    set diffopt+=iwhite
+
+    " Allow cursor keys in insert mode.
+    set esckeys
+    " Only insert single space after a '.', '?' and '!' with a join command.
+    set nojoinspaces
+    " Don't reset cursor to start of line when moving around.
+    set nostartofline
+    " Use /bin/sh for executing shell commands
+    set shell=/bin/sh
 
     " Use OSX Textmate style tabs and eol
     " tab:▸
@@ -254,6 +272,10 @@ function! Searching()
     set gdefault
     " hide mouse on search
     set mousehide
+    " Enable extended regexes.
+    set magic
+    " Searches wrap around end of file
+    set wrapscan
 endfunction
 call Searching()
 
@@ -305,8 +327,16 @@ function! Line_Wrapping()
 
     " only format comments at 80 chars by default, while typing
     set textwidth=80
-    " still deciding about comment format, comment autoformatting
-    set formatoptions=qrn1
+
+    set formatoptions=
+    set formatoptions+=c " Format comments
+    set formatoptions+=r " Continue comments by default
+    set formatoptions+=o " Make comment when using o or O from comment line
+    set formatoptions+=q " Format comments with gq
+    set formatoptions+=n " Recognize numbered lists
+    set formatoptions+=2 " Use indent from 2nd line of a paragraph
+    set formatoptions+=l " Don't break lines that are already long
+    set formatoptions+=1 " Break before 1-letter words
 endfunction
 call Line_Wrapping()
 
@@ -588,8 +618,8 @@ function! Normal_Mappings()
     noremap <leader><space> :noh<cr>:call clearmatches()<cr>
 
     " search literally, without vim magic
-    nnoremap / /\V
-    nnoremap ? ?\V
+    " nnoremap / /\V
+    " nnoremap ? ?\V
     " nnoremap <leader>/ /\v
     " nnoremap <leader>? ?\v
 
@@ -611,6 +641,7 @@ function! Normal_Mappings()
 
     " toggle paste on/off
     nnoremap <leader>tp :set invpaste paste?<CR>
+    nnoremap <leader>p :set invpaste paste?<CR>
 
     " toggle list on/off and report the change:
     nnoremap <leader>tl :set invlist list?<CR>
@@ -629,6 +660,15 @@ function! Normal_Mappings()
 
     " ehh whatelse to bind
     nnoremap <leader>m :w<CR>:make<CR>
+
+    " Join lines and restore cursor location (J)
+    nnoremap J mjJ`j
+
+    " Fix page up and down
+    map <PageUp> <C-U>
+    map <PageDown> <C-D>
+    imap <PageUp> <C-O><C-U>
+    imap <PageDown> <C-O><C-D>
 
     " Quick alignment of text
     map \al :left<CR>
@@ -919,8 +959,10 @@ nmap <Leader>a* :Tabularize /=.*<CR>
 vmap <Leader>a* :Tabularize /=.*<CR>
 nmap <Leader>a> :Tabularize /=><CR>
 vmap <Leader>a> :Tabularize /=><CR>
-nmap <Leader>a: :Tabularize /:\zs<CR>
-vmap <Leader>a: :Tabularize /:\zs<CR>
+nmap <Leader>a: :Tabularize /:\zs/l0l1<CR>
+vmap <Leader>a: :Tabularize /:\zs/l0l1<CR>
+nmap <Leader>a, :Tabularize /,\zs/l0l1<CR>
+vmap <Leader>a, :Tabularize /,\zs/l0l1<CR>
 nmap <Leader>a  :Tabularize /
 vmap <Leader>a  :Tabularize /
 
@@ -960,6 +1002,11 @@ nmap <c-f> :CtrlPMRU<CR>
 " let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_jump_to_buffer = 0 " disable this
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|eggs)$'
+
+let g:ctrlp_split_window = 1 " <CR> = New Tab
+let g:ctrlp_open_new_file = 't' " Open newly created files in a new tab
+let g:ctrlp_open_multiple_files = 't' " Open multiple files in new tabs
+
 
 " Netrw
 let g:netrw_hide              = 1
@@ -1002,7 +1049,7 @@ let g:SuperTabLongestEnhanced = 1
 let g:pyflakes_use_quickfix = 0
 
 " rainbow parens
-map <leader>tr :RainbowParenthesesToggleAll<CR>
+nnoremap <leader>tr :RainbowParenthesesToggleAll<CR>
 
 " syntasticlet g:syntastic_mode_map = {
 let g:syntastic_mode_map = { 'mode': 'passive',
@@ -1042,3 +1089,19 @@ endfunction
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
 let g:ackprg = 'ag --nogroup --nocolor --column'
+
+
+
+" Speed up viewport scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" Faster split resizing (+,-)
+if bufwinnr(1)
+  map + <C-W>+
+  map - <C-W>-
+endif
+
+" Indent/unident block (,]) (,[)
+nnoremap <leader>] >i{<CR>
+nnoremap <leader>[ <i{<CR>
