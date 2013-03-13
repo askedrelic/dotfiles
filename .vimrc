@@ -1000,11 +1000,11 @@ let g:ctrlp_map = '<c-n>'
 nmap <c-b> :CtrlPBuffer<CR>
 nmap <c-f> :CtrlPMRU<CR>
 " let g:ctrlp_extensions = ['tag', 'buffertag']
-let g:ctrlp_jump_to_buffer = 0 " disable this
+let g:ctrlp_switch_buffer = 0 "disable
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|eggs)$'
 
-let g:ctrlp_split_window = 1 " <CR> = New Tab
-let g:ctrlp_open_new_file = 't' " Open newly created files in a new tab
+" let g:ctrlp_split_window = 1 " <CR> = New Tab
+" let g:ctrlp_open_new_file = 't' " Open newly created files in a new tab
 let g:ctrlp_open_multiple_files = 't' " Open multiple files in new tabs
 
 
