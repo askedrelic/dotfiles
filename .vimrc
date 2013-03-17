@@ -1033,6 +1033,7 @@ let g:LustyJugglerSuppressRubyWarning = 1
 " Fugutive
 map <silent> \gb :Gblame<CR>
 map <silent> \gc :Gcommit -v<CR>
+map <silent> \gp :!git push<CR>
 map <silent> \ge :Gedit<CR>
 map <silent> \gl :Glog<CR>
 map <silent> \gr :Gread<CR>
