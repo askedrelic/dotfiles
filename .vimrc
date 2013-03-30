@@ -690,7 +690,7 @@ function! Visual_Mappings()
     " Show number of occurrences of currently visually selected word
     "vmap \s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
     "
-    " from https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim#L337
+    " from https://raw.github.com/amix/vimrc/master/vimrcs/basic.vim
     function! CmdLine(str)
         exe "menu Foo.Bar :" . a:str
         emenu Foo.Bar
@@ -707,7 +707,8 @@ function! Visual_Mappings()
         if a:direction == 'b'
             execute "normal ?" . l:pattern . "^M"
         elseif a:direction == 'gv'
-            call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+            call CmdLine("Ack -i \"" . l:pattern . '"<CR>')
+            " call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
         elseif a:direction == 'replace'
             call CmdLine("%s" . '/'. l:pattern . '/')
         elseif a:direction == 'f'
