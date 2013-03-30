@@ -866,7 +866,7 @@ function! Mini_Scripts()
 
     " OSX only: Open a web-browser with the URL in the current line
     function! HandleURI()
-        let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+        let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;)]*')
         echo s:uri
         if s:uri != ""
             exec "silent !open \"" . s:uri . "\""
