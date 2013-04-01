@@ -938,6 +938,27 @@ function! Mini_Scripts()
     hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
     hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
+    " a function to execute formd and return the cursor back
+    " to it's original position within the buffer. 
+    " http://www.drbunsen.org/formd-a-markdown-formatting-tool/
+    function! Formd(option)
+        :let save_view = winsaveview()
+        :let flag = a:option
+        :if flag == "-r"
+            :%! formd -r
+        :elseif flag == "-i"
+            :%! formd -i
+        :else
+            :%! formd -f
+        :endif
+        :call winrestview(save_view)
+    endfunction
+
+    " formd mappings
+    nmap <leader>fr :call Formd("-r")<CR>
+    nmap <leader>fi :call Formd("-i")<CR>
+    nmap <leader>f :call Formd("-f")<CR>
+
 endfunction
 call Mini_Scripts()
 
