@@ -689,8 +689,9 @@ function! Visual_Mappings()
 
     " Show number of occurrences of currently visually selected word
     "vmap \s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
-    "
+
     " from https://raw.github.com/amix/vimrc/master/vimrcs/basic.vim
+    " try here for other ideas https://github.com/nelstrom/vim-visual-star-search
     function! CmdLine(str)
         exe "menu Foo.Bar :" . a:str
         emenu Foo.Bar
@@ -724,7 +725,7 @@ function! Visual_Mappings()
     vnoremap <silent> * :call VisualSelection('f')<CR>
     vnoremap <silent> # :call VisualSelection('b')<CR>
     " When you press gv you vimgrep after the selected text
-    vnoremap <silent> gv :call VisualSelection('gv')<CR>
+    vnoremap <silent> g :call VisualSelection('gv')<CR>
     " When you press <leader>r you can search and replace the selected text
     vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
 
