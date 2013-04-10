@@ -81,5 +81,9 @@ bin/subl
 .s3cfg
 .venvburrito/
 .virtualenvs/
+.chef/
+.cmus/
+.ec2/
+.matplotlib/
 .yolk/
 source/
