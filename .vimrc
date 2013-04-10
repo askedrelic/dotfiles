@@ -78,7 +78,7 @@ function! General_Settings()
     " We have a modern terminal
     set ttyfast
     " Don't try to highlight lines longer than 500 characters.
-    set synmaxcol=500
+    set synmaxcol=1500
     " Add vertical spaces to keep right and left aligned
     set diffopt=filler
     " Ignore whitespace changes (focus on code changes)
@@ -307,9 +307,10 @@ function! Colors()
     endif
 
     " better diff pastel green/yellow/red diff colors
-    hi DiffAdd      ctermfg=0 ctermbg=2 guibg=#cfffac
-    hi DiffDelete   ctermfg=0 ctermbg=1 guibg=#ffb6b0
-    hi DiffChange   ctermfg=0 ctermbg=3 guibg=#ffffcc
+    hi DiffAdd      ctermfg=0 ctermbg=2 guibg=#cfffac guifg=#000000
+    hi DiffDelete   ctermfg=0 ctermbg=1 guibg=#ffb6b0 guifg=#000000
+    hi DiffChange   ctermfg=0 ctermbg=3 guibg=#ffffcc guifg=#000000
+    hi SignColumn   guibg=#2d2d2d ctermbg=0
 endfunction
 call Colors()
 
@@ -555,8 +556,8 @@ function! Normal_Mappings()
     cab WQ! wq!
 
     " map Ack.vim easier
-    cab a Ack
-    cab A Ack
+    " cab a Ack
+    " cab A Ack
 
     " save even more keystrokes!
     nnoremap ; :
@@ -613,6 +614,15 @@ function! Normal_Mappings()
     " already done by yy):
     nnoremap Y yt$
     vnoremap Y yt$
+
+    " delete without yanking
+    " nnoremap <leader>d "_d
+    " vnoremap <leader>d "_d
+
+    " replace currently selected text with default register
+    " without yanking it
+    " nnoremap p "_dP
+    " vnoremap p "_dP
 
     " clear the fucking search buffer, not just remove the highlight
     noremap <leader><space> :noh<cr>:call clearmatches()<cr>
@@ -940,7 +950,7 @@ function! Mini_Scripts()
     hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
     " a function to execute formd and return the cursor back
-    " to it's original position within the buffer. 
+    " to it's original position within the buffer.
     " http://www.drbunsen.org/formd-a-markdown-formatting-tool/
     function! Formd(option)
         :let save_view = winsaveview()
@@ -1049,6 +1059,7 @@ xmap <leader>c <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\ \%s
 au FileType python setlocal commentstring=#\ \%s
+au FileType go setlocal commentstring=//\ %s
 
 " LustyJuggler
 let g:LustyJugglerSuppressRubyWarning = 1
@@ -1063,6 +1074,7 @@ map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
 map <silent> \gd :Gdiff<CR>
 map <silent> \gx :!gitx<CR>
+map \g :Ack<Space>
 map \gg :Ack<Space>
 map \ga :Git add --patch -- %<CR>
 
@@ -1079,7 +1091,6 @@ nnoremap <leader>tr :RainbowParenthesesToggleAll<CR>
 let g:syntastic_mode_map = { 'mode': 'passive',
                               \ 'active_filetypes': [],
                               \ 'passive_filetypes': [] }
-
 
 
 
