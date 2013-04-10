@@ -108,7 +108,7 @@ if type -P ack &>/dev/null ; then
     #ack 1.X doesn't support case insensitive file searching, switching back to find
     #ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
     # find . -ipath "*$**" | highlight blue ".*/" green "$*[^/]"
-    ag -g "$*" --nocolor | highlight blue ".*/" green "$*[^/]"
+    ag -g "$*" -t --nocolor | highlight blue ".*/" green "$*[^/]"
   }
 else
   g() {
