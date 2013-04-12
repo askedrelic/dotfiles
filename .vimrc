@@ -1074,7 +1074,7 @@ map <silent> \gr :Gread<CR>
 map <silent> \gs :Gstatus<CR>
 map <silent> \gd :Gdiff<CR>
 map <silent> \gx :!gitx<CR>
-map \g :Ack<Space>
+" map \g :Ack<Space>
 map \gg :Ack<Space>
 map \ga :Git add --patch -- %<CR>
 
