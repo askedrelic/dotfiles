@@ -66,7 +66,7 @@ function! General_Settings()
     " report: show a report when N lines were changed. 0 means 'all'
     set report=0
     " runtimepath: list of dirs to search for runtime files
-    set runtimepath=~/.vim,$VIMRUNTIME
+    " set runtimepath=~/.vim,$VIMRUNTIME
     " Like File Explorer, preview window height is 8
     "set previewheight=8
     " always show status line
@@ -78,7 +78,7 @@ function! General_Settings()
     " We have a modern terminal
     set ttyfast
     " Don't try to highlight lines longer than 500 characters.
-    set synmaxcol=1500
+    " set synmaxcol=1500
     " Add vertical spaces to keep right and left aligned
     set diffopt=filler
     " Ignore whitespace changes (focus on code changes)
@@ -282,6 +282,7 @@ call Searching()
 function! Colors()
     syntax on
     set background=dark
+    set t_Co=256
     " One unified gui/terminal colorscheme
     colo Tomorrow-Night-Eighties
 
