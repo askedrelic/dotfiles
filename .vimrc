@@ -1020,9 +1020,9 @@ map <leader>t :TagbarOpenAutoClose<CR>
 " NERDTree
 map <silent> \n :NERDTreeMirrorToggle<CR>
 map <silent> \N :NERDTreeFind<CR>
-let NERDTreeWinPos              = 'right'
+let NERDTreeWinPos              = 'left'
 let NERDTreeChDirMode           = 0
-let NERDTreeIgnore              = ['\.vim$', '\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
+let NERDTreeIgnore              = ['\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
 let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let NERDTreeHighlightCursorline = 1
 let NERDTreeShowFiles           = 1 " Show hidden files, too
