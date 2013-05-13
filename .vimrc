@@ -1142,16 +1142,3 @@ let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
 " Indent/unident block (,]) (,[)
 nnoremap <leader>] >i{<CR>
 nnoremap <leader>[ <i{<CR>
-
-" dwm
-let g:dwm_master_pane_width=100
-let g:dwm_map_keys=0
-"
-nmap <C-N> <Plug>DWMNew
-nmap <C-C> <Plug>DWMClose
-nmap <C-@> <Plug>DWMFocus
-nmap <C-Space> <Plug>DWMFocus
-nmap <C-L> <Plug>DWMGrowMaster
-nmap <C-H> <Plug>DWMShrinkMaster
-" nnoremap <C-.> call DWM_Rotate(0)
-" nnoremap <C-,> call DWM_Rotate(1)
