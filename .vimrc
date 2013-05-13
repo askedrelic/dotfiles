@@ -224,9 +224,9 @@ function! Scrollbars()
 
     " ### Windows #############################################################
     set splitbelow splitright
-    "
+
     " don't always keep windows at equal size (for minibufexplorer)
-    set noequalalways
+    " set noequalalways
 
     " ### Cursor Highlights ###################################################
     " highlight current line is good enough
@@ -566,17 +566,27 @@ function! Normal_Mappings()
     " page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
     " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
     " or <BkSpc> (like in `Netscape Navigator'):
-    noremap <Space> <PageDown>
+    " noremap <Space> <PageDown>
     noremap - <PageUp>
+
+    " Speed up viewport scrolling
+    nnoremap <C-e> 3<C-e>
+    nnoremap <C-y> 3<C-y>
+
+    " Faster split resizing (+,-)
+    if bufwinnr(1)
+      map + <C-W>+
+      map - <C-W>-
+    endif
 
     " swap windows
     nnoremap , <C-w><C-w>
 
     "move around windows with ctrl key!
-    noremap <C-H> <C-W>h
-    noremap <C-J> <C-W>j
-    noremap <C-K> <C-W>k
-    noremap <C-L> <C-W>l
+    " noremap <C-H> <C-W>h
+    " noremap <C-J> <C-W>j
+    " noremap <C-K> <C-W>k
+    " noremap <C-L> <C-W>l
     noremap <leader>v <C-W>v
 
     " Fix vertsplit window sizing
@@ -815,9 +825,9 @@ function! Tab_Mapping()
     inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
     inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
     \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-    inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
-    \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-    imap <C-@> <C-Space>
+    " inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
+    " \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+    " imap <C-@> <C-Space>
 endfunction
 call Tab_Mapping()
 
@@ -1030,9 +1040,9 @@ let g:nerdtree_tabs_smart_startup_focus     = 1
 let g:nerdtree_tabs_synchronize_view        = 1
 
 " ctrlp.vim
-let g:ctrlp_map = '<c-n>'
+let g:ctrlp_map = '<c-f>'
 nmap <c-b> :CtrlPBuffer<CR>
-nmap <c-f> :CtrlPMRU<CR>
+" nmap <c-f> :CtrlPMRU<CR>
 " let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_switch_buffer = 0 "disable
 let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|eggs)$'
@@ -1054,7 +1064,7 @@ let g:miniBufExplSplitBelow   = 0
 
 " Commentary
 nmap <leader>c <Plug>CommentaryLine
-nnoremap <C-C> <Plug>CommentaryLine
+" nnoremap <C-c> <Plug>CommentaryLine
 " nnoremap <C-\> <Plug>CommentaryLine
 xmap <leader>c <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
@@ -1088,7 +1098,7 @@ let g:pyflakes_use_quickfix = 0
 " rainbow parens
 nnoremap <leader>tr :RainbowParenthesesToggleAll<CR>
 
-" syntasticlet g:syntastic_mode_map = {
+" syntastic
 let g:syntastic_mode_map = { 'mode': 'passive',
                               \ 'active_filetypes': [],
                               \ 'passive_filetypes': [] }
@@ -1122,20 +1132,12 @@ function! ToggleList(bufname, pfx)
   endif
 endfunction
 
+" ack.vim
 nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
 let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
 
 
-" Speed up viewport scrolling
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
-
-" Faster split resizing (+,-)
-if bufwinnr(1)
-  map + <C-W>+
-  map - <C-W>-
-endif
 
 " Indent/unident block (,]) (,[)
 nnoremap <leader>] >i{<CR>
