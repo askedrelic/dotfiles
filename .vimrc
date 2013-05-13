@@ -556,17 +556,13 @@ function! Normal_Mappings()
     cab WQ wq
     cab WQ! wq!
 
-    " map Ack.vim easier
-    " cab a Ack
-    " cab A Ack
-
     " save even more keystrokes!
     nnoremap ; :
 
     " page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
     " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
     " or <BkSpc> (like in `Netscape Navigator'):
-    " noremap <Space> <PageDown>
+    noremap <Space> <PageDown>
     noremap - <PageUp>
 
     " Speed up viewport scrolling
@@ -583,10 +579,10 @@ function! Normal_Mappings()
     nnoremap , <C-w><C-w>
 
     "move around windows with ctrl key!
-    " noremap <C-H> <C-W>h
-    " noremap <C-J> <C-W>j
-    " noremap <C-K> <C-W>k
-    " noremap <C-L> <C-W>l
+    noremap <C-H> <C-W>h
+    noremap <C-J> <C-W>j
+    noremap <C-K> <C-W>k
+    noremap <C-L> <C-W>l
     noremap <leader>v <C-W>v
 
     " Fix vertsplit window sizing
@@ -825,9 +821,9 @@ function! Tab_Mapping()
     inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
     inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
     \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-    " inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
-    " \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-    " imap <C-@> <C-Space>
+    inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
+    \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+    imap <C-@> <C-Space>
 endfunction
 call Tab_Mapping()
 
@@ -913,8 +909,7 @@ function! Mini_Scripts()
     endfunction
     nnoremap <leader>ti :call IndentGuides()<cr>
 
-    " Highlight Word {{{
-    "
+    " Highlight Word
     " This mini-plugin provides a few mappings for highlighting words temporarily.
     "
     " Sometimes you're looking at a hairy piece of code and would like a certain
@@ -922,7 +917,6 @@ function! Mini_Scripts()
     " gives you one color of highlighting.  Now you can use <leader>N where N is
     " a number from 1-6 to highlight the current word in a specific color.
     " stolen from SJL https://github.com/sjl/dotfiles/blob/master/vim/vimrc#L1814-1863
-
     function! HiInterestingWord(n)
         " Save our location.
         normal! mz
@@ -980,6 +974,35 @@ function! Mini_Scripts()
     nmap <leader>fr :call Formd("-r")<CR>
     nmap <leader>fi :call Formd("-i")<CR>
     nmap <leader>f :call Formd("-f")<CR>
+
+    " location/quickfix list toggle script
+    function! GetBufferList()
+      redir =>buflist
+      silent! ls
+      redir END
+      return buflist
+    endfunction
+    function! ToggleList(bufname, pfx)
+      let buflist = GetBufferList()
+      for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+        if bufwinnr(bufnum) != -1
+          exec(a:pfx.'close')
+          return
+        endif
+      endfor
+      if a:pfx == 'l' && len(getloclist(0)) == 0
+          echohl ErrorMsg
+          echo "Location List is Empty."
+          return
+      endif
+      let winnr = winnr()
+      exec('bot '.a:pfx.'open')
+      if winnr() != winnr
+        wincmd p
+      endif
+    endfunction
+    nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+    nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
 
 endfunction
 call Mini_Scripts()
@@ -1105,36 +1128,8 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 
 
 
-function! GetBufferList()
-  redir =>buflist
-  silent! ls
-  redir END
-  return buflist
-endfunction
-
-function! ToggleList(bufname, pfx)
-  let buflist = GetBufferList()
-  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if bufwinnr(bufnum) != -1
-      exec(a:pfx.'close')
-      return
-    endif
-  endfor
-  if a:pfx == 'l' && len(getloclist(0)) == 0
-      echohl ErrorMsg
-      echo "Location List is Empty."
-      return
-  endif
-  let winnr = winnr()
-  exec('bot '.a:pfx.'open')
-  if winnr() != winnr
-    wincmd p
-  endif
-endfunction
 
 " ack.vim
-nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
-nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
 let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
 
 
