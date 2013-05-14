@@ -1045,7 +1045,7 @@ map <silent> \n :NERDTreeMirrorToggle<CR>
 map <silent> \N :NERDTreeFind<CR>
 let NERDTreeWinPos              = 'left'
 let NERDTreeChDirMode           = 0
-let NERDTreeIgnore              = ['\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$']
+let NERDTreeIgnore              = ['\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$', '\.DS_Store$']
 let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let NERDTreeHighlightCursorline = 1
 let NERDTreeShowFiles           = 1 " Show hidden files, too
