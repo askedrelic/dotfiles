@@ -445,6 +445,8 @@ function! File_Types()
         au!
         " call Tabstyle_2spaces()
 
+        " easy comment insert
+        au FileType javascript inoremap <buffer> <c-c> console.log("");<left><left><left>
         au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         "au FileType javascript setlocal foldmethod=marker
         "au FileType javascript setlocal foldmarker={,}
