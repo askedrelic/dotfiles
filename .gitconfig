@@ -85,10 +85,10 @@
     # remove the top commit, to unstaged index
     pop = reset HEAD^
 
-	sp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git stash pop
-	spp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git push && git stash pop
-	pp = !git pull && git push
-	ppu = !git pp && git submodule sync && git submodule update --init
+    sp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git stash pop
+    spp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git push && git stash pop
+    pp = !git pull && git push
+    ppu = !git pp && git submodule sync && git submodule update --init
 
     prune-all = !git remote | xargs -n 1 git remote prune
 
