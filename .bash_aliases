@@ -41,7 +41,8 @@ cl() { cd $1; ls -la; }
 
 #ls and its options
 alias ls="ls -Fh $LS_OPTIONS"
-alias la='ls -Al'          # show hidden files
+alias la='ls -al'          # show hidden files
+alias ll='ls -al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
 alias lk='ls -lSr'         # sort by size, biggest last
 alias lc='ls -ltcr'        # sort by and show change time, most recent last
@@ -50,7 +51,7 @@ alias lt='ls -ltr'         # sort by date, most recent last
 alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
 
-alias ll='tree --dirsfirst -ChAFL 1'
+# alias ll='tree --dirsfirst -ChAFL 1'
 alias l="la"
 
 #OSX: Open a Finder window at your current location

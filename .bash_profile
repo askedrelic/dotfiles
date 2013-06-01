@@ -99,6 +99,7 @@ if [ -d ~/bin ]; then
 fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+export GEM_HOME="$(brew --prefix)"
 
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc

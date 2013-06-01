@@ -61,6 +61,7 @@ alias gk='gitk --all&'
 alias gx='gitx --all'
 
 #mine
+alias gg='gs -s'
 alias gts='gs'
 alias gtb='gb'
 alias gtd='git diff'
