@@ -82,8 +82,13 @@ bin/subl
 .venvburrito/
 .virtualenvs/
 .chef/
-.cmus/
 .ec2/
 .matplotlib/
 .yolk/
 source/
+.cmus/autosave
+.cmus/cache
+.cmus/command-history
+.cmus/lib.pl
+.cmus/playlist.pl
+.cmus/search-history

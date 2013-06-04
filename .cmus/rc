@@ -1,0 +1,10 @@
+
+unbind -f common space
+unbind -f browser space
+
+bind -f common space player-pause
+bind -f browser space player-pause
+bind -f settings q prev-view
+
+fset mp3=filename="*.mp3"
+fset ogg=filename="*.ogg"
