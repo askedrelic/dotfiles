@@ -490,6 +490,8 @@ function! File_Types()
         au FileType python setlocal cinkeys-=0#
         au FileType python setlocal indentkeys-=0#
 
+        au FileType python inoremap <buffer> <c-f> import IPython; IPython.embed()
+
         " @NOTE This blows up omnifunc complete
         " `gf` jumps to the filename under the cursor.  Point at an import statement
         " and jump to it!
@@ -693,6 +695,11 @@ function! Normal_Mappings()
     map \al :left<CR>
     map \ar :right<CR>
     map \ac :center<CR>
+
+    " Indent/unident block (,]) (,[)
+    " TODO: find a better mapping for this :(
+    nnoremap <leader>] >i{<CR>
+    nnoremap <leader>[ <i{<CR>
 endfunction
 call Normal_Mappings()
 
@@ -1088,10 +1095,13 @@ let g:netrw_special_syntax    = 1
 let g:miniBufExplSplitBelow   = 0
 
 " Commentary
+map <leader>c <Plug>Commentary
+
 nmap <leader>c <Plug>CommentaryLine
-" nnoremap <C-c> <Plug>CommentaryLine
+" vmap <leader>c <Plug>CommentaryLine
+nmap <C-c> <Plug>CommentaryLine
+" xmap <C-c> <Plug>CommentaryLine
 " nnoremap <C-\> <Plug>CommentaryLine
-xmap <leader>c <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\ \%s
 au FileType python setlocal commentstring=#\ \%s
@@ -1128,14 +1138,9 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                               \ 'active_filetypes': [],
                               \ 'passive_filetypes': [] }
 
-
-
-
 " ack.vim
 let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
 
-
-
-" Indent/unident block (,]) (,[)
-nnoremap <leader>] >i{<CR>
-nnoremap <leader>[ <i{<CR>
+" gitgutter
+nmap gh <Plug>GitGutterNextHunk
+nmap gH <Plug>GitGutterPrevHunk
