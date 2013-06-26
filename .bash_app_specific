@@ -61,8 +61,7 @@ alias gk='gitk --all&'
 #mine
 alias gg='gs -s'
 alias gts='gs'
-alias gtb='gb'
-alias gtd='git diff'
+alias gtb='git branch -a -v'
 alias gtr='gr'
 
 function gb() {
