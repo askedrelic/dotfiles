@@ -312,6 +312,14 @@ function! Colors()
     hi DiffDelete   ctermfg=0 ctermbg=1 guibg=#ffb6b0 guifg=#000000
     hi DiffChange   ctermfg=0 ctermbg=3 guibg=#ffffcc guifg=#000000
     hi SignColumn   guibg=#2d2d2d ctermbg=0
+
+    " Show the stack of syntax hilighting classes affecting whatever is under the
+    " cursor.
+    function! SynStack() "{{{
+        echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), " > ")
+    endfunc "}}}
+
+    nnoremap <leader>hlt :call SynStack()<CR>
 endfunction
 call Colors()
 
@@ -1144,3 +1152,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
 " gitgutter
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
+
+" linediff
+vnoremap <leader>l :Linediff<cr>
+nnoremap <leader>L :LinediffReset<cr>
