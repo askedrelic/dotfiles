@@ -1018,6 +1018,22 @@ function! Mini_Scripts()
     nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
     nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
 
+    " Split the current line at all commas
+    " Sometimes you have a list that has grown very past 80 or 100 chars on one
+    " line. You could <leader>S to split the list onto single lines.
+    function! SplitLine()
+        " Preparation: save last search, and cursor position.
+        let _s=@/
+        let l = line(".")
+        let c = col(".")
+        " Do the business:
+        :s/,/,\r/
+        " Clean up: restore previous search history, and cursor position
+        let @/=_s
+        call cursor(l, c)
+    endfunction
+    nnoremap <silent> <leader>S :call SplitLine()<CR>
+
 endfunction
 call Mini_Scripts()
 
