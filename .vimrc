@@ -284,7 +284,8 @@ function! Colors()
     set background=dark
     set t_Co=256
     " One unified gui/terminal colorscheme
-    colo Tomorrow-Night-Eighties
+    " colo Tomorrow-Night-Eighties
+    color badwolf
 
     if has("gui_running")
         " set guifont=Monaco:h12
