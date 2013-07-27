@@ -100,3 +100,4 @@ bin/subl
 envs/
 source/
 src/
+.pypirc
