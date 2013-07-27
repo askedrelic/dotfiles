@@ -33,14 +33,17 @@ function! General_Settings()
     set viminfo=/50,'50,h
 
     " Local dirs
-    set backupdir=~/.vim/backups
-    set directory=~/.vim/swaps
-    set undodir=~/.vim/undo
+    " set backupdir=~/.vim/backups
+    " set directory=~/.vim/swaps
+    " set undodir=~/.vim/undo
 
-    " where to put backup files
-    " set backupdir=~/.vim/backup
-    " directory to place swap files in
-    " set directory=~/.vim/tmp
+    " Don't keep a backup or swap file
+    set nobackup
+    set noswapfile
+    " keep 1000 lines of command line history
+    set history=1000
+    " keep 1000 undo levels
+    set undolevels=1000
 
     " Resize splits when the window is resized
     au VimResized * exe "normal! \<c-w>="
@@ -56,13 +59,6 @@ function! General_Settings()
     " set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
     " This being the 21st century, I use Unicode
     set encoding=utf-8
-    " Don't keep a backup or swap file
-    set nobackup
-    set noswapfile
-    " keep 1000 lines of command line history
-    set history=1000
-    " keep 1000 undo levels
-    set undolevels=1000
     " report: show a report when N lines were changed. 0 means 'all'
     set report=0
     " runtimepath: list of dirs to search for runtime files
