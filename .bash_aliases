@@ -1,11 +1,49 @@
 #Aliases and scripts
 
-# QuickJump  ----------------------------------------------------------------------------------------------
+alias v=vim
+alias vi=vim
+alias vg="vim -g"
+
+alias py="python"
+alias gx='gitx'
+alias sourcetree='open -a SourceTree'
+alias st=sourcetree
+
+alias c="clear"
+
+#apt shortcuts
+alias birth="sudo aptitude install"
+alias searchy="apt-cache search"
+
+alias rscreen="screen -R"
+alias pine=alpine
+#show all types
+alias type="type -a"
+alias paux="ps -A|grep -i"
+# human disk usage
+alias df='df -h'
+alias bc='bc -lq'
+alias man="man -a"
+alias logout="clear; logout"
+alias info="info --vi-keys"
+alias nslookup="nslookup -sil"
+alias watch="watch -d"
+alias wget="wget -c"
+alias free="free -m"
+alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
+alias dig='dig +nocomments +nocmd +nostats'
+
+#osx personal aliases
+alias mate="mate -d"
+alias mou="open -a Mou.app $*"
+
+# QuickFolders  ----------------------------------------------------------------------------------------------
 
 alias bin="cd ~/bin/"
 alias vimbundle="cd ~/.vim/bundle/"
 
 # History ----------------------------------------------------------------------------------------------
+
 alias h='history | tail -n 30'
 hf(){ grep "$@" ~/.bash_history; }
 
@@ -54,10 +92,11 @@ alias lo="ls -o"
 # alias ll='tree --dirsfirst -ChAFL 1'
 alias l="la"
 
-#OSX: Open a Finder window at your current location
+# OSX: Open a Finder window at your current location
 alias of="open ."
 
-#OSX: cd's to frontmost window of Finder
+# OSX: cd's to frontmost window of Finder
+# eg; change finder directory 
 cdf() {
     currFolderPath=$( /usr/bin/osascript << EOT
         tell application "Finder"
@@ -74,7 +113,8 @@ EOT
     cd "$currFolderPath"
 }
 
-#OSX: change frontmost Finder window to the cwd
+# OSX: change frontmost Finder window to the cwd
+# eg; finder directory change
 fdc() {
     if [ -n "$1" ]; then
         if [ "${1%%/*}" = "" ]; then
@@ -120,52 +160,6 @@ else
   }
 fi
 
-# Other aliases ----------------------------------------------------------------------------------------------
-#goto the source dir of any python module
-cdp () {
-    cd "$(python -c "import os.path as _, ${1}; \
-        print _.dirname(_.realpath(${1}.__file__[:-1]))"
-    )"
-}
-
-# Show disk usage
-alias df='df -h'
-
-#apt shortcuts
-alias birth="sudo aptitude install"
-alias searchy="apt-cache search"
-
-alias v=vim
-alias vi=vim
-alias vg="vim -g"
-alias c="clear"
-alias rscreen="screen -R"
-alias pine=alpine
-#show all types
-alias type="type -a"
-alias paux="ps -A|grep -i"
-alias bc='bc -lq'
-alias man="man -a"
-alias logout="clear; logout"
-alias info="info --vi-keys"
-alias nslookup="nslookup -sil"
-alias watch="watch -d"
-alias wget="wget -c"
-alias free="free -m"
-alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
-alias dig='dig +nocomments +nocmd +nostats'
-
-alias gx='gitx'
-
-# short python
-alias py="python"
-
-alias sourcetree='open -a SourceTree'
-alias st=sourcetree
-
-#osx personal aliases
-alias mate="mate -d"
-
 # Miniscripts -----------------------------------------------------------------------------------------------
 # Shows most used commands, from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
@@ -183,20 +177,22 @@ alias cp_folder="cp -Rpv"
 alias own="sudo chown -R $USER"
 
 #TODO: combine tree/simpletree
-# nice alternative to 'recursive ls'
-alias tree='tree -Csu'
 #for when 'tree' isn't installed
+alias tree='tree -Csu'
 alias simpletree="ls -aR | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
 #great for finding the current "real" size of all folders/files
-# alias ducks='du -cks * | sort -rn | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$((size/1024)); done; done'
 alias ducks="du -k | sort -n | tail -n 200 | perl -ne 'if ( /^(\d+)\s+(.*\$)/){\$l=log(\$1+.1);\$m=int(\$l/log(1024)); printf (\"%6.1f\t%s\t%25s %s\n\",(\$1/(2**(10*\$m))),((\"K\",\"M\",\"G\",\"T\",\"P\")[\$m]),\"*\"x (1.5*\$l),\$2);}' "
+# old style, for comparison
+# alias ducks='du -cks * | sort -rn | while read size fname; do for unit in k M G T P E Z Y; do if [ $size -lt 1024 ]; then echo -e "${size}${unit}\t${fname}"; break; fi; size=$((size/1024)); done; done'
 
 alias wgetdir="wget -r -nH --no-parent"
 alias wgetmirror="wget --mirror -U Firefox/3.0 -p -erobots=off --html-extension --convert-links"
+
+# Open files for open apps!
 alias openapps='lsof -P -i -n'
 
-#prints the path in a useful fashion
+# Print $PATH in a useful way
 function path(){
     old=$IFS
     IFS=:
@@ -204,7 +200,8 @@ function path(){
     IFS=$old
 }
 
-function extract()      # Handy Extract Program.
+# honestly, who really remembers these flags? I don't anymore
+function extract()      
 {
      if [ -f $1 ] ; then
          case $1 in
@@ -239,6 +236,8 @@ fi
 #simple password generating function
 alias mkpass='echo `</dev/random tr -dc A-Za-z0-9 | head -c8`'
 
+
+# Python
 # simple menu system for python virtualenv
 menuvirtualenv() {
     select env in `lsvirtualenv -b`; do
@@ -250,3 +249,11 @@ menuvirtualenv() {
 }
 alias vmenu='menuvirtualenv'
 alias vm='menuvirtualenv'
+
+# goto the source dir of any python module
+cdp () {
+    cd "$(python -c "import os.path as _, ${1}; \
+        print _.dirname(_.realpath(${1}.__file__[:-1]))"
+    )"
+}
+
