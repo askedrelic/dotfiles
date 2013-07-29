@@ -1,7 +1,6 @@
 ### Remote Machines
 alias fury="ssh askedrlc@fury.csh.rit.edu"
 alias scorn="ssh askedrlc@scorn.csh.rit.edu"
-#alias fury="ssh askedrlc@fury.csh.rit.edu -D 7025"
 
 alias asktherelic="ssh askedrelic@asktherelic.com"
 alias asktherelic-mysql="ssh -L 3306:localhost:3306 askedrelic@asktherelic.com"

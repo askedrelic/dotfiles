@@ -1,7 +1,9 @@
-# Bashrc
-#
-# Settings for bash only.
-# File imports at the bottom.
+# Bashrc: only bash settings
+# - Colors
+# - History
+# - Misc
+# - Prompts
+# - Imports
 
 # If not running interactively, don't do anything, to stop bind errors
 [ -z "$PS1" ] && return
@@ -14,8 +16,8 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
+# Colors -----------------------------------------------------------------------
 
-#Colors ------------------------------------------------------------
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
@@ -49,11 +51,16 @@ else
 fi
 
 # History -----------------------------------------------------------------------
-export HISTCONTROL=ignoreboth
+
 # Whenever displaying the prompt, reload history and write the previous line to disk, and update the term title
 export PROMPT_COMMAND='history -a; history -n; echo -ne "\033]0; ${PWD/$HOME/~}\007"'
+# Ignore common things
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:....."
+# Ignore duplicates and lines beginnging a space in the history file
+export HISTCONTROL=ignoreboth
+# Store a large amount of history
 export HISTSIZE=50000
+# Store a timestamp of when the cmd was run, for graphing/timing purposes
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
 # Concatenate multi-line commands
 shopt -s cmdhist
@@ -61,7 +68,8 @@ shopt -s cmdhist
 shopt -s histappend histreedit histverify
 
 # Misc -------------------------------------------------------------------------
-#auto-completion shows stats similiar to ls -F
+
+# auto-completion shows stats similiar to ls -F
 shopt -s cdspell
 # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -83,41 +91,29 @@ bind "set completion-ignore-case on" # note: bind used instead of sticking these
 bind "set bell-style none" # no bell
 bind "set show-all-if-ambiguous On" # show list automatically, without double tab
 
-export PAGER=less
 
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"
 export LESS="-FXR"
 
 export EDITOR="vim"
-#assume on OSX and using homebrew to install macvim
-#export VIM_APP_DIR=/usr/local/Cellar/macvim/HEAD
+export PAGER=less
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
-# export GEM_HOME=/home/askedrelic/.gem/ruby/1.8
-
-#Python 
+# Python
 export PIP_RESPECT_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
 # Prompts -----------------------------------------------------------------------
-#PS1="\h:\W\$ "
-# export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-# #export PS1="\[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path
 
-# # export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]" # Primary prompt with only a path, for root, need condition to use this for root
-# # export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]" # Primary prompt with user, host, and path
-
-# export PS2='> ' # Secondary prompt
-# export PS3='#? ' # Prompt 3
-# export PS4='+' # Prompt 4
 source ~/.bash_prompt
 
 # Imports ----------------------------------------------------------------------------------------------
-# Turn on advanced bash completion if the file exists
+
+# Turn on advanced bash completion if the file exists locally
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
-#osx brew install of bash-completion
+# Or if in OSX with homebrew
 if $BREW_EXISTS; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         . `brew --prefix`/etc/bash_completion
@@ -127,18 +123,13 @@ if $BREW_EXISTS; then
     fi
 fi
 
-## startup virtualenv-burrito
-#if [ -f $HOME/.venvburrito/startup.sh ]; then
-#    . $HOME/.venvburrito/startup.sh
-#fi
-
 #ehh try real virtualenvwrapper
 if [ -f /usr/local/share/python/virtualenvwrapper.sh ]; then
     . /usr/local/share/python/virtualenvwrapper.sh
     export WORKON_HOME=~/.virtualenvs
 fi
 
-#local bashrc changes
+# Local bash file for machine specific changes/passwords
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
