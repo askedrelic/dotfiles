@@ -104,6 +104,10 @@ export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 export PIP_RESPECT_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
+# Ruby
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+export GEM_HOME="$(brew --prefix)"
+
 # Prompts -----------------------------------------------------------------------
 
 source ~/.bash_prompt
@@ -117,9 +121,6 @@ source ~/.bash_prompt
 if $BREW_EXISTS; then
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         . `brew --prefix`/etc/bash_completion
-    fi
-    if [ -f `brew --prefix`/etc/bash_completion.d/git-completion.bash ]; then
-        . `brew --prefix git`/etc/bash_completion.d/git-completion.bash
     fi
 fi
 
@@ -144,10 +145,11 @@ source ~/.autojump.bash
 #crazy imports
 source ~/.bash_app_specific
 
-# django 1.4 complete
-. ~/.django_bash_completion
+# django 1.4 complete (because I'm always using django)
+source ~/.django_bash_completion
 
 # import any local bash completion scripts
+# for f in `brew --prefix`/etc/bash_completion.d/*; do source $f; done
 # for file in ~/.bash_completion; do
 #     #ignore directory itself
 #     if [ -f $file ]; then

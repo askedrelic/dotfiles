@@ -49,12 +49,7 @@ else
 fi
 
 # Path ------------------------------------------------------------
-# Add my paths, in reverse priority, so that they are prepend properly
-
-# local ruby gems
-# if [ -d ~/.gem/ruby/1.8/bin ]; then
-#   export PATH=~/.gem/ruby/1.8/bin:$PATH
-# fi
+# My paths, in reverse priority, so that they are prepended properly
 
 # brew installed ruby gems
 if $BREW_EXISTS; then
@@ -63,7 +58,7 @@ if $BREW_EXISTS; then
     fi
 fi
 
-# add brew installed node/npm modules
+# brew installed node/npm modules
 if [ -d /usr/local/share/npm/bin ]; then
   export PATH=/usr/local/share/npm/bin:$PATH
 fi
@@ -72,7 +67,7 @@ fi
 if [ -d /usr/local/share/python3 ]; then
   export PATH=/usr/local/share/python3:$PATH
 fi
-# python2 (more important than python3)
+# python2 (higher priority than python3)
 if [ -d /usr/local/share/python ]; then
   export PATH=/usr/local/share/python:$PATH
 fi
@@ -97,9 +92,6 @@ fi
 if [ -d ~/bin ]; then
   export PATH=~/bin:$PATH
 fi
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-export GEM_HOME="$(brew --prefix)"
 
 # Load in .bashrc -------------------------------------------------
 source ~/.bashrc
