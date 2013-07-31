@@ -10,6 +10,7 @@
 .bash_local
 .hgignore_global
 .netrc
+.mackup.cfg
 .pinerc
 .rnd
 .vim/.netrwhist
@@ -44,7 +45,7 @@ mail/
 .cpan/
 .ctrlp_cache/
 .gem/
-.subversion/
+.subversion
 .mitmproxy/
 .ipython/
 .pip_download_cache/
@@ -86,6 +87,7 @@ mail/
 .netbeans/
 .parallels/
 .pgpass
+.pypirc
 .pythonbrew/
 .s3cfg
 .venvburrito/
@@ -100,4 +102,3 @@ bin/subl
 envs/
 source/
 src/
-.pypirc
