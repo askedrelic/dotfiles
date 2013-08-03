@@ -52,14 +52,15 @@ hf(){ grep "$@" ~/.bash_history; }
 alias cd='pushd'
 alias b="popd"
 pushd() {
-    #If cd has no argument, goto home dir, like with normal cd
+    # If cd has no argument, goto home dir, like with normal cd
     if [ ! -n "$1" ]
     then
         cd ~
     else
-
         builtin pushd "$@" > /dev/null
     fi
+    # init python autoenv manually
+    [ "`type -t autoenv_init`" = 'function' ] && autoenv_init
 }
 popd() {
     builtin popd "$@" > /dev/null

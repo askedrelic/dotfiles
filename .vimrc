@@ -1104,7 +1104,6 @@ let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|eggs)$'
 " let g:ctrlp_open_new_file = 't' " Open newly created files in a new tab
 let g:ctrlp_open_multiple_files = 't' " Open multiple files in new tabs
 
-
 " Netrw
 let g:netrw_hide              = 1
 let g:netrw_list_hide         = '^\.svn.*'
