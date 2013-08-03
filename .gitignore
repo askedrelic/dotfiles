@@ -102,3 +102,5 @@ bin/subl
 envs/
 source/
 src/
+.autoenv_authorized
+.autoenv_authorized.tmp
