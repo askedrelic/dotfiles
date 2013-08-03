@@ -124,16 +124,14 @@ if $BREW_EXISTS; then
     fi
 fi
 
-#ehh try real virtualenvwrapper
-if [ -f /usr/local/share/python/virtualenvwrapper.sh ]; then
-    . /usr/local/share/python/virtualenvwrapper.sh
-    export WORKON_HOME=~/.virtualenvs
-fi
+# enable python virtualenv wrapper
+[ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
-# Local bash file for machine specific changes/passwords
-if [ -f ~/.bash_local ]; then
-    . ~/.bash_local
-fi
+# enable python autoenv
+[ -f /usr/local/opt/autoenv/activate.sh ] && source /usr/local/opt/autoenv/activate.sh
+
+# Local bash file for machine specific tweaks/passwords
+[ -f ~/.bash_local ] && source ~/.bash_local
 
 #my imports
 source ~/.bash_machines
