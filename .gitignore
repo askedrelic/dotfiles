@@ -1,7 +1,6 @@
 # ignore sensitive files
 .ssh*
 .agent.env
-
 # ignore common files not needed under revision control
 *.pyc
 *.swp
@@ -18,7 +17,6 @@
 .viminfo
 mbox
 tags
-
 .bash_history
 .mysql_history
 .gdb_history
@@ -26,7 +24,6 @@ tags
 .psql_history
 .rediscli_history
 .sqlite_history
-
 # ignore common directories
 Applications/
 Desktop/
@@ -55,7 +52,6 @@ mail/
 .buildout/
 .python-eggs/
 .npm/
- 
 # ignore my other stuff from OSX
 .Trash
 .adobe/
