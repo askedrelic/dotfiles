@@ -94,7 +94,6 @@ mail/
 .virtualenvs/
 .wemo/
 .yolk/
-Calibre Library/
 Virtualbox*
 backups/
 bin/mate
