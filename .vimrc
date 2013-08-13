@@ -451,7 +451,7 @@ function! File_Types()
         " call Tabstyle_2spaces()
 
         " easy comment insert
-        au FileType javascript inoremap <buffer> <c-c> console.log("");<left><left><left>
+        au FileType javascript inoremap <buffer> <c-c> console.log();<left><left>
         au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         "au FileType javascript setlocal foldmethod=marker
         "au FileType javascript setlocal foldmarker={,}
@@ -1141,7 +1141,8 @@ map <silent> \gs :Gstatus<CR>
 map <silent> \gd :Gdiff<CR>
 map <silent> \gx :!gitx<CR>
 " map \g :Ack<Space>
-map \gg :Ack<Space>
+map \gg :Ag<Space>
+map <C-G> :Ag<Space>
 map \ga :Git add --patch -- %<CR>
 
 " SuperTab
@@ -1168,3 +1169,6 @@ nmap gH <Plug>GitGutterPrevHunk
 " linediff
 vnoremap <leader>l :Linediff<cr>
 nnoremap <leader>L :LinediffReset<cr>
+
+let g:EasyMotion_leader_key = '<C-n>'
+let g:EasyMotion_mapping_f = '<C-n>'
