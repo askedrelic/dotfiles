@@ -105,8 +105,13 @@ export PIP_RESPECT_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
 # Ruby
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-export GEM_HOME="$(brew --prefix)"
+# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# export GEM_HOME="$(brew --prefix)"
+# export RY_PREFIX="$HOME/.local"
+
+export RY_PREFIX="/usr/local"
+export PATH="$RY_PREFIX/lib/ry/current/bin:$PATH"
+. "$RY_PREFIX/lib/ry.bash_completion"
 
 # Prompts -----------------------------------------------------------------------
 
