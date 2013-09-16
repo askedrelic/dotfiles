@@ -1045,6 +1045,15 @@ nmap <leader>tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
 iab _AUTHOR Matt Behrens <askedrelic@gmail.com>
 iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sollicitudin quam eget libero pulvinar id condimentum velit sollicitudin. Proin cursus scelerisque dui ac condimentum. Nullam quis tellus leo. Morbi consectetur, lectus a blandit tincidunt, tortor augue tincidunt nisi, sit amet rhoncus tortor velit eu felis.
 
+" insert author
+nmap <leader>ia :execute "normal aMatt Behrens <askedrelic@gmail.com>"<Esc>
+" insert signature
+nmap <leader>is :execute "normal aMJB " . strftime("%Y/%m/%d")<Esc>
+" insert timestamp
+nmap <leader>it :execute "normal a" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
+" insert date
+nmap <leader>id :execute "normal a" . strftime("%Y/%m/%d")<Esc>
+
 " ### Plugins ###################################################
 " First, load pathogen
 call pathogen#infect()
