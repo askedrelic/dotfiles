@@ -4,6 +4,7 @@ set show-rev-graph    = yes
 set show-refs         = yes
 set show-line-numbers = no
 set show-id           = yes
+set commit-order      = topo  # Order commits topologically
 
 # set - etc
 # set commit-encoding      = "UTF-8"
