@@ -90,7 +90,8 @@
     pp = !git pull && git push
     ppu = !git pp && git submodule sync && git submodule update --init
 
-    prune-all = !git remote | xargs -n 1 git remote prune
+    prune-remote = !git remote | xargs -n 1 git remote prune
+    prune-merged = !git branch --merged | grep -v \\* | xargs -n 1 git branch -d
 
     edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
     add-unmerged  = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
