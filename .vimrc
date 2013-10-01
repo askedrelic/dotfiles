@@ -1174,6 +1174,7 @@ let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
 " gitgutter
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
+let g:gitgutter_realtime = 0
 
 " linediff
 vnoremap <leader>l :Linediff<cr>
