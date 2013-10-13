@@ -70,6 +70,7 @@
     type       = cat-file -t
     dump       = cat-file -p
 
+    # easy wip commit :/
     wip        = commit -am "WIP"
 
     # my history, ignore quiting less error
@@ -90,11 +91,18 @@
     pp = !git pull && git push
     ppu = !git pp && git submodule sync && git submodule update --init
 
+    prune-all = !git prune-remote && git prune-merged
     prune-remote = !git remote | xargs -n 1 git remote prune
     prune-merged = !git branch --merged | grep -v \\* | xargs -n 1 git branch -d
 
     edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
     add-unmerged  = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+
+    # list branches sorted by last modified
+    b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+
+    # list aliases
+    la = "!git config -l | grep alias | cut -c 7-"
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
