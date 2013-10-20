@@ -98,3 +98,5 @@ envs/
 src/
 .autoenv_authorized
 .autoenv_authorized.tmp
+.chef
+.emacs.d
