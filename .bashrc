@@ -91,7 +91,6 @@ bind "set completion-ignore-case on" # note: bind used instead of sticking these
 bind "set bell-style none" # no bell
 bind "set show-all-if-ambiguous On" # show list automatically, without double tab
 
-
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"
 export LESS="-FXR"
@@ -109,9 +108,10 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 # export GEM_HOME="$(brew --prefix)"
 # export RY_PREFIX="$HOME/.local"
 
-export RY_PREFIX="/usr/local"
-export PATH="$RY_PREFIX/lib/ry/current/bin:$PATH"
-. "$RY_PREFIX/lib/ry.bash_completion"
+# export RY_PREFIX="/usr/local"
+# export PATH="$RY_PREFIX/lib/ry/current/bin:$PATH"
+# . "$RY_PREFIX/lib/ry.bash_completion"
+# export PATH=/usr/local/Cellar/ruby193/1.9.3-p448/bin:$PATH
 
 # Prompts -----------------------------------------------------------------------
 
