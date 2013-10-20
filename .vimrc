@@ -308,7 +308,7 @@ function! Colors()
     hi DiffAdd      ctermfg=0 ctermbg=2 guibg=#cfffac guifg=#000000
     hi DiffDelete   ctermfg=0 ctermbg=1 guibg=#ffb6b0 guifg=#000000
     hi DiffChange   ctermfg=0 ctermbg=3 guibg=#ffffcc guifg=#000000
-    hi SignColumn   guibg=#2d2d2d ctermbg=0
+    hi SignColumn   guibg=#1C1B1A ctermbg=0
 
     " Show the stack of syntax hilighting classes affecting whatever is under the
     " cursor.
