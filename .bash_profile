@@ -58,6 +58,13 @@ if $BREW_EXISTS; then
     fi
 fi
 
+# uhh trying to run ruby193 homebrew version for now
+if $BREW_EXISTS; then
+    if [ -d "$(brew --prefix ruby193)/bin" ]; then
+    export PATH="$(brew --prefix ruby193)/bin:$PATH"
+    fi
+fi
+
 # brew installed node/npm modules
 if [ -d /usr/local/share/npm/bin ]; then
   export PATH=/usr/local/share/npm/bin:$PATH
