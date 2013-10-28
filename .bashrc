@@ -9,12 +9,12 @@
 [ -z "$PS1" ] && return
 
 # UTF-8 everything
-#export LANG="en_US.utf8"
-#export LANGUAGE="en_US.utf8"
-#export LC_ALL="en_US.utf8"
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+# export LANG=en_US.UTF-8
+# export LC_ALL=en_US.UTF-8
+# Prefer US English and use UTF-8
+export LANG="en_US"
+export LANGUAGE="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 
 # Colors -----------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ if [ `uname` = FreeBSD ]; then
     export LS_OPTIONS='-G'
 else
     # Probably have GNU utils installed
-    export LS_OPTIONS='--color=auto'
+    export LS_OPTIONS="--color=auto"
 fi
 
 # History -----------------------------------------------------------------------
@@ -55,11 +55,11 @@ fi
 # Whenever displaying the prompt, reload history and write the previous line to disk, and update the term title
 export PROMPT_COMMAND='history -a; history -n; echo -ne "\033]0; ${PWD/$HOME/~}\007"'
 # Ignore common things
-export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:....."
+export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:.....:cd -:pwd:exit:date:* --help"
 # Ignore duplicates and lines beginnging a space in the history file
 export HISTCONTROL=ignoreboth
-# Store a large amount of history
-export HISTSIZE=50000
+# Larger bash history (allow 32³ entries; default is 500)
+export HISTSIZE=32768
 # Store a timestamp of when the cmd was run, for graphing/timing purposes
 export HISTTIMEFORMAT='%Y-%m-%d %H:%M:%S - '
 # Concatenate multi-line commands
@@ -94,6 +94,12 @@ bind "set show-all-if-ambiguous On" # show list automatically, without double ta
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"
 export LESS="-FXR"
+
+# Highlight section titles in manual pages
+export LESS_TERMCAP_md="$COLOR_RED"
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
 
 export EDITOR="vim"
 export PAGER=less
