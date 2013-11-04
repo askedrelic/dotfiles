@@ -95,9 +95,6 @@ bind "set show-all-if-ambiguous On" # show list automatically, without double ta
 #defaut : export LESS="-FXRS"
 export LESS="-FXR"
 
-# Highlight section titles in manual pages
-export LESS_TERMCAP_md="$COLOR_RED"
-
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
