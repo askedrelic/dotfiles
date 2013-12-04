@@ -21,13 +21,18 @@ upload_rate = 100
 directory = /home/askedrelic/torrents/incomplete
 
 # Move completed torrents
-# rtorrent 0.8.6
-system.method.set_key = event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/seed ;d.set_directory=~/torrents/seed"
-system.method.set_key = event.download.erased,move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/complete ;d.set_directory=~/torrents/complete"
 
-#rtorrent 0.8.2
-#on_finished = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/seed ;d.set_directory=~/torrents/seed"
-#on_erase = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/complete ;d.set_directory=~/torrents/complete"
+# rtorrent 0.8.6
+# system.method.set_key = event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/seed ;d.set_directory=~/torrents/seed"
+# system.method.set_key = event.download.erased,move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/complete ;d.set_directory=~/torrents/complete"
+
+# rtorrent 0.8.2
+# on_finished = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/seed ;d.set_directory=~/torrents/seed"
+# on_erase = move_complete,"execute=mv,-u,$d.get_base_path=,~/torrents/complete ;d.set_directory=~/torrents/complete"
+
+# rtorrent 0.9.x?
+system.method.set_key = event.download.finished,move_complete,"d.set_directory=~/torrents/seed/;execute=mv,-u,$d.get_base_path=,~/torrents/seed/"
+system.method.set_key = event.download.erased,move_complete,"d.set_directory=~/torrents/complete/;execute=mv,-u,$d.get_base_path=,~/torrents/complete/"
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
