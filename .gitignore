@@ -100,3 +100,4 @@ src/
 .autoenv_authorized.tmp
 .chef
 .emacs.d
+.httpie/
