@@ -16,6 +16,11 @@
 
 " First, use modern vim and clear any existing autocommands
 set nocompatible
+
+" enable syntax highlighting
+syntax enable
+
+" reset all commands
 autocmd!
 
 function! General_Settings()
@@ -36,6 +41,11 @@ function! General_Settings()
     " set backupdir=~/.vim/backups
     " set directory=~/.vim/swaps
     " set undodir=~/.vim/undo
+
+    " if you want to yank and paste with the system clipboard
+    " set clipboard=unnamed
+    " don't store swapfiles in the current directory
+    set directory-=.
 
     " Don't keep a backup or swap file
     set nobackup
@@ -73,8 +83,8 @@ function! General_Settings()
     set shortmess=flnrxoOItTA
     " We have a modern terminal
     set ttyfast
-    " Don't try to highlight lines longer than 500 characters.
-    " set synmaxcol=1500
+    " Don't try to highlight lines longer than 800 characters.
+    set synmaxcol=800
     " Add vertical spaces to keep right and left aligned
     set diffopt=filler
     " Ignore whitespace changes (focus on code changes)
@@ -92,8 +102,11 @@ function! General_Settings()
     " Use OSX Textmate style tabs and eol
     " tab:▸
     " eol:¬
-    execute 'set listchars+=tab:' . nr2char(9656) . nr2char(183)
-    execute 'set listchars+=eol:' . nr2char(172)
+    " execute 'set listchars+=tab:' . nr2char(9656) . nr2char(183)
+    " execute 'set listchars+=eol:' . nr2char(172)
+    " set listchars=eol:¬,tab:→→,extends:>,precedes:<
+    set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+    set showbreak=↪
 
     "check if file is written to elsewhere and ask to reload immediately, not when saving
     "au CursorHold * checktime
@@ -118,6 +131,15 @@ function! General_Settings()
     set wildignore+=*.sw?                            " Vim swap files
     " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
     " set wildignore+=*/eggs/*,*/develop-eggs/*        " Python buildout
+
+    " Time out on key codes but not mappings.
+    " Basically this makes terminal Vim work sanely.
+    set notimeout
+    set ttimeout
+    set ttimeoutlen=10
+
+    let mapleader = ','
+    let g:mapleader = ','
 endfunction
 call General_Settings()
 
@@ -285,7 +307,7 @@ function! Colors()
 
     if has("gui_running")
         " set guifont=Monaco:h12
-        set guifont=Meslo\ LG\ M:h12
+        set guifont=Meslo\ LG\ M\ for\ Powerline:h12
 
         " Orange :()
         highlight SpellBad term=underline gui=undercurl guisp=Orange
@@ -387,7 +409,7 @@ function! File_Types()
         "
         "         ...
         "     }
-        au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localleader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+        au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
         " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
         " positioned inside of them AND the following code doesn't get unfolded.
@@ -462,10 +484,10 @@ function! File_Types()
 
         au BufNewFile,BufRead *.m*down setlocal filetype=markdown
 
-        " Use <localleader>1/2/3 to add headings.
-        au Filetype markdown nnoremap <buffer> <localleader>1 yypVr=
-        au Filetype markdown nnoremap <buffer> <localleader>2 yypVr-
-        au Filetype markdown nnoremap <buffer> <localleader>3 I### <ESC>
+        " Use <localLeader>1/2/3 to add headings.
+        au Filetype markdown nnoremap <buffer> <localLeader>1 yypVr=
+        au Filetype markdown nnoremap <buffer> <localLeader>2 yypVr-
+        au Filetype markdown nnoremap <buffer> <localLeader>3 I### <ESC>
     augroup END
 
     augroup ft_nginx
@@ -514,10 +536,10 @@ function! File_Types()
     augroup ft_rest
         au!
 
-        au Filetype rst nnoremap <buffer> <localleader>1 yypVr=
-        au Filetype rst nnoremap <buffer> <localleader>2 yypVr-
-        au Filetype rst nnoremap <buffer> <localleader>3 yypVr~
-        au Filetype rst nnoremap <buffer> <localleader>4 yypVr`
+        au Filetype rst nnoremap <buffer> <localLeader>1 yypVr=
+        au Filetype rst nnoremap <buffer> <localLeader>2 yypVr-
+        au Filetype rst nnoremap <buffer> <localLeader>3 yypVr~
+        au Filetype rst nnoremap <buffer> <localLeader>4 yypVr`
     augroup END
 
     " Ruby
@@ -559,6 +581,7 @@ endfunction
 call File_Types()
 
 function! Normal_Mappings()
+
     " Map uppercase write and quit, I'm lazy lazy lazy with shift
     cab W w
     cab Q q
@@ -568,24 +591,30 @@ function! Normal_Mappings()
     " save even more keystrokes!
     nnoremap ; :
 
+    " Fuck you, help key.
+    noremap  <F1> <nop>
+    inoremap <F1> <nop>
+
     " page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
     " `SLRN', `Less', and `More'); page up with - (like in `Lynx', `Mutt', `Pine'),
     " or <BkSpc> (like in `Netscape Navigator'):
-    noremap <Space> <PageDown>
-    noremap - <PageUp>
+    " noremap <Space> <PageDown>
+    " noremap - <PageUp>
+    nnoremap <Space> <C-D>zz
+    nnoremap - <C-U>zz
 
     " Speed up viewport scrolling
-    nnoremap <C-e> 3<C-e>
-    nnoremap <C-y> 3<C-y>
+    nnoremap <C-e> 5<C-e>
+    nnoremap <C-y> 5<C-y>
 
     " Faster split resizing (+,-)
-    if bufwinnr(1)
-      map + <C-W>+
-      map - <C-W>-
-    endif
+    " if bufwinnr(1)
+    "   map + <C-W>+
+    "   map - <C-W>-
+    " endif
 
     " swap windows
-    nnoremap , <C-w><C-w>
+    " nnoremap , <C-w><C-w>
 
     "move around windows with ctrl key!
     noremap <C-H> <C-W>h
@@ -641,29 +670,25 @@ function! Normal_Mappings()
     " vnoremap p "_dP
 
     " clear the fucking search buffer, not just remove the highlight
-    noremap <leader><space> :noh<cr>:call clearmatches()<cr>
-
-    " search literally, without vim magic
-    " nnoremap / /\V
-    " nnoremap ? ?\V
+    nnoremap <leader>l :noh<CR>:call clearmatches()<CR>
     " nnoremap <leader>/ /\v
     " nnoremap <leader>? ?\v
 
     "Easy edit of vimrc
-    nnoremap \ev :e! $MYVIMRC<CR>
-    nnoremap \sv :source $MYVIMRC<CR>
+    nnoremap <leader>ev :e! $MYVIMRC<CR>
+    map <silent> <leader>sv :source $MYVIMRC<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
     " Quit Vim
-    nnoremap \Q :qall!<CR>
+    nnoremap <leader>Q :qall!<CR>
 
     " Kill buffer
-    nnoremap \q :bd<CR>
+    nnoremap <leader>q :bd<CR>
 
     " Revert the current buffer
-    nnoremap \r :e!<CR>
+    nnoremap <leader>r :e!<CR>
 
     " Show eeeeeeverything! http://www.youtube.com/watch?v=MrTsuvykUZk
-    nnoremap \I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
+    nnoremap <leader>I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
 
     " toggle paste on/off
     nnoremap <leader>tp :set invpaste paste?<CR>
@@ -687,24 +712,36 @@ function! Normal_Mappings()
     " ehh whatelse to bind
     nnoremap <leader>m :w<CR>:make<CR>
 
-    " Join lines and restore cursor location (J)
+    " [J]oin lines and restore cursor location
     nnoremap J mjJ`j
 
+    " Split line (sister to [J]oin lines)
+    " The normal use of S is covered by cc, so don't worry about shadowing it.
+    nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+
     " Fix page up and down
-    map <PageUp> <C-U>
-    map <PageDown> <C-D>
-    imap <PageUp> <C-O><C-U>
-    imap <PageDown> <C-O><C-D>
+    " map <PageUp> <C-U>
+    " map <PageDown> <C-D>
+    " imap <PageUp> <C-O><C-U>
+    " imap <PageDown> <C-O><C-D>
 
     " Quick alignment of text
-    map \al :left<CR>
-    map \ar :right<CR>
-    map \ac :center<CR>
+    map <leader>al :left<CR>
+    map <leader>ar :right<CR>
+    map <leader>ac :center<CR>
 
     " Indent/unident block (,]) (,[)
     " TODO: find a better mapping for this :(
     nnoremap <leader>] >i{<CR>
     nnoremap <leader>[ <i{<CR>
+
+    " Easy filetype switching
+    nnoremap _md :set ft=markdown<CR>
+    nnoremap _hd :set ft=htmldjango<CR>
+    nnoremap _jt :set ft=htmljinja<CR>
+    nnoremap _js :set ft=javascript<CR>
+    nnoremap _pd :set ft=python.django<CR>
+    nnoremap _d  :set ft=diff<CR>
 endfunction
 call Normal_Mappings()
 
@@ -716,10 +753,10 @@ function! Visual_Mappings()
     " vmap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
     " Replace current visually selected word
-    " vmap \r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
+    " vmap <leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
 
     " Show number of occurrences of currently visually selected word
-    "vmap \s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
+    "vmap <leader>s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
 
     " from https://raw.github.com/amix/vimrc/master/vimrcs/basic.vim
     " try here for other ideas https://github.com/nelstrom/vim-visual-star-search
@@ -829,7 +866,7 @@ function! Tab_Mapping()
     "     echo "tab completion on"
     "   endif
     " endfunction
-    " map <Leader>tc :call ToggleTabCompletion()<CR>
+    " map <leader>tc :call ToggleTabCompletion()<CR>
     "
     " tab complete?
     inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -844,7 +881,7 @@ call Tab_Mapping()
 function! Mini_Scripts()
     "toggle wrap and easy movement keys while in wrap mode
     "nnoremap <silent> <leader>w :set invwrap wrap?<CR>
-    noremap <silent> <Leader>tw :call ToggleWrap()<CR>
+    noremap <silent> <leader>tw :call ToggleWrap()<CR>
     function! ToggleWrap()
     if &wrap
         echo "Wrap OFF"
@@ -906,7 +943,7 @@ function! Mini_Scripts()
             echo "No URI found in line."
         endif
     endfunction
-    map \o :call HandleURI()<CR>
+    map <leader>o :call HandleURI()<CR>
 
     " Visual indent guide!
     " Stolen from https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc#cl-835
@@ -1015,7 +1052,7 @@ function! Mini_Scripts()
         wincmd p
       endif
     endfunction
-    nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+    " nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
     nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
 
     " Split the current line at all commas
@@ -1059,18 +1096,18 @@ nmap <leader>id :execute "normal a" . strftime("%Y/%m/%d")<Esc>
 call pathogen#infect()
 
 "Tabularize align options
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a* :Tabularize /=.*<CR>
-vmap <Leader>a* :Tabularize /=.*<CR>
-nmap <Leader>a> :Tabularize /=><CR>
-vmap <Leader>a> :Tabularize /=><CR>
-nmap <Leader>a: :Tabularize /:\zs/l0l1<CR>
-vmap <Leader>a: :Tabularize /:\zs/l0l1<CR>
-nmap <Leader>a, :Tabularize /,\zs/l0l1<CR>
-vmap <Leader>a, :Tabularize /,\zs/l0l1<CR>
-nmap <Leader>a  :Tabularize /
-vmap <Leader>a  :Tabularize /
+nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a* :Tabularize /=.*<CR>
+vmap <leader>a* :Tabularize /=.*<CR>
+nmap <leader>a> :Tabularize /=><CR>
+vmap <leader>a> :Tabularize /=><CR>
+nmap <leader>a: :Tabularize /:\zs/l0l1<CR>
+vmap <leader>a: :Tabularize /:\zs/l0l1<CR>
+nmap <leader>a, :Tabularize /,\zs/l0l1<CR>
+vmap <leader>a, :Tabularize /,\zs/l0l1<CR>
+nmap <leader>a  :Tabularize /
+vmap <leader>a  :Tabularize /
 
 " Tagbar
 let g:tagbar_left      = 1 " Open tagbar on the left
@@ -1080,8 +1117,8 @@ let g:tagbar_compact   = 1 " Remove empty lines by default
 map <leader>t :TagbarOpenAutoClose<CR>
 
 " NERDTree
-map <silent> \n :NERDTreeMirrorToggle<CR>
-map <silent> \N :NERDTreeFind<CR>
+map <silent> <leader>n :NERDTreeMirrorToggle<CR>
+map <silent> <leader>N :NERDTreeFind<CR>
 let NERDTreeWinPos              = 'left'
 let NERDTreeChDirMode           = 0
 let NERDTreeIgnore              = ['\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$', '\.DS_Store$']
@@ -1102,12 +1139,12 @@ let g:nerdtree_tabs_smart_startup_focus     = 1
 let g:nerdtree_tabs_synchronize_view        = 1
 
 " ctrlp.vim
-let g:ctrlp_map = '<c-f>'
-nmap <c-b> :CtrlPBuffer<CR>
-" nmap <c-f> :CtrlPMRU<CR>
+let g:ctrlp_map = 'gj'
+nmap gb :CtrlPBuffer<CR>
+nmap gr :CtrlPMRU<CR>
 " let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_switch_buffer = 0 "disable
-let g:ctrlp_custom_ignore = '\v[\/](\.git|\.hg|\.svn|eggs)$'
+let g:ctrlp_custom_ignore = '\v[\/][1]$'
 
 " let g:ctrlp_split_window = 1 " <CR> = New Tab
 " let g:ctrlp_open_new_file = 't' " Open newly created files in a new tab
@@ -1140,19 +1177,19 @@ au FileType go setlocal commentstring=//\ %s
 let g:LustyJugglerSuppressRubyWarning = 1
 
 " Fugutive
-map <silent> \gb :Gblame<CR>
-map <silent> \gc :Gcommit -v<CR>
-map <silent> \gp :!git push<CR>
-map <silent> \ge :Gedit<CR>
-map <silent> \gl :Glog<CR>
-map <silent> \gr :Gread<CR>
-map <silent> \gs :Gstatus<CR>
-map <silent> \gd :Gdiff<CR>
-map <silent> \gx :!gitx<CR>
+map <silent> <leader>gb :Gblame<CR>
+map <silent> <leader>gc :Gcommit -v<CR>
+map <silent> <leader>gp :!git push<CR>
+map <silent> <leader>ge :Gedit<CR>
+map <silent> <leader>gl :Glog<CR>
+map <silent> <leader>gr :Gread<CR>
+map <silent> <leader>gs :Gstatus<CR>
+map <silent> <leader>gd :Gdiff<CR>
+map <silent> <leader>gx :!gitx<CR>
+map <silent> <leader>ga :Git add --patch -- %<CR>
+map <silent> <C-G> :Ag<Space>
 " map \g :Ack<Space>
-map \gg :Ag<Space>
-map <C-G> :Ag<Space>
-map \ga :Git add --patch -- %<CR>
+" map \gg :Ag<Space>
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
