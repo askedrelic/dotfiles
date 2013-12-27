@@ -122,16 +122,6 @@ source ~/.bash_prompt
 
 # Imports ----------------------------------------------------------------------------------------------
 
-# Turn on advanced bash completion if the file exists locally
-[ -f /etc/bash_completion ] && source /etc/bash_completion
-
-# Or if in OSX with homebrew
-if $BREW_EXISTS; then
-    if [ -f `brew --prefix`/etc/bash_completion ]; then
-        . `brew --prefix`/etc/bash_completion
-    fi
-fi
-
 # enable python virtualenv wrapper
 [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
@@ -141,18 +131,22 @@ fi
 # Local bash file for machine specific tweaks/passwords
 [ -f ~/.bash_local ] && source ~/.bash_local
 
-#my imports
+# my imports
 source ~/.bash_machines
 source ~/.bash_aliases
 
-#local version of autojump
+# my local version of autojump, always want this
 source ~/.autojump.bash
 
-#crazy imports
-source ~/.bash_app_specific
+# try enable bash completion
+[ -f /etc/bash_completion ] && source /etc/bash_completion
 
-# django 1.4 complete (because I'm always using django)
-source ~/.django_bash_completion
+# or try enable in homebrew
+if [[ "${BREW_EXISTS}" == "true" ]] ; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+        . $(brew --prefix)/etc/bash_completion
+    fi
+fi
 
 # import any local bash completion scripts
 # for f in `brew --prefix`/etc/bash_completion.d/*; do source $f; done

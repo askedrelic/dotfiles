@@ -97,7 +97,7 @@ alias l="la"
 alias of="open ."
 
 # OSX: cd's to frontmost window of Finder
-# eg; change finder directory 
+# eg; change finder directory
 cdf() {
     currFolderPath=$( /usr/bin/osascript << EOT
         tell application "Finder"
@@ -202,7 +202,7 @@ function path(){
 }
 
 # honestly, who really remembers these flags? I don't anymore
-function extract()      
+function extract()
 {
      if [ -f $1 ] ; then
          case $1 in
@@ -258,3 +258,123 @@ cdp () {
     )"
 }
 
+# Subversion & Diff ------------------------------------------------
+export SVN_EDITOR='${EDITOR}'
+
+alias svshowcommands="echo -e '${COLOR_LIGHT_PURPLE}Available commands:
+   ${COLOR_GREEN}sv
+   ${COLOR_GREEN}sv${COLOR_NC}help
+   ${COLOR_GREEN}sv${COLOR_NC}import ${COLOR_GRAY}Example: import ~/projects/my_local_folder http://svn.foo.com/bar
+   ${COLOR_GREEN}sv${COLOR_NC}checkout ${COLOR_GRAY}Example: svcheckout http://svn.foo.com/bar
+   ${COLOR_GREEN}sv${COLOR_NC}status
+   ${COLOR_GREEN}sv${COLOR_NC}status${COLOR_GREEN}remote
+   ${COLOR_GREEN}sv${COLOR_NC}add ${COLOR_GRAY}Example: svadd your_file
+   ${COLOR_GREEN}sv${COLOR_NC}add${COLOR_GREEN}all${COLOR_NC} ${COLOR_GRAY}Note: adds all files not in repository [recursively]
+   ${COLOR_GREEN}sv${COLOR_NC}delete ${COLOR_GRAY}Example: svdelete your_file
+   ${COLOR_GREEN}sv${COLOR_NC}diff ${COLOR_GRAY}Example: svdiff your_file
+   ${COLOR_GREEN}sv${COLOR_NC}diff${COLOR_GREEN}remote${COLOR_NC} ${COLOR_GRAY}Example: svdiffremote your_file
+   ${COLOR_GREEN}sv${COLOR_NC}commit ${COLOR_GRAY}Example: svcommit
+   ${COLOR_GREEN}sv${COLOR_NC}update ${COLOR_GRAY}Example: svupdate
+   ${COLOR_GREEN}sv${COLOR_NC}get${COLOR_GREEN}info${COLOR_NC} ${COLOR_GRAY}Example: svgetinfo your_file
+   ${COLOR_GREEN}sv${COLOR_NC}blame ${COLOR_GRAY}Example: svblame your_file
+   ${COLOR_GREEN}sv${COLOR_NC}delete${COLOR_GREEN}svn${COLOR_NC}folders ${COLOR_GRAY}Example: svdeletesvnfolders
+'"
+
+alias sv='svn'
+alias svimport='sv import'
+alias svcheckout='sv checkout'
+alias svstatus='sv status'
+alias svupdate='sv update'
+alias svstatusremote='sv status --show-updates' # Show status here and on the server
+alias svcommit='sv commit'
+alias svadd='sv add'
+alias svaddall='sv status | grep "^\?" | awk "{print \$2}" | xargs svn add'
+alias svdelete='sv delete'
+alias svhelp='sv help'
+alias svblame='sv blame'
+alias svdeletesvnfolders='find . -name ".svn" -exec rm -rf {} \;'
+alias svexcludeswpfiles='sv propset svn:ignore "*.swp" .'
+alias svdeleteall='sv status | grep "^\!" | awk "{print \$2}" | xargs svn delete'
+alias svlastlog='svn log -v -l 10 | less'
+
+svgetinfo (){
+   sv info $@
+  sv log $@
+}
+
+if [ "$OS" = "darwin" ] ; then
+  # You need to create fmdiff and fmresolve, which can be found at: http://ssel.vub.ac.be/ssel/internal:fmdiff
+  alias svdiff='sv diff --diff-cmd fmdiff' # OS-X SPECIFIC
+  alias svdiffremote='sv diff -r HEAD --diff-cmd fmdiff' # OS-X SPECIFIC
+  # Use diff for command line diff, use fmdiff for gui diff, and svdiff for subversion diff
+fi
+
+
+# git ------------------------------------------------
+alias gs='git status '
+alias ga='git add '
+alias gr='git remote -v'
+alias gc='git commit'
+alias gd='git diff'
+alias gk='gitk --all&'
+
+#mine
+alias gg='gs -s'
+alias gts='gs'
+alias gtb='git branch -a -v'
+alias gtr='gr'
+
+function gb() {
+    select branch in $(git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname)' | sed 's/refs\/heads\///g'); do
+        git checkout "$branch"
+        break;
+    done;
+}
+
+# MySQL ------------------------------------------------
+alias mqshowcommands="echo -e '${COLOR_LIGHT_PURPLE}Available commands:
+   ${COLOR_GREEN}mq${COLOR_NC}list${COLOR_GREEN}databases${COLOR_NC}
+   ${COLOR_GREEN}mq${COLOR_NC}use${COLOR_GREEN}database${COLOR_NC}
+   ${COLOR_GREEN}mq${COLOR_NC}create${COLOR_GREEN}database${COLOR_NC}
+   ${COLOR_GREEN}mq${COLOR_NC}drop${COLOR_GREEN}database${COLOR_NC}
+   ${COLOR_GREEN}mq${COLOR_NC}list${COLOR_GREEN}tables${COLOR_NC}
+   ${COLOR_GREEN}mq${COLOR_NC}list${COLOR_GREEN}fields${COLOR_NC}
+   ${COLOR_GREEN}mq${COLOR_NC}run ${COLOR_GRAY}Example: mqrun \"Select id From foo\"
+   ${COLOR_GREEN}mq${COLOR_NC}run${COLOR_GREEN}file${COLOR_NC} ${COLOR_GRAY}Example: mqrunfile file_name
+   ${COLOR_GREEN}mq${COLOR_NC}run${COLOR_GREEN}file${COLOR_NC}to${COLOR_GREEN}file${COLOR_NC} ${COLOR_GRAY}Example: mqrunfiletofile file_name out_file_name
+'"
+
+export MYSQL_DEFAULT_DB=mysql
+
+mqusedatabase (){
+  export MYSQL_DEFAULT_DB=$@
+}
+
+mqrun (){
+  mysql -u root -t -D ${MYSQL_DEFAULT_DB} -vvv -e "$@" | highlight blue '[|+-]'
+}
+mqrunfile (){
+  mysql -u root -t -vvv ${MYSQL_DEFAULT_DB} < $@ | highlight blue '[|+-]'
+}
+mqrunfiletofile (){
+  mysql -u root -t -vvv ${MYSQL_DEFAULT_DB} < $1 >> $2
+}
+mqrunfiletoeditor (){
+  mysql -u root -t -vvv ${MYSQL_DEFAULT_DB} < $1 | vim -
+}
+
+alias mqlistdatabases='mqrun "show databases"'
+alias mqlisttables='mqrun "show tables"'
+mqlistfields(){
+  mqrun "describe $@"
+}
+
+mqcreatedatabase(){
+  mysqladmin -u root create $@
+  echo "$@ Created" | highlight blue '.*'
+}
+
+mqdropdatabase(){
+  echo Warning | highlight red '.*'
+  mysqladmin -u root drop $@
+}

@@ -20,9 +20,9 @@ export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefgh
 export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
 # setup homebrew
-export BREW_EXISTS=false
+export BREW_EXISTS="false"
 if [ -e /usr/local/bin/brew ]; then
-  export BREW_EXISTS=true
+  export BREW_EXISTS="true"
 fi
 
 # SSH Agent ------------------------------------------------------------
@@ -52,14 +52,14 @@ fi
 # My paths, in reverse priority, so that they are prepended properly
 
 # brew installed ruby gems
-if $BREW_EXISTS; then
+if [[ "${BREW_EXISTS}" == "true" ]] ; then
     if [ -d "$(brew --prefix ruby)/bin" ]; then
     export PATH="$(brew --prefix ruby)/bin:$PATH"
     fi
 fi
 
 # uhh trying to run ruby193 homebrew version for now
-if $BREW_EXISTS; then
+if [[ "${BREW_EXISTS}" == "true" ]] ; then
     if [ -d "$(brew --prefix ruby193)/bin" ]; then
     export PATH="$(brew --prefix ruby193)/bin:$PATH"
     fi
@@ -89,9 +89,9 @@ if [ -d /usr/local/sbin ]; then
 fi
 
 # homebrew installed coreutils
-if $BREW_EXISTS; then
+if [[ "${BREW_EXISTS}" == "true" ]] ; then
     if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ]; then
-    export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+        export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
     fi
 fi
 
