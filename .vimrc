@@ -1007,7 +1007,7 @@ function! Mini_Scripts()
 
     " a function to execute formd and return the cursor back
     " to it's original position within the buffer.
-    " http://www.drbunsen.org/formd-a-markdown-formatting-tool/
+    " http://drbunsen.github.io/formd/
     function! Formd(option)
         :let save_view = winsaveview()
         :let flag = a:option
