@@ -37,27 +37,22 @@ function! General_Settings()
     " highlight
     set viminfo=/50,'50,h
 
-    " Local dirs
-    " set backupdir=~/.vim/backups
-    " set directory=~/.vim/swaps
-    " set undodir=~/.vim/undo
+    " Local tmp dirs
+    set backup
+    set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+    set backupskip=/tmp/*,/private/tmp/*
+    set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+    set writebackup
 
     " if you want to yank and paste with the system clipboard
     " set clipboard=unnamed
-    " don't store swapfiles in the current directory
-    set directory-=.
 
-    " Don't keep a backup or swap file
-    set nobackup
-    set noswapfile
     " keep 1000 lines of command line history
     set history=1000
     " keep 1000 undo levels
     set undolevels=1000
-
     " Resize splits when the window is resized
     au VimResized * exe "normal! \<c-w>="
-
     " allow you to have multiple files open and change between them without saving
     set hidden
     "make backspace work
@@ -131,6 +126,9 @@ function! General_Settings()
     set wildignore+=*.sw?                            " Vim swap files
     " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
     " set wildignore+=*/eggs/*,*/develop-eggs/*        " Python buildout
+
+    " redraw only when we need to.
+    set lazyredraw
 
     " Time out on key codes but not mappings.
     " Basically this makes terminal Vim work sanely.
@@ -1092,8 +1090,11 @@ nmap <leader>it :execute "normal a" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
 nmap <leader>id :execute "normal a" . strftime("%Y/%m/%d")<Esc>
 
 " ### Plugins ###################################################
+
 " First, load pathogen
 call pathogen#infect()
+call pathogen#runtime_append_all_bundles()
+
 
 "Tabularize align options
 nmap <leader>a= :Tabularize /=<CR>
@@ -1109,12 +1110,14 @@ vmap <leader>a, :Tabularize /,\zs/l0l1<CR>
 nmap <leader>a  :Tabularize /
 vmap <leader>a  :Tabularize /
 
+
 " Tagbar
 let g:tagbar_left      = 1 " Open tagbar on the left
 let g:tagbar_sort      = 0 " Sort tags by file order by default
 let g:tagbar_compact   = 1 " Remove empty lines by default
 " let g:tagbar_foldlevel = 0 " Close folds default
 map <leader>t :TagbarOpenAutoClose<CR>
+
 
 " NERDTree
 map <silent> <leader>n :NERDTreeMirrorToggle<CR>
@@ -1127,8 +1130,6 @@ let NERDTreeHighlightCursorline = 1
 let NERDTreeShowFiles           = 1 " Show hidden files, too
 let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
-" let NERDTreeDirArrows=0
-
 " don't show nerdtree by default
 let g:nerdtree_tabs_focus_on_files          = 0
 let g:nerdtree_tabs_meaningful_tab_names    = 1
@@ -1161,16 +1162,14 @@ let g:netrw_special_syntax    = 1
 let g:miniBufExplSplitBelow   = 0
 
 " Commentary
-map <leader>c <Plug>Commentary
-
-nmap <leader>c <Plug>CommentaryLine
-" vmap <leader>c <Plug>CommentaryLine
+" comment single line
 nmap <C-c> <Plug>CommentaryLine
-" xmap <C-c> <Plug>CommentaryLine
-" nnoremap <C-\> <Plug>CommentaryLine
+" use xmap to comment multi line visual selection
+xmap <C-c> <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\ \%s
-au FileType python setlocal commentstring=#\ \%s
+" au FileType python setlocal commentstring=#\ \%s
+au FileType python setlocal commentstring=#\ %s
 au FileType go setlocal commentstring=//\ %s
 
 " LustyJuggler
