@@ -107,6 +107,9 @@ export PIP_RESPECT_VIRTUALENV=true
 export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
 
 # Ruby
+# Using rbenv currently
+eval "$(rbenv init -)"
+
 # [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # export GEM_HOME="$(brew --prefix)"
 # export RY_PREFIX="$HOME/.local"
