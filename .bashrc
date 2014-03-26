@@ -52,8 +52,10 @@ fi
 
 # History -----------------------------------------------------------------------
 
-# Whenever displaying the prompt, reload history and write the previous line to disk, and update the term title
-export PROMPT_COMMAND='history -a; history -n; echo -ne "\033]0; ${PWD/$HOME/~}\007"'
+# 1. Whenever displaying the prompt, reload history and write the previous line to disk, and update the term title
+# 2. Don't overwrite existing prompt commands
+MY_PROMPT='history -a; history -n; echo -ne "\033]0; ${PWD/$HOME/~}\007"'
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ;} ${MY_PROMPT}"
 # Ignore common things
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:.....:cd -:pwd:exit:date:* --help"
 # Ignore duplicates and lines beginnging a space in the history file
@@ -134,12 +136,13 @@ source ~/.bash_prompt
 # Local bash file for machine specific tweaks/passwords
 [ -f ~/.bash_local ] && source ~/.bash_local
 
+# try enabling brew autojump
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
 # my imports
 source ~/.bash_machines
 source ~/.bash_aliases
 
-# my local version of autojump, always want this
-source ~/.autojump.bash
 
 # try enable bash completion
 [ -f /etc/bash_completion ] && source /etc/bash_completion
