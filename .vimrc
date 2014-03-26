@@ -136,6 +136,9 @@ function! General_Settings()
     set ttimeout
     set ttimeoutlen=10
 
+    " make matchparen timeout quickly; don't take forever on long lines
+    let g:matchparen_insert_timeout=5
+
     let mapleader = ','
     let g:mapleader = ','
 endfunction
@@ -764,7 +767,7 @@ function! Visual_Mappings()
         unmenu Foo
     endfunction
 
-    function! VisualSelection(direction) range
+    function! VisualSelection(direction, extra_filter) range
         let l:saved_reg = @"
         execute "normal! vgvy"
 
@@ -774,8 +777,7 @@ function! Visual_Mappings()
         if a:direction == 'b'
             execute "normal ?" . l:pattern . "^M"
         elseif a:direction == 'gv'
-            call CmdLine("Ag \"" . l:pattern . '"<CR>')
-            " call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+            call CmdLine("Ag \"" . l:pattern . "\"<CR>" )
         elseif a:direction == 'replace'
             call CmdLine("%s" . '/'. l:pattern . '/')
         elseif a:direction == 'f'
@@ -788,12 +790,12 @@ function! Visual_Mappings()
 
     " Visual mode pressing * or # searches for the current selection
     " Super useful! From an idea by Michael Naumann
-    vnoremap <silent> * :call VisualSelection('f')<CR>
-    vnoremap <silent> # :call VisualSelection('b')<CR>
+    vnoremap <silent> * :call VisualSelection('f', '')<CR>
+    vnoremap <silent> # :call VisualSelection('b', '')<CR>
     " When you press gv you vimgrep after the selected text
-    vnoremap <silent> g :call VisualSelection('gv')<CR>
+    vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
     " When you press <leader>r you can search and replace the selected text
-    vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
+    vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
 endfunction
 call Visual_Mappings()
@@ -932,6 +934,7 @@ function! Mini_Scripts()
     nmap <leader>w :call <SID>StripTrailingWhitespaces()<cr>
 
     " OSX only: Open a web-browser with the URL in the current line
+    " Funny thing: 'gx' actually does this better, using netrw
     function! HandleURI()
         let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;)]*')
         echo s:uri
@@ -1139,17 +1142,22 @@ let g:nerdtree_tabs_open_on_new_tab         = 0
 let g:nerdtree_tabs_smart_startup_focus     = 1
 let g:nerdtree_tabs_synchronize_view        = 1
 
+
 " ctrlp.vim
 let g:ctrlp_map = 'gj'
 nmap gb :CtrlPBuffer<CR>
 nmap gr :CtrlPMRU<CR>
-" let g:ctrlp_extensions = ['tag', 'buffertag']
-let g:ctrlp_switch_buffer = 0 "disable
-let g:ctrlp_custom_ignore = '\v[\/][1]$'
+" Order files top to bottom
+" let g:ctrlp_match_window = 'bottom,order:ttb'
+" Always open files in new buffers
+let g:ctrlp_switch_buffer = 0
+" Open multiple files in new tabs
+let g:ctrlp_open_multiple_files = 't'
+" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+let g:ctrlp_user_command = 'ag %s -l --nocolor --smart-case -g ""'
+" ag is fast enough that CtrlP doesn't need to cache
+let g:ctrlp_use_caching = 0
 
-" let g:ctrlp_split_window = 1 " <CR> = New Tab
-" let g:ctrlp_open_new_file = 't' " Open newly created files in a new tab
-let g:ctrlp_open_multiple_files = 't' " Open multiple files in new tabs
 
 " Netrw
 let g:netrw_hide              = 1
@@ -1168,7 +1176,6 @@ nmap <C-c> <Plug>CommentaryLine
 xmap <C-c> <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\ \%s
-" au FileType python setlocal commentstring=#\ \%s
 au FileType python setlocal commentstring=#\ %s
 au FileType go setlocal commentstring=//\ %s
 
@@ -1186,9 +1193,6 @@ map <silent> <leader>gs :Gstatus<CR>
 map <silent> <leader>gd :Gdiff<CR>
 map <silent> <leader>gx :!gitx<CR>
 map <silent> <leader>ga :Git add --patch -- %<CR>
-map <silent> <C-G> :Ag<Space>
-" map \g :Ack<Space>
-" map \gg :Ag<Space>
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
@@ -1204,13 +1208,22 @@ let g:syntastic_mode_map = { 'mode': 'passive',
                               \ 'active_filetypes': [],
                               \ 'passive_filetypes': [] }
 
-" ack.vim
+" The Silver Searcher / ag.vim / ack.vim
+" Use ag over grep
 let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+set grepprg=ag\ --nogroup\ --nocolor\ --smart-case
+let g:ag_apply_qmappings = 1
+let g:ag_apply_lmappings = 1
+" bind \ (backward slash) to grep shortcut
+command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap <C-g> :Ag -S<space>
+" old way? don't think this works as well
+" map <silent> <c-g> :Ag<Space>
 
 " gitgutter
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
-let g:gitgutter_realtime = 0
+" let g:gitgutter_realtime = 0
 
 " linediff
 vnoremap <leader>l :Linediff<cr>
