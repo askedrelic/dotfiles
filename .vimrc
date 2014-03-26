@@ -473,8 +473,8 @@ function! File_Types()
         " easy comment insert
         au FileType javascript inoremap <buffer> <c-c> console.log();<left><left>
         au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        "au FileType javascript setlocal foldmethod=marker
-        "au FileType javascript setlocal foldmarker={,}
+        au FileType javascript setlocal foldmethod=marker
+        au FileType javascript setlocal foldmarker={,}
     augroup END
 
     augroup ft_markdown
@@ -598,7 +598,7 @@ function! Normal_Mappings()
     " or <BkSpc> (like in `Netscape Navigator'):
     " noremap <Space> <PageDown>
     " noremap - <PageUp>
-    nnoremap <Space> <C-D>zz
+    noremap <Space> <C-D>zz
     nnoremap - <C-U>zz
 
     " Speed up viewport scrolling
