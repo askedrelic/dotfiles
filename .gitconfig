@@ -85,6 +85,8 @@
 
     # remove the top commit, to unstaged index
     pop = reset HEAD^
+    # kill the last commit
+    drop = reset --hard HEAD^
 
     sp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git stash pop
     spp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git push && git stash pop
