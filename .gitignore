@@ -1,6 +1,7 @@
 # ignore sensitive files
 .ssh*
 .agent.env
+
 # ignore common files not needed under revision control
 *.pyc
 *.swp
@@ -13,6 +14,7 @@
 .pinerc
 .rnd
 .vim/.netrwhist
+.vim-tmp/
 .vimfuzzyfinder
 .viminfo
 mbox
@@ -24,12 +26,13 @@ tags
 .psql_history
 .rediscli_history
 .sqlite_history
+
 # ignore common directories
 Applications/
 Desktop/
 Documents/
 Downloads/
-Dropbox/
+Dropbox*/
 Library/
 Movies/
 Music/
@@ -38,6 +41,7 @@ Public/
 Sites/
 code/
 mail/
+
 .aptitude/
 .cpan/
 .ctrlp_cache/
@@ -52,6 +56,7 @@ mail/
 .buildout/
 .python-eggs/
 .npm/
+
 # ignore my other stuff from OSX
 .Trash
 .adobe/
@@ -65,7 +70,7 @@ mail/
 .cmus/search-history
 .config/
 .cups/
-.dropbox/
+.dropbox*/
 .ec2/
 .fontconfig/
 .fonts/
@@ -90,15 +95,17 @@ mail/
 .virtualenvs/
 .wemo/
 .yolk/
+
 Virtualbox*
 backups/
 bin/mate
 bin/subl
 envs/
-src/
+random-source/
 .autoenv_authorized
 .autoenv_authorized.tmp
 .chef
 .emacs.d
 .httpie/
 .rbenv/
+.erlang.cookie
