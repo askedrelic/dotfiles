@@ -601,8 +601,8 @@ function! Normal_Mappings()
     " or <BkSpc> (like in `Netscape Navigator'):
     " noremap <Space> <PageDown>
     " noremap - <PageUp>
-    noremap <Space> <C-D>zz
-    nnoremap - <C-U>zz
+    " noremap <Space> <C-D>zz
+    " nnoremap - <C-U>zz
 
     " Speed up viewport scrolling
     nnoremap <C-e> 5<C-e>
@@ -1154,7 +1154,8 @@ let g:ctrlp_switch_buffer = 0
 " Open multiple files in new tabs
 let g:ctrlp_open_multiple_files = 't'
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor --smart-case -g ""'
+" let g:ctrlp_user_command = 'ag %s -l --nocolor --smart-case -g ""'
+let g:ctrlp_user_command = 'ag %s --files-with-matches -g "" --smart-case --ignore "\.git$\|\.hg$\|\.svn$"'
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 
@@ -1244,9 +1245,14 @@ let g:airline#extensions#default#section_truncate_width = {
       \ 'b': 79,
       \ 'c': 10,
       \ 'x': 60,
-      \ 'y': 88,
-      \ 'z': 45,
+      \ 'y': 150,
+      \ 'z': 120,
       \ }
+ " truncate file info pretty quick
+let g:airline_theme='powerlineish'
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+let g:airline_inactive_collapse=1
 
 " Unite.vim
 " let g:unite_enable_start_insert = 1
