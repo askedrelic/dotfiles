@@ -1226,8 +1226,51 @@ nmap gH <Plug>GitGutterPrevHunk
 " let g:gitgutter_realtime = 0
 
 " linediff
-vnoremap <leader>l :Linediff<cr>
-nnoremap <leader>L :LinediffReset<cr>
+" vnoremap <leader>l :Linediff<cr>
+" nnoremap <leader>L :LinediffReset<cr>
 
-let g:EasyMotion_leader_key = '<C-n>'
-let g:EasyMotion_mapping_f = '<C-n>'
+" easymotion
+" let g:EasyMotion_leader_key = '<C-n>'
+" let g:EasyMotion_mapping_f = '<C-n>'
+
+" Airline.vim
+let g:airline#extensions#tabline#enabled = 1
+" let g:bufferline_echo = 0
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#default#section_truncate_width = {
+      \ 'b': 79,
+      \ 'c': 10,
+      \ 'x': 60,
+      \ 'y': 88,
+      \ 'z': 45,
+      \ }
+
+" Unite.vim
+" let g:unite_enable_start_insert = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>u :Unite<Space>
+nnoremap <leader>U :Unite -start-insert<Space>
+let g:unite_winheight = 10
+let g:unite_split_rule = 'botright'
+" let g:unite_enable_start_insert = 1
+" let g:unite_enable_short_source_names = 1
+" let g:unite_source_rec_max_cache_files = 5000
+
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
+" Splitjoin.vim
+nmap sj :SplitjoinSplit<cr>
+nmap sk :SplitjoinJoin<cr>
+
+" ExpandVisualSelection.vim
+vmap v <Plug>(expand_region_expand)
