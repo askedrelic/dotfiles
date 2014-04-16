@@ -476,8 +476,8 @@ function! File_Types()
         " easy comment insert
         au FileType javascript inoremap <buffer> <c-c> console.log();<left><left>
         au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        au FileType javascript setlocal foldmethod=marker
-        au FileType javascript setlocal foldmarker={,}
+        " au FileType javascript setlocal foldmethod=marker
+        " au FileType javascript setlocal foldmarker={,}
     augroup END
 
     augroup ft_markdown
