@@ -2,32 +2,34 @@
 .ssh*
 .agent.env
 
-# ignore common files not needed under revision control
-*.pyc
+# Ignore common files / Byte-compiled / optimized / DLL files
+*.py[cod]
+*.so
 *.swp
 .DS_Store
 .NERDTreeBookmarks
-.bash_local
-.hgignore_global
-.netrc
-.mackup.cfg
-.pinerc
-.rnd
-.vim/.netrwhist
-.vim-tmp/
-.vimfuzzyfinder
-.viminfo
-mbox
-tags
 .bash_history
-.mysql_history
+.bash_local
 .gdb_history
+.hgignore_global
 .irb_history
+.mackup.cfg
+.mysql_history
+.netrc
+.pinerc
 .psql_history
 .rediscli_history
+.rnd
 .sqlite_history
+.vim-tmp/
+.vim/.netrwhist
+.vimfuzzyfinder
+.viminfo
+__pycache__/
+mbox
+tags
 
-# ignore common directories
+# Ignore common OSX directories
 Applications/
 Desktop/
 Documents/
