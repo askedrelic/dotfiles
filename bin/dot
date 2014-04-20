@@ -7,10 +7,12 @@
 export ZSH=$HOME/.dotfiles
 
 # Set OS X defaults
-$ZSH/osx/set-defaults.sh
+# $ZSH/osx/set-defaults.sh
 
 # Upgrade homebrew
-brew update
+# brew update
 
 # Install homebrew packages
-$ZSH/homebrew/install.sh 2>&1
+# $ZSH/homebrew/install.sh 2>&1
+
+print 'ran bin/dot'
