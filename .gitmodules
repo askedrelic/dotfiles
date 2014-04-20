@@ -73,3 +73,6 @@
 [submodule "vim/vim.symlink/bundle/vinegar"]
 	path = vim/vim.symlink/bundle/vinegar
 	url = https://github.com/dhruvasagar/vim-vinegar
+[submodule "vim/vim.symlink/bundle/vim-css-color"]
+	path = vim/vim.symlink/bundle/vim-css-color
+	url = https://github.com/ap/vim-css-color
