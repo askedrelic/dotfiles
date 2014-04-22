@@ -361,7 +361,7 @@ function! Line_Wrapping()
     set formatoptions=
     set formatoptions+=c " Format comments
     set formatoptions+=r " Continue comments by default
-    set formatoptions+=o " Make comment when using o or O from comment line
+    " set formatoptions+=o " Make comment when using o or O from comment line
     set formatoptions+=q " Format comments with gq
     set formatoptions+=n " Recognize numbered lists
     set formatoptions+=2 " Use indent from 2nd line of a paragraph
