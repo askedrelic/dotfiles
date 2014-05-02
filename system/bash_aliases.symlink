@@ -42,20 +42,39 @@ audio-usb() {
     SwitchAudioSource -t system -s "Audinst HUD-mx1"
     SwitchAudioSource -t output -s "Audinst HUD-mx1"
 }
+audio-system() {
+    SwitchAudioSource -t system -s "Built-in Output"
+    SwitchAudioSource -t output -s "Built-in Output"
+}
+# Generally, this doesn't work, setting itunes airplay works better
 audio-airplay() {
     echo "setting all audio to airplay"
     SwitchAudioSource -t system -s "AirPlay"
     SwitchAudioSource -t output -s "AirPlay"
 }
-audio-system() {
-    SwitchAudioSource -t system -s "Built-in Output"
-    SwitchAudioSource -t output -s "Built-in Output"
+itunes-system() {
+    /usr/bin/osascript << EOT
+    tell application "iTunes"
+        # possible values for kind are computer/AirPort Express/Apple TV/AirPlay device/unknown
+        set newAirplayDevice to (get some AirPlay device whose kind is computer)
+        set current AirPlay devices to {newAirplayDevice}
+    end tell
+EOT
+}
+itunes-appletv() {
+    /usr/bin/osascript << EOT
+    tell application "iTunes"
+        # possible values for kind are computer/AirPort Express/Apple TV/AirPlay device/unknown
+        set newAirplayDevice to (get some AirPlay device whose kind is Apple TV)
+        set current AirPlay devices to {newAirplayDevice}
+    end tell
+EOT
 }
 
 # QuickFolders  ----------------------------------------------------------------------------------------------
 
-alias bin="cd ~/bin/"
 alias vimbundle="cd ~/.vim/bundle/"
+alias dotfiles="cd ~/.dotfiles"
 
 # History ----------------------------------------------------------------------------------------------
 
