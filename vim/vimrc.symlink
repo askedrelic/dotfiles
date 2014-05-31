@@ -1241,7 +1241,7 @@ nmap gH <Plug>GitGutterPrevHunk
 " nnoremap <leader>L :LinediffReset<cr>
 
 " easymotion
-" let g:EasyMotion_leader_key = '<C-n>'
+let g:EasyMotion_leader_key = ','
 " let g:EasyMotion_mapping_f = '<C-n>'
 
 " Airline.vim
