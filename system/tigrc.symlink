@@ -1,17 +1,23 @@
 # set - show
-set show-date         = relative
-set show-rev-graph    = yes
-set show-refs         = yes
-set show-line-numbers = no
-set show-id           = yes
-set commit-order      = topo  # Order commits topologically
+# set main-view = date:relative commit-title:yes,yes
+# set show-rev-graph    = yes
+# set show-refs         = yes
+# set show-line-numbers = no
+# set show-id           = yes
+
+# set commit-order = topo  # Order commits topologically
+
+
+# Show line numbers for every 10th line in the pager view
+# set pager-view = line-number:yes,interval=1 text
+set main-view = id date:relative author:full commit-title:graph=yes,refs=yes
+
 
 # set - etc
-# set commit-encoding      = "UTF-8"
+set vertical-split       = "auto"
 set horizontal-scroll    = 35%
 set split-view-height    = 65%
-# set line-graphics        = "UTF-8"
-set line-number-interval = 1
+set line-graphics        = utf-8
 set tab-size             = 4
 
 # color
@@ -23,3 +29,6 @@ bind generic G move-last-line
 bind generic r refresh
 bind generic n next
 bind generic p previous
+bind generic h scroll-left
+bind generic l scroll-right
+bind generic ? view-help
