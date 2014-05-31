@@ -141,6 +141,9 @@ function! General_Settings()
 
     let mapleader = ','
     let g:mapleader = ','
+
+    " Search for ctags file up to /
+    set tags=tags;./;/
 endfunction
 call General_Settings()
 
