@@ -71,13 +71,13 @@ if [ -d /usr/local/share/npm/bin ]; then
 fi
 
 # python3
-if [ -d /usr/local/share/python3 ]; then
-  export PATH=/usr/local/share/python3:$PATH
-fi
+# if [ -d /usr/local/share/python3 ]; then
+#   export PATH=/usr/local/share/python3:$PATH
+# fi
 # python2 (higher priority than python3)
-if [ -d /usr/local/share/python ]; then
-  export PATH=/usr/local/share/python:$PATH
-fi
+# if [ -d /usr/local/share/python ]; then
+#   export PATH=/usr/local/share/python:$PATH
+# fi
 
 # add /usr/local/bin for OSX/homebrew
 if [ -d /usr/local/bin ]; then
