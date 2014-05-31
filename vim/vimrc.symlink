@@ -659,6 +659,9 @@ function! Normal_Mappings()
     nnoremap Q gqip
     vnoremap Q gq
 
+    " visual select last pasted text
+    noremap gV `[v`]
+
     " have Y behave analogously to D and C rather than to dd and cc (which is
     " already done by yy):
     nnoremap Y yt$
@@ -667,6 +670,10 @@ function! Normal_Mappings()
     " delete without yanking
     " nnoremap <leader>d "_d
     " vnoremap <leader>d "_d
+
+    vnoremap <silent> y y`]
+    vnoremap <silent> p p`]
+    nnoremap <silent> p p`]
 
     " replace currently selected text with default register
     " without yanking it
