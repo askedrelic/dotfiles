@@ -95,6 +95,13 @@ if [[ "${BREW_EXISTS}" == "true" ]] ; then
     fi
 fi
 
+# homebrew installed gettext
+if [[ "${BREW_EXISTS}" == "true" ]] ; then
+    if [ -d "$(brew --prefix gettext)/bin" ]; then
+        export PATH="$(brew --prefix gettext)/bin:$PATH"
+    fi
+fi
+
 # Local bin should always be first priority
 if [ -d ~/bin ]; then
   export PATH=~/bin:$PATH
