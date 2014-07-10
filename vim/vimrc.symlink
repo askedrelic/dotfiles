@@ -1240,7 +1240,17 @@ nmap gH <Plug>GitGutterPrevHunk
 " vnoremap <leader>l :Linediff<cr>
 " nnoremap <leader>L :LinediffReset<cr>
 
-" easymotion
+" vim-autoformat
+" Need to override this to work on OSX
+let g:formatprg_args_expr_python = '"- ".(&textwidth ? "--max-line-length=".&textwidth : "")'
+
+if !exists("g:formatprg_scss") | let g:formatprg_scss = "sass-convert" | endif
+let g:formatprg_args_scss = "-s --indent 4 -F scss -T scss"
+" if !exists("g:formatprg_args_expr_scss")  && !exists("g:formatprg_args_scss")
+"     let g:formatprg_args_expr_css = '"--indent 4 "'
+" endif
+
+" Easymotion.vim
 let g:EasyMotion_leader_key = ','
 " let g:EasyMotion_mapping_f = '<C-n>'
 
