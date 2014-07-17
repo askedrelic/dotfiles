@@ -296,7 +296,8 @@ cdp () {
     )"
 }
 
-# git ------------------------------------------------
+# Git ------------------------------------------------
+
 alias gs='git status '
 alias ga='git add '
 alias gr='git remote -v'
@@ -316,3 +317,31 @@ function gb() {
         break;
     done;
 }
+
+# Pylint --------------------------------------------
+
+# Show files that have been added, modified, changed, or renamed in the
+# current branch (in a commit)
+bchanged() {
+    git diff --name-only $(git merge-base origin/master HEAD) HEAD
+}
+
+# Filter to only the python files that have been changed in the branch
+bpychanged() {
+    bchanged | grep "\.py$" --color="never"
+}
+
+# Run pylint on all files that have been modified in the
+# working directory
+pychk() {
+    git status --porcelain | grep "\.py$" --color="never" | awk '{print $2}' | xargs pylint
+}
+
+# Run pylint on all files that have commited modifications in this branch
+bpychk() {
+    for file in "$(bpychanged)"; do
+        echo $file
+        [ -e "$file" ] && pylint $file
+    done
+}
+
