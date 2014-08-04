@@ -1105,8 +1105,7 @@ nmap <leader>id :execute "normal a" . strftime("%Y/%m/%d")<Esc>
 " ### Plugins ###################################################
 
 " First, load pathogen
-call pathogen#infect()
-call pathogen#runtime_append_all_bundles()
+execute pathogen#infect()
 
 
 "Tabularize align options
