@@ -79,3 +79,6 @@
 [submodule "vim/vim.symlink/bundle/vim-autoformat"]
 	path = vim/vim.symlink/bundle/vim-autoformat
 	url = git@github.com:Chiel92/vim-autoformat.git
+[submodule "vim/vim.symlink/bundle/vim-autotag"]
+	path = vim/vim.symlink/bundle/vim-autotag
+	url = https://github.com/craigemery/vim-autotag
