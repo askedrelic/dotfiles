@@ -133,3 +133,6 @@
     extendedRegexp = true
 [rebase]
     autosquash = true
+[gh]
+	protocol = https
+	autoUpdate = never
