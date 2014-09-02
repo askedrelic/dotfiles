@@ -134,5 +134,7 @@
 [rebase]
     autosquash = true
 [gh]
-	protocol = https
-	autoUpdate = never
+    protocol = https
+    autoUpdate = never
+[credential "https://github.com"]
+    username = askedrelic
