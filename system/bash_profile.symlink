@@ -59,10 +59,13 @@ if [[ "${BREW_EXISTS}" == "true" ]] ; then
 fi
 
 # uhh trying to run ruby193 homebrew version for now
-if [[ "${BREW_EXISTS}" == "true" ]] ; then
-    if [ -d "$(brew --prefix ruby193)/bin" ]; then
+if [ -d "$(brew --prefix ruby193)/bin" ]; then
     export PATH="$(brew --prefix ruby193)/bin:$PATH"
-    fi
+fi
+
+# rbenv bin?
+if [ -d "~/.rbenv/versions/1.9.3-p385/bin" ]; then
+    export PATH="~/.rbenv/versions/1.9.3-p385/bin:$PATH"
 fi
 
 # brew installed node/npm modules
