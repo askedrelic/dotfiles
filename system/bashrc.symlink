@@ -142,6 +142,7 @@ source ~/.bash_prompt
 # my imports
 source ~/.bash_machines
 source ~/.bash_aliases
+source ~/.bash_scripts
 
 
 # try enable bash completion
