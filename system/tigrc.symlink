@@ -5,7 +5,8 @@
 # set show-line-numbers = no
 # set show-id           = yes
 
-# set commit-order = topo  # Order commits topologically
+# Order commits topologically
+set commit-order = topo  
 
 
 # Show line numbers for every 10th line in the pager view
@@ -14,7 +15,8 @@ set main-view = id date:relative author:full commit-title:graph=yes,refs=yes
 
 
 # set - etc
-set vertical-split       = "auto"
+# set vertical-split       = "auto"
+# set split-view-width = 40%
 set horizontal-scroll    = 35%
 set split-view-height    = 65%
 set line-graphics        = utf-8
@@ -29,6 +31,10 @@ bind generic G move-last-line
 bind generic r refresh
 bind generic n next
 bind generic p previous
+bind generic N find-next
+# bind generic P find-previous
 bind generic h scroll-left
 bind generic l scroll-right
 bind generic ? view-help
+
+set log-options = --simplify-merges --pretty=fuller
