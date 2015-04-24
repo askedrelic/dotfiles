@@ -149,7 +149,7 @@ source ~/.bash_scripts
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
 # or try enable in homebrew
-if [[ -n $(command brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
+if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
     source $(brew --prefix)/etc/bash_completion
 fi
 

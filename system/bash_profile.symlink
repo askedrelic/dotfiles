@@ -69,12 +69,12 @@ if [ -d /usr/local/sbin ]; then
 fi
 
 # homebrew installed coreutils
-if [[ -n $(command brew) && -d "$(brew --prefix coreutils)/libexec/gnubin" ]] ; then
+if [[ -n $(command -v brew) && -d "$(brew --prefix coreutils)/libexec/gnubin" ]] ; then
     export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi
 
 # homebrew installed gettext
-if [[ -n $(command brew) && -d "$(brew --prefix gettext)/bin" ]] ; then
+if [[ -n $(command -v brew) && -d "$(brew --prefix gettext)/bin" ]] ; then
     export PATH="$(brew --prefix gettext)/bin:$PATH"
 fi
 
