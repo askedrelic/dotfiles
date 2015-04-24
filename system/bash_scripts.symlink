@@ -93,14 +93,14 @@ alias myip='curl "http://www.networksecuritytoolkit.org/nst/cgi-bin/ip.cgi"'
 # Get rid of those pesky .DS_Store files recursively
 alias dsclean='find . -type f -name .DS_Store -print0 | xargs -0 rm'
 
-#TODO: combine tree/simpletree
-#for when 'tree' isn't installed
-if type -P tree &>/dev/null ; then
-    tree() {
-      tree -Csu
-    }
+# simple tree backup program
+alias simpletree="ls -aR | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+
+# If tree is installed; use it or fallback
+if [[ -n $(command -v tree) ]] ; then
+    alias tree="tree -Csu"
 else
-    alias tree="ls -aR | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
+    alias tree=simpletree
 fi
 
 #great for finding the current "real" size of all folders/files
