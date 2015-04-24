@@ -149,10 +149,8 @@ source ~/.bash_scripts
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
 # or try enable in homebrew
-if [[ "${BREW_EXISTS}" == "true" ]] ; then
-    if [ -f $(brew --prefix)/etc/bash_completion ]; then
-        . $(brew --prefix)/etc/bash_completion
-    fi
+if [[ -n $(command brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
+    source $(brew --prefix)/etc/bash_completion
 fi
 
 # import any local bash completion scripts

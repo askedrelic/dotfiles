@@ -19,12 +19,6 @@ export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0
 export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
 export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
-# setup homebrew
-export BREW_EXISTS="false"
-if [ -e /usr/local/bin/brew ]; then
-  export BREW_EXISTS="true"
-fi
-
 # SSH Agent ------------------------------------------------------------
 # from http://help.github.com/working-with-key-passphrases/
 SSH_ENV="$HOME/.ssh/environment"
@@ -49,23 +43,13 @@ else
 fi
 
 # Path ------------------------------------------------------------
-# My paths, in reverse priority, so that they are prepended properly
+# In reverse priority, so that they are prepended properly
 
-# brew installed ruby gems
-if [[ "${BREW_EXISTS}" == "true" ]] ; then
-    if [ -d "$(brew --prefix ruby)/bin" ]; then
-    export PATH="$(brew --prefix ruby)/bin:$PATH"
-    fi
-fi
-
-# uhh trying to run ruby193 homebrew version for now
-if [ -d "$(brew --prefix ruby193)/bin" ]; then
-    export PATH="$(brew --prefix ruby193)/bin:$PATH"
-fi
-
-# rbenv bin?
-if [ -d "~/.rbenv/versions/1.9.3-p385/bin" ]; then
-    export PATH="~/.rbenv/versions/1.9.3-p385/bin:$PATH"
+# Mac OS X uses path_helper to preload PATH, clear it out first
+# IE; start from scratch every time
+if [ -x /usr/libexec/path_helper ]; then
+    PATH=''
+    eval `/usr/libexec/path_helper -s`
 fi
 
 # brew installed node/npm modules
@@ -73,36 +57,35 @@ if [ -d /usr/local/share/npm/bin ]; then
   export PATH=/usr/local/share/npm/bin:$PATH
 fi
 
-# python3
-# if [ -d /usr/local/share/python3 ]; then
-#   export PATH=/usr/local/share/python3:$PATH
-# fi
-# python2 (higher priority than python3)
-# if [ -d /usr/local/share/python ]; then
-#   export PATH=/usr/local/share/python:$PATH
-# fi
-
 # add /usr/local/bin for OSX/homebrew
-if [ -d /usr/local/bin ]; then
-  export PATH=/usr/local/bin:$PATH
-fi
+# but it is already added mostly?
+# if [ -d /usr/local/bin ]; then
+#   export PATH=/usr/local/bin:$PATH
+# fi
 
+# homebrew programs using sbin...
 if [ -d /usr/local/sbin ]; then
   export PATH=/usr/local/sbin:$PATH
 fi
 
 # homebrew installed coreutils
-if [[ "${BREW_EXISTS}" == "true" ]] ; then
-    if [ -d "$(brew --prefix coreutils)/libexec/gnubin" ]; then
-        export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-    fi
+if [[ -n $(command brew) && -d "$(brew --prefix coreutils)/libexec/gnubin" ]] ; then
+    export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 fi
 
 # homebrew installed gettext
-if [[ "${BREW_EXISTS}" == "true" ]] ; then
-    if [ -d "$(brew --prefix gettext)/bin" ]; then
-        export PATH="$(brew --prefix gettext)/bin:$PATH"
-    fi
+if [[ -n $(command brew) && -d "$(brew --prefix gettext)/bin" ]] ; then
+    export PATH="$(brew --prefix gettext)/bin:$PATH"
+fi
+
+
+# if rbenv is present, configure it for use
+if which rbenv &> /dev/null; then
+    # Put the rbenv entry at the front of the line
+    export PATH="$HOME/.rbenv/bin:$PATH"
+
+    # enable shims and auto-completion
+    eval "$(rbenv init -)"
 fi
 
 # Local bin should always be first priority
