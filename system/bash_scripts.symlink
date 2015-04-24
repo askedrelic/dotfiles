@@ -116,10 +116,7 @@ alias openapps='lsof -P -i -n'
 
 # Print $PATH in a useful way
 function path(){
-    old=$IFS
-    IFS=:
-    printf "%s\n" $PATH
-    IFS=$old
+    echo -e $(echo $PATH | sed 's/:/\\\n/g')
 }
 
 # honestly, who really remembers these flags? I don't anymore
