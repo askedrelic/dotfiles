@@ -73,3 +73,18 @@
 [submodule "vim/vim.symlink/bundle/vim-ags"]
 	path = vim/vim.symlink/bundle/vim-ags
 	url = https://github.com/gabesoft/vim-ags
+[submodule "vim/vim.symlink/bundle/gutentags"]
+	path = vim/vim.symlink/bundle/gutentags
+	url = https://github.com/ludovicchabant/vim-gutentags
+[submodule "vim/vim.symlink/bundle/tlib_vim"]
+	path = vim/vim.symlink/bundle/tlib_vim
+	url = https://github.com/tomtom/tlib_vim.git
+[submodule "vim/vim.symlink/bundle/vim-addon-mw-utils"]
+	path = vim/vim.symlink/bundle/vim-addon-mw-utils
+	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
+[submodule "vim/vim.symlink/bundle/easy-align"]
+	path = vim/vim.symlink/bundle/easy-align
+	url = git@github.com:junegunn/vim-easy-align.git
+[submodule "vim/vim.symlink/bundle/visualrepeat"]
+	path = vim/vim.symlink/bundle/visualrepeat
+	url = https://github.com/vim-scripts/visualrepeat
