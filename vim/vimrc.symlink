@@ -95,6 +95,7 @@ function! General_Settings()
     set shortmess=flnrxoOItTA
     " We have a modern terminal
     set ttyfast
+    set fileformats=unix,dos,mac
     " Don't try to highlight lines longer than 800 characters.
     set synmaxcol=800
     " Add vertical spaces to keep right and left aligned
@@ -398,7 +399,7 @@ function! File_Types()
     set completeopt=longest,menuone,preview
 
     " complete using built in syntax? http://vim.wikia.com/wiki/Completion_using_a_syntax_file
-    au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
+    " au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
     " CSS and LessCSS
     augroup ft_css
@@ -538,7 +539,7 @@ function! File_Types()
         au FileType python setlocal cinkeys-=0#
         au FileType python setlocal indentkeys-=0#
 
-        au FileType python inoremap <buffer> <c-f> import IPython; IPython.embed()
+        " au FileType python inoremap <buffer> <c-f> import IPython; IPython.embed()
 
         " @NOTE This blows up omnifunc complete
         " `gf` jumps to the filename under the cursor.  Point at an import statement
@@ -703,8 +704,8 @@ function! Normal_Mappings()
     " nnoremap <leader>? ?\v
 
     "Easy edit of vimrc
-    nnoremap <leader>ev :e! $MYVIMRC<CR>
-    map <silent> <leader>sv :source $MYVIMRC<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+    nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+    map <silent> <leader>sv :source $MYVIMRC<CR>:redraw<CR>:echo $MYVIMRC 'reloaded'<CR>
 
     " Quit Vim
     nnoremap <leader>Q :qall!<CR>
@@ -719,7 +720,7 @@ function! Normal_Mappings()
     nnoremap <leader>I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
 
     " toggle paste on/off
-    nnoremap <leader>tp :set invpaste paste?<CR>
+    " nnoremap <leader>tp :set invpaste paste?<CR>
     nnoremap <leader>p :set invpaste paste?<CR>
 
     " toggle list on/off and report the change:
@@ -735,17 +736,17 @@ function! Normal_Mappings()
     nnoremap <leader>sp :set spell! spelllang=en_us spell?<CR>
 
     " simple substitute
-    nnoremap <leader>s :%s//<left>
+    " 2015/02/06 dont think I need this
+    " nnoremap <leader>s :%s//<left>
 
     " ehh whatelse to bind
     nnoremap <leader>m :w<CR>:make<CR>
 
-    " [J]oin lines and restore cursor location
-    nnoremap J mjJ`j
+    " [J]oin lines and preserve cursor position
+    nnoremap J :call Preserve("normal! J")<CR>
 
-    " Split line (sister to [J]oin lines)
-    " The normal use of S is covered by cc, so don't worry about shadowing it.
-    nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+    " split line (sister to [J]oin lines) and preserve cursor position
+    nnoremap S :call Preserve("normal! i\r")<CR>
 
     " Fix page up and down
     " map <PageUp> <C-U>
@@ -824,6 +825,26 @@ function! Visual_Mappings()
     " When you press <leader>r you can search and replace the selected text
     vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
+
+    function! GetVisualSelection()
+    let [l:l1, l:c1] = getpos("'<")[1:2]
+    let [l:l2, l:c2] = getpos("'>")[1:2]
+    let l:selection = getline(l:l1, l:l2)
+    let l:selection[-1] = l:selection[-1][: l:c2 - 1]
+    let l:selection[0] = l:selection[0][l:c1 - 1:]
+    return join(l:selection, "\n")
+    endfunction
+
+    " search for visually selected areas
+    xnoremap * <ESC>/<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR><CR>
+    xnoremap # <ESC>?<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR><CR>
+
+    " prepare search based on visually selected area
+    xnoremap / <ESC>/<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR>
+
+    " prepare substitution based on visually selected area
+    xnoremap & <ESC>:%s/<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR>/
+
 endfunction
 call Visual_Mappings()
 
@@ -896,12 +917,12 @@ function! Tab_Mapping()
     " map <leader>tc :call ToggleTabCompletion()<CR>
     "
     " tab complete?
-    inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-    inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-    \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-    inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
-    \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-    imap <C-@> <C-Space>
+    " inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    " inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+    " \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+    " inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
+    " \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+    " imap <C-@> <C-Space>
 endfunction
 call Tab_Mapping()
 
@@ -946,19 +967,38 @@ function! Mini_Scripts()
     endif
     endfunction
 
-    " Strip trailing whitespace
-    function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
+    function! Preserve(command)
+        let l:search=@/
+        let l:line = line(".")
+        let l:col = col(".")
+        execute a:command
+        let @/=l:search
+        call cursor(l:line, l:col)
     endfunction
-    nmap <leader>w :call <SID>StripTrailingWhitespaces()<cr>
+
+    " <leader>rt retabs the file, preserve cursor position
+    nnoremap <silent> <leader>rt :call Preserve(":retab")<CR>
+
+    " <leader>s removes trailing spaces
+    noremap <silent> <leader>s :call Preserve("%s/\\s\\+$//e")<CR>
+
+    " <leader>$ fixes mixed EOLs (^M)
+    noremap <silent> <leader>$ :call Preserve("%s/<C-V><CR>//e")<CR>
+
+
+    " Strip trailing whitespace
+    " function! <SID>StripTrailingWhitespaces()
+    " " Preparation: save last search, and cursor position.
+    " let _s=@/
+    " let l = line(".")
+    " let c = col(".")
+    " " Do the business:
+    " %s/\s\+$//e
+    " " Clean up: restore previous search history, and cursor position
+    " let @/=_s
+    " call cursor(l, c)
+    " endfunction
+    " nmap <leader>w :call <SID>StripTrailingWhitespaces()<cr>
 
     " OSX only: Open a web-browser with the URL in the current line
     " Funny thing: 'gx' actually does this better, using netrw
@@ -967,6 +1007,7 @@ function! Mini_Scripts()
         echo s:uri
         if s:uri != ""
             exec "silent !open \"" . s:uri . "\""
+            exec "redraw"
         else
             echo "No URI found in line."
         endif
@@ -996,6 +1037,7 @@ function! Mini_Scripts()
     " gives you one color of highlighting.  Now you can use <leader>N where N is
     " a number from 1-6 to highlight the current word in a specific color.
     " stolen from SJL https://github.com/sjl/dotfiles/blob/master/vim/vimrc#L1814-1863
+
     function! HiInterestingWord(n)
         " Save our location.
         normal! mz
@@ -1099,6 +1141,31 @@ function! Mini_Scripts()
     endfunction
     nnoremap <silent> <leader>S :call SplitLine()<CR>
 
+    " vp doesn't replace paste buffer
+    function! RestoreRegister()
+        let @" = s:restore_reg
+        return ''
+    endfunction
+    function! s:Repl()
+        let s:restore_reg = @"
+        return "p@=RestoreRegister()\<cr>"
+    endfunction
+    vmap <silent> <expr> p <sid>Repl()
+
+    " use <leader>d to delete a line without adding it to the yanked stack
+    nnoremap <silent> <leader>d "_d
+    vnoremap <silent> <leader>d "_d
+
+    " yank/paste to/from the OS clipboard
+    noremap <silent> <leader>y "+y
+    noremap <silent> <leader>Y "+Y
+    noremap <silent> <leader>p "+p
+    noremap <silent> <leader>P "+P
+
+    " paste without yanking replaced text in visual mode
+    vnoremap <silent> p "_dP
+    vnoremap <silent> P "_dp
+
 endfunction
 call Mini_Scripts()
 
@@ -1108,7 +1175,6 @@ call Mini_Scripts()
 nmap <leader>tt :execute "normal i" . strftime("%Y/%m/%d %H:%M:%S")<Esc>
 
 iab _AUTHOR Matt Behrens <askedrelic@gmail.com>
-iab lorem Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sollicitudin quam eget libero pulvinar id condimentum velit sollicitudin. Proin cursus scelerisque dui ac condimentum. Nullam quis tellus leo. Morbi consectetur, lectus a blandit tincidunt, tortor augue tincidunt nisi, sit amet rhoncus tortor velit eu felis.
 
 " insert author
 nmap <leader>ia :execute "normal aMatt Behrens <askedrelic@gmail.com>"<Esc>
@@ -1145,7 +1211,15 @@ let g:tagbar_left      = 1 " Open tagbar on the left
 let g:tagbar_sort      = 0 " Sort tags by file order by default
 let g:tagbar_compact   = 1 " Remove empty lines by default
 " let g:tagbar_foldlevel = 0 " Close folds default
-map <leader>t :TagbarOpenAutoClose<CR>
+map <leader>b :TagbarOpenAutoClose<CR>
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:Heading_L1',
+        \ 'i:Heading_L2',
+        \ 'k:Heading_L3'
+    \ ]
+\ }
 
 
 " NERDTree
@@ -1153,7 +1227,7 @@ map <silent> <leader>n :NERDTreeMirrorToggle<CR>
 map <silent> <leader>N :NERDTreeFind<CR>
 let NERDTreeWinPos              = 'left'
 let NERDTreeChDirMode           = 0
-let NERDTreeIgnore              = ['\~$', '\.pyo$', '\.pyc$', '\.svn[\//]$', '\.swp$', '\.DS_Store$']
+let NERDTreeIgnore              = ['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', '\.DS_Store$']
 let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let NERDTreeHighlightCursorline = 1
 let NERDTreeShowFiles           = 1 " Show hidden files, too
@@ -1267,7 +1341,7 @@ let g:formatprg_args_scss = "-s --indent 4 -F scss -T scss"
 " endif
 
 " Easymotion.vim
-let g:EasyMotion_leader_key = ','
+" let g:EasyMotion_leader_key = ','
 " let g:EasyMotion_mapping_f = '<C-n>'
 
 " Airline.vim
@@ -1311,8 +1385,8 @@ let g:airline_inactive_collapse=1
 " endfunction
 
 " Splitjoin.vim
-nmap sj :SplitjoinSplit<cr>
-nmap sk :SplitjoinJoin<cr>
+" nmap sj :SplitjoinSplit<cr>
+" nmap sk :SplitjoinJoin<cr>
 
 " ExpandVisualSelection.vim
 vmap v <Plug>(expand_region_expand)
