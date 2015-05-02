@@ -37,12 +37,29 @@ function! General_Settings()
     " highlight
     set viminfo=/50,'50,h
 
-    " Local tmp dirs
-    set backup
-    set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-    set backupskip=/tmp/*,/private/tmp/*
-    set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-    set writebackup
+    set backup      " enable backup files
+    set writebackup " enable backup files
+    set swapfile    " enable swap files (useful when loading huge files)
+
+    let s:vimdir=$HOME . "/.vim"
+    let &backupdir=s:vimdir . "/backup"  " backups location
+    let &directory=s:vimdir . "/tmp"     " swap location
+
+    if exists("*mkdir")
+        if !isdirectory(s:vimdir)
+            call mkdir(s:vimdir, "p")
+        endif
+        if !isdirectory(&backupdir)
+            call mkdir(&backupdir, "p")
+        endif
+        if !isdirectory(&directory)
+            call mkdir(&directory, "p")
+        endif
+    endif
+
+    set backupskip+=*.tmp " skip backup for *.tmp
+
+    let &viminfo=&viminfo . ",n" . s:vimdir . "/.viminfo" " viminfo location
 
     " if you want to yank and paste with the system clipboard
     " set clipboard=unnamed
