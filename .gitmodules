@@ -40,9 +40,6 @@
 [submodule "vim/vim.symlink/bundle/surround"]
 	path = vim/vim.symlink/bundle/surround
 	url = git://github.com/tpope/vim-surround.git
-[submodule "vim/vim.symlink/bundle/ack.vim"]
-	path = vim/vim.symlink/bundle/ack.vim
-	url = git://github.com/mileszs/ack.vim.git
 [submodule "vim/vim.symlink/bundle/supertab"]
 	path = vim/vim.symlink/bundle/supertab
 	url = https://github.com/ervandew/supertab
