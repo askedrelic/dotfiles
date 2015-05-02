@@ -61,9 +61,6 @@
 [submodule "vim/vim.symlink/bundle/vim-airline"]
 	path = vim/vim.symlink/bundle/vim-airline
 	url = https://github.com/bling/vim-airline
-[submodule "vim/vim.symlink/bundle/ag"]
-	path = vim/vim.symlink/bundle/ag
-	url = https://github.com/rking/ag.vim
 [submodule "vim/vim.symlink/bundle/expand-region"]
 	path = vim/vim.symlink/bundle/expand-region
 	url = https://github.com/terryma/vim-expand-region
