@@ -805,7 +805,7 @@ function! Visual_Mappings()
         if a:direction == 'b'
             execute "normal ?" . l:pattern . "^M"
         elseif a:direction == 'gv'
-            call CmdLine("Ag \"" . l:pattern . "\"<CR>" )
+            call CmdLine("Ags \"" . l:pattern . "\"<CR>" )
         elseif a:direction == 'replace'
             call CmdLine("%s" . '/'. l:pattern . '/')
         elseif a:direction == 'f'
@@ -1255,7 +1255,9 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_open_multiple_files = 't'
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 " let g:ctrlp_user_command = 'ag %s -l --nocolor --smart-case -g ""'
-let g:ctrlp_user_command = 'ag %s --files-with-matches -g "" --smart-case --ignore "\.git$\|\.hg$\|\.svn$"'
+" let g:ctrlp_user_command = 'ag %s --files-with-matches -g "" --smart-case --ignore "\.git$\|\.hg$\|\.svn$"'
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard',
+ \ 'ag %s -l --ignore-case --nocolor --noheading --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store --ignore "**/*.pyc" -g ""']
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 
@@ -1317,9 +1319,7 @@ let g:ag_apply_qmappings = 1
 let g:ag_apply_lmappings = 1
 " bind \ (backward slash) to grep shortcut
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap <C-g> :Ag -S<space>
-" old way? don't think this works as well
-" map <silent> <c-g> :Ag<Space>
+nnoremap <C-g> :Ags -S<space>
 
 " gitgutter
 nmap gh <Plug>GitGutterNextHunk
