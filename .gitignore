@@ -1,0 +1,10 @@
+vim/vim.symlink/tmp/
+vim/vim.symlink/backup/
+
+# ignore some cmus stuff
+system/cmus.symlink/autosave
+system/cmus.symlink/cache
+system/cmus.symlink/command-history
+system/cmus.symlink/lib.pl
+system/cmus.symlink/playlist.pl
+system/cmus.symlink/search-history
