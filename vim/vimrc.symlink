@@ -33,6 +33,11 @@ function! General_Settings()
         set t_te= [?47l 8
     endif
 
+    " Fix term under cli vim
+    if exists('$TMUX')
+        set term=screen-256color
+    endif
+
     " save last 50 search history items, last 50 edit marks, don't remember search
     " highlight
     set viminfo=/50,'50,h
