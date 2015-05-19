@@ -98,7 +98,7 @@ alias simpletree="ls -aR | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' 
 
 # If tree is installed; use it or fallback
 if [[ -n $(command -v tree) ]] ; then
-    alias tree="tree -Csu"
+    alias tree=tree
 else
     alias tree=simpletree
 fi
