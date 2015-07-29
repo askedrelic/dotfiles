@@ -1309,7 +1309,9 @@ let g:SuperTabLongestEnhanced = 1
 let g:pyflakes_use_quickfix = 0
 
 " rainbow parens
-nnoremap <leader>tr :RainbowParenthesesToggleAll<CR>
+" from https://github.com/junegunn/rainbow_parentheses.vim
+" better fork from https://github.com/kien/rainbow_parentheses.vim
+nnoremap <leader>tr :RainbowParentheses!!<CR>
 
 " syntastic
 let g:syntastic_mode_map = { 'mode': 'passive',
