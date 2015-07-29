@@ -94,3 +94,6 @@
 [submodule "vim/vim.symlink/bundle/snippets"]
 	path = vim/vim.symlink/bundle/snippets
 	url = https://github.com/honza/vim-snippets.git
+[submodule "vim/vim.symlink/bundle/rainbow_parentheses"]
+	path = vim/vim.symlink/bundle/rainbow_parentheses
+	url = git@github.com:junegunn/rainbow_parentheses.vim.git
