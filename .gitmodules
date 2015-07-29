@@ -4,9 +4,6 @@
 [submodule "vim/vim.symlink/bundle/vim-markdown"]
 	path = vim/vim.symlink/bundle/vim-markdown
 	url = https://github.com/tpope/vim-markdown.git
-[submodule "vim/vim.symlink/bundle/vim-ctrlp"]
-	path = vim/vim.symlink/bundle/vim-ctrlp
-	url = https://github.com/kien/ctrlp.vim.git
 [submodule "vim/vim.symlink/bundle/vim-tabular"]
 	path = vim/vim.symlink/bundle/vim-tabular
 	url = git://github.com/godlygeek/tabular.git
