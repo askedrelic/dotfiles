@@ -94,3 +94,6 @@
 [submodule "vim/vim.symlink/bundle/rainbow_parentheses"]
 	path = vim/vim.symlink/bundle/rainbow_parentheses
 	url = git@github.com:junegunn/rainbow_parentheses.vim.git
+[submodule "vim/vim.symlink/bundle/ctrlp"]
+	path = vim/vim.symlink/bundle/ctrlp
+	url = git@github.com:ctrlpvim/ctrlp.vim.git
