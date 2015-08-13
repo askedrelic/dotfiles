@@ -6,7 +6,7 @@
 	url = https://github.com/tpope/vim-markdown.git
 [submodule "vim/vim.symlink/bundle/vim-tabular"]
 	path = vim/vim.symlink/bundle/vim-tabular
-	url = git://github.com/godlygeek/tabular.git
+	url = https://github.com/godlygeek/tabular.git
 [submodule "vim/vim.symlink/bundle/vim-fugitive"]
 	path = vim/vim.symlink/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive.git
@@ -27,19 +27,19 @@
 	url = https://github.com/scrooloose/nerdcommenter
 [submodule "vim/vim.symlink/bundle/surround"]
 	path = vim/vim.symlink/bundle/surround
-	url = git://github.com/tpope/vim-surround.git
+	url = https://github.com/tpope/vim-surround.git
 [submodule "vim/vim.symlink/bundle/supertab"]
 	path = vim/vim.symlink/bundle/supertab
 	url = https://github.com/ervandew/supertab
 [submodule "vim/vim.symlink/bundle/cocoa.vim"]
 	path = vim/vim.symlink/bundle/cocoa.vim
-	url = git://github.com/msanders/cocoa.vim.git
+	url = https://github.com/msanders/cocoa.vim.git
 [submodule "vim/vim.symlink/bundle/easymotion"]
 	path = vim/vim.symlink/bundle/easymotion
-	url = git://github.com/Lokaltog/vim-easymotion.git
+	url = https://github.com/Lokaltog/vim-easymotion.git
 [submodule "vim/vim.symlink/bundle/gitgutter"]
 	path = vim/vim.symlink/bundle/gitgutter
-	url = git://github.com/airblade/vim-gitgutter.git
+	url = https://github.com/airblade/vim-gitgutter.git
 [submodule "vim/vim.symlink/bundle/matchtag"]
 	path = vim/vim.symlink/bundle/matchtag
 	url = https://github.com/gregsexton/MatchTag
@@ -78,7 +78,7 @@
 	url = https://github.com/MarcWeber/vim-addon-mw-utils.git
 [submodule "vim/vim.symlink/bundle/easy-align"]
 	path = vim/vim.symlink/bundle/easy-align
-	url = git@github.com:junegunn/vim-easy-align.git
+	url = https://github.com:junegunn/vim-easy-align.git
 [submodule "vim/vim.symlink/bundle/visualrepeat"]
 	path = vim/vim.symlink/bundle/visualrepeat
 	url = https://github.com/vim-scripts/visualrepeat
@@ -90,7 +90,7 @@
 	url = https://github.com/honza/vim-snippets.git
 [submodule "vim/vim.symlink/bundle/rainbow_parentheses"]
 	path = vim/vim.symlink/bundle/rainbow_parentheses
-	url = git@github.com:junegunn/rainbow_parentheses.vim.git
+	url = https://github.com:junegunn/rainbow_parentheses.vim.git
 [submodule "vim/vim.symlink/bundle/ctrlp"]
 	path = vim/vim.symlink/bundle/ctrlp
-	url = git@github.com:ctrlpvim/ctrlp.vim.git
+	url = https://github.com:ctrlpvim/ctrlp.vim.git
