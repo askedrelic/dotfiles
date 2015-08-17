@@ -8,3 +8,11 @@ system/cmus.symlink/command-history
 system/cmus.symlink/lib.pl
 system/cmus.symlink/playlist.pl
 system/cmus.symlink/search-history
+
+# ignore more config stuff
+system/config.symlink/configstore/bower-github.yml
+system/config.symlink/configstore/update-notifier-bower.yml
+system/config.symlink/gh
+system/config.symlink/gh-update
+system/config.symlink/pianobar/
+system/config.symlink/ranger/
