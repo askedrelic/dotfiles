@@ -28,6 +28,8 @@
 __pycache__/
 mbox
 tags
+tags.lock
+tags.temp
 
 # Ignore common OSX directories
 Applications/
@@ -97,17 +99,3 @@ mail/
 .virtualenvs/
 .wemo/
 .yolk/
-
-Virtualbox*
-backups/
-bin/mate
-bin/subl
-envs/
-random-source/
-.autoenv_authorized
-.autoenv_authorized.tmp
-.chef
-.emacs.d
-.httpie/
-.rbenv/
-.erlang.cookie
