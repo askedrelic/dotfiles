@@ -34,7 +34,7 @@ function! General_Settings()
     endif
 
     " Fix term under cli vim
-    if exists('$TMUX')
+    if exists('$TMUX') && !has("gui_running")
         set term=screen-256color
     endif
 
@@ -145,6 +145,7 @@ function! General_Settings()
     set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
     set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
     set wildignore+=*.pyc                            " Python byte code
+    set wildignore+=.tox                             " Python tox directory
     set wildignore+=*.spl                            " compiled spelling word lists
     set wildignore+=*.sw?                            " Vim swap files
     " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
@@ -334,7 +335,7 @@ function! Colors()
 
     if has("gui_running")
         " set guifont=Monaco:h12
-        set guifont=Meslo\ LG\ M\ for\ Powerline:h12
+        set guifont=Hack:h12
 
         " Orange :()
         highlight SpellBad term=underline gui=undercurl guisp=Orange
@@ -1249,22 +1250,33 @@ let g:nerdtree_tabs_synchronize_view        = 1
 
 
 " ctrlp.vim
+" Go Jump to file
 let g:ctrlp_map = 'gj'
+" Go to Buffer
 nmap gb :CtrlPBuffer<CR>
+" Go to Recent
 nmap gr :CtrlPMRU<CR>
 " Order files top to bottom
-" let g:ctrlp_match_window = 'bottom,order:ttb'
-" Always open files in new buffers
+let g:ctrlp_match_window = 'bottom,order:ttb'
+" Always open results in a new buffer
 let g:ctrlp_switch_buffer = 0
 " Open multiple files in new tabs
 let g:ctrlp_open_multiple_files = 't'
+
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
 " let g:ctrlp_user_command = 'ag %s -l --nocolor --smart-case -g ""'
 " let g:ctrlp_user_command = 'ag %s --files-with-matches -g "" --smart-case --ignore "\.git$\|\.hg$\|\.svn$"'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard',
- \ 'ag %s -l --ignore-case --nocolor --noheading --ignore .git --ignore .svn --ignore .hg --ignore .DS_Store --ignore "**/*.pyc" -g ""']
+
+" Newest form of ctrlp_user_command: if git exists, use git ls files. Otherwise
+" use ag for file search
+let g:ctrlp_user_command = [
+ \ '.git',
+ \ 'cd %s && git ls-files . -co --exclude-standard',
+ \ 'ag %s -l --ignore-case --nocolor --noheading --ignore .git --ignore .tox --ignore .svn --ignore .hg --ignore .DS_Store --ignore "**/*.pyc" -g ""']
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
+" Only show relative CWD MRU files
+let g:ctrlp_mruf_relative = 0
 
 
 " Netrw
@@ -1280,7 +1292,7 @@ let g:miniBufExplSplitBelow   = 0
 " Commentary
 " comment single line
 nmap <C-c> <Plug>CommentaryLine
-" use xmap to comment multi line visual selection
+" xmap to comment multi line visual selection
 xmap <C-c> <Plug>Commentary
 au FileType htmldjango setlocal commentstring={#\ %s\ #}
 au FileType python.django setlocal commentstring=#\ \%s
@@ -1291,7 +1303,8 @@ au FileType go setlocal commentstring=//\ %s
 let g:LustyJugglerSuppressRubyWarning = 1
 
 " Fugutive
-map <silent> <leader>gb :Gblame<CR>
+" ignore whitespace by default
+map <silent> <leader>gb :Gblame -w<CR>
 map <silent> <leader>gc :Gcommit -v<CR>
 map <silent> <leader>gp :!git push<CR>
 map <silent> <leader>ge :Gedit<CR>
@@ -1351,13 +1364,19 @@ let g:formatprg_args_scss = "-s --indent 4 -F scss -T scss"
 " let g:EasyMotion_leader_key = ','
 " let g:EasyMotion_mapping_f = '<C-n>'
 
-" Airline.vim
+" ========== Airline.vim
 let g:airline#extensions#tabline#enabled = 1
-" let g:bufferline_echo = 0
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#displayed_head_limit = 10
+
+" let g:airline#extensions#hunks#enabled = 1
+" let g:airline#extensions#hunks#enabled = 0
+
+" let g:bufferline_echo = 0
+let g:airline_powerline_fonts = 1
 " truncate file info first once window size shrinks
 let g:airline#extensions#default#section_truncate_width = {
       \ 'b': 100,
@@ -1365,7 +1384,7 @@ let g:airline#extensions#default#section_truncate_width = {
       \ 'x': 150,
       \ 'y': 150,
       \ 'z': 40,
-      \ }
+\ }
 let g:airline_theme='powerlineish'
 let g:airline_left_sep=''
 let g:airline_right_sep=''
