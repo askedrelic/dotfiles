@@ -44,6 +44,8 @@
     #figure out what a revision is
     human = name-rev --name-only --refs=refs/heads/*
 
+    bname = rev-parse --abbrev-ref HEAD
+
     # history
     h    = log --pretty=format:'%Cred%h%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset]%C(yellow)%d%Creset %s ' --graph --abbrev-commit --date=relative --topo-order
 
