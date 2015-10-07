@@ -11,8 +11,7 @@ set commit-order = topo
 
 # Show line numbers for every 10th line in the pager view
 # set pager-view = line-number:yes,interval=1 text
-set main-view = id date:relative author:full commit-title:graph=yes,refs=yes
-
+set main-view = id date:relative author:full commit-title:graph=v1,refs=yes
 
 # set - etc
 # set vertical-split       = "auto"
