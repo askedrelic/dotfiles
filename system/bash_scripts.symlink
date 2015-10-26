@@ -87,8 +87,8 @@ alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 # Share current dir
 alias sharethisdir="echo 'now sharing cur directory at port 9000'; python -m SimpleHTTPServer 9000"
 
-# Get all IPs OSX/Linux compatable
-alias myip='curl "http://www.networksecuritytoolkit.org/nst/cgi-bin/ip.cgi"'
+# External IP lookup
+alias myip='curl "http://what-is-my-ip.net/?text"'
 
 # Get rid of those pesky .DS_Store files recursively
 alias dsclean='find . -type f -name .DS_Store -print0 | xargs -0 rm'
@@ -176,7 +176,12 @@ cdp () {
     )"
 }
 
-# Git ------------------------------------------------
+# Print OSX wifi history
+wifi_history() {
+    defaults read /Library/Preferences/SystemConfiguration/com.apple.airport.preferences | grep LastConnected -A 7
+}
+
+# Git ------------------------------------------------------------------------
 
 alias gs='git status '
 alias ga='git add '
@@ -198,7 +203,7 @@ function gb() {
     done;
 }
 
-# Pylint --------------------------------------------
+# Pylint ---------------------------------------------------------------------
 
 # Show files that have been added, modified, changed, or renamed in the
 # current branch (in a commit)

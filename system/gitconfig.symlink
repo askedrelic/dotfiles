@@ -38,12 +38,14 @@
 
     # Commit all changes
     ca = commit -a
+
     # Switch to a branch, creating it if necessary
     go = checkout -B
 
-    #figure out what a revision is
+    # figure out what a revision is
     human = name-rev --name-only --refs=refs/heads/*
 
+    # branch name
     bname = rev-parse --abbrev-ref HEAD
 
     # history
@@ -59,15 +61,14 @@
     hs               = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
     hist-stat        = log -M --summary --stat --abbrev-commit --date=relative --no-merges --date-order
 
-    #diff
+    # diff
     staged     = diff --patience --cached --patch-with-stat
     un         = diff --patience --patch-with-stat
     unstaged   = diff --patience --patch-with-stat
     both       = diff HEAD --patch-with-stat
 
-    changes    = diff --name-status -r
-    diff-stat  = diff --stat -r
     ds         = diff --stat -r
+    diff-stat  = diff --stat -r
 
     type       = cat-file -t
     dump       = cat-file -p
@@ -105,8 +106,11 @@
     # list branches sorted by last modified
     b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 
-    # list aliases
+    # list git aliases
     la = "!git config -l | grep alias | cut -c 7-"
+
+    # retouch all the files, for things that watch filesystem events
+    touch = "!git status -s | awk '{print $2}' | xargs touch"
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
