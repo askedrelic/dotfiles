@@ -14,14 +14,22 @@
 " ### Custom text inserts
 " ### Plugins
 
-" First, use modern vim and clear any existing autocommands
+filetype off
+call pathogen#infect()
+
+
+"
+filetype plugin indent on
+
+
+" Use modern vim
 set nocompatible
 
 " enable syntax highlighting
-syntax enable
+syntax on
 
 " reset all commands
-autocmd!
+" autocmd!
 
 function! General_Settings()
     " Restore the screen when we're exiting and set correct terminal
@@ -398,8 +406,6 @@ endfunction
 call Line_Wrapping()
 
 function! File_Types()
-    filetype plugin indent on
-
     " Omni Completion
     " mine set completeopt=menu,menuone,longest
     set completeopt=longest,menuone,preview
@@ -1193,8 +1199,6 @@ nmap <leader>id :execute "normal a" . strftime("%Y/%m/%d")<Esc>
 
 " ### Plugins ###################################################
 
-" First, load pathogen
-execute pathogen#infect()
 
 
 "Tabularize align options
@@ -1256,6 +1260,11 @@ let g:ctrlp_map = 'gj'
 nmap gb :CtrlPBuffer<CR>
 " Go to Recent
 nmap gr :CtrlPMRU<CR>
+" Go Undo
+nmap gu :CtrlPUndo<CR>
+" Go recent Changes
+" Overwrite vim-commentary gc, gcc mappings
+nnoremap gc :CtrlPChangeAll<CR>
 " Order files top to bottom
 let g:ctrlp_match_window = 'bottom,order:ttb'
 " Always open results in a new buffer
@@ -1379,7 +1388,7 @@ let g:airline#extensions#branch#displayed_head_limit = 10
 let g:airline_powerline_fonts = 1
 " truncate file info first once window size shrinks
 let g:airline#extensions#default#section_truncate_width = {
-      \ 'b': 100,
+      \ 'b': 20,
       \ 'c': 40,
       \ 'x': 150,
       \ 'y': 150,
@@ -1416,3 +1425,42 @@ let g:airline_inactive_collapse=1
 
 " ExpandVisualSelection.vim
 vmap v <Plug>(expand_region_expand)
+
+let g:ultisnips_python_style = "google"
+let g:snipMateAllowMatchingDot = 0
+
+vmap <Enter> <Plug>(LiveEasyAlign)
+
+" let python_highlight_all = 1
+let g:gutentags_exclude = ['env', '.tox']
+
+" CTRL+A moves to start of line in command mode
+cnoremap <C-a> <home>
+" CTRL+E moves to end of line in command mode
+cnoremap <C-e> <end>
+
+nnoremap <Space> za
+vnoremap <Space> za
+
+" --user defined ---------------------------------------------------------------
+"
+ if filereadable(expand("~/.vimrc.local"))
+   source ~/.vimrc.local
+endif
+
+" remap U to <C-r> for easier redo
+nnoremap U <C-r>
+
+" exit from insert mode without cursor movement
+inoremap jk <ESC>`^
+
+" Always set titlestring to CWD. Most useful identifier to me.
+set titlestring=%{substitute(getcwd(),\ $HOME,\ '~',\ '')}
+
+" Yank current file and line number, to system yank buffer
+function! CopyLine()
+    let @+=expand("%") . ':' . line(".")
+endfunction
+
+" Clear lines
+noremap <Leader>clr :s/^.*$//<CR>:nohls<CR>
