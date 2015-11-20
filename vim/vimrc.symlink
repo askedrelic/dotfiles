@@ -14,19 +14,55 @@
 " ### Custom text inserts
 " ### Plugins
 
-filetype off
-call pathogen#infect()
-
-
-"
-filetype plugin indent on
-
-
 " Use modern vim
 set nocompatible
 
-" enable syntax highlighting
-syntax on
+" Setup vim-plug
+" Docs here: https://github.com/junegunn/vim-plug
+call plug#begin('~/.vim/plugged')
+Plug 'Lokaltog/vim-easymotion'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'ap/vim-css-color'
+Plug 'bling/vim-airline'
+Plug 'junegunn/vim-peekaboo'
+Plug 'pangloss/vim-javascript'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'dhruvasagar/vim-vinegar'
+Plug 'ervandew/supertab'
+Plug 'gabesoft/vim-ags'
+Plug 'vim-scripts/matchit.zip'
+Plug 'garbas/vim-snipmate'
+Plug 'godlygeek/tabular'
+Plug 'vim-scripts/python_match.vim'
+Plug 'gregsexton/MatchTag'
+Plug 'honza/vim-snippets'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+Plug 'msanders/cocoa.vim'
+Plug 'rhysd/clever-f.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'stephpy/vim-yaml'
+Plug 'Chiel92/vim-autoformat'
+Plug 'terryma/vim-expand-region'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/visualrepeat'
+call plug#end()
 
 " reset all commands
 " autocmd!
@@ -334,7 +370,6 @@ endfunction
 call Searching()
 
 function! Colors()
-    syntax on
     set background=dark
     set t_Co=256
     " One unified gui/terminal colorscheme
@@ -1464,3 +1499,6 @@ endfunction
 
 " Clear lines
 noremap <Leader>clr :s/^.*$//<CR>:nohls<CR>
+
+" Make rainbow_parens work with {}
+let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
