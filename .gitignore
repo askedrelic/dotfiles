@@ -2,9 +2,10 @@ tags
 tags.lock
 .DS_Store
 
-
+# ignore vim stuff
 vim/vim.symlink/tmp/
 vim/vim.symlink/backup/
+vim/vim.symlink/plugged/
 
 # ignore some cmus stuff
 system/cmus.symlink/autosave
