@@ -155,6 +155,9 @@ if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
     source $(brew --prefix)/etc/bash_completion
 fi
 
+# Add local tmuxinator bash completion
+[ -f ~/.tmuxinator.bash ] && source ~/.tmuxinator.bash
+
 # import any local bash completion scripts
 # for f in `brew --prefix`/etc/bash_completion.d/*; do source $f; done
 # for file in ~/.bash_completion; do
