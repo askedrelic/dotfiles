@@ -32,7 +32,6 @@
     cm = commit -m
     br = branch
     co = checkout
-    ls = ls-files
     dt = difftool
     mt = mergetool
 
@@ -79,6 +78,8 @@
     # my history, ignore quiting less error
     me         = !git h --author="askedrelic" || TRUE
 
+    # list things
+    ls = ls-files
     ls-ignored = ls-files --others -i --exclude-standard
 
     # open all current changed files in vim
@@ -111,6 +112,9 @@
 
     # retouch all the files, for things that watch filesystem events
     touch = "!git status -s | awk '{print $2}' | xargs touch"
+
+    # fetch all
+    fall = fetch --all
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
