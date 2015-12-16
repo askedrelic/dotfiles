@@ -20,48 +20,51 @@ set nocompatible
 " Setup vim-plug
 " Docs here: https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
-Plug 'Lokaltog/vim-easymotion'
 Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
+
+" Plug 'junegunn/vim-peekaboo'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'Chiel92/vim-autoformat'
+Plug 'Lokaltog/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'bling/vim-airline'
-Plug 'junegunn/vim-peekaboo'
-Plug 'pangloss/vim-javascript'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dhruvasagar/vim-vinegar'
-Plug 'ervandew/supertab'
+Plug 'ervandew/supertab' ", {'commit': 'feb2a5f8'}
 Plug 'gabesoft/vim-ags'
-Plug 'vim-scripts/matchit.zip'
-Plug 'garbas/vim-snipmate'
+Plug 'garbas/vim-snipmate' ", {'commit': '2d3e8ddc'}
 Plug 'godlygeek/tabular'
-Plug 'vim-scripts/python_match.vim'
 Plug 'gregsexton/MatchTag'
 Plug 'honza/vim-snippets'
 Plug 'jistr/vim-nerdtree-tabs'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'msanders/cocoa.vim'
+Plug 'pangloss/vim-javascript'
 Plug 'rhysd/clever-f.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'stephpy/vim-yaml'
-Plug 'Chiel92/vim-autoformat'
 Plug 'terryma/vim-expand-region'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-commentary'
+Plug 'vim-scripts/matchit.zip'
+Plug 'vim-scripts/python_match.vim'
 Plug 'vim-scripts/visualrepeat'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'https://gitlab.com/mcepl/vim-diff_navigator.git'
 call plug#end()
 
 " reset all commands
@@ -1139,9 +1142,10 @@ function! Mini_Scripts()
     endfunction
 
     " formd mappings
-    nmap <leader>fr :call Formd("-r")<CR>
-    nmap <leader>fi :call Formd("-i")<CR>
-    nmap <leader>f :call Formd("-f")<CR>
+    " nmap <leader>fr :call Formd("-r")<CR>
+    " nmap <leader>fi :call Formd("-i")<CR>
+    " Format ...
+    " nmap <leader>f :call Formd("-f")<CR>
 
     " location/quickfix list toggle script
     function! GetBufferList()
@@ -1289,6 +1293,8 @@ let g:nerdtree_tabs_synchronize_view        = 1
 
 
 " ctrlp.vim
+" Remember to use <C-\> to insert current word or visual selection when
+" searching...
 " Go Jump to file
 let g:ctrlp_map = 'gj'
 " Go to Buffer
@@ -1495,10 +1501,37 @@ set titlestring=%{substitute(getcwd(),\ $HOME,\ '~',\ '')}
 " Yank current file and line number, to system yank buffer
 function! CopyLine()
     let @+=expand("%") . ':' . line(".")
+    echo 'Copied "'@*'" to clipboard'
 endfunction
+
+" Yank in vim style
+function! CopyLineVim()
+    let @+='+' . line(".") . ' ' .expand("%")
+    echo 'Copied "'@*'" to clipboard'
+endfunction
+
+" http://www.vimbits.com/bits/337
+
+" Yank Path
+nnoremap <Leader>yp :let @*=expand("%")<cr>:echo 'Copied '@*' to clipboard'<cr>
+" Yank Filepath to clipboard
+nnoremap <Leader>yf :let @*=expand("%:t")<cr>:echo 'Copied '@*' to clipboard'<cr>
+" Yank Vim style filepath
+nnoremap <Leader>yv :call CopyLineVim()<cr>
+" Yank normal style file with Line number
+nnoremap <Leader>yl :call CopyLine()<cr>
+" Copy current buffer path without filename to system clipboard
+nnoremap <Leader>yd :let @*=expand("%:h")<cr>:echo 'Copied '@*' to clipboard'<cr>
 
 " Clear lines
 noremap <Leader>clr :s/^.*$//<CR>:nohls<CR>
 
 " Make rainbow_parens work with {}
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
+
+" Better ctrlp searching
+" nmap <leader>f :CtrlP<CR><C-\>w
+vmap gj y:CtrlP<CR><C-\>v
+" vmap <leader>f y:CtrlP<CR><C-\>c
+"
+
