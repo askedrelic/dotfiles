@@ -6,6 +6,8 @@
     whitespace = fix
 [color]
     pager = true
+    # Use colors in Git commands that are capable of colored output when
+	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
     ui    = auto
 [color "branch"]
     current = yellow reverse
@@ -13,9 +15,9 @@
     remote  = green
 [color "diff"]
     meta       = yellow bold
-    frag       = magenta bold
-    old        = red bold
-    new        = green bold
+    frag       = magenta bold # line info
+    old        = red          # deletions
+    new        = green        # additions
     whitespace = red reverse
 [color "status"]
     added     = yellow
@@ -23,23 +25,83 @@
     untracked = cyan
 [core]
     excludesfile   = ~/.gitignore
-    whitespace     = fix,-indent-with-non-tab,space-before-tab,trailing-space,cr-at-eol
+
+    # Force pager to work with colors
     pager          = less -FRSX
+
+	# Treat spaces before tabs and all kinds of trailing whitespace as an error
+	# [default] trailing-space: looks for spaces at the end of a line
+	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+    # Make `git rebase` safer on OS X
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+
+	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
+	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+	precomposeunicode = false
 [alias]
-    st = status
-    s  = status
+	# View the current working tree status using the short format
+	s = status -s
+
+    # Switch to a branch, creating it if necessary
+    go = checkout -B
+
+    # easy wip commit :/
+    wip        = commit -am "WIP"
+
+    # remove the top commit, to unstaged index
+    pop = reset HEAD^
+
+    # kill the last commit
+    drop = reset --hard HEAD^
+
+    # list things
+    ls = ls-files
+    ls-ignored = ls-files --others -i --exclude-standard
+
+    # retouch all the files, for things that watch filesystem events
+    touch = "!git status -s | awk '{print $2}' | xargs touch"
+
+    # fetch all
+    fall = fetch --all
+
+    # Remove branches that have already been merged with master
+	# a.k.a. ‘delete merged’
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+
+    # Interactive rebase with the given number of latest commits
+	reb = "!r() { git rebase -i HEAD~$1; }; r"
+
+	# Find branches containing commit
+	fb = "!f() { git branch -a --contains $1; }; f"
+
+	# Find tags containing commit
+	ft = "!f() { git describe --always --contains $1; }; f"
+
+	# Find commits by source code
+	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+
+	# Find commits by commit message
+	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+
+	# List contributors with number of commits
+	contributors = shortlog --summary --numbered
+
     ci = commit -v
     cm = commit -m
     br = branch
     co = checkout
-    dt = difftool
-    mt = mergetool
 
     # Commit all changes
     ca = commit -a
 
-    # Switch to a branch, creating it if necessary
-    go = checkout -B
 
     # figure out what a revision is
     human = name-rev --name-only --refs=refs/heads/*
@@ -72,25 +134,14 @@
     type       = cat-file -t
     dump       = cat-file -p
 
-    # easy wip commit :/
-    wip        = commit -am "WIP"
-
     # my history, ignore quiting less error
     me         = !git h --author="askedrelic" || TRUE
-
-    # list things
-    ls = ls-files
-    ls-ignored = ls-files --others -i --exclude-standard
 
     # open all current changed files in vim
     edit = !vim -p `git diff HEAD --name-only`
     e = !git edit
     eg = !gvim -p `git diff HEAD --name-only`
 
-    # remove the top commit, to unstaged index
-    pop = reset HEAD^
-    # kill the last commit
-    drop = reset --hard HEAD^
 
     sp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git stash pop
     spp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git push && git stash pop
@@ -110,11 +161,6 @@
     # list git aliases
     la = "!git config -l | grep alias | cut -c 7-"
 
-    # retouch all the files, for things that watch filesystem events
-    touch = "!git status -s | awk '{print $2}' | xargs touch"
-
-    # fetch all
-    fall = fetch --all
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
     autosetupmerge = true
@@ -130,19 +176,20 @@
 [push]
     #When pushing without giving a refspec, push the current branch to its upstream branch.
     default = tracking
+	# Make `git push` push relevant annotated tags when pushing branches out.
+	followTags = true
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
-    tool = p4merge
-[mergetool]
-    keepBackup = false
-    prompt     = false
 [difftool]
     prompt = false
 [grep]
     extendedRegexp = true
 [rebase]
     autosquash = true
+[help]
+	# Automatically correct and execute mistyped commands
+	autocorrect = 1
 [gh]
     protocol = https
     autoUpdate = never
