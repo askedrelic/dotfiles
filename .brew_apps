@@ -1,12 +1,10 @@
 ack
 alfred
-apple-gcc42
 at-monitor
 atk
 autoconf
+autojump
 automake
-bash
-bash-completion
 bdw-gc
 bison
 brew-cask
@@ -18,7 +16,6 @@ colordiff
 coreutils
 cscope
 csshx
-csstidy
 ctags
 curl
 dcraw
@@ -28,7 +25,6 @@ exiv2
 faac
 faad2
 ffmpeg
-findutils
 flac
 fontconfig
 freetype
@@ -36,7 +32,6 @@ gawk
 gd
 gdbm
 gdk-pixbuf
-gephi
 gettext
 gifsicle
 gist
@@ -62,7 +57,6 @@ ios-sim
 jasper
 jpeg
 jq
-jsl
 json-c
 lame
 libao
@@ -88,7 +82,6 @@ libzip
 little-cms
 lynx
 lzip
-macvim
 mad
 md5sha1sum
 mercurial
@@ -110,12 +103,10 @@ p11-kit
 p7zip
 pango
 pcre
-perforce
 pg_top
 phantomjs
 pianobar
 pidof
-pil
 pixman
 pkg-config
 pngcrush
@@ -137,12 +128,9 @@ scons
 sox
 sqlite
 sshuttle
-steam
 swig
-synergy
 taglib
 texi2html
-the-unarchiver
 the_silver_searcher
 theora
 tig
@@ -150,8 +138,6 @@ tmux
 transmission
 tree
 ufraw
-utorrent
-virtualbox
 w3m
 webkit2png
 wget
@@ -160,4 +146,3 @@ xvid
 xz
 yasm
 yuicompressor
-zlib
