@@ -10,5 +10,6 @@ cd "$(dirname $0)"/..
 echo "› brew bundle"
 brew bundle
 
-# find the installers and run them iteratively
-find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
+# find the installers and run them iteratively (except homebrew, which has
+# probably already happened)
+find . -name install.sh -not -path 'homebrew/install.sh' | while read installer ; do sh -c "${installer}" ; done
