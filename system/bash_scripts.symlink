@@ -142,10 +142,13 @@ function extract()
      fi
 }
 
-function ps() { /bin/ps $@ -u $USER -o pid,%cpu,%mem,command ; }
-function pp() { ps -f | awk '!/awk/ && $0~var' var=${1:-".*"} ; }
+function pp() {
+    ps -f | awk '!/awk/ && $0~var' var=${1:-".*"} ;
+}
 
-function countdown () { MIN=$1; for ((i=$((MIN*60));i>=0;i--));do echo -ne "\r$(date -d"0+$i sec" +%H:%M:%S)"; sleep 1; done; say -v bruce "$2";}
+function countdown () {
+    MIN=$1; for ((i=$((MIN*60));i>=0;i--));do echo -ne "\r$(date -d"0+$i sec" +%H:%M:%S)"; sleep 1; done; say -v bruce "$2";
+}
 alias atop='watch -n 3 "free; echo; uptime; echo; ps aux  --sort=-%cpu | head -n 11; echo; who"'
 
 if [ `uname` = Darwin ]; then
