@@ -110,22 +110,23 @@ export PIP_RESPECT_VIRTUALENV=true
 
 # Ruby
 # Using rbenv currently
-# eval "$(rbenv init -)"
+export RBENV_ROOT=/usr/local/var/rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-# export GEM_HOME="$(brew --prefix)"
-# export RY_PREFIX="$HOME/.local"
-
-# export RY_PREFIX="/usr/local"
-# export PATH="$RY_PREFIX/lib/ry/current/bin:$PATH"
-# . "$RY_PREFIX/lib/ry.bash_completion"
-# export PATH=/usr/local/Cellar/ruby193/1.9.3-p448/bin:$PATH
+# Python
+# Ditto for pyenv
+export PYENV_ROOT=/usr/local/var/pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 # Prompts -----------------------------------------------------------------------
 
 source ~/.bash_prompt
 
 # Imports ----------------------------------------------------------------------------------------------
+
+# Add fuzzy finder scripts
+# https://github.com/junegunn/fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # enable python virtualenv wrapper
 # [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
@@ -167,3 +168,4 @@ fi
 #         echo
 #     fi
 # done
+
