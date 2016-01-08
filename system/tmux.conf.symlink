@@ -9,22 +9,26 @@ unbind C-b
 set -g prefix C-f
 bind C-f send-prefix
 
-# Disable this; iTerm2 hex key code compatability
+# Disable paste-time for iTerm2 hex key code compatability
 set -g assume-paste-time 0
 
-set -g default-terminal "screen-256color" # colors!
+# colors!
+set -g default-terminal "screen-256color"
+
 setw -g xterm-keys on
-set -s escape-time 0                      # fastest command sequences
-set -sg repeat-time 600                   # increase repeat timeout
-set -s quiet on                           # disable various messages
 
-# uncomment to force vi-style key bindings
-# emacs is the default unless $EDITOR or $VISUAL contain 'vi'
-#set -g status-keys vi
-#setw -g mode-keys vi
+# fastest command sequences
+set -s escape-time 0
 
+# increase repeat timeout
+set -sg repeat-time 600
+
+# disable various messages
+set -s quiet on
+
+# expect UTF-8
 setw -g utf8 on
-set -g status-utf8 on                     # expect UTF-8
+set -g status-utf8 on
 
 # Watch for activity in background windows
 setw -g monitor-activity on
@@ -33,17 +37,18 @@ set -g visual-activity off
 # increase scrollback size
 set -g history-limit 10000
 
+# Allow copy/paste to work natively in OSX; https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+# Not needed after OSX 10.10?
+# if 'which -s reattach-to-user-namespace' 'set -g default-command "reattach-to-user-namespace $SHELL -l"'
+
+# Toggle status line
+bind T set-option -g status
+
 # edit configuration
 bind e new-window -n '~/.tmux.conf' '${EDITOR:-vim} ~/.tmux.conf && tmux source ~/.tmux.conf && tmux display "~/.tmux.conf sourced"'
 
 # reload configuration
 bind r source-file ~/.tmux.conf \; display '~/.tmux.conf sourced'
-
-# see https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-if 'which -s reattach-to-user-namespace' 'set -g default-command "reattach-to-user-namespace $SHELL -l"'
-
-# toggle status line
-bind T set-option -g status
 
 # -- display -------------------------------------------------------------------
 
@@ -56,13 +61,18 @@ setw -g pane-base-index 1   # make pane numbering consistent with windows
 # renumber windows when a window is closed
 set -g renumber-windows on
 
-set -g set-titles on                        # set terminal title
+# set terminal title
+set -g set-titles on
 set -g set-titles-string '#h ❐ #S ● #I #W'
 
-set -g display-panes-time 800 # slightly longer pane indicators display time
-set -g display-time 1000      # slightly longer status messages display time
+# slightly longer pane indicators display time
+set -g display-panes-time 800
 
-set -g status-interval 5     # redraw status line every 5 seconds
+# slightly longer status messages display time
+set -g display-time 1000
+
+# redraw status line every 5 seconds
+set -g status-interval 5
 
 # 24 hour clock
 setw -g clock-mode-style 24
@@ -128,24 +138,22 @@ bind b list-buffers  # list paster buffers
 bind p paste-buffer  # paste from the top pate buffer
 bind P choose-buffer # choose which buffer to paste from
 
-# the following vi-copy bindings match my vim settings
-#   see https://github.com/gpakosz/.vim.git
+# vim style copy bindings https://github.com/gpakosz/.vim.git
 bind -t vi-copy v begin-selection
 bind -t vi-copy C-v rectangle-toggle
-bind -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
-bind -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
-bind -t vi-copy Escape cancel
+bind -t vi-copy y copy-pipe "pbcopy"
+bind -t vi-copy Enter copy-pipe "pbcopy"
+# bind -t vi-copy Escape cancel
 bind -t vi-copy H start-of-line
 bind -t vi-copy L end-of-line
 
-# copy to Mac OSX pasteboard
-if 'which -s reattach-to-user-namespace' 'bind y run "tmux save-buffer - | reattach-to-user-namespace pbcopy"'
-
+# Always copy to OSX pasteboard
+# Not needed after oSX 10.10?
+# if 'which -s reattach-to-user-namespace' 'bind y run "tmux save-buffer - | reattach-to-user-namespace pbcopy"'
 
 # -- user defined --------------------------------------------------------------
 
 if '[ -f ~/.tmux.conf.local ]' 'source ~/.tmux.conf.local'
-
 
 # -- 8< ------------------------------------------------------------------------
 
@@ -156,12 +164,34 @@ run 'for name in $(printenv | grep -Eo ^tmux_conf_[^=]+); do tmux setenv -gu $na
 # List of plugins
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sessionist'
+
+# Easy open
+# prefix + o - open "thing"
 set -g @plugin 'tmux-plugins/tmux-open'
+
+# Easy urlopen
+# prefix + u - show any URLs
 set -g @plugin 'tmux-plugins/tmux-urlview'
+
+# Plugin that highlights when you press tmux prefix key
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
 set -g @plugin 'tmux-plugins/tmux-logging'
 
-# # Other examples:
+# https://github.com/tmux-plugins/tmux-copycat
+# prefix + ctrl-f - simple file search
+# prefix + ctrl-g - jumping over git status files (best used after git status command)
+# prefix + alt-h  - jumping over SHA-1 hashes (best used after git log command)
+# prefix + ctrl-u - url search (http, ftp and git urls)
+# prefix + ctrl-d - number search (mnemonic d, as digit)
+# prefix + alt-i  - ip address search
+set -g @plugin 'tmux-plugins/tmux-copycat'
+
+# Easy paste bindings
+# prefix + y - copies text from the command line to clipboard
+# prefix + Y - copy pane current working directory to clipboard
+set -g @plugin 'tmux-plugins/tmux-yank'
+
+# # other examples:
 # set -g @plugin 'github_username/plugin_name'
 # set -g @plugin 'git@github.com/user/plugin'
 # # set -g @plugin 'git@bitbucket.com/user/plugin'
