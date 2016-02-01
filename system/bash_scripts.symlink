@@ -87,8 +87,8 @@ alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 # Share current dir
 alias sharethisdir="echo 'now sharing cur directory at port 9000'; python -m SimpleHTTPServer 9000"
 
-# External IP lookup
-alias myip='curl "http://what-is-my-ip.net/?text"'
+# External IP lookup, my own app
+alias myip='curl https://ipster.apps.asktherelic.com'
 
 # Get rid of those pesky .DS_Store files recursively
 alias dsclean='find . -type f -name .DS_Store -print0 | xargs -0 rm'
@@ -116,7 +116,7 @@ alias openapps='lsof -P -i -n'
 
 # Print $PATH in a useful way
 function path(){
-    echo -e $(echo $PATH | sed 's/:/\\\n/g')
+    echo $PATH | sed 's#:#\n#g'
 }
 
 # honestly, who really remembers these flags? I don't anymore
