@@ -42,14 +42,28 @@
 	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
 	precomposeunicode = false
 [alias]
+    # Add all (tracked and untracked)
+    aa = add --all
+
+    ci = commit -v
+    cm = commit -m
+    br = branch
+    co = checkout
+
+    # Commit all changes
+    ca = commit -a
+
 	# View the current working tree status using the short format
 	s = status -s
+
+    # Simple status, for piping
+    ss = "!git status -s | awk '{print $2}'"
 
     # Switch to a branch, creating it if necessary
     go = checkout -B
 
-    # easy wip commit :/
-    wip        = commit -am "WIP"
+    # WIP commit. Don't abuse this!
+    wip = commit -am "WIP"
 
     # remove the top commit, to unstaged index
     pop = reset HEAD^
@@ -94,19 +108,10 @@
 	# List contributors with number of commits
 	contributors = shortlog --summary --numbered
 
-    ci = commit -v
-    cm = commit -m
-    br = branch
-    co = checkout
-
-    # Commit all changes
-    ca = commit -a
-
-
     # figure out what a revision is
     human = name-rev --name-only --refs=refs/heads/*
 
-    # branch name
+    # Current branch name, for piping
     bname = rev-parse --abbrev-ref HEAD
 
     # history
@@ -135,7 +140,7 @@
     dump       = cat-file -p
 
     # my history, ignore quiting less error
-    me         = !git h --author="askedrelic" || TRUE
+    me = !git h --author="$GIT_AUTHOR_EMAIL" || TRUE
 
     # open all current changed files in vim
     edit = !vim -p `git diff HEAD --name-only`
