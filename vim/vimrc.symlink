@@ -17,6 +17,10 @@
 " Use modern vim
 set nocompatible
 
+" Fix unicode things
+set encoding=utf-8
+scriptencoding utf-8
+
 " Setup vim-plug
 " Docs here: https://github.com/junegunn/vim-plug
 call plug#begin('~/.vim/plugged')
@@ -29,9 +33,16 @@ Plug 'Chiel92/vim-autoformat'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
-Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'dhruvasagar/vim-vinegar'
+
+" Airline status bar and themes
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" A better JSON for Vim
+Plug 'elzr/vim-json'
+
 Plug 'ervandew/supertab' ", {'commit': 'feb2a5f8'}
 Plug 'gabesoft/vim-ags'
 Plug 'garbas/vim-snipmate' ", {'commit': '2d3e8ddc'}
@@ -46,20 +57,46 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'msanders/cocoa.vim'
 Plug 'pangloss/vim-javascript'
+Plug 'plasticboy/vim-markdown'
 Plug 'rhysd/clever-f.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
+
+
+" Better yaml syntax highlighting
 Plug 'stephpy/vim-yaml'
+
+" Yaml indent support
+Plug 'martin-svk/vim-yaml'
+
 Plug 'terryma/vim-expand-region'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+
+" Eunuch - vim sugar for the UNIX shell commands
+" :Remove: Delete a buffer and the file on disk simultaneously.
+" :Unlink: Like :Remove, but keeps the now empty buffer.
+" :Move: Rename a buffer and the file on disk simultaneously.
+" :Rename: Like :Move, but relative to the current file's containing directory.
+" :Chmod: Change the permissions of the current file.
+" :Mkdir: Create a directory, defaulting to the parent of the current file.
+" :Find: Run find and load the results into the quickfix list.
+" :Locate: Run locate and load the results into the quickfix list.
+" :Wall: Write every open window. Handy for kicking off tools like guard.
+" :SudoWrite: Write a privileged file with sudo.
+" :SudoEdit: Edit a privileged file with sudo.
+" File type detection for sudo -e is based on original file name.
+" New files created with a shebang line are automatically made executable.
+" New init scripts are automatically prepopulated with /etc/init.d/skeleton.
+Plug 'tpope/vim-eunuch'
+
+
 Plug 'vim-scripts/matchit.zip'
 Plug 'vim-scripts/python_match.vim'
 Plug 'vim-scripts/visualrepeat'
@@ -67,8 +104,10 @@ Plug 'nathanaelkane/vim-indent-guides'
 Plug 'https://gitlab.com/mcepl/vim-diff_navigator.git'
 call plug#end()
 
-" reset all commands
-" autocmd!
+" Create vimrc group
+augroup vimrc
+  autocmd!
+augroup END
 
 function! General_Settings()
     " Restore the screen when we're exiting and set correct terminal
@@ -121,7 +160,7 @@ function! General_Settings()
     " keep 1000 undo levels
     set undolevels=1000
     " Resize splits when the window is resized
-    au VimResized * exe "normal! \<c-w>="
+    autocmd VimResized * exe "normal! \<c-w>="
     " allow you to have multiple files open and change between them without saving
     set hidden
     "make backspace work
@@ -131,8 +170,6 @@ function! General_Settings()
     " have % bounce between angled brackets, as well as other kinds:
     " set matchpairs+=<:>
     " set comments=s1:/*,mb:*,ex:*/,f://,b:#,:%,:XCOMM,n:>,fb:-
-    " This being the 21st century, I use Unicode
-    set encoding=utf-8
     " report: show a report when N lines were changed. 0 means 'all'
     set report=0
     " runtimepath: list of dirs to search for runtime files
@@ -174,7 +211,7 @@ function! General_Settings()
     set showbreak=↪
 
     "check if file is written to elsewhere and ask to reload immediately, not when saving
-    "au CursorHold * checktime
+    "autocmd CursorHold * checktime
     " automatically reload a file when it has changed externally
     set autoread
     " automatically write the file a bunch of commands
@@ -210,7 +247,7 @@ function! General_Settings()
     " make matchparen timeout quickly; don't take forever on long lines
     let g:matchparen_insert_timeout=5
 
-    let mapleader = ','
+    " let mapleader = ','
     let g:mapleader = ','
 
     " Search for ctags file up to /
@@ -331,8 +368,8 @@ function! Scrollbars()
     set sidescrolloff=10
 
     "Highlight cursorline ONLY in the active window:
-    au WinEnter * setlocal cursorline
-    au WinLeave * setlocal nocursorline
+    autocmd WinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
 
     " Highlight long lines
     highlight clear ColorColumn
@@ -449,18 +486,18 @@ function! File_Types()
     set completeopt=longest,menuone,preview
 
     " complete using built in syntax? http://vim.wikia.com/wiki/Completion_using_a_syntax_file
-    " au FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
+    " autocmd FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
 
     " CSS and LessCSS
     augroup ft_css
-        au!
+        autocmd!
 
-        au BufNewFile,BufRead *.less setlocal filetype=less
+        autocmd BufNewFile,BufRead *.less setlocal filetype=less
 
-        "au Filetype less,css setlocal foldmethod=marker
-        "au Filetype less,css setlocal foldmarker={,}
-        au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
-        au Filetype less,css setlocal iskeyword+=-
+        "autocmd Filetype less,css setlocal foldmethod=marker
+        "autocmd Filetype less,css setlocal foldmarker={,}
+        autocmd Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd Filetype less,css setlocal iskeyword+=-
 
         " Use <leader>S to sort properties.  Turns this:
         "
@@ -481,42 +518,42 @@ function! File_Types()
         "
         "         ...
         "     }
-        au BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+        autocmd BufNewFile,BufRead *.less,*.css nnoremap <buffer> <localLeader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 
         " Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
         " positioned inside of them AND the following code doesn't get unfolded.
-        au BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
+        autocmd BufNewFile,BufRead *.less,*.css inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
     augroup END
 
     " Django
     augroup ft_django
-        au!
+        autocmd!
 
-        au BufNewFile,BufRead urls.py             setlocal nowrap
-        au BufNewFile,BufRead urls.py             normal! zR
-        au BufNewFile,BufRead dashboard.py        normal! zR
-        au BufNewFile,BufRead local_settings.py   normal! zR
+        autocmd BufNewFile,BufRead urls.py             setlocal nowrap
+        autocmd BufNewFile,BufRead urls.py             normal! zR
+        autocmd BufNewFile,BufRead dashboard.py        normal! zR
+        autocmd BufNewFile,BufRead local_settings.py   normal! zR
 
-        au BufNewFile,BufRead admin.py            setlocal filetype=python.django
-        au BufNewFile,BufRead urls.py             setlocal filetype=python.django
-        au BufNewFile,BufRead models.py           setlocal filetype=python.django
-        au BufNewFile,BufRead views.py            setlocal filetype=python.django
-        au BufNewFile,BufRead settings.py         setlocal filetype=python.django
-        au BufNewFile,BufRead forms.py            setlocal filetype=python.django
-        au BufNewFile,BufRead common_settings.py  setlocal filetype=python.django
+        autocmd BufNewFile,BufRead admin.py            setlocal filetype=python.django
+        autocmd BufNewFile,BufRead urls.py             setlocal filetype=python.django
+        autocmd BufNewFile,BufRead models.py           setlocal filetype=python.django
+        autocmd BufNewFile,BufRead views.py            setlocal filetype=python.django
+        autocmd BufNewFile,BufRead settings.py         setlocal filetype=python.django
+        autocmd BufNewFile,BufRead forms.py            setlocal filetype=python.django
+        autocmd BufNewFile,BufRead common_settings.py  setlocal filetype=python.django
     augroup END
 
     " HTML and HTMLDjango
     augroup ft_html
-        au!
+        autocmd!
 
-        au BufNewFile,BufRead *.html setlocal filetype=htmldjango
+        autocmd BufNewFile,BufRead *.html setlocal filetype=htmldjango
         " call Tabstyle_2spaces()
 
         "hitting % on <ul> jumps to <li> instead of </ul>
-        au FileType html let b:match_words='<:>,<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>'
+        autocmd FileType html let b:match_words='<:>,<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>'
 
-        au FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
         " Use Shift-Return to turn this:
         "     <tag>|</tag>
         "
@@ -524,72 +561,72 @@ function! File_Types()
         "     <tag>
         "         |
         "     </tag>
-        au FileType html,jinja,htmldjango nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
+        autocmd FileType html,jinja,htmldjango nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
 
         " Django tags
-        au FileType jinja,htmldjango inoremap <buffer> <c-t> {%<space><space>%}<left><left><left>
+        autocmd FileType jinja,htmldjango inoremap <buffer> <c-t> {%<space><space>%}<left><left><left>
 
         " Django variables
-        au FileType jinja,htmldjango inoremap <buffer> <c-f> {{<space><space>}}<left><left><left>
+        autocmd FileType jinja,htmldjango inoremap <buffer> <c-f> {{<space><space>}}<left><left><left>
     augroup END
 
     " Java
     augroup ft_java
-        au!
+        autocmd!
 
     augroup END
 
     " Javascript
     augroup ft_javascript
-        au!
+        autocmd!
         " call Tabstyle_2spaces()
 
         " easy comment insert
-        au FileType javascript inoremap <buffer> <c-c> console.log();<left><left>
-        au FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-        " au FileType javascript setlocal foldmethod=marker
-        " au FileType javascript setlocal foldmarker={,}
+        autocmd FileType javascript inoremap <buffer> <c-c> console.log();<left><left>
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        " autocmd FileType javascript setlocal foldmethod=marker
+        " autocmd FileType javascript setlocal foldmarker={,}
     augroup END
 
     augroup ft_markdown
-        au!
+        autocmd!
 
-        au BufNewFile,BufRead *.m*down setlocal filetype=markdown
+        autocmd BufNewFile,BufRead *.m*down setlocal filetype=markdown
 
         " Use <localLeader>1/2/3 to add headings.
-        au Filetype markdown nnoremap <buffer> <localLeader>1 yypVr=
-        au Filetype markdown nnoremap <buffer> <localLeader>2 yypVr-
-        au Filetype markdown nnoremap <buffer> <localLeader>3 I### <ESC>
+        autocmd Filetype markdown nnoremap <buffer> <localLeader>1 yypVr=
+        autocmd Filetype markdown nnoremap <buffer> <localLeader>2 yypVr-
+        autocmd Filetype markdown nnoremap <buffer> <localLeader>3 I### <ESC>
     augroup END
 
     augroup ft_nginx
-        au!
+        autocmd!
 
-        au BufRead,BufNewFile /etc/nginx/conf/*                      set ft=nginx
-        au BufRead,BufNewFile /etc/nginx/sites-available/*           set ft=nginx
-        au BufRead,BufNewFile /usr/local/etc/nginx/sites-available/* set ft=nginx
-        au BufRead,BufNewFile vhost.nginx                            set ft=nginx
+        autocmd BufRead,BufNewFile /etc/nginx/conf/*                      set ft=nginx
+        autocmd BufRead,BufNewFile /etc/nginx/sites-available/*           set ft=nginx
+        autocmd BufRead,BufNewFile /usr/local/etc/nginx/sites-available/* set ft=nginx
+        autocmd BufRead,BufNewFile vhost.nginx                            set ft=nginx
 
     augroup END
 
     " Python
     augroup ft_python
-        au!
-        let python_highlight_all = 1
-        au FileType python setlocal omnifunc=pythoncomplete#Complete
-        "au FileType python compiler nose
-        au FileType man nnoremap <buffer> <cr> :q<cr>
+        autocmd!
+        let g:python_highlight_all = 1
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        "autocmd FileType python compiler nose
+        autocmd FileType man nnoremap <buffer> <cr> :q<cr>
 
         " format comments correctly
-        au FileType python setlocal textwidth=80
-        au FileType python setlocal formatoptions=croqn
+        autocmd FileType python setlocal textwidth=80
+        autocmd FileType python setlocal formatoptions=croqn
 
         " @NOTE Fuck smartindent, it forces inserting tabs. Use cindent instead
-        au FileType python setlocal cindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
-        au FileType python setlocal cinkeys-=0#
-        au FileType python setlocal indentkeys-=0#
+        autocmd FileType python setlocal cindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
+        autocmd FileType python setlocal cinkeys-=0#
+        autocmd FileType python setlocal indentkeys-=0#
 
-        " au FileType python inoremap <buffer> <c-f> import IPython; IPython.embed()
+        " autocmd FileType python inoremap <buffer> <c-f> import IPython; IPython.embed()
 
         " @NOTE This blows up omnifunc complete
         " `gf` jumps to the filename under the cursor.  Point at an import statement
@@ -606,37 +643,37 @@ function! File_Types()
 
     " Restructured text
     augroup ft_rest
-        au!
+        autocmd!
 
-        au Filetype rst nnoremap <buffer> <localLeader>1 yypVr=
-        au Filetype rst nnoremap <buffer> <localLeader>2 yypVr-
-        au Filetype rst nnoremap <buffer> <localLeader>3 yypVr~
-        au Filetype rst nnoremap <buffer> <localLeader>4 yypVr`
+        autocmd Filetype rst nnoremap <buffer> <localLeader>1 yypVr=
+        autocmd Filetype rst nnoremap <buffer> <localLeader>2 yypVr-
+        autocmd Filetype rst nnoremap <buffer> <localLeader>3 yypVr~
+        autocmd Filetype rst nnoremap <buffer> <localLeader>4 yypVr`
     augroup END
 
     " Ruby
     augroup ft_ruby
-        au!
+        autocmd!
 
-        au Filetype ruby setlocal shiftwidth=2
-        au Filetype ruby setlocal softtabstop=2
+        autocmd Filetype ruby setlocal shiftwidth=2
+        autocmd Filetype ruby setlocal softtabstop=2
     augroup END
 
     augroup ft_vagrant
-        au!
-        au BufRead,BufNewFile Vagrantfile set ft=ruby
+        autocmd!
+        autocmd BufRead,BufNewFile Vagrantfile set ft=ruby
     augroup END
 
     " Vim
     augroup ft_vim
-        au!
+        autocmd!
 
-        au FileType help setlocal textwidth=78 nonumber
-        au BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
+        autocmd FileType help setlocal textwidth=78 nonumber
+        autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | endif
 
         " treat lines starting with a quote mark as comments (for `Vim' files, such as
         " this very one!)
-        au FileType vim setlocal comments+=b:\"
+        autocmd FileType vim setlocal comments+=b:\"
     augroup END
 
     "jump to last cursor position when opening a file
@@ -1087,7 +1124,6 @@ function! Mini_Scripts()
     " gives you one color of highlighting.  Now you can use <leader>N where N is
     " a number from 1-6 to highlight the current word in a specific color.
     " stolen from SJL https://github.com/sjl/dotfiles/blob/master/vim/vimrc#L1814-1863
-
     function! HiInterestingWord(n)
         " Save our location.
         normal! mz
@@ -1129,8 +1165,8 @@ function! Mini_Scripts()
     " to it's original position within the buffer.
     " http://drbunsen.github.io/formd/
     function! Formd(option)
-        :let save_view = winsaveview()
-        :let flag = a:option
+        :let l:save_view = winsaveview()
+        :let l:flag = a:option
         :if flag == "-r"
             :%! formd -r
         :elseif flag == "-i"
@@ -1155,7 +1191,7 @@ function! Mini_Scripts()
       return buflist
     endfunction
     function! ToggleList(bufname, pfx)
-      let buflist = GetBufferList()
+      let l:buflist = GetBufferList()
       for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
         if bufwinnr(bufnum) != -1
           exec(a:pfx.'close')
@@ -1167,7 +1203,7 @@ function! Mini_Scripts()
           echo "Location List is Empty."
           return
       endif
-      let winnr = winnr()
+      let l:winnr = winnr()
       exec('bot '.a:pfx.'open')
       if winnr() != winnr
         wincmd p
@@ -1344,10 +1380,10 @@ let g:miniBufExplSplitBelow   = 0
 nmap <C-c> <Plug>CommentaryLine
 " xmap to comment multi line visual selection
 xmap <C-c> <Plug>Commentary
-au FileType htmldjango setlocal commentstring={#\ %s\ #}
-au FileType python.django setlocal commentstring=#\ \%s
-au FileType python setlocal commentstring=#\ %s
-au FileType go setlocal commentstring=//\ %s
+autocmd vimrc FileType htmldjango setlocal commentstring={#\ %s\ #}
+autocmd vimrc FileType python.django setlocal commentstring=#\ \%s
+autocmd vimrc FileType python setlocal commentstring=#\ %s
+autocmd vimrc FileType go setlocal commentstring=//\ %s
 
 " LustyJuggler
 let g:LustyJugglerSuppressRubyWarning = 1
@@ -1535,3 +1571,7 @@ vmap gj y:CtrlP<CR><C-\>v
 " vmap <leader>f y:CtrlP<CR><C-\>c
 "
 
+" Remap vim-ags open tab
+" https://github.com/gabesoft/vim-ags/issues/23
+autocmd vimrc FileType agsv nnoremap <buffer> ot
+  \ :exec 'tab split ' . ags#filePath(line('.'))<CR>
