@@ -35,7 +35,7 @@ setw -g monitor-activity on
 set -g visual-activity off
 
 # increase scrollback size
-set -g history-limit 10000
+set -g history-limit 20000
 
 # Allow copy/paste to work natively in OSX; https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 # Not needed after OSX 10.10?
@@ -122,11 +122,12 @@ bind + run 'cut -c3- ~/.tmux.conf | sh -s maximize_pane'
 # window navigation
 bind-key C-h previous-window # select previous window
 bind-key C-l next-window     # select next window
-bind-key Space last-window      # move to last active window
+# bind-key Space last-session      # move to last session
 
 # toggle mouse
 bind m run "cut -c3- ~/.tmux.conf | sh -s toggle_mouse"
 
+bind-key s switch-client -n
 
 # -- copy mode -----------------------------------------------------------------
 
@@ -167,7 +168,7 @@ set -g @plugin 'tmux-plugins/tmux-sessionist'
 
 # Easy open
 # prefix + o - open "thing"
-set -g @plugin 'tmux-plugins/tmux-open'
+# set -g @plugin 'tmux-plugins/tmux-open'
 
 # Easy urlopen
 # prefix + u - show any URLs
@@ -175,6 +176,17 @@ set -g @plugin 'tmux-plugins/tmux-urlview'
 
 # Plugin that highlights when you press tmux prefix key
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+
+# 1. Toggles (start/stop) logging in the current pane.
+# Key binding: prefix + shift + p
+#
+# 2. Screen Capture
+# Key binding: prefix + alt + p
+#
+# 3. Save complete history
+# Key binding: prefix + alt + shift + p
+set-option -g @sessionist-alternate "g"
+set-option -g @sessionist-goto "G"
 set -g @plugin 'tmux-plugins/tmux-logging'
 
 # https://github.com/tmux-plugins/tmux-copycat
@@ -189,13 +201,16 @@ set -g @plugin 'tmux-plugins/tmux-copycat'
 # Easy paste bindings
 # prefix + y - copies text from the command line to clipboard
 # prefix + Y - copy pane current working directory to clipboard
-set -g @plugin 'tmux-plugins/tmux-yank'
+# set -g @plugin 'tmux-plugins/tmux-yank'
 
 # # other examples:
 # set -g @plugin 'github_username/plugin_name'
 # set -g @plugin 'git@github.com/user/plugin'
 # # set -g @plugin 'git@bitbucket.com/user/plugin'
-#
+
+# https://github.com/tmux-plugins/tmux-fpp
+# set -g @plugin 'jbnicolai/tmux-fpp'
+
 # # Initialize TMUX plugin manager (keep this line at the very bottom of
 # tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
