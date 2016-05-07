@@ -8,8 +8,8 @@ deflogin on
 # turn visual bell on
 vbell on
 vbell_msg "   Wuff  ----  Wuff!!  "
-# define a bigger scrollback, default is 100 lines
-defscrollback 1024
+# Use a large scrollback buffer
+defscrollback 30000
 # ------------------------------------------------------------------------------
 # SCREEN KEYBINDINGS
 # ------------------------------------------------------------------------------
@@ -53,3 +53,6 @@ defnonblock 5
 
 #fix for osx delete key?
 termcapinfo xterm-color kD=\E[3~
+
+# https://www.mattcutts.com/blog/screen-power-tips-screenrc/
+# termcapinfo xterm ti@:te@
