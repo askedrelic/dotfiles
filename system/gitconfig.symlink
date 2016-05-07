@@ -7,7 +7,7 @@
 [color]
     pager = true
     # Use colors in Git commands that are capable of colored output when
-	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
+    # outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
     ui    = auto
 [color "branch"]
     current = yellow reverse
@@ -15,6 +15,7 @@
     remote  = green
 [color "diff"]
     meta       = yellow bold
+    commit     = green bold
     frag       = magenta bold # line info
     old        = red          # deletions
     new        = green        # additions
@@ -23,24 +24,30 @@
     added     = yellow
     changed   = green
     untracked = cyan
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = "red bold 52"
+    newNormal = "green bold"
+    newHighlight = "green bold 22"
+    whitespace = fix
 [core]
     excludesfile   = ~/.gitignore
 
     # Force pager to work with colors
     pager          = less -FRSX
 
-	# Treat spaces before tabs and all kinds of trailing whitespace as an error
-	# [default] trailing-space: looks for spaces at the end of a line
-	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
-	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error
+    # [default] trailing-space: looks for spaces at the end of a line
+    # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 
     # Make `git rebase` safer on OS X
-	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
-	trustctime = false
+    # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+    trustctime = false
 
-	# Prevent showing files whose names contain non-ASCII symbols as unversioned.
-	# http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
-	precomposeunicode = false
+    # Prevent showing files whose names contain non-ASCII symbols as unversioned.
+    # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
+    precomposeunicode = false
 [alias]
     # Add all (tracked and untracked)
     aa = add --all
@@ -53,8 +60,8 @@
     # Commit all changes
     ca = commit -a
 
-	# View the current working tree status using the short format
-	s = status -s
+    # View the current working tree status using the short format
+    s = status -s
 
     # Simple status, for piping
     ss = "!git status -s | awk '{print $2}'"
@@ -62,8 +69,8 @@
     # Switch to a branch, creating it if necessary
     go = checkout -B
 
-    # WIP commit. Don't abuse this!
-    wip = commit -am "WIP"
+    # WIP commit. Don't abuse this! Ignores precommit hook
+    wip = commit --no-verify -am "WIP"
 
     # remove the top commit, to unstaged index
     pop = reset HEAD^
@@ -82,31 +89,31 @@
     fall = fetch --all
 
     # Remove branches that have already been merged with master
-	# a.k.a. ‘delete merged’
-	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+    # a.k.a. ‘delete merged’
+    dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
 
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
+    # Show verbose output about tags, branches or remotes
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
 
     # Interactive rebase with the given number of latest commits
-	reb = "!r() { git rebase -i HEAD~$1; }; r"
+    reb = "!r() { git rebase -i HEAD~$1; }; r"
 
-	# Find branches containing commit
-	fb = "!f() { git branch -a --contains $1; }; f"
+    # Find branches containing commit
+    fb = "!f() { git branch -a --contains $1; }; f"
 
-	# Find tags containing commit
-	ft = "!f() { git describe --always --contains $1; }; f"
+    # Find tags containing commit
+    ft = "!f() { git describe --always --contains $1; }; f"
 
-	# Find commits by source code
-	fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+    # Find commits by source code
+    fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
 
-	# Find commits by commit message
-	fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+    # Find commits by commit message
+    fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
 
-	# List contributors with number of commits
-	contributors = shortlog --summary --numbered
+    # List contributors with number of commits
+    contributors = shortlog --summary --numbered
 
     # figure out what a revision is
     human = name-rev --name-only --refs=refs/heads/*
@@ -165,6 +172,7 @@
 
     # list git aliases
     la = "!git config -l | grep alias | cut -c 7-"
+    dsf = "!git diff --color $@ | diff-so-fancy"
 
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
@@ -181,8 +189,8 @@
 [push]
     #When pushing without giving a refspec, push the current branch to its upstream branch.
     default = tracking
-	# Make `git push` push relevant annotated tags when pushing branches out.
-	followTags = true
+    # Make `git push` push relevant annotated tags when pushing branches out.
+    followTags = true
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
@@ -193,8 +201,8 @@
 [rebase]
     autosquash = true
 [help]
-	# Automatically correct and execute mistyped commands
-	autocorrect = 1
+    # Automatically correct and execute mistyped commands
+    autocorrect = 1
 [gh]
     protocol = https
     autoUpdate = never
