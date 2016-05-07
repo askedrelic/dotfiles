@@ -25,26 +25,23 @@
 .vim/.netrwhist
 .vimfuzzyfinder
 .viminfo
-__pycache__/
-mbox
 tags
 tags.lock
 tags.temp
 
 # Ignore common OSX directories
-Applications/
-Desktop/
-Documents/
-Downloads/
-Dropbox*/
-Library/
-Movies/
-Music/
-Pictures/
-Public/
-Sites/
-code/
-mail/
+# Applications/
+# Desktop/
+# Documents/
+# Downloads/
+# Dropbox*/
+# Library/
+# Movies/
+# Music/
+# Pictures/
+# Public/
+# Sites/
+# mail/
 
 .aptitude/
 .cpan/
