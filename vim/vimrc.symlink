@@ -65,6 +65,7 @@ Plug 'rhysd/clever-f.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
+Plug 'FelikZ/ctrlp-py-matcher'
 
 
 " Better yaml syntax highlighting
@@ -1361,11 +1362,14 @@ let g:ctrlp_open_multiple_files = 't'
 let g:ctrlp_user_command = [
  \ '.git',
  \ 'cd %s && git ls-files . -co --exclude-standard',
- \ 'ag %s -l --ignore-case --nocolor --noheading --ignore .git --ignore .tox --ignore .svn --ignore .hg --ignore .DS_Store --ignore "**/*.pyc" -g ""']
+ \ 'ag %s -l --ignore-case --nocolor --nogroup --ignore .git --ignore .tox --ignore .svn --ignore .hg --ignore .DS_Store -g ""']
 " ag is fast enough that CtrlP doesn't need to cache
 let g:ctrlp_use_caching = 0
 " Only show relative CWD MRU files
 let g:ctrlp_mruf_relative = 0
+
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_lazy_update = 200
 
 
 " Netrw
