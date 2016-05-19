@@ -37,9 +37,8 @@ set -g visual-activity off
 # increase scrollback size
 set -g history-limit 20000
 
-# Allow copy/paste to work natively in OSX; https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
-# Not needed after OSX 10.10?
-# if 'which -s reattach-to-user-namespace' 'set -g default-command "reattach-to-user-namespace $SHELL -l"'
+# Allow native OSX things to work properly; https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
+if 'which -s reattach-to-user-namespace' 'set -g default-command "reattach-to-user-namespace $SHELL -l"'
 
 # Toggle status line
 bind T set-option -g status
