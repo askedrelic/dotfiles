@@ -897,7 +897,7 @@ function! Visual_Mappings()
         elseif a:direction == 'gv'
             call CmdLine("Ags \"" . l:pattern . "\"<CR>" )
         elseif a:direction == 'replace'
-            call CmdLine("%s" . '/'. l:pattern . '/')
+            call CmdLine("%s" . '/'. l:pattern . '/' . l:pattern . '/')
         elseif a:direction == 'f'
             execute "normal /" . l:pattern . "^M"
         endif
