@@ -1,0 +1,40 @@
+directory: ~/Desktop/CurrentBeetsLibrary
+library: ~/.musiclibrary.blb
+plugins: lastgenre web info play fetchart missing embedart inline random
+
+# Force ascii in path naming
+# http://beets.readthedocs.org/en/v1.3.17/reference/config.html#asciify-paths
+asciify_paths: no
+
+move: yes
+
+# Fix default sort by artists; album sort is more important to me
+# http://beets.readthedocs.org/en/v1.3.17/reference/config.html#sort-item
+sort_item: albumartist+ album+ disc+ track+
+
+# http://beets.readthedocs.org/en/v1.3.17/plugins/play.html
+play:
+  command: /Users/mbehrens/.dotfiles/bin/play.sh
+  # raw: yes
+
+# http://beets.readthedocs.io/en/v1.3.17/plugins/fetchart.html
+fetchart:
+  # We can go for some quality here...
+  maxwidth: 1000
+
+# Fix default paths, to create multiple disc/folders
+# http://beets.readthedocs.org/en/latest/faq.html#create-disc-n-directories-for-multi-disc-albums
+item_fields:
+  multidisc: 1 if disctotal > 1 else 0
+
+# Fix default libraray path naming,
+# to include the year in the album name
+paths:
+  default: $albumartist/$album%aunique{} ($year)/%if{$multidisc,$disc-}$track $title
+  comp: Compilations/$album%aunique{} ($year)/%if{$multidisc,$disc-}$track $title
+  # singleton: Non-Album/$artist/$title
+
+# http://beets.readthedocs.org/en/v1.3.17/plugins/lastgenre.html
+lastgenre:
+  auto: yes
+  force: no
