@@ -31,9 +31,6 @@
 [submodule "vim/vim.symlink/bundle/supertab"]
 	path = vim/vim.symlink/bundle/supertab
 	url = https://github.com/ervandew/supertab.git
-[submodule "vim/vim.symlink/bundle/cocoa.vim"]
-	path = vim/vim.symlink/bundle/cocoa.vim
-	url = https://github.com/msanders/cocoa.vim.git
 [submodule "vim/vim.symlink/bundle/easymotion"]
 	path = vim/vim.symlink/bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
