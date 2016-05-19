@@ -34,7 +34,10 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'dhruvasagar/vim-vinegar'
+
+" Trying filebeagle; faster and simpler than vinegar/nerdtree
+" Plug 'dhruvasagar/vim-vinegar'
+Plug 'jeetsukumaran/vim-filebeagle'
 
 " Airline status bar and themes
 Plug 'vim-airline/vim-airline'
