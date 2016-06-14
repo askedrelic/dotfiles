@@ -92,17 +92,24 @@ alias l="la"
 # OSX: Open a Finder window at your current location
 alias of="open ."
 
-# OSX: cd's to frontmost window of Finder
-# eg; change finder directory
-cdf() {
+# OSX: send finder window to console
+ftc() {
     currFolderPath=$( /usr/bin/osascript << EOT
-        tell application "Finder"
-            try
-                set currFolder to (folder of the front window as alias)
-            on error
-                set currFolder to (path to desktop folder as alias)
-            end try
-            POSIX path of currFolder
+        # Disable for now
+        #tell application "Finder"
+        #    try
+        #        set currFolder to (folder of the front window as alias)
+        #    on error
+        #        set currFolder to (path to desktop folder as alias)
+        #    end try
+        #    POSIX path of currFolder
+        #end tell
+
+        tell application "Path Finder"
+            #set pathList to POSIX path of the target of the front finder window
+            #set pathList to quoted form of pathList
+            #set command to "clear; cd " & pathList
+            POSIX path of the target of the front finder window
         end tell
 EOT
     )
@@ -110,9 +117,8 @@ EOT
     cd "$currFolderPath"
 }
 
-# OSX: change frontmost Finder window to the cwd
-# eg; finder directory change
-fdc() {
+# OSX: send console pwd to finder window
+ctf() {
     if [ -n "$1" ]; then
         if [ "${1%%/*}" = "" ]; then
             thePath="$1"
@@ -125,10 +131,22 @@ fdc() {
 
     /usr/bin/osascript << EOT
         set myPath to ( POSIX file "$thePath" as alias )
-        try
-            tell application "Finder" to set the (folder of the front window) to myPath
-        on error -- no open folder windows
-            tell application "Finder" to open myPath
-        end try
+        # disable finder for now...
+        #try
+        #    tell application "Finder" to set the (folder of the front window) to myPath
+        #on error -- no open folder windows
+        #    tell application "Finder" to open myPath
+        #end try
+        tell application "Path Finder"
+            activate
+            PFOpen myPath
+        end tell
 EOT
 }
+
+# another idea for pathfinder
+# try
+#     tell application "Path Finder" to reveal "/Users/danielbeck/Downloads"
+# on error
+#     tell application "Finder" to reveal folder "Downloads" of home
+# end try
