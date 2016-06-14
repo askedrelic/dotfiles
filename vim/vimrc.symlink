@@ -29,15 +29,21 @@ Plug 'tomtom/tlib_vim'
 
 " Plug 'junegunn/vim-peekaboo'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'junegunn/gv.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 Plug 'ctrlpvim/ctrlp.vim'
 
+
+" Alignment
+" https://github.com/tommcdo/vim-lion
+Plug 'tommcdo/vim-lion'
+
+Plug 'dhruvasagar/vim-vinegar'
 " Trying filebeagle; faster and simpler than vinegar/nerdtree
-" Plug 'dhruvasagar/vim-vinegar'
-Plug 'jeetsukumaran/vim-filebeagle'
+" Plug 'jeetsukumaran/vim-filebeagle'
 
 " Airline status bar and themes
 Plug 'vim-airline/vim-airline'
@@ -46,8 +52,16 @@ Plug 'vim-airline/vim-airline-themes'
 " A better JSON for Vim
 Plug 'elzr/vim-json'
 
+" Normal Mode
+" - gagiw to search the word
+" - gagi' to search the words inside single quotes.
+" Visual Mode
+" - gag to search the selected text
+" Plug 'Chun-Yang/vim-action-ag'
+
 Plug 'ervandew/supertab' ", {'commit': 'feb2a5f8'}
 Plug 'gabesoft/vim-ags'
+" Plug 'rking/ag.vim'
 Plug 'garbas/vim-snipmate' ", {'commit': '2d3e8ddc'}
 Plug 'godlygeek/tabular'
 Plug 'gregsexton/MatchTag'
@@ -70,6 +84,10 @@ Plug 'FelikZ/ctrlp-py-matcher'
 
 " Better yaml syntax highlighting
 Plug 'stephpy/vim-yaml'
+
+" indenting
+" https://github.com/jeetsukumaran/vim-indentwise
+Plug 'jeetsukumaran/vim-indentwise'
 
 " Yaml indent support
 Plug 'martin-svk/vim-yaml'
@@ -244,9 +262,11 @@ function! General_Settings()
 
     " Time out on key codes but not mappings.
     " Basically this makes terminal Vim work sanely.
-    set notimeout
-    set ttimeout
-    set ttimeoutlen=10
+    " set timeout
+    set ttimeoutlen=50
+
+    " set ttimeout
+    " set ttimeoutlen=100
 
     " make matchparen timeout quickly; don't take forever on long lines
     let g:matchparen_insert_timeout=5
@@ -379,6 +399,7 @@ function! Scrollbars()
     highlight clear ColorColumn
     highlight ColorColumn cterm=underline gui=underline
     "set colorcolumn=+1
+    " Highlight Long lines
     nnoremap <silent> <leader>hl
         \ :if exists('w:long_line_match') <Bar>
         \   silent! call matchdelete(w:long_line_match) <Bar>
@@ -453,7 +474,8 @@ function! Colors()
         echo join(map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")'), " > ")
     endfunc "}}}
 
-    nnoremap <leader>hlt :call SynStack()<CR>
+    " Highlight Tag? syntax?
+    nnoremap <leader>ht :call SynStack()<CR>
 endfunction
 call Colors()
 
@@ -801,8 +823,8 @@ function! Normal_Mappings()
     " Quit Vim
     nnoremap <leader>Q :qall!<CR>
 
-    " Kill buffer
-    nnoremap <leader>q :bd<CR>
+    " Kill current viewport
+    nnoremap <leader>q :quit<CR>
 
     " Revert the current buffer
     nnoremap <leader>r :e!<CR>
@@ -810,7 +832,7 @@ function! Normal_Mappings()
     " Show eeeeeeverything! http://www.youtube.com/watch?v=MrTsuvykUZk
     nnoremap <leader>I :verbose set ai? si? cin? cink? cino? cinw? inde? indk? formatoptions? filetype? fileencoding? syntax? <CR>
 
-    " toggle paste on/off
+    " Toggle paste on/off
     " nnoremap <leader>tp :set invpaste paste?<CR>
     nnoremap <leader>p :set invpaste paste?<CR>
 
@@ -927,8 +949,8 @@ function! Visual_Mappings()
     endfunction
 
     " search for visually selected areas
-    xnoremap * <ESC>/<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR><CR>
-    xnoremap # <ESC>?<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR><CR>
+    " xnoremap * <ESC>/<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR><CR>
+    " xnoremap # <ESC>?<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR><CR>
 
     " prepare search based on visually selected area
     xnoremap / <ESC>/<C-r>=substitute(escape(GetVisualSelection(), '\/.*$^~[]'), "\n", '\\n', "g")<CR>
@@ -1014,6 +1036,10 @@ function! Tab_Mapping()
     " inoremap <expr> <C-Space> pumvisible() ? '<C-n>' :
     " \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
     " imap <C-@> <C-Space>
+
+    " In normal mode...
+    " nnoremap <Tab> <C-W>w
+    " nnoremap <S-Tab> <C-W>W
 endfunction
 call Tab_Mapping()
 
@@ -1151,12 +1177,12 @@ function! Mini_Scripts()
         normal! `z
     endfunction
     " Mappings
-    nnoremap <silent> <leader>1 :call HiInterestingWord(1)<cr>
-    nnoremap <silent> <leader>2 :call HiInterestingWord(2)<cr>
-    nnoremap <silent> <leader>3 :call HiInterestingWord(3)<cr>
-    nnoremap <silent> <leader>4 :call HiInterestingWord(4)<cr>
-    nnoremap <silent> <leader>5 :call HiInterestingWord(5)<cr>
-    nnoremap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+    nnoremap <silent> <leader>h1 :call HiInterestingWord(1)<cr>
+    nnoremap <silent> <leader>h2 :call HiInterestingWord(2)<cr>
+    nnoremap <silent> <leader>h3 :call HiInterestingWord(3)<cr>
+    nnoremap <silent> <leader>h4 :call HiInterestingWord(4)<cr>
+    nnoremap <silent> <leader>h5 :call HiInterestingWord(5)<cr>
+    nnoremap <silent> <leader>h6 :call HiInterestingWord(6)<cr>
     " Default Highlights
     hi def InterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
     hi def InterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
@@ -1462,14 +1488,16 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
-let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#branch#displayed_head_limit = 10
 
+
+" disable git gutter hunks
 " let g:airline#extensions#hunks#enabled = 1
-" let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
 
 " let g:bufferline_echo = 0
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 " truncate file info first once window size shrinks
 let g:airline#extensions#default#section_truncate_width = {
       \ 'b': 20,
@@ -1582,3 +1610,64 @@ vmap gj y:CtrlP<CR><C-\>v
 " https://github.com/gabesoft/vim-ags/issues/23
 autocmd vimrc FileType agsv nnoremap <buffer> ot
   \ :exec 'tab split ' . ags#filePath(line('.'))<CR>
+
+let g:startify_custom_indices = ['a', 's', 'd', 'f']
+
+" Press \r to start rotating lines and <C-c> (Control+c) to stop.
+
+function! s:RotateString(string)
+    let split_string = split(a:string, '\zs')
+    return join(split_string[-1:] + split_string[:-2], '')
+endfunction
+
+function! s:RotateLine(line, leading_whitespace, trailing_whitespace)
+    return substitute(
+        \ a:line,
+        \ '^\(' . a:leading_whitespace . '\)\(.\{-}\)\(' . a:trailing_whitespace . '\)$',
+        \ '\=submatch(1) . <SID>RotateString(submatch(2)) . submatch(3)',
+        \ ''
+    \ )
+endfunction
+
+function! s:RotateLines()
+    let saved_view = winsaveview()
+    let first_visible_line = line('w0')
+    let last_visible_line = line('w$')
+    let lines = getline(first_visible_line, last_visible_line)
+    let leading_whitespace = map(
+        \ range(len(lines)),
+        \ 'matchstr(lines[v:val], ''^\s*'')'
+    \ )
+    let trailing_whitespace = map(
+        \ range(len(lines)),
+        \ 'matchstr(lines[v:val], ''\s*$'')'
+    \ )
+    try
+        while 1 " <C-c> to exit
+            let lines = map(
+                \ range(len(lines)),
+                \ '<SID>RotateLine(lines[v:val], leading_whitespace[v:val], trailing_whitespace[v:val])'
+            \ )
+            call setline(first_visible_line, lines)
+            redraw
+            sleep 50m
+        endwhile
+    finally
+        if &modified
+            silent undo
+        endif
+        call winrestview(saved_view)
+    endtry
+endfunction
+
+nnoremap <silent> <Plug>(RotateLines) :<C-u>call <SID>RotateLines()<CR>
+
+nmap \r <Plug>(RotateLines)
+
+" Source: http://stackoverflow.com/a/6404246/151007
+let i = 1
+" If I have more than 9 windows open I have bigger problems :)
+while i <= 9
+  execute 'nnoremap <Leader>'.i.' :tabn '.i.'<CR>'
+  let i = i + 1
+endwhile
