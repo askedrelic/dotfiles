@@ -1,6 +1,6 @@
 directory: ~/Desktop/CurrentBeetsLibrary
 library: ~/.musiclibrary.blb
-plugins: lastgenre web info play fetchart missing embedart inline random
+plugins: lastgenre web info play fetchart missing embedart inline random mbsubmit discogs
 
 # Force ascii in path naming
 # http://beets.readthedocs.org/en/v1.3.17/reference/config.html#asciify-paths

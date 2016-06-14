@@ -14,6 +14,7 @@ set -g assume-paste-time 0
 
 # colors!
 set -g default-terminal "screen-256color"
+set -ga terminal-overrides ",st-256color:Tc"
 
 setw -g xterm-keys on
 
@@ -175,6 +176,8 @@ set -g @plugin 'tmux-plugins/tmux-urlview'
 
 # Plugin that highlights when you press tmux prefix key
 set -g @plugin 'tmux-plugins/tmux-prefix-highlight'
+set -g @prefix_highlight_show_copy_mode 'on'
+set -g @prefix_highlight_copy_mode_attr 'fg=black,bg=green,bold' # default is 'fg=default,bg=yellow'
 
 # 1. Toggles (start/stop) logging in the current pane.
 # Key binding: prefix + shift + p
@@ -195,7 +198,8 @@ set -g @plugin 'tmux-plugins/tmux-logging'
 # prefix + ctrl-u - url search (http, ftp and git urls)
 # prefix + ctrl-d - number search (mnemonic d, as digit)
 # prefix + alt-i  - ip address search
-set -g @plugin 'tmux-plugins/tmux-copycat'
+# Currently disabled due to bug? https://github.com/tmux/tmux/issues/362
+# set -g @plugin 'tmux-plugins/tmux-copycat'
 
 # Easy paste bindings
 # prefix + y - copies text from the command line to clipboard
