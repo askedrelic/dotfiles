@@ -142,7 +142,6 @@ source ~/.bash_prompt
 # fi
 
 # my imports
-source ~/.bash_machines
 source ~/.bash_aliases
 source ~/.bash_scripts
 

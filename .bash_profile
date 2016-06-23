@@ -94,10 +94,10 @@ if which pyenv > /dev/null; then
 fi
 
 # Local bin should always be first priority
-if [[ -d ~/bin ]]; then
+if [[ -e ~/bin ]]; then
   export PATH=~/bin:$PATH
 fi
-if [[ -d ~/.dotfiles/bin ]]; then
+if [[ -e ~/.dotfiles/bin ]]; then
   export PATH=~/.dotfiles/bin:$PATH
 fi
 
