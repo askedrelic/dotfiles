@@ -23,6 +23,8 @@
 .sqlite_history
 .vim-tmp/
 .vim/.netrwhist
+.vim/plugged/*
+.vim/backup/*
 .vimfuzzyfinder
 .viminfo
 tags
