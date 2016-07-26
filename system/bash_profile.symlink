@@ -93,6 +93,15 @@ if which pyenv > /dev/null; then
     eval "$(pyenv init -)"
 fi
 
+# Add
+export GOPATH=$HOME/go
+#mkdir -p $GOPATH
+# If go exists, use it
+if [[ -d $GOPATH ]]; then
+    export GOBIN=$GOPATH/bin
+    export PATH=$GOBIN:$PATH
+fi
+
 # Local bin should always be first priority
 if [[ -d ~/bin ]]; then
   export PATH=~/bin:$PATH
