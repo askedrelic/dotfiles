@@ -115,6 +115,11 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PYENV_ROOT=/usr/local/var/pyenv
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
+export GOPATH=~/.gopath
+if [[ -e ~/.gopath/bin ]]; then
+  export PATH=~/.gopath/bin:$PATH
+fi
+
 # Imports ----------------------------------------------------------------------------------------------
 
 # Add fuzzy finder scripts

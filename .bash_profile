@@ -46,7 +46,6 @@ fi
 # In reverse priority, so that they are prepended properly
 
 # Mac OS X uses path_helper to preload PATH, clear it out first
-# IE; start from scratch every time
 if [ -x /usr/libexec/path_helper ]; then
     PATH=''
     eval `/usr/libexec/path_helper -s`
@@ -93,7 +92,7 @@ if which pyenv > /dev/null; then
     eval "$(pyenv init -)"
 fi
 
-# Local bin should always be first priority
+# Local bins should always be first priority
 if [[ -e ~/bin ]]; then
   export PATH=~/bin:$PATH
 fi
