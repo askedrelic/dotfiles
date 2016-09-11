@@ -46,7 +46,6 @@ fi
 # In reverse priority, so that they are prepended properly
 
 # Mac OS X uses path_helper to preload PATH, clear it out first
-# IE; start from scratch every time
 if [ -x /usr/libexec/path_helper ]; then
     PATH=''
     eval `/usr/libexec/path_helper -s`
@@ -106,7 +105,7 @@ fi
 if [[ -d ~/bin ]]; then
   export PATH=~/bin:$PATH
 fi
-if [[ -d ~/.dotfiles/bin ]]; then
+if [[ -e ~/.dotfiles/bin ]]; then
   export PATH=~/.dotfiles/bin:$PATH
 fi
 

@@ -32,17 +32,19 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'junegunn/gv.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'airblade/vim-gitgutter'
+" NOTE: the async stuff on master after this commit isn't ready yet, don't update
+Plug 'airblade/vim-gitgutter', {'commit': 'cae4f72aa1290'}
 Plug 'ap/vim-css-color'
-Plug 'ctrlpvim/ctrlp.vim'
 
 
 " Alignment
 " https://github.com/tommcdo/vim-lion
 Plug 'tommcdo/vim-lion'
 
+" tpope vinegar, but with nerdtree
 Plug 'dhruvasagar/vim-vinegar'
-" Trying filebeagle; faster and simpler than vinegar/nerdtree
+" Trying filebeagle? faster and simpler than vinegar/nerdtree
+" But less file mgmt features :(
 " Plug 'jeetsukumaran/vim-filebeagle'
 
 " Airline status bar and themes
@@ -51,6 +53,10 @@ Plug 'vim-airline/vim-airline-themes'
 
 " A better JSON for Vim
 Plug 'elzr/vim-json'
+Plug 'pangloss/vim-javascript'
+
+" Better yaml syntax highlighting
+Plug 'martin-svk/vim-yaml'
 
 " Normal Mode
 " - gagiw to search the word
@@ -60,39 +66,43 @@ Plug 'elzr/vim-json'
 " Plug 'Chun-Yang/vim-action-ag'
 
 Plug 'ervandew/supertab' ", {'commit': 'feb2a5f8'}
-Plug 'gabesoft/vim-ags'
 " Plug 'rking/ag.vim'
 Plug 'garbas/vim-snipmate' ", {'commit': '2d3e8ddc'}
 Plug 'godlygeek/tabular'
 Plug 'gregsexton/MatchTag'
 Plug 'honza/vim-snippets'
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'msanders/cocoa.vim'
-Plug 'pangloss/vim-javascript'
 Plug 'plasticboy/vim-markdown'
 Plug 'rhysd/clever-f.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
+
+Plug 'scrooloose/nerdtree'
+" Plug 'jistr/vim-nerdtree-tabs'
+"
+""""""""""""" File search plugins
+" Ack search
+Plug 'wincent/ferret'
+" Ags search
+Plug 'gabesoft/vim-ags'
+" File/buffer/MRU search
+Plug 'ctrlpvim/ctrlp.vim'
+" Faster ctrlp searches
 Plug 'FelikZ/ctrlp-py-matcher'
-
-
-" Better yaml syntax highlighting
-Plug 'stephpy/vim-yaml'
 
 " indenting
 " https://github.com/jeetsukumaran/vim-indentwise
 Plug 'jeetsukumaran/vim-indentwise'
 
-" Yaml indent support
-Plug 'martin-svk/vim-yaml'
-
+" Keep hitting v to expand region
 Plug 'terryma/vim-expand-region'
+
+" All the tpope
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -100,6 +110,10 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-dispatch'
+
+" https://github.com/vim-scripts/QFEnter
+Plug 'yssl/QFEnter'
 
 " Eunuch - vim sugar for the UNIX shell commands
 " :Remove: Delete a buffer and the file on disk simultaneously.
@@ -118,11 +132,12 @@ Plug 'tpope/vim-unimpaired'
 " New init scripts are automatically prepopulated with /etc/init.d/skeleton.
 Plug 'tpope/vim-eunuch'
 
-
 Plug 'vim-scripts/matchit.zip'
 Plug 'vim-scripts/python_match.vim'
 Plug 'vim-scripts/visualrepeat'
 Plug 'nathanaelkane/vim-indent-guides'
+
+" use this?? diff navigator
 Plug 'https://gitlab.com/mcepl/vim-diff_navigator.git'
 call plug#end()
 
@@ -272,7 +287,7 @@ function! General_Settings()
     let g:matchparen_insert_timeout=5
 
     " let mapleader = ','
-    let g:mapleader = ','
+    let g:mapleader = ' '
 
     " Search for ctags file up to /
     set tags=tags;./;/
@@ -1274,10 +1289,10 @@ function! Mini_Scripts()
     vnoremap <silent> <leader>d "_d
 
     " yank/paste to/from the OS clipboard
-    noremap <silent> <leader>y "+y
-    noremap <silent> <leader>Y "+Y
-    noremap <silent> <leader>p "+p
-    noremap <silent> <leader>P "+P
+    noremap <silent> <leader>yy "+y
+    " noremap <silent> <leader>Y "+Y
+    " noremap <silent> <leader>p "+p
+    " noremap <silent> <leader>P "+P
 
     " paste without yanking replaced text in visual mode
     vnoremap <silent> p "_dP
@@ -1348,6 +1363,9 @@ let NERDTreeHighlightCursorline = 1
 let NERDTreeShowFiles           = 1 " Show hidden files, too
 let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
+let NERDTreeShowLineNumbers     = 1 " Linenumbers are great for gg
+" let NERDTreeCreatePrefix        = 'keepalt keepjumps'
+let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
 " don't show nerdtree by default
 let g:nerdtree_tabs_focus_on_files          = 0
 let g:nerdtree_tabs_meaningful_tab_names    = 1
@@ -1355,7 +1373,7 @@ let g:nerdtree_tabs_open_on_console_startup = 0
 let g:nerdtree_tabs_open_on_gui_startup     = 0
 let g:nerdtree_tabs_open_on_new_tab         = 0
 let g:nerdtree_tabs_smart_startup_focus     = 1
-let g:nerdtree_tabs_synchronize_view        = 1
+let g:nerdtree_tabs_synchronize_view        = 0
 
 
 " ctrlp.vim
@@ -1480,7 +1498,7 @@ let g:formatprg_args_scss = "-s --indent 4 -F scss -T scss"
 " endif
 
 " Easymotion.vim
-" let g:EasyMotion_leader_key = ','
+let g:EasyMotion_leader_key = ','
 " let g:EasyMotion_mapping_f = '<C-n>'
 
 " ========== Airline.vim
@@ -1551,8 +1569,8 @@ cnoremap <C-a> <home>
 " CTRL+E moves to end of line in command mode
 cnoremap <C-e> <end>
 
-nnoremap <Space> za
-vnoremap <Space> za
+" nnoremap <Space> za
+" vnoremap <Space> za
 
 " --user defined ---------------------------------------------------------------
 "
@@ -1671,3 +1689,36 @@ while i <= 9
   execute 'nnoremap <Leader>'.i.' :tabn '.i.'<CR>'
   let i = i + 1
 endwhile
+
+" Bind q to quit in fugitive git diff buffers
+" https://github.com/tpope/vim-fugitive/blob/master/plugin/fugitive.vim#L2729
+autocmd Filetype git nnoremap <buffer> <silent> q :<C-U>bdelete<CR>
+
+nmap <leader>x <Plug>(FerretAck)
+
+" <leader>c -- Fix (most) syntax highlighting problems in current buffer
+" (mnemonic: coloring).
+nnoremap <silent> <leader>c :syntax sync fromstart<CR>
+
+" <leader><leader> -- Open last buffer.
+nnoremap <leader><leader> <C-^>
+
+if exists('+relativenumber')
+  " <leader>r -- Cycle through relativenumber + number, number (only), and no
+  " numbering (mnemonic: relative).
+  nnoremap <leader>r :<c-r>={
+        \ '00': 'set rnu   <bar> set nu',
+        \ '01': 'set nornu <bar> set nu',
+        \ '10': 'set nornu <bar> set nonu',
+        \ '11': 'set nornu <bar> set nu' }[&nu . &rnu]<CR><CR><CR>
+else
+  " <leader>r -- Toggle line numbers on and off (mnemonic: relative).
+  nnoremap <leader>r :set nu!<CR>
+endif
+
+" For each time K has produced timely, useful results, I have pressed it 10,000
+" times without meaning to, triggering an annoying delay.
+nnoremap K <nop>
+
+" Ditto for q
+nnoremap q <nop>

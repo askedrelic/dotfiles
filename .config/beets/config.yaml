@@ -1,6 +1,6 @@
 directory: ~/Desktop/CurrentBeetsLibrary
 library: ~/.musiclibrary.blb
-plugins: lastgenre web info play fetchart missing embedart inline random mbsubmit discogs
+plugins: lastgenre web info play fetchart missing embedart inline random mbsubmit discogs convert badfiles
 
 # Force ascii in path naming
 # http://beets.readthedocs.org/en/v1.3.17/reference/config.html#asciify-paths
@@ -14,7 +14,8 @@ sort_item: albumartist+ album+ disc+ track+
 
 # http://beets.readthedocs.org/en/v1.3.17/plugins/play.html
 play:
-  command: /Users/mbehrens/.dotfiles/bin/play.sh
+  # command: /Users/mbehrens/bin/play.sh
+  command: open -a Vox
   # raw: yes
 
 # http://beets.readthedocs.io/en/v1.3.17/plugins/fetchart.html
@@ -34,7 +35,7 @@ paths:
   comp: Compilations/$album%aunique{} ($year)/%if{$multidisc,$disc-}$track $title
   # singleton: Non-Album/$artist/$title
 
-# http://beets.readthedocs.org/en/v1.3.17/plugins/lastgenre.html
+# http://beets.readthedocs.io/en/latest/plugins/lastgenre.html
 lastgenre:
-  auto: yes
+  auto: no
   force: no

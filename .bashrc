@@ -2,7 +2,6 @@
 # - Colors
 # - History
 # - Misc
-# - Prompts
 # - Imports
 
 # If not running interactively, don't do anything, to stop bind errors
@@ -116,9 +115,10 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PYENV_ROOT=/usr/local/var/pyenv
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
-# Prompts -----------------------------------------------------------------------
-
-source ~/.bash_prompt
+export GOPATH=~/.gopath
+if [[ -e ~/.gopath/bin ]]; then
+  export PATH=~/.gopath/bin:$PATH
+fi
 
 # Imports ----------------------------------------------------------------------------------------------
 
@@ -141,13 +141,14 @@ source ~/.bash_prompt
 #     source $(brew --prefix)/etc/autojump.sh
 # fi
 
-# my imports
-source ~/.bash_machines
-source ~/.bash_aliases
-source ~/.bash_scripts
+# import any local bash scripts
+for file in ~/.bash/* ; do
+  if [ -f "$file" ] ; then
+    . "$file"
+  fi
+done
 
-
-# try enable bash completion
+# try enable bash cbash_scriptsompletion
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
 # or try enable in homebrew
@@ -156,15 +157,4 @@ if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
 fi
 
 # Add local tmuxinator bash completion
-[ -f ~/.tmuxinator.bash ] && source ~/.tmuxinator.bash
-
-# import any local bash completion scripts
-# for f in `brew --prefix`/etc/bash_completion.d/*; do source $f; done
-# for file in ~/.bash_completion; do
-#     #ignore directory itself
-#     if [ -f $file ]; then
-#         # source $file
-#         echo
-#     fi
-# done
-
+# [ -f ~/.tmuxinator.bash ] && source ~/.tmuxinator.bash

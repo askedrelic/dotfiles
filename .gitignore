@@ -1,26 +1,100 @@
+# ignore sensitive files
+.ssh*
+.agent.env
+
+# Ignore common files / Byte-compiled / optimized / DLL files
+*.py[cod]
+*.so
+*.swp
+.DS_Store
+.NERDTreeBookmarks
+.bash_history
+.bash_local
+.gdb_history
+.hgignore_global
+.irb_history
+.mackup.cfg
+.mysql_history
+.netrc
+.pinerc
+.psql_history
+.rediscli_history
+.rnd
+.sqlite_history
+.vim-tmp/
+.vim/.netrwhist
+.vim/plugged/*
+.vim/backup/*
+.vimfuzzyfinder
+.viminfo
 tags
 tags.lock
-.DS_Store
+tags.temp
 
-# ignore vim stuff
-vim/vim.symlink/tmp/
-vim/vim.symlink/backup/
-vim/vim.symlink/plugged/
+# Ignore common OSX directories
+# Applications/
+# Desktop/
+# Documents/
+# Downloads/
+# Dropbox*/
+# Library/
+# Movies/
+# Music/
+# Pictures/
+# Public/
+# Sites/
+# mail/
 
-# ignore some cmus stuff
-system/cmus.symlink/autosave
-system/cmus.symlink/cache
-system/cmus.symlink/command-history
-system/cmus.symlink/lib.pl
-system/cmus.symlink/playlist.pl
-system/cmus.symlink/search-history
+.aptitude/
+.cpan/
+.ctrlp_cache/
+.gem/
+.subversion
+.mitmproxy/
+.ipython/
+.pip_download_cache/
+.pip/
+.rvm/
+.vagrant.d/
+.buildout/
+.python-eggs/
+.npm/
 
-# ignore more config stuff
-system/config.symlink/configstore/bower-github.yml
-system/config.symlink/configstore/update-notifier-bower.yml
-system/config.symlink/gh
-system/config.symlink/gh-update
-system/config.symlink/pianobar/
-system/config.symlink/ranger/
-system/config.symlink/hub
-system/config.symlink/beets/state.pickle
+# ignore my other stuff from OSX
+.Trash
+.adobe/
+.cache/
+.chef/
+.cmus/autosave
+.cmus/cache
+.cmus/command-history
+.cmus/lib.pl
+.cmus/playlist.pl
+.cmus/search-history
+.config/
+.cups/
+.dropbox*/
+.ec2/
+.fontconfig/
+.fonts/
+.gitk
+.heroku/
+.htoprc
+.ievms/
+.kindle/
+.lesshst
+.local/
+.matplotlib/
+.mplayer/
+.muttator/
+.nbprofiler/
+.netbeans/
+.parallels/
+.pgpass
+.pypirc
+.pythonbrew/
+.s3cfg
+.venvburrito/
+.virtualenvs/
+.wemo/
+.yolk/
