@@ -169,8 +169,8 @@ menuvirtualenv() {
         break;
     done;
 }
-alias vmenu='menuvirtualenv'
-alias vm='menuvirtualenv'
+# alias vmenu='menuvirtualenv'
+# alias vm='menuvirtualenv'
 
 # goto the source dir of any python module
 cdp () {
@@ -187,19 +187,19 @@ wifi_history() {
 # Git ------------------------------------------------------------------------
 
 alias gs='git status '
+# short status
+alias gg='gs -s'
 alias ga='git add '
 alias gr='git remote -v'
 alias gc='git commit'
 alias gd='git diff'
-alias gk='gitk --all&'
 
 #mine
-alias gg='gs -s'
-alias gts='gs'
-alias gtb='git branch -a -v'
-alias gtr='gr'
+# alias gts='gs'
+alias gb='git branch -a -v'
+# alias gtr='gr'
 
-function gb() {
+function gtb() {
     select branch in $(git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname)' | sed 's/refs\/heads\///g'); do
         git checkout "$branch"
         break;
