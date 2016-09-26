@@ -144,7 +144,7 @@ fi
 # import any local bash scripts
 for file in ~/.bash/* ; do
   if [ -f "$file" ] ; then
-    . "$file"
+    source "$file"
   fi
 done
 
@@ -152,8 +152,16 @@ done
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
 # or try enable in homebrew
-if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
-    source $(brew --prefix)/etc/bash_completion
+# if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
+#     source $(brew --prefix)/etc/bash_completion
+# fi
+
+if [[ -n $(command -v brew) ]] ; then
+    for file in $(brew --prefix)/etc/bash_completion.d/* ; do
+        if [ -f "$file" ] ; then
+            source "$file"
+        fi
+    done
 fi
 
 # Add local tmuxinator bash completion
