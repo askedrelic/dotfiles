@@ -53,7 +53,6 @@ Plug 'vim-airline/vim-airline-themes'
 
 " A better JSON for Vim
 Plug 'elzr/vim-json'
-Plug 'pangloss/vim-javascript'
 
 " Better yaml syntax highlighting
 Plug 'martin-svk/vim-yaml'
@@ -132,13 +131,30 @@ Plug 'yssl/QFEnter'
 " New init scripts are automatically prepopulated with /etc/init.d/skeleton.
 Plug 'tpope/vim-eunuch'
 
-Plug 'vim-scripts/matchit.zip'
+" Library for yelp test files
+Plug 'askedrelic/pair_files.vim'
+Plug 'moll/vim-bbye'
+
+" Lanugages
+Plug 'sheerun/vim-polyglot'
+
+" Python ---------
 Plug 'vim-scripts/python_match.vim'
+
+" Javascript --------
+Plug 'pangloss/vim-javascript'
+
+Plug 'vim-scripts/matchit.zip'
 Plug 'vim-scripts/visualrepeat'
 Plug 'nathanaelkane/vim-indent-guides'
 
+" Testing -------------
 " use this?? diff navigator
 Plug 'https://gitlab.com/mcepl/vim-diff_navigator.git'
+
+" Too much setup...
+" Plug 'hecal3/vim-leader-guide'
+
 call plug#end()
 
 " Create vimrc group
@@ -533,7 +549,7 @@ function! File_Types()
     augroup ft_css
         autocmd!
 
-        autocmd BufNewFile,BufRead *.less setlocal filetype=less
+        autocmd bufnewfile,bufread *.less setlocal filetype=less
 
         "autocmd Filetype less,css setlocal foldmethod=marker
         "autocmd Filetype less,css setlocal foldmarker={,}
@@ -617,14 +633,21 @@ function! File_Types()
 
     augroup END
 
+    " Cheetah overrides
+    augroup ft_cheetah
+        autocmd!
+
+        autocmd bufnewfile,bufread *.tmpl setlocal filetype=cheetah
+
+    augroup END
+
     " Javascript
     augroup ft_javascript
         autocmd!
-        " call Tabstyle_2spaces()
 
         " easy comment insert
         autocmd FileType javascript inoremap <buffer> <c-c> console.log();<left><left>
-        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
         " autocmd FileType javascript setlocal foldmethod=marker
         " autocmd FileType javascript setlocal foldmarker={,}
     augroup END
@@ -742,7 +765,7 @@ function! Normal_Mappings()
     nnoremap ; :
 
     " Fuck you, help key.
-    noremap  <F1> <nop>
+    nnoremap  <F1> <nop>
     inoremap <F1> <nop>
 
     " page down with <Space> (like in `Lynx', `Mutt', `Pine', `Netscape Navigator',
@@ -767,11 +790,11 @@ function! Normal_Mappings()
     " nnoremap , <C-w><C-w>
 
     "move around windows with ctrl key!
-    noremap <C-H> <C-W>h
-    noremap <C-J> <C-W>j
-    noremap <C-K> <C-W>k
-    noremap <C-L> <C-W>l
-    noremap <leader>v <C-W>v
+    nnoremap <C-H> <C-W>h
+    nnoremap <C-J> <C-W>j
+    nnoremap <C-K> <C-W>k
+    nnoremap <C-L> <C-W>l
+    nnoremap <leader>v <C-W>v
 
     " Fix vertsplit window sizing
     nnoremap <C-Left> <C-W>><C-W>>
@@ -806,7 +829,7 @@ function! Normal_Mappings()
     vnoremap Q gq
 
     " visual select last pasted text
-    noremap gV `[v`]
+    nnoremap gV `[v`]
 
     " have Y behave analogously to D and C rather than to dd and cc (which is
     " already done by yy):
@@ -1061,7 +1084,7 @@ call Tab_Mapping()
 function! Mini_Scripts()
     "toggle wrap and easy movement keys while in wrap mode
     "nnoremap <silent> <leader>w :set invwrap wrap?<CR>
-    noremap <silent> <leader>tw :call ToggleWrap()<CR>
+    nnoremap <silent> <leader>tw :call ToggleWrap()<CR>
     function! ToggleWrap()
     if &wrap
         echo "Wrap OFF"
@@ -1111,11 +1134,11 @@ function! Mini_Scripts()
     " <leader>rt retabs the file, preserve cursor position
     nnoremap <silent> <leader>rt :call Preserve(":retab")<CR>
 
-    " <leader>s removes trailing spaces
-    noremap <silent> <leader>s :call Preserve("%s/\\s\\+$//e")<CR>
+    " <leader>w removes trailing whitespaces
+    nnoremap <silent> <leader>w :call Preserve("%s/\\s\\+$//e")<CR>
 
     " <leader>$ fixes mixed EOLs (^M)
-    noremap <silent> <leader>$ :call Preserve("%s/<C-V><CR>//e")<CR>
+    nnoremap <silent> <leader>$ :call Preserve("%s/<C-V><CR>//e")<CR>
 
 
     " Strip trailing whitespace
@@ -1289,10 +1312,10 @@ function! Mini_Scripts()
     vnoremap <silent> <leader>d "_d
 
     " yank/paste to/from the OS clipboard
-    noremap <silent> <leader>yy "+y
-    " noremap <silent> <leader>Y "+Y
-    " noremap <silent> <leader>p "+p
-    " noremap <silent> <leader>P "+P
+    nnoremap <silent> <leader>yy "+y
+    " nnoremap <silent> <leader>Y "+Y
+    " nnoremap <silent> <leader>p "+p
+    " nnoremap <silent> <leader>P "+P
 
     " paste without yanking replaced text in visual mode
     vnoremap <silent> p "_dP
@@ -1488,8 +1511,9 @@ nmap gH <Plug>GitGutterPrevHunk
 " nnoremap <leader>L :LinediffReset<cr>
 
 " vim-autoformat
-" Need to override this to work on OSX
-let g:formatprg_args_expr_python = '"- ".(&textwidth ? "--max-line-length=".&textwidth : "")'
+" https://github.com/google/yapf
+let g:formatter_yapf_style = 'facebook'
+let g:formatdef_yapf = "'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:'.&shiftwidth.',dedent_closing_brackets:true}\" -l '.a:firstline.'-'.a:lastline"
 
 if !exists("g:formatprg_scss") | let g:formatprg_scss = "sass-convert" | endif
 let g:formatprg_args_scss = "-s --indent 4 -F scss -T scss"
@@ -1561,8 +1585,15 @@ let g:snipMateAllowMatchingDot = 0
 
 vmap <Enter> <Plug>(LiveEasyAlign)
 
-" let python_highlight_all = 1
-let g:gutentags_exclude = ['env', '.tox']
+" TODO: this is working?
+" let g:gutentags_exclude = ['env', '.tox']
+let g:gutentags_file_list_command = {
+                \ 'markers': {
+                    \ '.git': 'git ls-files',
+                    \ '.hg': 'hg locate',
+                \ },
+            \ }
+
 
 " CTRL+A moves to start of line in command mode
 cnoremap <C-a> <home>
@@ -1692,9 +1723,9 @@ endwhile
 
 " Bind q to quit in fugitive git diff buffers
 " https://github.com/tpope/vim-fugitive/blob/master/plugin/fugitive.vim#L2729
-autocmd Filetype git nnoremap <buffer> <silent> q :<C-U>bdelete<CR>
+autocmd Filetype git nnoremap <buffer> <silent> q :<C-U>quit<CR>
 
-nmap <leader>x <Plug>(FerretAck)
+nnoremap <leader>x <Plug>(FerretAck)
 
 " <leader>c -- Fix (most) syntax highlighting problems in current buffer
 " (mnemonic: coloring).
