@@ -189,7 +189,7 @@ wifi_history() {
 alias gs='git status '
 # short status
 alias gg='gs -s'
-alias ga='git add '
+alias ga='git add -v'
 alias gr='git remote -v'
 alias gc='git commit'
 alias gd='git diff'
