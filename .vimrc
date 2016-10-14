@@ -179,7 +179,7 @@ function! General_Settings()
 
     " save last 50 search history items, last 50 edit marks, don't remember search
     " highlight
-    set viminfo=/50,'50,h
+    set viminfo=/50,'30,h
 
     set backup      " enable backup files
     set writebackup " enable backup files
@@ -1499,7 +1499,7 @@ let g:ag_apply_qmappings = 1
 let g:ag_apply_lmappings = 1
 " bind \ (backward slash) to grep shortcut
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap <C-g> :Ags -S<space>
+nnoremap <C-g> :Ags -S ""<Left>
 
 " gitgutter
 nmap gh <Plug>GitGutterNextHunk
@@ -1586,7 +1586,7 @@ let g:snipMateAllowMatchingDot = 0
 vmap <Enter> <Plug>(LiveEasyAlign)
 
 " TODO: this is working?
-" let g:gutentags_exclude = ['env', '.tox']
+let g:gutentags_exclude = ['env', '.tox', 'virtualenv*', 'venv', 'node_modules', 'vim-polyglot']
 let g:gutentags_file_list_command = {
                 \ 'markers': {
                     \ '.git': 'git ls-files',
