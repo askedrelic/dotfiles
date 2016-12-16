@@ -136,10 +136,9 @@ fi
 [ -f ~/.bash_local ] && source ~/.bash_local
 
 # try enabling brew autojump
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-# if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/autojump.sh ]] ; then
-#     source $(brew --prefix)/etc/autojump.sh
-# fi
+if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/autojump.sh ]] ; then
+    source $(brew --prefix)/etc/autojump.sh
+fi
 
 # import any local bash scripts
 for file in ~/.bash/* ; do
