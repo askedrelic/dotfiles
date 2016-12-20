@@ -1,0 +1,2 @@
+#!/bin/bash
+reattach-to-user-namespace -l terminal-notifier -message "$@"
