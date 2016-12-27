@@ -233,3 +233,6 @@ bpychk() {
     done
 }
 
+dashcase() {
+    echo "$*" | tr '[:upper:]' '[:lower:]' | tr ' ' '-'
+}
