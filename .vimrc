@@ -310,6 +310,8 @@ function! General_Settings()
     " set ttimeout
     " set ttimeoutlen=100
 
+    set sessionoptions-=options
+
     " make matchparen timeout quickly; don't take forever on long lines
     let g:matchparen_insert_timeout=5
 
@@ -680,6 +682,28 @@ function! File_Types()
         autocmd Filetype markdown nnoremap <buffer> <localLeader>1 yypVr=
         autocmd Filetype markdown nnoremap <buffer> <localLeader>2 yypVr-
         autocmd Filetype markdown nnoremap <buffer> <localLeader>3 I### <ESC>
+
+        " a function to execute formd and return the cursor back
+        " to it's original position within the buffer.
+        " http://drbunsen.github.io/formd/
+        function! Formd(option)
+            :let l:save_view = winsaveview()
+            :let l:flag = a:option
+            :if flag == "-r"
+                :%! formd -r
+            :elseif flag == "-i"
+                :%! formd -i
+            :else
+                :%! formd -f
+            :endif
+            :call winrestview(save_view)
+        endfunction
+
+        " formd mappings
+        nnoremap <localleader>fr :call Formd("-r")<CR>
+        nnoremap <localleader>fi :call Formd("-i")<CR>
+        " Format ...
+        nnoremap <localleader>f :call Formd("-f")<CR>
     augroup END
 
     augroup ft_nginx
@@ -698,13 +722,13 @@ function! File_Types()
         let g:python_highlight_all = 1
         autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
         "autocmd FileType python compiler nose
-        autocmd FileType man nnoremap <buffer> <cr> :q<cr>
+        " autocmd FileType man nnoremap <buffer> <cr> :q<cr>
 
         " format comments correctly
         autocmd FileType python setlocal textwidth=80
         autocmd FileType python setlocal formatoptions=croqn
 
-        " @NOTE Fuck smartindent, it forces inserting tabs. Use cindent instead
+        " @NOTE disable smartindent, it forces inserting tabs. Use cindent instead
         autocmd FileType python setlocal cindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
         autocmd FileType python setlocal cinkeys-=0#
         autocmd FileType python setlocal indentkeys-=0#
@@ -869,7 +893,9 @@ function! Normal_Mappings()
     " vnoremap p "_dP
 
     " clear the fucking search buffer, not just remove the highlight
-    nnoremap <leader>l :noh<CR>:call clearmatches()<CR>
+    " " Use <leader>l to clear the highlighting of :set hlsearch.
+    " nnoremap <silent> <leader>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><leader>l
+    nnoremap <silent> <leader>l :nohlsearch<CR>:call clearmatches()<CR>
     " nnoremap <leader>/ /\v
     " nnoremap <leader>? ?\v
 
@@ -1248,27 +1274,6 @@ function! Mini_Scripts()
     hi def InterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
     hi def InterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
 
-    " a function to execute formd and return the cursor back
-    " to it's original position within the buffer.
-    " http://drbunsen.github.io/formd/
-    function! Formd(option)
-        :let l:save_view = winsaveview()
-        :let l:flag = a:option
-        :if flag == "-r"
-            :%! formd -r
-        :elseif flag == "-i"
-            :%! formd -i
-        :else
-            :%! formd -f
-        :endif
-        :call winrestview(save_view)
-    endfunction
-
-    " formd mappings
-    " nmap <leader>fr :call Formd("-r")<CR>
-    " nmap <leader>fi :call Formd("-i")<CR>
-    " Format ...
-    " nmap <leader>f :call Formd("-f")<CR>
 
     " location/quickfix list toggle script
     function! GetBufferList()
@@ -1530,8 +1535,13 @@ nmap gH <Plug>GitGutterPrevHunk
 
 " vim-autoformat
 " https://github.com/google/yapf
+" My settings:
+" BLANK_LINE_BEFORE_NESTED_CLASS_OR_DEF - True
+" dedent_closing_brackets - True (I like C style)
+" split_arguments_when_comma_terminated - True
+" coalesce_brackets - True
 let g:formatter_yapf_style = 'facebook'
-let g:formatdef_yapf = "'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:'.&shiftwidth.',dedent_closing_brackets:true}\" -l '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf = "'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:'.&shiftwidth.',dedent_closing_brackets:true, blank_line_before_nested_class_or_def:true,split_arguments_when_comma_terminated:true,coalesce_brackets:true:split_before_first_argument:true,spaces_around_default_or_named_assign:true}\" -l '.a:firstline.'-'.a:lastline"
 
 if !exists("g:formatprg_scss") | let g:formatprg_scss = "sass-convert" | endif
 let g:formatprg_args_scss = "-s --indent 4 -F scss -T scss"
@@ -1545,8 +1555,11 @@ let g:EasyMotion_leader_key = ','
 
 " ========== Airline.vim
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#tab_nr_type = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+" let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#branch#displayed_head_limit = 10
@@ -1636,9 +1649,9 @@ inoremap jk <ESC>`^
 " Always set titlestring to CWD. Most useful identifier to me.
 set titlestring=%{substitute(getcwd(),\ $HOME,\ '~',\ '')}
 
-" Yank current file and line number, to system yank buffer
+" Yank current relative file path and line number, to system yank buffer
 function! CopyLine()
-    let @+=expand("%") . ':' . line(".")
+    let @+=fnamemodify(expand("%"), ":~:.") . ':' . line(".")
     echo 'Copied "'@*'" to clipboard'
 endfunction
 
@@ -1650,8 +1663,8 @@ endfunction
 
 " http://www.vimbits.com/bits/337
 
-" Yank Path
-nnoremap <Leader>yp :let @*=expand("%")<cr>:echo 'Copied '@*' to clipboard'<cr>
+" Yank relative Path
+nnoremap <Leader>yp :let @*=fnamemodify(expand("%"), ":~:.")<cr>:echo 'Copied '@*' to clipboard'<cr>
 " Yank Filepath to clipboard
 nnoremap <Leader>yf :let @*=expand("%:t")<cr>:echo 'Copied '@*' to clipboard'<cr>
 " Yank Vim style filepath
@@ -1681,7 +1694,6 @@ autocmd vimrc FileType agsv nnoremap <buffer> ot
 let g:startify_custom_indices = ['a', 's', 'd', 'f']
 
 " Press \r to start rotating lines and <C-c> (Control+c) to stop.
-
 function! s:RotateString(string)
     let split_string = split(a:string, '\zs')
     return join(split_string[-1:] + split_string[:-2], '')
@@ -1727,9 +1739,8 @@ function! s:RotateLines()
     endtry
 endfunction
 
-nnoremap <silent> <Plug>(RotateLines) :<C-u>call <SID>RotateLines()<CR>
-
-nmap \r <Plug>(RotateLines)
+" nnoremap <silent> <Plug>(RotateLines) :<C-u>call <SID>RotateLines()<CR>
+" nmap \r <Plug>(RotateLines)
 
 " Source: http://stackoverflow.com/a/6404246/151007
 let i = 1
