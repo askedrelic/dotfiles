@@ -1,0 +1,5 @@
+source 'https://rubygems.org'
+# Need this
+gem 'bundler'
+# Want latest tmuxinator installed
+gem 'tmuxinator'
