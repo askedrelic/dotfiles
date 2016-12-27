@@ -20,6 +20,7 @@ alias type="type -a" #show all types
 alias wget="wget -c"
 alias paux="ps -A|grep -i"
 alias pine='alpine'
+alias mux=tmuxinator
 
 alias rscreen="screen -R"
 alias logout="clear; logout"
