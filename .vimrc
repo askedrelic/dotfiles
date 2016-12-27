@@ -33,7 +33,8 @@ Plug 'junegunn/gv.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Lokaltog/vim-easymotion'
 " NOTE: the async stuff on master after this commit isn't ready yet, don't update
-Plug 'airblade/vim-gitgutter', {'commit': 'cae4f72aa1290'}
+" Plug 'airblade/vim-gitgutter', {'commit': 'cae4f72aa1290'}
+Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 
 
@@ -42,7 +43,7 @@ Plug 'ap/vim-css-color'
 Plug 'tommcdo/vim-lion'
 
 " tpope vinegar, but with nerdtree
-Plug 'dhruvasagar/vim-vinegar'
+Plug 'askedrelic/vim-vinegar'
 " Trying filebeagle? faster and simpler than vinegar/nerdtree
 " But less file mgmt features :(
 " Plug 'jeetsukumaran/vim-filebeagle'
@@ -82,7 +83,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/syntastic'
 
 Plug 'scrooloose/nerdtree'
-" Plug 'jistr/vim-nerdtree-tabs'
+Plug 'jistr/vim-nerdtree-tabs'
 "
 """"""""""""" File search plugins
 " Ack search
@@ -154,6 +155,15 @@ Plug 'https://gitlab.com/mcepl/vim-diff_navigator.git'
 
 " Too much setup...
 " Plug 'hecal3/vim-leader-guide'
+
+" new ctrlp style search plugin
+Plug 'vim-ctrlspace/vim-ctrlspace'
+
+Plug 'benmills/vimux'
+
+" https://github.com/janko-m/vim-test
+" Should fix all my testing issues?
+Plug 'janko-m/vim-test'
 
 call plug#end()
 
@@ -260,7 +270,8 @@ function! General_Settings()
     " execute 'set listchars+=tab:' . nr2char(9656) . nr2char(183)
     " execute 'set listchars+=eol:' . nr2char(172)
     " set listchars=eol:¬,tab:→→,extends:>,precedes:<
-    set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+    " set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+    set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮,nbsp:+
     set showbreak=↪
 
     "check if file is written to elsewhere and ask to reload immediately, not when saving
@@ -293,7 +304,7 @@ function! General_Settings()
 
     " Time out on key codes but not mappings.
     " Basically this makes terminal Vim work sanely.
-    " set timeout
+    set timeout
     set ttimeoutlen=50
 
     " set ttimeout
@@ -303,7 +314,10 @@ function! General_Settings()
     let g:matchparen_insert_timeout=5
 
     " let mapleader = ','
+    " Use space for leader
     let g:mapleader = ' '
+    " shrug, local leader still doesn't make much sense to me
+    " let g:maplocalleader = '\'
 
     " Search for ctags file up to /
     set tags=tags;./;/
@@ -475,6 +489,7 @@ function! Colors()
     if has("gui_running")
         " set guifont=Monaco:h12
         set guifont=Hack:h12
+        " set guifont=Inconsolata:h14
 
         " Orange :()
         highlight SpellBad term=underline gui=undercurl guisp=Orange
@@ -491,6 +506,9 @@ function! Colors()
 
         " Use a line-drawing char for pretty vertical splits.
         set fillchars+=vert:│
+
+        " Settings for MacVim and Inconsolata font
+        let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
     endif
 
     " better diff pastel green/yellow/red diff colors
@@ -534,6 +552,7 @@ function! Line_Wrapping()
     set formatoptions+=2 " Use indent from 2nd line of a paragraph
     set formatoptions+=l " Don't break lines that are already long
     set formatoptions+=1 " Break before 1-letter words
+    set formatoptions+=j " Delete comment character when joining commented lines
 endfunction
 call Line_Wrapping()
 
@@ -1278,7 +1297,8 @@ function! Mini_Scripts()
       endif
     endfunction
     " nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
-    nmap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
+    nnoremap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
+    " nnoremap <silent> qq :call ToggleList("Quickfix List", 'c')<CR>
 
     " Split the current line at all commas
     " Sometimes you have a list that has grown very past 80 or 100 chars on one
@@ -1379,7 +1399,7 @@ let g:tagbar_type_markdown = {
 map <silent> <leader>n :NERDTreeMirrorToggle<CR>
 map <silent> <leader>N :NERDTreeFind<CR>
 let NERDTreeWinPos              = 'left'
-let NERDTreeChDirMode           = 0
+let NERDTreeChDirMode           = 1
 let NERDTreeIgnore              = ['\.rbc$', '\~$', '\.pyc$', '\.db$', '\.sqlite$', '__pycache__', '\.DS_Store$']
 let NERDTreeSortOrder           = ['^__\.py$', '\/$', '*', '\.swp$',  '\.bak$', '\~$']
 let NERDTreeHighlightCursorline = 1
@@ -1387,9 +1407,7 @@ let NERDTreeShowFiles           = 1 " Show hidden files, too
 let NERDTreeShowHidden          = 1
 let NERDTreeMinimalUI           = 1 " Hide 'up a dir' and help message
 let NERDTreeShowLineNumbers     = 1 " Linenumbers are great for gg
-" let NERDTreeCreatePrefix        = 'keepalt keepjumps'
-let g:NERDTreeCreatePrefix='silent keepalt keepjumps'
-" don't show nerdtree by default
+let NERDTreeCreatePrefix        = 'silent keepalt keepjumps'
 let g:nerdtree_tabs_focus_on_files          = 0
 let g:nerdtree_tabs_meaningful_tab_names    = 1
 let g:nerdtree_tabs_open_on_console_startup = 0
