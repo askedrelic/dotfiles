@@ -1200,7 +1200,7 @@ function! Mini_Scripts()
     " endfunction
     " nmap <leader>w :call <SID>StripTrailingWhitespaces()<cr>
 
-    " OSX only: Open a web-browser with the URL in the current line
+    " OSX only: Open a web-browser with the URL in the current line.
     " Funny thing: 'gx' actually does this better, using netrw
     function! HandleURI()
         let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;)]*')
