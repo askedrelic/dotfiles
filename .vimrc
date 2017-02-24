@@ -74,12 +74,14 @@ Plug 'honza/vim-snippets'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'msanders/cocoa.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'rhysd/clever-f.vim'
 Plug 'scrooloose/nerdcommenter'
+
+" Run ctags in the bg on save
+Plug 'ludovicchabant/vim-gutentags'
 Plug 'scrooloose/syntastic'
 
 Plug 'scrooloose/nerdtree'
@@ -1616,8 +1618,7 @@ let g:snipMateAllowMatchingDot = 0
 
 vmap <Enter> <Plug>(LiveEasyAlign)
 
-" TODO: this is working?
-let g:gutentags_exclude = ['env', '.tox', 'virtualenv*', 'venv', 'node_modules', 'vim-polyglot']
+let g:gutentags_ctags_exclude = ['env', '.tox', 'virtualenv*', 'venv', 'node_modules', 'vim-polyglot']
 let g:gutentags_file_list_command = {
                 \ 'markers': {
                     \ '.git': 'git ls-files',
