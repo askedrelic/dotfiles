@@ -208,3 +208,5 @@
     autoUpdate = never
 [credential "https://github.com"]
     username = askedrelic
+[http "https://gopkg.in"]
+	followRedirects = true
