@@ -16,7 +16,7 @@ export LC_ALL="en_US.UTF-8"
 # Colors -----------------------------------------------------------------------
 
 export TERM=xterm-color
-export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
+# export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
 # Setup some colors to use later in interactive shell or scripts
