@@ -1,12 +1,16 @@
 --recurse=yes
 --exclude=.git
 --exclude=log/*
+--exclude=*.json
 
 --Python-kinds=-i
 
---langdef=css
---langmap=css:.css
---regex-css=/^[ \t]*([^\t {][^{]{1,100})(\t| )*{/\1/d,definition/
+--JSON-kinds=
+
+# don't need this with universal-ctags?
+#--langdef=css
+#--langmap=css:.css
+#--regex-css=/^[ \t]*([^\t {][^{]{1,100})(\t| )*{/\1/d,definition/
 
 --langdef=scss
 --langmap=scss:.scss
