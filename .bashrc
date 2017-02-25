@@ -129,6 +129,13 @@ fi
 # enable python virtualenv wrapper
 # [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
+if [[ -n $(command -v brew) ]] ; then
+    if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+        __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
+        source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+    fi
+fi
+
 # enable python autoenv
 [ -f /usr/local/opt/autoenv/activate.sh ] && source /usr/local/opt/autoenv/activate.sh
 
