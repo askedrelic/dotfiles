@@ -107,18 +107,17 @@ export PIP_RESPECT_VIRTUALENV=true
 
 # Ruby
 # Using rbenv currently
-export RBENV_ROOT=/usr/local/var/rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+#export RBENV_ROOT=/usr/local/var/rbenv
+#if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # Python
 # Ditto for pyenv
-export PYENV_ROOT=/usr/local/var/pyenv
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+#export PYENV_ROOT=/usr/local/var/pyenv
+#if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
-export GOPATH=~/.gopath
-if [[ -e ~/.gopath/bin ]]; then
-  export PATH=~/.gopath/bin:$PATH
-fi
+#if [[ -e ~/.gopath/bin ]]; then
+#   export PATH=~/.gopath/bin:$PATH
+#fi
 
 # Imports ----------------------------------------------------------------------------------------------
 

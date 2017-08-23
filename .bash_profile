@@ -92,9 +92,9 @@ if which pyenv > /dev/null; then
     eval "$(pyenv init -)"
 fi
 
-# Add
-export GOPATH=$HOME/go
-#mkdir -p $GOPATH
+# Add Go paths next
+export GOPATH=~/.gopath
+mkdir -p $GOPATH
 # If go exists, use it
 if [[ -d $GOPATH ]]; then
     export GOBIN=$GOPATH/bin
