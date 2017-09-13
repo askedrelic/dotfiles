@@ -1,0 +1,108 @@
+{
+    // Matt's person key bindings for MailMate
+    // See http://manual.mailmate-app.com/key_binding_selectors
+
+    // Email Creation
+    "c" = "newMessage:"; // compose
+    "r" = "replySender:";
+    "a" = "replyAll:";
+    "f" =  "forwardMessage:";
+
+    // Sending
+    // Based on: http://mail.google.com/support/bin/answer.py?answer=6594
+    "@\U000A" = "send:"; // ⌘+return
+    "@\U000D" = "send:"; // ⌘+enter
+
+    // Filtering
+    //"s" = "moveToJunk:";
+    //"h" = (
+    //    "copyToMailbox:", "/Spam.TrainGood",
+    //    "moveToMailbox:", "INBOX"
+    //);
+    // "x" = "deleteMessage:";
+    // "X" = ( "moveThreadToMailbox:", "trash" );
+    // "m" = "moveToMailbox:";
+    // "M" = "moveThreadToMailbox:";
+    // "e" = "archive:";
+
+    // gmail style, archive whole thread
+    // http://protips.maxmasnick.com/mailmate-keyboard-shortcut-to-archive-all-messages-in-a-thread
+    "e" = ( "selectWithFilter:", "#thread-id = ${#thread-id}", "archive:"); 
+    // I don't think this way works:
+    // "e"    = ("moveThreadToMailbox:", "archive"); /* archive the entire thread */
+
+    // Just this message
+    "E" = "archive:";
+
+    // Set focus.
+    "1" = ( "makeFirstResponder:", "mailboxesOutline" );
+    "2" = ( "makeFirstResponder:", "mainOutline" );
+
+    // Threads
+    "o" = "showThread:"; // open thread
+    "," = "rootOfThread:"; // left, top
+    "." = "lastOfThread:"; // right, bottom
+    ";" = "collapseAll:"; // left, open
+    "'" = "expandAll:"; // right, close
+
+    // Navigation
+    "j" = "nextMessage:";
+    "k" = "previousMessage:";
+
+    "n" = "nextThread:";
+    "p" = "previousThread:";
+
+    "^j" = "nextUnreadThread:";
+    "^k" = "previousUnreadThread:";
+
+    "l" = "selectNextMailboxRow:";
+    "h" = "selectPreviousMailboxRow:";
+
+    "C" = "showCorrespondence:";
+    "/" = "searchAllMessages:";
+    "F" = "mailboxSearch:";
+
+    "g" = {
+        "1" = ( "goToMailbox:", "9C872B6A-8E4A-41C8-8BAE-20A9C34472B6" ); // P1
+        "2" = ( "goToMailbox:", "D00F00AB-7DC7-4D04-9503-6137F4A5C29A" ); // P2
+        "a" = ( "goToMailbox:", "ALL_MESSAGES" );
+        "s" = ( "goToMailbox:", "FLAGGED" );
+        "d" = ( "goToMailbox:", "DRAFTS" );
+        "g" = "selectFirstMessageRow:"; /* gg, like in Vim */
+        "l" = "goToMailbox:";
+        "i" = ( "goToMailbox:", "INBOX" );
+        "t" = ( "goToMailbox:", "SENT" );
+        "u" = ( "goToMailbox:", "0CE5FC71-F7DC-4D08-842D-0556FA57CDB9" ); /* Goto smart mailbox, Unread. Obtain the UUID from  ~/Library/Application Support/MailMate/Mailboxes.plist */
+    };
+    "G" = "selectLastMessageRow:"; /* G, like in Vim */
+
+    "*" = {
+        "a" = "selectAll:";                                            /* Selects all */
+        "n" = "deselectAll:";                                          /* Deselect all */
+        "r" = ( "selectWithFilter:", "#flags.flag = '\\Seen'" );        /* Selects all mail you've read. */
+        "u" = ( "selectWithFilter:", "#flags.flag !=[x] '\\Seen'" );    /* Selects all unread mail. */
+        "s" = ( "selectWithFilter:", "#flags.flag = '\\Flagged'" );     /* Selects all starred mail. */
+        "t" = ( "selectWithFilter:", "#flags.flag !=[x] '\\Flagged'" ); /* Selects all unstarred mail. */
+    };
+
+
+
+    // Message State
+    "!" = "toggleFlag:";
+    "u" = "toggleReadState:";
+    "m" = "toggleMuteState:";
+    "-" = "markAsJunk:";
+    "=" = "markAsNotJunk:";
+    "L" = "loadImagesOnce:"; // load remote images once
+
+
+    // Miscellaneous
+    // "u" = "undo:";
+    "z" = "redo:";
+    "D" = "saveAttachmentsInDownloads:";
+    "^c" = "copyAsLink:";
+
+    // In composer.
+    "^i" = "showIdentities:";
+    "^s" = "showSignatures:";
+}
