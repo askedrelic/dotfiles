@@ -96,22 +96,21 @@ alias of="open ."
 # OSX: send finder window to console
 ftc() {
     currFolderPath=$( /usr/bin/osascript << EOT
-        # Disable for now
-        #tell application "Finder"
-        #    try
-        #        set currFolder to (folder of the front window as alias)
-        #    on error
-        #        set currFolder to (path to desktop folder as alias)
-        #    end try
-        #    POSIX path of currFolder
-        #end tell
-
-        tell application "Path Finder"
-            #set pathList to POSIX path of the target of the front finder window
-            #set pathList to quoted form of pathList
-            #set command to "clear; cd " & pathList
-            POSIX path of the target of the front finder window
+        tell application "Finder"
+            try
+                set currFolder to (folder of the front window as alias)
+            on error
+                set currFolder to (path to desktop folder as alias)
+            end try
+            POSIX path of currFolder
         end tell
+
+        #tell application "Path Finder"
+        #    #set pathList to POSIX path of the target of the front finder window
+        #    #set pathList to quoted form of pathList
+        #    #set command to "clear; cd " & pathList
+        #    POSIX path of the target of the front finder window
+        #end tell
 EOT
     )
     echo "cd to \"$currFolderPath\""
@@ -132,16 +131,17 @@ ctf() {
 
     /usr/bin/osascript << EOT
         set myPath to ( POSIX file "$thePath" as alias )
-        # disable finder for now...
-        #try
-        #    tell application "Finder" to set the (folder of the front window) to myPath
-        #on error -- no open folder windows
-        #    tell application "Finder" to open myPath
-        #end try
-        tell application "Path Finder"
-            activate
-            PFOpen myPath
-        end tell
+        try
+            tell application "Finder" to set the (folder of the front window) to myPath
+        on error -- no open folder windows
+            tell application "Finder" to open myPath
+        end try
+
+        # Disable for now
+        #tell application "Path Finder"
+        #    activate
+        #    PFOpen myPath
+        #end tell
 EOT
 }
 
