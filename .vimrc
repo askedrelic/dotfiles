@@ -28,7 +28,10 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 
 " Plug 'junegunn/vim-peekaboo'
-Plug 'AndrewRadev/splitjoin.vim'
+"
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
 Plug 'junegunn/gv.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Lokaltog/vim-easymotion'
@@ -73,7 +76,7 @@ Plug 'gregsexton/MatchTag'
 Plug 'honza/vim-snippets'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
 Plug 'majutsushi/tagbar'
 Plug 'msanders/cocoa.vim'
 Plug 'plasticboy/vim-markdown'
@@ -82,9 +85,12 @@ Plug 'scrooloose/nerdcommenter'
 
 " Run ctags in the bg on save
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'scrooloose/syntastic'
 
-Plug 'scrooloose/nerdtree'
+" 2017/02/01 now using ale for linting
+" Plug 'scrooloose/syntastic'
+" Plug 'w0rp/ale'
+
+Plug 'scrooloose/nerdtree' ", { 'on':  'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs'
 "
 """"""""""""" File search plugins
@@ -114,7 +120,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-dispatch'
 
-" https://github.com/vim-scripts/QFEnter
+" https://github.com/yssl/QFEnter
+" make Enter work in the QF window
 Plug 'yssl/QFEnter'
 
 " Eunuch - vim sugar for the UNIX shell commands
@@ -158,8 +165,9 @@ Plug 'https://gitlab.com/mcepl/vim-diff_navigator.git'
 " Too much setup...
 " Plug 'hecal3/vim-leader-guide'
 
-" new ctrlp style search plugin
-Plug 'vim-ctrlspace/vim-ctrlspace'
+" https://github.com/vim-ctrlspace/vim-ctrlspace
+" ctrlp style search plugin
+" Plug 'vim-ctrlspace/vim-ctrlspace'
 
 Plug 'benmills/vimux'
 
@@ -167,6 +175,13 @@ Plug 'benmills/vimux'
 " Should fix all my testing issues?
 Plug 'janko-m/vim-test'
 
+" https://github.com/bogado/file-line
+" Let vim open file:lineno style
+Plug 'bogado/file-line'
+
+" maggggit
+" https://github.com/jreybert/vimagit
+Plug 'jreybert/vimagit'
 call plug#end()
 
 " Create vimrc group
@@ -185,16 +200,16 @@ function! General_Settings()
     endif
 
     " Fix term under cli vim
-    if exists('$TMUX') && !has("gui_running")
-        set term=screen-256color
-    endif
+    "if exists('$TMUX') && !has("gui_running")
+    "    set term=screen-256color
+    "endif
 
-    " save last 50 search history items, last 50 edit marks, don't remember search
-    " highlight
+    " save last 50 search history items, last 50 edit marks,
+    " don't remember last search highlight
     set viminfo=/50,'30,h
 
     set backup      " enable backup files
-    set writebackup " enable backup files
+    "set writebackup " enable backup files
     set swapfile    " enable swap files (useful when loading huge files)
 
     let s:vimdir=$HOME . "/.vim"
@@ -213,9 +228,12 @@ function! General_Settings()
         endif
     endif
 
-    set backupskip+=*.tmp " skip backup for *.tmp
+    " skip backup for tmp files
+    set backupskip=/tmp/*,/private/tmp/*,*.tmp
 
-    let &viminfo=&viminfo . ",n" . s:vimdir . "/.viminfo" " viminfo location
+    " 2017/11/16 17:25:47
+    " Disable to let nvim work?
+    "let &viminfo=&viminfo . ",n" . s:vimdir . "/.viminfo" " viminfo location
 
     " if you want to yank and paste with the system clipboard
     " set clipboard=unnamed
@@ -230,7 +248,7 @@ function! General_Settings()
     set hidden
     "make backspace work
     set backspace=indent,eol,start
-    " Show matching brackets
+    " highlight matching [{()}]
     set showmatch
     " have % bounce between angled brackets, as well as other kinds:
     " set matchpairs+=<:>
@@ -258,7 +276,9 @@ function! General_Settings()
     set diffopt+=iwhite
 
     " Allow cursor keys in insert mode.
-    set esckeys
+    if !has('nvim')
+        set esckeys
+    endif
     " Only insert single space after a '.', '?' and '!' with a join command.
     set nojoinspaces
     " Don't reset cursor to start of line when moving around.
@@ -300,6 +320,9 @@ function! General_Settings()
     set wildignore+=*.sw?                            " Vim swap files
     " set wildignore+=*/.git/*,*/.hg/*,*/.svn/*        " Source control
     " set wildignore+=*/eggs/*,*/develop-eggs/*        " Python buildout
+
+    " Disable included files in tab complete, for now
+    set complete-=i
 
     " redraw only when we need to.
     set lazyredraw
@@ -510,9 +533,6 @@ function! Colors()
 
         " Use a line-drawing char for pretty vertical splits.
         set fillchars+=vert:│
-
-        " Settings for MacVim and Inconsolata font
-        let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
     endif
 
     " better diff pastel green/yellow/red diff colors
@@ -650,18 +670,11 @@ function! File_Types()
         autocmd FileType jinja,htmldjango inoremap <buffer> <c-f> {{<space><space>}}<left><left><left>
     augroup END
 
-    " Java
-    augroup ft_java
-        autocmd!
-
-    augroup END
-
     " Cheetah overrides
     augroup ft_cheetah
         autocmd!
 
-        autocmd bufnewfile,bufread *.tmpl setlocal filetype=cheetah
-
+        autocmd BufNewFile,BufRead *.tmpl setlocal filetype=cheetah
     augroup END
 
     " Javascript
@@ -863,7 +876,8 @@ function! Normal_Mappings()
     nnoremap } :tabn<CR>
 
     " insert new line without going into insert mode
-    nnoremap <Enter> o<ESC>
+    " Except this breaks ctrl-f...
+    " nnoremap <Enter> o<ESC>
     nnoremap <S-Enter> :put!=''<CR>
 
     " Force gm to go the middle of the ACTUAL line, not the screen line
@@ -937,8 +951,11 @@ function! Normal_Mappings()
     " 2015/02/06 dont think I need this
     " nnoremap <leader>s :%s//<left>
 
-    " ehh whatelse to bind
+    " ehh bind m to make
     nnoremap <leader>m :w<CR>:make<CR>
+
+    " vim-autoformat should be easy to use
+    nnoremap <leader>= :Autoformat<CR>
 
     " [J]oin lines and preserve cursor position
     nnoremap J :call Preserve("normal! J")<CR>
@@ -969,6 +986,9 @@ function! Normal_Mappings()
     nnoremap _js :set ft=javascript<CR>
     nnoremap _pd :set ft=python.django<CR>
     nnoremap _d  :set ft=diff<CR>
+
+    " reset font size. combines with Apple+`-`/`=` keys
+    nnoremap <D-0> :set guifont=Hack:h12<CR>
 endfunction
 call Normal_Mappings()
 
