@@ -119,6 +119,9 @@ export PIP_RESPECT_VIRTUALENV=true
 #   export PATH=~/.gopath/bin:$PATH
 #fi
 
+# Only auto-update every 2 days
+export HOMEBREW_AUTO_UPDATE_SECS=172800
+
 # Imports ----------------------------------------------------------------------------------------------
 
 # Add fuzzy finder scripts
