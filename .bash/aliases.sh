@@ -42,11 +42,14 @@ alias dotfiles="cd ~/.dotfiles"
 # History ----------------------------------------------------------------------------------------------
 
 alias h='history | tail -n 30'
+# History Find
 hf(){ grep "$@" ~/.bash_history; }
 
 # Navigation ----------------------------------------------------------------------------------------------
+
 # Silent pushd/popd functions below
-alias cd='pushd'
+# NOTE (2018): this breaks somethings weirdly
+# alias cd='pushd'
 # back
 alias b="popd"
 pushd() {
@@ -58,21 +61,21 @@ pushd() {
         builtin pushd "$@" > /dev/null
     fi
     # init python autoenv manually
-    [ "`type -t autoenv_init`" = 'function' ] && autoenv_init
+    #[ "`type -t autoenv_init`" = 'function' ] && autoenv_init
 }
 popd() {
     builtin popd "$@" > /dev/null
 }
-alias u="cd .."
-alias d="dirs -v"
+alias d="cd"
 alias p="pwd"
+alias u="cd .."
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 
-#cd and ls
+# cd and ls
 cl() { cd $1; ls -la; }
 
 #ls and its options
@@ -90,8 +93,19 @@ alias lo="ls -o"
 alias ll='tree --dirsfirst -ChAFL 1'
 alias l="la"
 
-# OSX: Open a Finder window at your current location
+# OSX: Open Finder window at your current location
 alias of="open ."
+
+# OSX: Open Alfred, with location
+oa() {
+    if [ ! -n "$1" ]
+    then
+        ARGS=$(pwd)
+    else
+        ARGS="$@"
+    fi
+    osascript -e "tell application \"Alfred 3\" to search \"$ARGS\""
+}
 
 # OSX: send finder window to console
 ftc() {
