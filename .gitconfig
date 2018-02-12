@@ -194,6 +194,8 @@
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
+    # diff3 is better?
+    conflictStyle = diff3
 [difftool]
     prompt = false
 [grep]
