@@ -146,7 +146,7 @@ if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/autojump.sh ]] ; then
 fi
 
 # import any local bash scripts
-for file in ~/.bash/* ; do
+for file in ~/.bash/*.sh; do
   if [ -f "$file" ] ; then
     source "$file"
   fi
