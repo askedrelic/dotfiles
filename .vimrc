@@ -219,7 +219,7 @@ call plug#end()
 
 " Create vimrc group
 augroup vimrc
-  autocmd!
+    autocmd!
 augroup END
 
 function! General_Settings()
@@ -506,14 +506,14 @@ function! Scrollbars()
     "set colorcolumn=+1
     " Highlight Long lines
     nnoremap <silent> <leader>hl
-        \ :if exists('w:long_line_match') <Bar>
-        \   silent! call matchdelete(w:long_line_match) <Bar>
-        \   unlet w:long_line_match <Bar>
-        \ elseif &textwidth > 0 <Bar>
-        \   let w:long_line_match = matchadd('ColorColumn', '\%>'.&tw.'v.\+', -1) <Bar>
-        \ else <Bar>
-        \   let w:long_line_match = matchadd('ColorColumn', '\%>80v.\+', -1) <Bar>
-        \ endif<CR>
+                \ :if exists('w:long_line_match') <Bar>
+                \   silent! call matchdelete(w:long_line_match) <Bar>
+                \   unlet w:long_line_match <Bar>
+                \ elseif &textwidth > 0 <Bar>
+                \   let w:long_line_match = matchadd('ColorColumn', '\%>'.&tw.'v.\+', -1) <Bar>
+                \ else <Bar>
+                \   let w:long_line_match = matchadd('ColorColumn', '\%>80v.\+', -1) <Bar>
+                \ endif<CR>
 endfunction
 call Scrollbars()
 
@@ -621,7 +621,7 @@ function! File_Types()
     set completeopt+=menuone
     set completeopt-=menu
     if &completeopt !~# 'noinsert\|noselect'
-    set completeopt+=noselect
+        set completeopt+=noselect
     endif
 
     " complete using built in syntax? http://vim.wikia.com/wiki/Completion_using_a_syntax_file
@@ -744,11 +744,11 @@ function! File_Types()
             :let l:save_view = winsaveview()
             :let l:flag = a:option
             :if flag == "-r"
-                :%! formd -r
+            :%! formd -r
             :elseif flag == "-i"
-                :%! formd -i
+            :%! formd -i
             :else
-                :%! formd -f
+            :%! formd -f
             :endif
             :call winrestview(save_view)
         endfunction
@@ -853,9 +853,9 @@ function! File_Types()
     autocmd BufReadPost * call SetCursorPosition()
     function! SetCursorPosition()
         if &filetype !~ 'commit\c' && &filetype !~ 'svn\c'
-        if line("'\"") > 0 && line("'\"") <= line("$")
-            exe "normal g`\""
-        endif
+            if line("'\"") > 0 && line("'\"") <= line("$")
+                exe "normal g`\""
+            endif
         end
     endfunction
 endfunction
@@ -1097,12 +1097,12 @@ function! Visual_Mappings()
 
 
     function! GetVisualSelection()
-    let [l:l1, l:c1] = getpos("'<")[1:2]
-    let [l:l2, l:c2] = getpos("'>")[1:2]
-    let l:selection = getline(l:l1, l:l2)
-    let l:selection[-1] = l:selection[-1][: l:c2 - 1]
-    let l:selection[0] = l:selection[0][l:c1 - 1:]
-    return join(l:selection, "\n")
+        let [l:l1, l:c1] = getpos("'<")[1:2]
+        let [l:l2, l:c2] = getpos("'>")[1:2]
+        let l:selection = getline(l:l1, l:l2)
+        let l:selection[-1] = l:selection[-1][: l:c2 - 1]
+        let l:selection[0] = l:selection[0][l:c1 - 1:]
+        return join(l:selection, "\n")
     endfunction
 
     " search for visually selected areas
@@ -1158,13 +1158,13 @@ function! Tab_Mapping()
     """ let col = col('.') - 1
     "" if !col || strpart(getline('.'), col-1, col) =~ '\s'
     "if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-        "return "\<tab>"
+    "return "\<tab>"
     "elseif "forward" == a:direction
-        "return "\<c-n>"
+    "return "\<c-n>"
     "elseif "backward" == a:direction
-        "return "\<c-d>"
+    "return "\<c-d>"
     "else
-        "return "\<c-x>\<c-k>"
+    "return "\<c-x>\<c-k>"
     "endif
     "endfunction
 
@@ -1205,40 +1205,40 @@ function! Mini_Scripts()
     "nnoremap <silent> <leader>w :set invwrap wrap?<CR>
     nnoremap <silent> <leader>tw :call ToggleWrap()<CR>
     function! ToggleWrap()
-    if &wrap
-        echo "Wrap OFF"
-        setlocal nowrap
-        setlocal virtualedit=
-        silent! nunmap <buffer> k
-        silent! nunmap <buffer> j
-        silent! nunmap <buffer> 0
-        silent! nunmap <buffer> $
-        silent! nunmap <buffer> <Up>
-        silent! nunmap <buffer> <Down>
-        silent! nunmap <buffer> <Home>
-        silent! nunmap <buffer> <End>
-        silent! iunmap <buffer> <Up>
-        silent! iunmap <buffer> <Down>
-        silent! iunmap <buffer> <Home>
-        silent! iunmap <buffer> <End>
-    else
-        echo "Wrap ON"
-        setlocal wrap linebreak nolist
-        setlocal virtualedit=all
-        setlocal display+=lastline
-        noremap  <buffer> <silent> k gk
-        noremap  <buffer> <silent> j gj
-        noremap  <buffer> <silent> 0 g0
-        noremap  <buffer> <silent> $ g$
-        noremap  <buffer> <silent> <Up>   gk
-        noremap  <buffer> <silent> <Down> gj
-        noremap  <buffer> <silent> <Home> g<Home>
-        noremap  <buffer> <silent> <End>  g<End>
-        inoremap <buffer> <silent> <Up>   <C-o>gk
-        inoremap <buffer> <silent> <Down> <C-o>gj
-        inoremap <buffer> <silent> <Home> <C-o>g<Home>
-        inoremap <buffer> <silent> <End>  <C-o>g<End>
-    endif
+        if &wrap
+            echo "Wrap OFF"
+            setlocal nowrap
+            setlocal virtualedit=
+            silent! nunmap <buffer> k
+            silent! nunmap <buffer> j
+            silent! nunmap <buffer> 0
+            silent! nunmap <buffer> $
+            silent! nunmap <buffer> <Up>
+            silent! nunmap <buffer> <Down>
+            silent! nunmap <buffer> <Home>
+            silent! nunmap <buffer> <End>
+            silent! iunmap <buffer> <Up>
+            silent! iunmap <buffer> <Down>
+            silent! iunmap <buffer> <Home>
+            silent! iunmap <buffer> <End>
+        else
+            echo "Wrap ON"
+            setlocal wrap linebreak nolist
+            setlocal virtualedit=all
+            setlocal display+=lastline
+            noremap  <buffer> <silent> k gk
+            noremap  <buffer> <silent> j gj
+            noremap  <buffer> <silent> 0 g0
+            noremap  <buffer> <silent> $ g$
+            noremap  <buffer> <silent> <Up>   gk
+            noremap  <buffer> <silent> <Down> gj
+            noremap  <buffer> <silent> <Home> g<Home>
+            noremap  <buffer> <silent> <End>  g<End>
+            inoremap <buffer> <silent> <Up>   <C-o>gk
+            inoremap <buffer> <silent> <Down> <C-o>gj
+            inoremap <buffer> <silent> <Home> <C-o>g<Home>
+            inoremap <buffer> <silent> <End>  <C-o>g<End>
+        endif
     endfunction
 
     function! Preserve(command)
@@ -1351,29 +1351,29 @@ function! Mini_Scripts()
 
     " location/quickfix list toggle script
     function! GetBufferList()
-      redir =>buflist
-      silent! ls
-      redir END
-      return buflist
+        redir =>buflist
+        silent! ls
+        redir END
+        return buflist
     endfunction
     function! ToggleList(bufname, pfx)
-      let l:buflist = GetBufferList()
-      for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-        if bufwinnr(bufnum) != -1
-          exec(a:pfx.'close')
-          return
+        let l:buflist = GetBufferList()
+        for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+            if bufwinnr(bufnum) != -1
+                exec(a:pfx.'close')
+                return
+            endif
+        endfor
+        if a:pfx == 'l' && len(getloclist(0)) == 0
+            echohl ErrorMsg
+            echo "Location List is Empty."
+            return
         endif
-      endfor
-      if a:pfx == 'l' && len(getloclist(0)) == 0
-          echohl ErrorMsg
-          echo "Location List is Empty."
-          return
-      endif
-      let l:winnr = winnr()
-      exec('bot '.a:pfx.'open')
-      if winnr() != winnr
-        wincmd p
-      endif
+        let l:winnr = winnr()
+        exec('bot '.a:pfx.'open')
+        if winnr() != winnr
+            wincmd p
+        endif
     endfunction
     " nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
     nnoremap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
@@ -1464,13 +1464,13 @@ let g:tagbar_compact   = 1 " Remove empty lines by default
 " let g:tagbar_foldlevel = 0 " Close folds default
 map <leader>b :TagbarOpenAutoClose<CR>
 let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'kinds' : [
-        \ 'h:Heading_L1',
-        \ 'i:Heading_L2',
-        \ 'k:Heading_L3'
-    \ ]
-\ }
+            \ 'ctagstype' : 'markdown',
+            \ 'kinds' : [
+            \ 'h:Heading_L1',
+            \ 'i:Heading_L2',
+            \ 'k:Heading_L3'
+            \ ]
+            \ }
 
 
 " NERDTree
@@ -1526,12 +1526,12 @@ if executable('rg')
     let g:ctrlp_use_caching = 0
 elseif executable('ag')
     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-          \ --ignore .git
-          \ --ignore .svn
-          \ --ignore .hg
-          \ --ignore .DS_Store
-          \ --ignore "**/*.pyc"
-          \ -g ""'
+                \ --ignore .git
+                \ --ignore .svn
+                \ --ignore .hg
+                \ --ignore .DS_Store
+                \ --ignore "**/*.pyc"
+                \ -g ""'
     let g:ctrlp_use_caching = 0
 else
     let g:ctrlp_user_command = 'find %s -type f'
@@ -1594,8 +1594,8 @@ nnoremap <leader>tr :RainbowParentheses!!<CR>
 
 " syntastic
 let g:syntastic_mode_map = { 'mode': 'passive',
-                              \ 'active_filetypes': [],
-                              \ 'passive_filetypes': [] }
+            \ 'active_filetypes': [],
+            \ 'passive_filetypes': [] }
 
 " The Silver Searcher / ag.vim / ack.vim
 " Use ag over grep
@@ -1663,17 +1663,17 @@ let g:airline#extensions#hunks#enabled = 0
 let g:airline_powerline_fonts = 0
 " truncate file info first once window size shrinks
 let g:airline#extensions#default#section_truncate_width = {
-      \ 'a': 80,
-      \ 'b': 80,
-      \ 'x': 120,
-      \ 'y': 100,
-      \ 'z': 80,
-\ }
+            \ 'a': 80,
+            \ 'b': 80,
+            \ 'x': 120,
+            \ 'y': 100,
+            \ 'z': 80,
+            \ }
 let g:airline_theme='wombat'
 let g:airline_inactive_collapse=1
 
 if !exists('g:airline_symbols')
-let g:airline_symbols = {}
+    let g:airline_symbols = {}
 endif
 
 " unicode symbols
@@ -1725,10 +1725,10 @@ let g:snipMateAllowMatchingDot = 0
 
 let g:gutentags_ctags_exclude = ['env', '.tox', 'virtualenv*', 'venv', 'node_modules', 'vim-polyglot']
 let g:gutentags_file_list_command = {
-                \ 'markers': {
-                    \ '.git': 'git ls-files',
-                    \ '.hg': 'hg locate',
-                \ },
+            \ 'markers': {
+            \ '.git': 'git ls-files',
+            \ '.hg': 'hg locate',
+            \ },
             \ }
 
 
@@ -1742,8 +1742,8 @@ cnoremap <C-e> <end>
 
 " --user defined ---------------------------------------------------------------
 "
- if filereadable(expand("~/.vimrc.local"))
-   source ~/.vimrc.local
+if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
 endif
 
 " remap U to <C-r> for easier redo
@@ -1796,7 +1796,7 @@ let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 " Remap vim-ags open tab
 " https://github.com/gabesoft/vim-ags/issues/23
 autocmd vimrc FileType agsv nnoremap <buffer> ot
-  \ :exec 'tab split ' . ags#filePath(line('.'))<CR>
+            \ :exec 'tab split ' . ags#filePath(line('.'))<CR>
 
 let g:startify_custom_indices = ['a', 's', 'd', 'f']
 
@@ -1808,11 +1808,11 @@ endfunction
 
 function! s:RotateLine(line, leading_whitespace, trailing_whitespace)
     return substitute(
-        \ a:line,
-        \ '^\(' . a:leading_whitespace . '\)\(.\{-}\)\(' . a:trailing_whitespace . '\)$',
-        \ '\=submatch(1) . <SID>RotateString(submatch(2)) . submatch(3)',
-        \ ''
-    \ )
+                \ a:line,
+                \ '^\(' . a:leading_whitespace . '\)\(.\{-}\)\(' . a:trailing_whitespace . '\)$',
+                \ '\=submatch(1) . <SID>RotateString(submatch(2)) . submatch(3)',
+                \ ''
+                \ )
 endfunction
 
 function! s:RotateLines()
@@ -1821,19 +1821,19 @@ function! s:RotateLines()
     let last_visible_line = line('w$')
     let lines = getline(first_visible_line, last_visible_line)
     let leading_whitespace = map(
-        \ range(len(lines)),
-        \ 'matchstr(lines[v:val], ''^\s*'')'
-    \ )
+                \ range(len(lines)),
+                \ 'matchstr(lines[v:val], ''^\s*'')'
+                \ )
     let trailing_whitespace = map(
-        \ range(len(lines)),
-        \ 'matchstr(lines[v:val], ''\s*$'')'
-    \ )
+                \ range(len(lines)),
+                \ 'matchstr(lines[v:val], ''\s*$'')'
+                \ )
     try
         while 1 " <C-c> to exit
             let lines = map(
-                \ range(len(lines)),
-                \ '<SID>RotateLine(lines[v:val], leading_whitespace[v:val], trailing_whitespace[v:val])'
-            \ )
+                        \ range(len(lines)),
+                        \ '<SID>RotateLine(lines[v:val], leading_whitespace[v:val], trailing_whitespace[v:val])'
+                        \ )
             call setline(first_visible_line, lines)
             redraw
             sleep 50m
@@ -1853,8 +1853,8 @@ endfunction
 let i = 1
 " If I have more than 9 windows open I have bigger problems :)
 while i <= 9
-  execute 'nnoremap <Leader>'.i.' :tabn '.i.'<CR>'
-  let i = i + 1
+    execute 'nnoremap <Leader>'.i.' :tabn '.i.'<CR>'
+    let i = i + 1
 endwhile
 
 " Bind q to quit in fugitive git diff buffers
@@ -1922,7 +1922,7 @@ let g:vim_markdown_frontmatter = 1
 let test#runners = {'yelp': ['Testify']}
 
 function! EchoStrategy(cmd)
-  echo 'It works! Command for running tests: ' . a:cmd
+    echo 'It works! Command for running tests: ' . a:cmd
 endfunction
 
 let g:test#custom_strategies = {'echo': function('EchoStrategy')}
@@ -1950,8 +1950,8 @@ nnoremap gu :GundoToggle<CR>
 
 let g:tagbar_type_make = {
             \ 'kinds':[
-                \ 'm:macros',
-                \ 't:targets'
+            \ 'm:macros',
+            \ 't:targets'
             \ ]
             \}
 
@@ -1990,9 +1990,9 @@ let g:NERDCommentEmptyLines = 1
 "   in order to target a global variable for redirection you must prefix it with `g:`.
 " EG call Redir('ls', '=>g:buffer_list')
 funct! Redir(command, to)
-  exec 'redir '.a:to
-  exec a:command
-  redir END
+    exec 'redir '.a:to
+    exec a:command
+    redir END
 endfunct
 " The last non-space substring is passed as the redirection target.
 " EG
@@ -2014,32 +2014,32 @@ command! -nargs=+ R call call(function('Redir'), split(<q-args>, '\s\(\S\+\s*$\)
 "
 
 function! RedirMessages(msgcmd, destcmd)
-"
-" Captures the output generated by executing a:msgcmd, then places this
-" output in the current buffer.
-"
-" If the a:destcmd parameter is not empty, a:destcmd is executed
-" before the output is put into the buffer. This can be used to open a
-" new window, new tab, etc., before :put'ing the output into the
-" destination buffer.
-"
-" Examples:
-"
-"   " Insert the output of :registers into the current buffer.
-"   call RedirMessages('registers', '')
-"
-"   " Output :registers into the buffer of a new window.
-"   call RedirMessages('registers', 'new')
-"
-"   " Output :registers into a new vertically-split window.
-"   call RedirMessages('registers', 'vnew')
-"
-"   " Output :registers to a new tab.
-"   call RedirMessages('registers', 'tabnew')
-"
-" Commands for common cases are defined immediately after the
-" function; see below.
-"
+    "
+    " Captures the output generated by executing a:msgcmd, then places this
+    " output in the current buffer.
+    "
+    " If the a:destcmd parameter is not empty, a:destcmd is executed
+    " before the output is put into the buffer. This can be used to open a
+    " new window, new tab, etc., before :put'ing the output into the
+    " destination buffer.
+    "
+    " Examples:
+    "
+    "   " Insert the output of :registers into the current buffer.
+    "   call RedirMessages('registers', '')
+    "
+    "   " Output :registers into the buffer of a new window.
+    "   call RedirMessages('registers', 'new')
+    "
+    "   " Output :registers into a new vertically-split window.
+    "   call RedirMessages('registers', 'vnew')
+    "
+    "   " Output :registers to a new tab.
+    "   call RedirMessages('registers', 'tabnew')
+    "
+    " Commands for common cases are defined immediately after the
+    " function; see below.
+    "
     " Redirect messages to a variable.
     "
     redir => message
@@ -2085,12 +2085,12 @@ command! -nargs=+ -complete=command TabMessage call RedirMessages(<q-args>, 'tab
 
 " map <leader>l :RainbowLevelsToggle<cr>
 let g:rainbow_levels = [
-    \{'ctermbg': 'none'},
-    \{'ctermbg': 'none'},
-    \{'ctermbg': 'none'},
-    \{'ctermbg': 'none'},
-    \
-    \{'ctermbg': 3,   'guibg': '#ffc66d'},
-    \{'ctermbg': 9,   'guibg': '#cc7833'},
-    \{'ctermbg': 1,   'guibg': '#da4939'},
-    \{'ctermbg': 160, 'guibg': '#870000'}]
+            \{'ctermbg': 'none'},
+            \{'ctermbg': 'none'},
+            \{'ctermbg': 'none'},
+            \{'ctermbg': 'none'},
+            \
+            \{'ctermbg': 3,   'guibg': '#ffc66d'},
+            \{'ctermbg': 9,   'guibg': '#cc7833'},
+            \{'ctermbg': 1,   'guibg': '#da4939'},
+            \{'ctermbg': 160, 'guibg': '#870000'}]
