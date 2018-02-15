@@ -35,8 +35,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/gv.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Lokaltog/vim-easymotion'
-" NOTE: the async stuff on master after this commit isn't ready yet, don't update
-" Plug 'airblade/vim-gitgutter', {'commit': 'cae4f72aa1290'}
+" https://github.com/airblade/vim-gitgutter
+" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
 Plug 'airblade/vim-gitgutter'
 Plug 'ap/vim-css-color'
 
@@ -70,10 +70,13 @@ Plug 'martin-svk/vim-yaml'
 
 Plug 'ervandew/supertab' ", {'commit': 'feb2a5f8'}
 " Plug 'rking/ag.vim'
-Plug 'garbas/vim-snipmate' ", {'commit': '2d3e8ddc'}
+
+" I like this; it doesn't work with completor.vim
+"Plug 'garbas/vim-snipmate' ", {'commit': '2d3e8ddc'}
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'godlygeek/tabular'
 Plug 'gregsexton/MatchTag'
-Plug 'honza/vim-snippets'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/rainbow_parentheses.vim'
 " Plug 'junegunn/vim-easy-align'
@@ -92,6 +95,8 @@ Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'scrooloose/nerdtree' ", { 'on':  'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs'
+
+Plug 'AndrewRadev/tagfinder.vim'
 "
 """"""""""""" File search plugins
 " Ack search
@@ -111,7 +116,7 @@ Plug 'jeetsukumaran/vim-indentwise'
 Plug 'terryma/vim-expand-region'
 
 " All the tpope
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-repeat'
@@ -182,6 +187,34 @@ Plug 'bogado/file-line'
 " maggggit
 " https://github.com/jreybert/vimagit
 Plug 'jreybert/vimagit'
+
+" Plug 'davidhalter/jedi-vim'
+
+Plug 'sjl/gundo.vim'
+
+" Plug 'heavenshell/vim-pydocstring'
+
+" provides additional text objects
+" https://github.com/wellle/targets.vim
+" ( ) b (work on parentheses)
+" { } B (work on curly braces)
+" [ ] (work on square brackets)
+" < > (work on angle brackets)
+" t (work on tags)
+" cin) next )
+" dtl) previous )
+Plug 'wellle/targets.vim'
+
+" Binds gv, breaks my tab, stab indent binding
+Plug 'mhinz/vim-grepper'
+
+" colorscheme
+" Plug 'morhetz/gruvbox'
+
+Plug 'maralla/completor.vim'
+
+Plug 'thiagoalessio/rainbow_levels.vim'
+
 call plug#end()
 
 " Create vimrc group
@@ -511,7 +544,9 @@ function! Colors()
     set t_Co=256
     " One unified gui/terminal colorscheme
     " colo Tomorrow-Night-Eighties
-    color badwolf
+    colorscheme badwolf
+    "colorscheme gruvbox
+    let g:gruvbox_contrast_dark="soft"
 
     if has("gui_running")
         " set guifont=Monaco:h12
@@ -583,7 +618,11 @@ call Line_Wrapping()
 function! File_Types()
     " Omni Completion
     " mine set completeopt=menu,menuone,longest
-    set completeopt=longest,menuone,preview
+    set completeopt+=menuone
+    set completeopt-=menu
+    if &completeopt !~# 'noinsert\|noselect'
+    set completeopt+=noselect
+    endif
 
     " complete using built in syntax? http://vim.wikia.com/wiki/Completion_using_a_syntax_file
     " autocmd FileType * exec('setlocal dict+='.$VIMRUNTIME.'/syntax/'.expand('<amatch>').'.vim')
@@ -734,19 +773,30 @@ function! File_Types()
     " Python
     augroup ft_python
         autocmd!
-        let g:python_highlight_all = 1
         autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
         "autocmd FileType python compiler nose
         " autocmd FileType man nnoremap <buffer> <cr> :q<cr>
 
         " format comments correctly
         autocmd FileType python setlocal textwidth=80
-        autocmd FileType python setlocal formatoptions=croqn
+        " autocmd FileType python setlocal formatoptions=croqn
 
         " @NOTE disable smartindent, it forces inserting tabs. Use cindent instead
         autocmd FileType python setlocal cindent cinwords=if,elif,else,for,while,with,try,except,finally,def,class
         autocmd FileType python setlocal cinkeys-=0#
         autocmd FileType python setlocal indentkeys-=0#
+
+        " Python mode settings
+        let g:pymode = 0
+        let g:pymode_syntax_all= 1
+        let g:pymode_indent = 1
+        let g:pymode_motion = 1
+
+        let g:pymode_rope_goto_definition_bind = ""
+        let g:pymode_run_bind = ""
+        let g:pymode_doc_bind = ""
+        let g:pymode_options_colorcolumn = 0
+        let g:pymode_folding = 0
 
         " autocmd FileType python inoremap <buffer> <c-f> import IPython; IPython.embed()
 
@@ -948,10 +998,10 @@ function! Normal_Mappings()
     nnoremap <leader>sp :set spell! spelllang=en_us spell?<CR>
 
     " simple substitute
-    " 2015/02/06 dont think I need this
+    " 2015/02/06 dont think I need this anymore
     " nnoremap <leader>s :%s//<left>
 
-    " ehh bind m to make
+    " [M]ake this file, after saving.
     nnoremap <leader>m :w<CR>:make<CR>
 
     " vim-autoformat should be easy to use
@@ -1000,7 +1050,7 @@ function! Visual_Mappings()
     " vmap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
     " Replace current visually selected word
-    " vmap <leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/
+    vmap <leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/<Left>
 
     " Show number of occurrences of currently visually selected word
     "vmap <leader>s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
@@ -1039,7 +1089,9 @@ function! Visual_Mappings()
     vnoremap <silent> * :call VisualSelection('f', '')<CR>
     vnoremap <silent> # :call VisualSelection('b', '')<CR>
     " When you press gv you vimgrep after the selected text
-    vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
+    " vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
+    " vnoremap <silent> gj :call VisualSelection('gj', '')<CR>
+    "
     " When you press <leader>r you can search and replace the selected text
     vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
@@ -1092,8 +1144,8 @@ function! Tab_Mapping()
     "nmap <S-Tab> :<<CR>
 
     " quick change indent of visual selected text blocks
-    vmap <Tab> >gv
-    vmap <S-Tab> <gv
+    vnoremap > >gv
+    vnoremap < <gv
 
     " [<Ctrl>+V <Tab> still inserts an actual tab character.]
     "inoremap <Tab> <c-r>=InsertTabWrapper ("forward")<CR>
@@ -1325,7 +1377,6 @@ function! Mini_Scripts()
     endfunction
     " nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
     nnoremap <silent> <leader>` :call ToggleList("Quickfix List", 'c')<CR>
-    " nnoremap <silent> qq :call ToggleList("Quickfix List", 'c')<CR>
 
     " Split the current line at all commas
     " Sometimes you have a list that has grown very past 80 or 100 chars on one
@@ -1450,38 +1501,48 @@ let g:nerdtree_tabs_synchronize_view        = 0
 " Go Jump to file
 let g:ctrlp_map = 'gj'
 " Go to Buffer
-nmap gb :CtrlPBuffer<CR>
+nnoremap gb :CtrlPBuffer<CR>
 " Go to Recent
-nmap gr :CtrlPMRU<CR>
+nnoremap gr :CtrlPMRU<CR>
 " Go Undo
-nmap gu :CtrlPUndo<CR>
+" nmap gu :CtrlPUndo<CR>
 " Go recent Changes
-" Overwrite vim-commentary gc, gcc mappings
 nnoremap gc :CtrlPChangeAll<CR>
-" Order files top to bottom
-let g:ctrlp_match_window = 'bottom,order:ttb'
+" Order files bottom to top
+let g:ctrlp_match_window = 'bottom,order:btt,max:20,max:0'
 " Always open results in a new buffer
 let g:ctrlp_switch_buffer = 0
 " Open multiple files in new tabs
 let g:ctrlp_open_multiple_files = 't'
+" Don't let ctrlp change cwd ?
+let g:ctrlp_working_path = 0
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
-" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-" let g:ctrlp_user_command = 'ag %s -l --nocolor --smart-case -g ""'
-" let g:ctrlp_user_command = 'ag %s --files-with-matches -g "" --smart-case --ignore "\.git$\|\.hg$\|\.svn$"'
-
-" Newest form of ctrlp_user_command: if git exists, use git ls files. Otherwise
-" use ag for file search
-let g:ctrlp_user_command = [
- \ '.git',
- \ 'cd %s && git ls-files . -co --exclude-standard',
- \ 'ag %s -l --ignore-case --nocolor --nogroup --ignore .git --ignore .tox --ignore .svn --ignore .hg --ignore .DS_Store -g ""']
-" ag is fast enough that CtrlP doesn't need to cache
-let g:ctrlp_use_caching = 0
-" Only show relative CWD MRU files
-let g:ctrlp_mruf_relative = 0
-
+" Use PyMatch for much faster matching
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_lazy_update = 200
+" Use rg or ag if avaliable. Default to find if not.
+if executable('rg')
+    let g:ctrlp_user_command = 'rg %s --smart-case --files --color=never --glob ""'
+    let g:ctrlp_use_caching = 0
+elseif executable('ag')
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+          \ --ignore .git
+          \ --ignore .svn
+          \ --ignore .hg
+          \ --ignore .DS_Store
+          \ --ignore "**/*.pyc"
+          \ -g ""'
+    let g:ctrlp_use_caching = 0
+else
+    let g:ctrlp_user_command = 'find %s -type f'
+    let g:ctrlp_use_caching = 1
+endif
+
+" Only show relative CWD MRU files
+let g:ctrlp_mruf_relative = 1
+
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_max_files = 1000000
 
 
 " Netrw
@@ -1496,16 +1557,14 @@ let g:miniBufExplSplitBelow   = 0
 
 " Commentary
 " comment single line
-nmap <C-c> <Plug>CommentaryLine
+" nnoremap <Leader>c <Plug>CommentaryLine
 " xmap to comment multi line visual selection
-xmap <C-c> <Plug>Commentary
-autocmd vimrc FileType htmldjango setlocal commentstring={#\ %s\ #}
-autocmd vimrc FileType python.django setlocal commentstring=#\ \%s
-autocmd vimrc FileType python setlocal commentstring=#\ %s
-autocmd vimrc FileType go setlocal commentstring=//\ %s
-
-" LustyJuggler
-let g:LustyJugglerSuppressRubyWarning = 1
+" xnoremap <Leader>c  <Plug>Commentary
+" xnoremap <C-c>  <Plug>Commentary
+" autocmd vimrc FileType htmldjango setlocal commentstring={#\ %s\ #}
+" autocmd vimrc FileType python.django setlocal commentstring=#\ \%s
+" autocmd vimrc FileType python setlocal commentstring=#\ %s
+" autocmd vimrc FileType go setlocal commentstring=//\ %s
 
 " Fugutive
 " ignore whitespace by default
@@ -1522,6 +1581,8 @@ map <silent> <leader>ga :Git add --patch -- %<CR>
 
 " SuperTab
 let g:SuperTabLongestEnhanced = 1
+" let g:SuperTabDefaultCompletionType = "context"
+" let g:SuperTabContextDefaultCompletionType = "<c-n>"
 
 " PyFlakes
 let g:pyflakes_use_quickfix = 0
@@ -1544,18 +1605,23 @@ let g:ag_apply_qmappings = 1
 let g:ag_apply_lmappings = 1
 " bind \ (backward slash) to grep shortcut
 command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap <C-g> :Ags -S ""<Left>
+" nnoremap <C-g> :Ags -S ""<Left>
 
 " gitgutter
 nmap gh <Plug>GitGutterNextHunk
 nmap gH <Plug>GitGutterPrevHunk
 " let g:gitgutter_realtime = 0
+let g:gitgutter_max_signs = 1000
 
 " linediff
 " vnoremap <leader>l :Linediff<cr>
 " nnoremap <leader>L :LinediffReset<cr>
 
 " vim-autoformat
+" https://github.com/Chiel92/vim-autoformat
+" For verbose mode:
+" let g:autoformat_verbosemode=1
+"
 " https://github.com/google/yapf
 " My settings:
 " BLANK_LINE_BEFORE_NESTED_CLASS_OR_DEF - True
@@ -1563,7 +1629,10 @@ nmap gH <Plug>GitGutterPrevHunk
 " split_arguments_when_comma_terminated - True
 " coalesce_brackets - True
 let g:formatter_yapf_style = 'facebook'
-let g:formatdef_yapf = "'yapf --style=\"{based_on_style:'.g:formatter_yapf_style.',indent_width:'.&shiftwidth.',dedent_closing_brackets:true, blank_line_before_nested_class_or_def:true,split_arguments_when_comma_terminated:true,coalesce_brackets:true:split_before_first_argument:true,spaces_around_default_or_named_assign:true}\" -l '.a:firstline.'-'.a:lastline"
+let g:formatdef_yapf = "'yapf -l '.a:firstline.'-'.a:lastline"
+
+let g:formatdef_autopep8 = "'autopep8 --aggressive --max-line-length 80 - --range '.a:firstline.' '.a:lastline"
+let g:formatters_python = ['yapf']
 
 if !exists("g:formatprg_scss") | let g:formatprg_scss = "sass-convert" | endif
 let g:formatprg_args_scss = "-s --indent 4 -F scss -T scss"
@@ -1586,7 +1655,6 @@ let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#branch#displayed_head_limit = 10
 
-
 " disable git gutter hunks
 " let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#hunks#enabled = 0
@@ -1595,16 +1663,36 @@ let g:airline#extensions#hunks#enabled = 0
 let g:airline_powerline_fonts = 0
 " truncate file info first once window size shrinks
 let g:airline#extensions#default#section_truncate_width = {
-      \ 'b': 20,
-      \ 'c': 40,
-      \ 'x': 150,
-      \ 'y': 150,
-      \ 'z': 40,
+      \ 'a': 80,
+      \ 'b': 80,
+      \ 'x': 120,
+      \ 'y': 100,
+      \ 'z': 80,
 \ }
-let g:airline_theme='powerlineish'
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:airline_theme='wombat'
 let g:airline_inactive_collapse=1
+
+if !exists('g:airline_symbols')
+let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'PASTE'
+let g:airline_symbols.spell = 'SPELL'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'WS'
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " Unite.vim
 " let g:unite_enable_start_insert = 1
@@ -1626,17 +1714,14 @@ let g:airline_inactive_collapse=1
 "   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
 " endfunction
 
-" Splitjoin.vim
-" nmap sj :SplitjoinSplit<cr>
-" nmap sk :SplitjoinJoin<cr>
-
 " ExpandVisualSelection.vim
 vmap v <Plug>(expand_region_expand)
 
 let g:ultisnips_python_style = "google"
 let g:snipMateAllowMatchingDot = 0
 
-vmap <Enter> <Plug>(LiveEasyAlign)
+" This breaks ctrl-f
+" vmap <Enter> <Plug>(LiveEasyAlign)
 
 let g:gutentags_ctags_exclude = ['env', '.tox', 'virtualenv*', 'venv', 'node_modules', 'vim-polyglot']
 let g:gutentags_file_list_command = {
@@ -1696,14 +1781,15 @@ nnoremap <Leader>yl :call CopyLine()<cr>
 nnoremap <Leader>yd :let @*=expand("%:h")<cr>:echo 'Copied '@*' to clipboard'<cr>
 
 " Clear lines
-noremap <Leader>clr :s/^.*$//<CR>:nohls<CR>
+"noremap <Leader>clr :s/^.*$//<CR>:nohls<CR>
 
 " Make rainbow_parens work with {}
 let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 
 " Better ctrlp searching
 " nmap <leader>f :CtrlP<CR><C-\>w
-vmap gj y:CtrlP<CR><C-\>v
+" Doesn't work?
+" vnoremap gj y:CtrlP<CR><C-\>v
 " vmap <leader>f y:CtrlP<CR><C-\>c
 "
 
@@ -1775,31 +1861,236 @@ endwhile
 " https://github.com/tpope/vim-fugitive/blob/master/plugin/fugitive.vim#L2729
 autocmd Filetype git nnoremap <buffer> <silent> q :<C-U>quit<CR>
 
-nnoremap <leader>x <Plug>(FerretAck)
+" nnoremap <leader>x <Plug>(FerretAck)
 
 " <leader>c -- Fix (most) syntax highlighting problems in current buffer
 " (mnemonic: coloring).
-nnoremap <silent> <leader>c :syntax sync fromstart<CR>
+"nnoremap <silent> <leader>c :syntax sync fromstart<CR>
 
 " <leader><leader> -- Open last buffer.
 nnoremap <leader><leader> <C-^>
 
-if exists('+relativenumber')
-  " <leader>r -- Cycle through relativenumber + number, number (only), and no
-  " numbering (mnemonic: relative).
-  nnoremap <leader>r :<c-r>={
-        \ '00': 'set rnu   <bar> set nu',
-        \ '01': 'set nornu <bar> set nu',
-        \ '10': 'set nornu <bar> set nonu',
-        \ '11': 'set nornu <bar> set nu' }[&nu . &rnu]<CR><CR><CR>
-else
-  " <leader>r -- Toggle line numbers on and off (mnemonic: relative).
-  nnoremap <leader>r :set nu!<CR>
-endif
+" 2017/06/22 - I really dont like relativenumbers :/
+" if exists('+relativenumber')
+"   " <leader>r -- Cycle through relativenumber + number, number (only), and no
+"   " numbering (mnemonic: relative).
+"   nnoremap <leader>r :<c-r>={
+"         \ '00': 'set rnu   <bar> set nu',
+"         \ '01': 'set nornu <bar> set nu',
+"         \ '10': 'set nornu <bar> set nonu',
+"         \ '11': 'set nornu <bar> set nu' }[&nu . &rnu]<CR><CR><CR>
+" else
+"   " <leader>r -- Toggle line numbers on and off (mnemonic: relative).
+"   nnoremap <leader>r :set nu!<CR>
+" endif
 
 " For each time K has produced timely, useful results, I have pressed it 10,000
 " times without meaning to, triggering an annoying delay.
 nnoremap K <nop>
 
 " Ditto for q
-nnoremap q <nop>
+" nnoremap q <nop>
+
+let g:clever_f_across_no_line = 0
+let g:clever_f_timeout_ms = 3000
+
+" NOTE: disabling while testing ctrl-space...
+let g:airline_exclude_preview = 1
+" if executable("ag")
+"     let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+" endif
+" let g:CtrlSpaceUseUnicode = 0
+" let g:CtrlSpaceSearchTiming = 500
+" Settings for MacVim and Inconsolata font
+" let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
+
+"Remember :ol to browse old files
+nnoremap go :ol<CR>
+
+" fix ctrl-k to delete to end of line
+cnoremap <C-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<CR>
+
+let g:VimuxHeight = "49"
+let g:VimuxOrientation = "h"
+
+" vim-markdown settings
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_frontmatter = 1
+
+
+" First letter of runner's name must be uppercase
+let test#runners = {'yelp': ['Testify']}
+
+function! EchoStrategy(cmd)
+  echo 'It works! Command for running tests: ' . a:cmd
+endfunction
+
+let g:test#custom_strategies = {'echo': function('EchoStrategy')}
+let g:test#strategy = 'echo'
+
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+" nmap <silent> <leader>l :TestLast<CR>
+" nmap <silent> <leader>g :TestVisit<CR>
+
+
+" jedi vim
+" disable a bunch of built-in things by default
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#documentation_command = ""
+let g:jedi#goto_assignments_command = ""
+let g:jedi#goto_command = ""
+let g:jedi#goto_definitions_command = ""
+let g:jedi#rename_command = ""
+let g:jedi#usages_command = ""
+
+nnoremap gu :GundoToggle<CR>
+
+
+let g:tagbar_type_make = {
+            \ 'kinds':[
+                \ 'm:macros',
+                \ 't:targets'
+            \ ]
+            \}
+
+let g:grepper = {}
+let g:grepper.tools = ['rg', 'ag']
+" Disable the 'choose your tool' prompt
+let g:grepper.prompt = 0
+runtime autoload/grepper.vim
+" Jump to first result
+let g:grepper.jump = 1
+" Limit to 1000 results
+let g:grepper.stop = 1000
+noremap <C-g> :Grepper -tool rg -query<Space>""<Left>
+nmap gv <plug>(GrepperOperator)
+xmap gv <plug>(GrepperOperator)
+
+
+let g:lion_squeeze_spaces = 1
+
+
+"" NERDCommenter
+"" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+"" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+"" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Called with a command and a redirection target
+"   (see `:help redir` for info on redirection targets)
+" Note that since this is executed in function context,
+"   in order to target a global variable for redirection you must prefix it with `g:`.
+" EG call Redir('ls', '=>g:buffer_list')
+funct! Redir(command, to)
+  exec 'redir '.a:to
+  exec a:command
+  redir END
+endfunct
+" The last non-space substring is passed as the redirection target.
+" EG
+"   :R ls @">
+"   " stores the buffer list in the 'unnamed buffer'
+" Redirections to variables or files will work,
+"   but there must not be a space between the redirection operator and the variable name.
+" Also note that in order to redirect to a global variable you have to preface it with `g:`.
+"   EG
+"     :R ls =>g:buffer_list
+"     :R ls >buffer_list.txt
+command! -nargs=+ R call call(function('Redir'), split(<q-args>, '\s\(\S\+\s*$\)\@='))
+
+
+" redir_messages.vim
+"
+" Inspired by the TabMessage function/command combo found
+" at <http://www.jukie.net/~bart/conf/vimrc>.
+"
+
+function! RedirMessages(msgcmd, destcmd)
+"
+" Captures the output generated by executing a:msgcmd, then places this
+" output in the current buffer.
+"
+" If the a:destcmd parameter is not empty, a:destcmd is executed
+" before the output is put into the buffer. This can be used to open a
+" new window, new tab, etc., before :put'ing the output into the
+" destination buffer.
+"
+" Examples:
+"
+"   " Insert the output of :registers into the current buffer.
+"   call RedirMessages('registers', '')
+"
+"   " Output :registers into the buffer of a new window.
+"   call RedirMessages('registers', 'new')
+"
+"   " Output :registers into a new vertically-split window.
+"   call RedirMessages('registers', 'vnew')
+"
+"   " Output :registers to a new tab.
+"   call RedirMessages('registers', 'tabnew')
+"
+" Commands for common cases are defined immediately after the
+" function; see below.
+"
+    " Redirect messages to a variable.
+    "
+    redir => message
+
+    " Execute the specified Ex command, capturing any messages
+    " that it generates into the message variable.
+    "
+    silent execute a:msgcmd
+
+    " Turn off redirection.
+    "
+    redir END
+
+    " If a destination-generating command was specified, execute it to
+    " open the destination. (This is usually something like :tabnew or
+    " :new, but can be any Ex command.)
+    "
+    " If no command is provided, output will be placed in the current
+    " buffer.
+    "
+    if strlen(a:destcmd) " destcmd is not an empty string
+        silent execute a:destcmd
+    endif
+
+    " Place the messages in the destination buffer.
+    "
+    silent put=message
+
+endfunction
+
+" Create commands to make RedirMessages() easier to use interactively.
+" Here are some examples of their use:
+"
+"   :BufMessage registers
+"   :WinMessage ls
+"   :TabMessage echo "Key mappings for Control+A:" | map <C-A>
+"
+command! -nargs=+ -complete=command BufMessage call RedirMessages(<q-args>, ''       )
+command! -nargs=+ -complete=command WinMessage call RedirMessages(<q-args>, 'new'    )
+command! -nargs=+ -complete=command TabMessage call RedirMessages(<q-args>, 'tabnew' )
+
+" end redir_messages.vim
+
+" map <leader>l :RainbowLevelsToggle<cr>
+let g:rainbow_levels = [
+    \{'ctermbg': 'none'},
+    \{'ctermbg': 'none'},
+    \{'ctermbg': 'none'},
+    \{'ctermbg': 'none'},
+    \
+    \{'ctermbg': 3,   'guibg': '#ffc66d'},
+    \{'ctermbg': 9,   'guibg': '#cc7833'},
+    \{'ctermbg': 1,   'guibg': '#da4939'},
+    \{'ctermbg': 160, 'guibg': '#870000'}]
