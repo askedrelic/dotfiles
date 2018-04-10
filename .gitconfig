@@ -122,10 +122,10 @@
     bname = rev-parse --abbrev-ref HEAD
 
     # history
-    h    = log --pretty=format:'%Cred%h%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset]%C(yellow)%d%Creset %s ' --graph --abbrev-commit --date=relative --topo-order
+    h    = log --pretty=format:'%Cred%h%Creset (%Cgreen%cr%Creset) <%Cblue%an%Creset>%C(yellow)%d%Creset %s ' --graph --abbrev-commit --date=relative --topo-order
 
     # flat history
-    hf   = log --pretty=format:'%Cred%h%Creset (%Cgreen%cr%Creset) [%Cblue%an%Creset]%C(yellow)%d%Creset %s ' --abbrev-commit --date=relative --date-order --no-merges
+    hf   = log --pretty=format:'%Cred%h%Creset (%Cgreen%cr%Creset) <%Cblue%an%Creset>%C(yellow)%d%Creset %s ' --abbrev-commit --date=relative --date-order --no-merges
 
     hist-refs = log --all --graph --decorate --oneline --simplify-by-decoration --no-merges
 
