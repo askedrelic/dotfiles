@@ -1,20 +1,37 @@
+# docs here: http://ctags.sourceforge.net/ctags.html
 --recurse=yes
 --exclude=.git
 --exclude=log/*
+
+# ignore most boring files
 --exclude=*.json
+--exclude=*.html
+--exclude=*.htm
+--exclude=*.css
+--exclude=*.scss
 
---Python-kinds=-i
+#--Python-kinds=-i
 
+# Include interface info
+--fields=+iaS
+
+# "Include an extra class-qualified tag entry for each tag"
+# Breaks out class members into seperate tags; doubles tag file size
+# Useful?
+--extras=+q
+
+# Disable all JSON kinds
 --JSON-kinds=
 
-# don't need this with universal-ctags?
+# universal-ctags handles css now automatically?
 #--langdef=css
 #--langmap=css:.css
 #--regex-css=/^[ \t]*([^\t {][^{]{1,100})(\t| )*{/\1/d,definition/
 
---langdef=scss
---langmap=scss:.scss
---regex-scss=/^[ \t]*([^\t {][^{]{1,100})(\t| )*{/| \1/d,definition/
+# Don't think I really need scss support
+#--langdef=scss
+#--langmap=scss:.scss
+#--regex-scss=/^[ \t]*([^\t {][^{]{1,100})(\t| )*{/| \1/d,definition/
 
 --langdef=markdown
 --langmap=markdown:.mkd
@@ -22,4 +39,5 @@
 --regex-markdown=/^##[ \t]+(.*)/\1/i,Heading_L2/
 --regex-markdown=/^###[ \t]+(.*)/\1/k,Heading_L3/
 
---regex-make=/^([^# \t]*):/\1/t,target/
+# Only needed for old ctags?
+#--regex-make=/^([^# \t]*):/\1/t,target/

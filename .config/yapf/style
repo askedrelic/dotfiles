@@ -48,9 +48,10 @@ blank_line_before_nested_class_or_def=True
 coalesce_brackets=True
 
 # The column limit.
-column_limit=80
+column_limit=88
 
 # Indent width used for line continuations.
+# Broken with with statement?
 continuation_indent_width=4
 
 # Put closing brackets on a separate line, dedented, if the bracketed
@@ -118,7 +119,8 @@ spaces_before_comment=2
 
 # Insert a space between the ending comma and closing bracket of a list,
 # etc.
-# This forces ('thing', ) which I don't want
+# This forces ('thing', ) which I don't want, and PEP8 agrees with
+# https://www.python.org/dev/peps/pep-0008/#pet-peeves
 space_between_ending_comma_and_closing_bracket=False
 
 # Split before arguments if the argument list is terminated by a
@@ -144,7 +146,10 @@ split_before_expression_after_opening_paren=True
 
 # If an argument / parameter list is going to be split, then split before
 # the first argument.
-split_before_first_argument=True
+# BROKEN with with statement?
+# I want this True
+# https://github.com/google/yapf/issues/460
+split_before_first_argument=False
 
 # Set to True to prefer splitting before 'and' or 'or' rather than
 # after.
@@ -212,3 +217,5 @@ split_penalty_logical_operator=300
 # Use the Tab character for indentation.
 use_tabs=False
 
+# Default True
+split_before_closing_bracket=True
