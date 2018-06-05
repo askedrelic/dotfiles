@@ -29,8 +29,6 @@ Plug 'tomtom/tlib_vim'
 
 " Plug 'junegunn/vim-peekaboo'
 "
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
 
 Plug 'junegunn/gv.vim'
 Plug 'Chiel92/vim-autoformat'
@@ -46,7 +44,7 @@ Plug 'ap/vim-css-color'
 Plug 'tommcdo/vim-lion'
 
 " tpope vinegar, but with nerdtree
-Plug 'askedrelic/vim-vinegar'
+" Plug 'askedrelic/vim-vinegar'
 " Trying filebeagle? faster and simpler than vinegar/nerdtree
 " But less file mgmt features :(
 " Plug 'jeetsukumaran/vim-filebeagle'
@@ -80,7 +78,6 @@ Plug 'gregsexton/MatchTag'
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/rainbow_parentheses.vim'
 " Plug 'junegunn/vim-easy-align'
-Plug 'majutsushi/tagbar'
 Plug 'msanders/cocoa.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'rhysd/clever-f.vim'
@@ -93,36 +90,54 @@ Plug 'ludovicchabant/vim-gutentags'
 " Plug 'scrooloose/syntastic'
 " Plug 'w0rp/ale'
 
-Plug 'scrooloose/nerdtree' ", { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 
 Plug 'AndrewRadev/tagfinder.vim'
 "
 """"""""""""" File search plugins
+
+" Install FZF from homebrew
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+
 " Ack search
-Plug 'wincent/ferret'
+" 2018 - replace by vim-grepper
+" Plug 'wincent/ferret'
+
 " Ags search
-Plug 'gabesoft/vim-ags'
+" 2018 - replaced by vim-grepper
+" Plug 'gabesoft/vim-ags'
+
+" Interface for using all search tools
+" Binds gv, breaks my tab, stab indent binding
+" https://github.com/mhinz/vim-grepper
+Plug 'mhinz/vim-grepper'
+
 " File/buffer/MRU search
 Plug 'ctrlpvim/ctrlp.vim'
 " Faster ctrlp searches
 Plug 'FelikZ/ctrlp-py-matcher'
 
-" indenting
+" Search the current file by tags
+Plug 'majutsushi/tagbar'
+
+" Indenting
 " https://github.com/jeetsukumaran/vim-indentwise
 Plug 'jeetsukumaran/vim-indentwise'
 
 " Keep hitting v to expand region
 Plug 'terryma/vim-expand-region'
 
-" All the tpope
+""""""""""""""" Almost all the tpope
+" I prefer nerdcommenter
 " Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired', {'commit': 'bacf154'}
 Plug 'tpope/vim-dispatch'
 
 " https://github.com/yssl/QFEnter
@@ -205,8 +220,6 @@ Plug 'sjl/gundo.vim'
 " dtl) previous )
 Plug 'wellle/targets.vim'
 
-" Binds gv, breaks my tab, stab indent binding
-Plug 'mhinz/vim-grepper'
 
 " colorscheme
 " Plug 'morhetz/gruvbox'
@@ -542,11 +555,14 @@ call Searching()
 function! Colors()
     set background=dark
     set t_Co=256
+
     " One unified gui/terminal colorscheme
     " colo Tomorrow-Night-Eighties
+
     colorscheme badwolf
-    "colorscheme gruvbox
-    let g:gruvbox_contrast_dark="soft"
+
+    " colorscheme gruvbox
+    " let g:gruvbox_contrast_dark="soft"
 
     if has("gui_running")
         " set guifont=Monaco:h12
@@ -1050,10 +1066,10 @@ function! Visual_Mappings()
     " vmap p <Erc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
 
     " Replace current visually selected word
-    vmap <leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/<Left>
+    vnoremap <leader>r "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/<C-R>=substitute(@s,"\n",'\\n','g')<CR>/<Left>
 
     " Show number of occurrences of currently visually selected word
-    "vmap <leader>s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
+    vmap <leader>s "sy:%s/<C-R>=substitute(@s,"\n",'\\n','g')<CR>//n<CR>
 
     " from https://raw.github.com/amix/vimrc/master/vimrcs/basic.vim
     " try here for other ideas https://github.com/nelstrom/vim-visual-star-search
@@ -1093,7 +1109,7 @@ function! Visual_Mappings()
     " vnoremap <silent> gj :call VisualSelection('gj', '')<CR>
     "
     " When you press <leader>r you can search and replace the selected text
-    vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
+    " vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
 
     function! GetVisualSelection()
@@ -1507,7 +1523,7 @@ nnoremap gr :CtrlPMRU<CR>
 " Go Undo
 " nmap gu :CtrlPUndo<CR>
 " Go recent Changes
-nnoremap gc :CtrlPChangeAll<CR>
+" nnoremap gc :CtrlPChangeAll<CR>
 " Order files bottom to top
 let g:ctrlp_match_window = 'bottom,order:btt,max:20,max:0'
 " Always open results in a new buffer
@@ -1984,6 +2000,10 @@ let g:NERDDefaultAlign = 'left'
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
 
+let g:NERDCreateDefaultMappings = 0
+nmap gc <plug>NERDCommenterToggle
+vmap gc <plug>NERDCommenterToggle
+
 " Called with a command and a redirection target
 "   (see `:help redir` for info on redirection targets)
 " Note that since this is executed in function context,
@@ -2094,3 +2114,7 @@ let g:rainbow_levels = [
             \{'ctermbg': 9,   'guibg': '#cc7833'},
             \{'ctermbg': 1,   'guibg': '#da4939'},
             \{'ctermbg': 160, 'guibg': '#870000'}]
+
+
+" gitgutter
+set updatetime=100
