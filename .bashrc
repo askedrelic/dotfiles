@@ -155,18 +155,16 @@ done
 # try enable bash cbash_scriptsompletion
 [ -f /etc/bash_completion ] && source /etc/bash_completion
 
-# or try enable in homebrew
-# if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/bash_completion ]] ; then
-#     source $(brew --prefix)/etc/bash_completion
-# fi
-
-if [[ -n $(command -v brew) ]] ; then
-    for file in $(brew --prefix)/etc/bash_completion.d/* ; do
-        if [ -f "$file" ] ; then
-            source "$file"
-        fi
-    done
-fi
+# try enable from homebrew
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+#if [[ -n $(command -v brew) ]] ; then
+#    for file in $(brew --prefix)/etc/bash_completion.d/* ; do
+#        if [ -f "$file" ] ; then
+#	    echo ".......... $file"
+#            source "$file"
+#        fi
+#    done
+#fi
 
 # Add local tmuxinator bash completion
 # [ -f ~/.tmuxinator.bash ] && source ~/.tmuxinator.bash
