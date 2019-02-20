@@ -33,18 +33,27 @@ Plug 'tomtom/tlib_vim'
 Plug 'junegunn/gv.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Lokaltog/vim-easymotion'
+
 " https://github.com/airblade/vim-gitgutter
-" A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes hunks.
+" A Vim plugin which shows a git diff in the gutter (sign column) and
+" stages/undoes hunks.
 Plug 'airblade/vim-gitgutter'
+nmap gh <Plug>GitGutterNextHunk
+nmap gH <Plug>GitGutterPrevHunk
+" let g:gitgutter_realtime = 0
+let g:gitgutter_max_signs = 1000
+set updatetime=100
+
 Plug 'ap/vim-css-color'
 
 
 " Alignment
 " https://github.com/tommcdo/vim-lion
 Plug 'tommcdo/vim-lion'
+let g:lion_squeeze_spaces = 1
 
 " tpope vinegar, but with nerdtree
-" Plug 'askedrelic/vim-vinegar'
+Plug 'askedrelic/vim-vinegar'
 " Trying filebeagle? faster and simpler than vinegar/nerdtree
 " But less file mgmt features :(
 " Plug 'jeetsukumaran/vim-filebeagle'
@@ -79,9 +88,29 @@ Plug 'gregsexton/MatchTag'
 Plug 'junegunn/rainbow_parentheses.vim'
 " Plug 'junegunn/vim-easy-align'
 Plug 'msanders/cocoa.vim'
+
 Plug 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_frontmatter = 1
+
 Plug 'rhysd/clever-f.vim'
+
 Plug 'scrooloose/nerdcommenter'
+"" NERDCommenter
+"" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+"" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+"" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+let g:NERDCreateDefaultMappings = 0
+nmap gc <plug>NERDCommenterToggle
+vmap gc <plug>NERDCommenterToggle
 
 " Run ctags in the bg on save
 Plug 'ludovicchabant/vim-gutentags'
@@ -98,8 +127,8 @@ Plug 'AndrewRadev/tagfinder.vim'
 """"""""""""" File search plugins
 
 " Install FZF from homebrew
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
+" Plug '/usr/local/opt/fzf'
+" Plug 'junegunn/fzf.vim'
 
 " Ack search
 " 2018 - replace by vim-grepper
@@ -113,6 +142,18 @@ Plug 'junegunn/fzf.vim'
 " Binds gv, breaks my tab, stab indent binding
 " https://github.com/mhinz/vim-grepper
 Plug 'mhinz/vim-grepper'
+let g:grepper = {}
+let g:grepper.tools = ['rg', 'ag']
+" Disable the 'choose your tool' prompt
+let g:grepper.prompt = 0
+runtime autoload/grepper.vim
+" Jump to first result
+let g:grepper.jump = 1
+" Limit to 500 results
+let g:grepper.stop = 500
+noremap <C-g> :GrepperRg -query<Space>""<Left>
+nmap gv <plug>(GrepperOperator)
+xmap gv <plug>(GrepperOperator)
 
 " File/buffer/MRU search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -121,6 +162,12 @@ Plug 'FelikZ/ctrlp-py-matcher'
 
 " Search the current file by tags
 Plug 'majutsushi/tagbar'
+let g:tagbar_type_make = {
+    \ 'kinds':[
+    \ 'm:macros',
+    \ 't:targets'
+    \ ]
+    \}
 
 " Indenting
 " https://github.com/jeetsukumaran/vim-indentwise
@@ -176,7 +223,12 @@ Plug 'pangloss/vim-javascript'
 
 Plug 'vim-scripts/matchit.zip'
 Plug 'vim-scripts/visualrepeat'
+
+" indent lines
 Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'Yggdroot/indentLine'
+" let g:indentLine_faster = 1
+" let g:indentLine_setConceal = 0
 
 " Testing -------------
 " use this?? diff navigator
@@ -193,7 +245,33 @@ Plug 'benmills/vimux'
 
 " https://github.com/janko-m/vim-test
 " Should fix all my testing issues?
-Plug 'janko-m/vim-test'
+Plug 'janko-m/vim-test', { 'on': ['TestFile', 'TestNearest', 'TestLast'] }
+" First letter of runner's name must be uppercase
+let test#runners = {'yelp': ['Testify']}
+
+function! EchoStrategy(cmd)
+    echo 'It works! Command for running tests: ' . a:cmd
+endfunction
+
+let g:test#custom_strategies = {'echo': function('EchoStrategy')}
+let g:test#strategy = 'echo'
+
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+" nmap <silent> <leader>l :TestLast<CR>
+" nmap <silent> <leader>g :TestVisit<CR>
+"
+" Other ideas
+" noremap <silent> <leader>tt :TestNearest<CR>
+" noremap <silent> <leader>tf :TestFile<CR>
+" noremap <silent> <leader>ts :TestSuite<CR>
+" noremap <silent> <leader>tl :TestLast<CR>
+" if has("nvim")
+"     let test#strategy = "neovim"
+" else
+"     let test#strategy = "vimterminal"
+" endif
 
 " https://github.com/bogado/file-line
 " Let vim open file:lineno style
@@ -201,11 +279,11 @@ Plug 'bogado/file-line'
 
 " maggggit
 " https://github.com/jreybert/vimagit
-Plug 'jreybert/vimagit'
+" Plug 'jreybert/vimagit'
 
 " Plug 'davidhalter/jedi-vim'
 
-Plug 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 
 " Plug 'heavenshell/vim-pydocstring'
 
@@ -227,6 +305,22 @@ Plug 'wellle/targets.vim'
 Plug 'maralla/completor.vim'
 
 Plug 'thiagoalessio/rainbow_levels.vim'
+" map <leader>l :RainbowLevelsToggle<cr>
+let g:rainbow_levels = [
+    \{'ctermbg': 'none'},
+    \{'ctermbg': 'none'},
+    \{'ctermbg': 'none'},
+    \{'ctermbg': 'none'},
+    \
+    \{'ctermbg': 3,   'guibg': '#ffc66d'},
+    \{'ctermbg': 9,   'guibg': '#cc7833'},
+    \{'ctermbg': 1,   'guibg': '#da4939'},
+    \{'ctermbg': 160, 'guibg': '#870000'}]
+
+" https://github.com/christoomey/vim-tmux-runner
+" Send commands to tmux
+" VtrSendCommandToRunner
+Plug 'christoomey/vim-tmux-runner'
 
 call plug#end()
 
@@ -941,6 +1035,9 @@ function! Normal_Mappings()
     nnoremap { :tabp<CR>
     nnoremap } :tabn<CR>
 
+    " fix ctrl-k to delete to end of line in ex mode; bash style
+    cnoremap <C-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<CR>
+
     " insert new line without going into insert mode
     " Except this breaks ctrl-f...
     " nnoremap <Enter> o<ESC>
@@ -960,6 +1057,9 @@ function! Normal_Mappings()
     " already done by yy):
     nnoremap Y yt$
     vnoremap Y yt$
+
+    "Remember :ol to browse old files
+    nnoremap go :ol<CR>
 
     " delete without yanking
     " nnoremap <leader>d "_d
@@ -1108,6 +1208,8 @@ function! Visual_Mappings()
     " vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
     " vnoremap <silent> gj :call VisualSelection('gj', '')<CR>
     "
+    " See also https://github.com/nelstrom/vim-visual-star-search
+
     " When you press <leader>r you can search and replace the selected text
     " vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 
@@ -1317,7 +1419,8 @@ function! Mini_Scripts()
             execute '2match IndentGuides /\%(\_^\s*\)\@<=\%(\%'.(0*&sw+1).'v\|\%'.(1*&sw+1).'v\|\%'.(2*&sw+1).'v\|\%'.(3*&sw+1).'v\|\%'.(4*&sw+1).'v\|\%'.(5*&sw+1).'v\|\%'.(6*&sw+1).'v\|\%'.(7*&sw+1).'v\)\s/'
         endif
     endfunction
-    nnoremap <leader>ti :call IndentGuides()<cr>
+    " nnoremap <leader>ti :call IndentGuides()<cr>
+    nnoremap <leader>ti :IndentLinesToggle<cr>
 
     " Highlight Word
     " This mini-plugin provides a few mappings for highlighting words temporarily.
@@ -1536,8 +1639,12 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
 " Use PyMatch for much faster matching
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-" Use rg or ag if avaliable. Default to find if not.
-if executable('rg')
+" Use (fd, rg, ag) if avaliable. Default to find if not.
+if executable('fd')
+    let g:ctrlp_user_command = 'fd --type f --color=never "" %s'
+    let g:ctrlp_use_caching = 0
+    let g:ctrlp_match_window_reversed = 0
+elseif executable('rg')
     let g:ctrlp_user_command = 'rg %s --smart-case --files --color=never --glob ""'
     let g:ctrlp_use_caching = 0
 elseif executable('ag')
@@ -1624,10 +1731,6 @@ command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 " nnoremap <C-g> :Ags -S ""<Left>
 
 " gitgutter
-nmap gh <Plug>GitGutterNextHunk
-nmap gH <Plug>GitGutterPrevHunk
-" let g:gitgutter_realtime = 0
-let g:gitgutter_max_signs = 1000
 
 " linediff
 " vnoremap <leader>l :Linediff<cr>
@@ -1920,35 +2023,10 @@ let g:airline_exclude_preview = 1
 " Settings for MacVim and Inconsolata font
 " let g:CtrlSpaceSymbols = { "File": "◯", "CTab": "▣", "Tabs": "▢" }
 
-"Remember :ol to browse old files
-nnoremap go :ol<CR>
 
-" fix ctrl-k to delete to end of line
-cnoremap <C-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<CR>
 
 let g:VimuxHeight = "49"
 let g:VimuxOrientation = "h"
-
-" vim-markdown settings
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_frontmatter = 1
-
-
-" First letter of runner's name must be uppercase
-let test#runners = {'yelp': ['Testify']}
-
-function! EchoStrategy(cmd)
-    echo 'It works! Command for running tests: ' . a:cmd
-endfunction
-
-let g:test#custom_strategies = {'echo': function('EchoStrategy')}
-let g:test#strategy = 'echo'
-
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-" nmap <silent> <leader>l :TestLast<CR>
-" nmap <silent> <leader>g :TestVisit<CR>
 
 
 " jedi vim
@@ -1962,47 +2040,6 @@ let g:jedi#rename_command = ""
 let g:jedi#usages_command = ""
 
 nnoremap gu :GundoToggle<CR>
-
-
-let g:tagbar_type_make = {
-            \ 'kinds':[
-            \ 'm:macros',
-            \ 't:targets'
-            \ ]
-            \}
-
-let g:grepper = {}
-let g:grepper.tools = ['rg', 'ag']
-" Disable the 'choose your tool' prompt
-let g:grepper.prompt = 0
-runtime autoload/grepper.vim
-" Jump to first result
-let g:grepper.jump = 1
-" Limit to 1000 results
-let g:grepper.stop = 1000
-noremap <C-g> :Grepper -tool rg -query<Space>""<Left>
-nmap gv <plug>(GrepperOperator)
-xmap gv <plug>(GrepperOperator)
-
-
-let g:lion_squeeze_spaces = 1
-
-
-"" NERDCommenter
-"" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-"" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-"" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-
-let g:NERDCreateDefaultMappings = 0
-nmap gc <plug>NERDCommenterToggle
-vmap gc <plug>NERDCommenterToggle
 
 " Called with a command and a redirection target
 "   (see `:help redir` for info on redirection targets)
@@ -2102,19 +2139,3 @@ command! -nargs=+ -complete=command WinMessage call RedirMessages(<q-args>, 'new
 command! -nargs=+ -complete=command TabMessage call RedirMessages(<q-args>, 'tabnew' )
 
 " end redir_messages.vim
-
-" map <leader>l :RainbowLevelsToggle<cr>
-let g:rainbow_levels = [
-            \{'ctermbg': 'none'},
-            \{'ctermbg': 'none'},
-            \{'ctermbg': 'none'},
-            \{'ctermbg': 'none'},
-            \
-            \{'ctermbg': 3,   'guibg': '#ffc66d'},
-            \{'ctermbg': 9,   'guibg': '#cc7833'},
-            \{'ctermbg': 1,   'guibg': '#da4939'},
-            \{'ctermbg': 160, 'guibg': '#870000'}]
-
-
-" gitgutter
-set updatetime=100
