@@ -67,14 +67,19 @@ if [ -d /usr/local/sbin ]; then
   export PATH=/usr/local/sbin:$PATH
 fi
 
+
+# Cache these because homebrew is hella slow
+export HAS_HOMEBREW=`command -v brew`
+export GNUBIN_PATH="$(brew --prefix coreutils)/libexec/gnubin"
+export GETTEXT_PATH="$(brew --prefix gettext)/bin"
 # homebrew installed coreutils
-if [[ -n $(command -v brew) && -d "$(brew --prefix coreutils)/libexec/gnubin" ]] ; then
-    export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+if [[ -n $HAS_HOMEBREW && -d $GNUBIN_PATH ]] ; then
+    export PATH="$GNUBIN_PATH:$PATH"
 fi
 
 # homebrew installed gettext
-if [[ -n $(command -v brew) && -d "$(brew --prefix gettext)/bin" ]] ; then
-    export PATH="$(brew --prefix gettext)/bin:$PATH"
+if [[ -n $HAS_HOMEBREW && -d $GETTEXT_PATH ]] ; then
+    export PATH="$GETTEXT_PATH:$PATH"
 fi
 
 
