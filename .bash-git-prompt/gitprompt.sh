@@ -2,7 +2,7 @@
 
 function async_run() {
   {
-    eval "$@" &> /dev/null
+    eval "nice -n10 $@" &> /dev/null
   }&
 }
 
