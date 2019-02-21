@@ -151,7 +151,7 @@ runtime autoload/grepper.vim
 let g:grepper.jump = 1
 " Limit to 500 results
 let g:grepper.stop = 500
-noremap <C-g> :GrepperRg -query<Space>""<Left>
+noremap <C-g> :Grepper -tool rg -query<Space>""<Left>
 nmap gv <plug>(GrepperOperator)
 xmap gv <plug>(GrepperOperator)
 
