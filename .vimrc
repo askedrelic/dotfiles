@@ -796,11 +796,12 @@ function! File_Types()
     augroup ft_html
         autocmd!
 
-        autocmd BufNewFile,BufRead *.html setlocal filetype=htmldjango
+        " autocmd BufNewFile,BufRead *.html setlocal filetype=htmldjango
         " call Tabstyle_2spaces()
 
+        " NOTE: 2019-03-18, this seems broken?
         "hitting % on <ul> jumps to <li> instead of </ul>
-        autocmd FileType html let b:match_words='<:>,<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>'
+        " autocmd FileType html let b:match_words='<:>,<\@<=\([^/][^ \t>]*\)[^>]*\%(>\|$\):<\@<=/\1>'
 
         autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
         " Use Shift-Return to turn this:
