@@ -49,7 +49,7 @@ hf(){ grep "$@" ~/.bash_history; }
 
 # Silent pushd/popd functions below
 # NOTE (2018): this breaks somethings weirdly
-# alias cd='pushd'
+alias cd='pushd'
 # back
 alias b="popd"
 pushd() {
