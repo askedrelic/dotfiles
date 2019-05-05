@@ -648,3 +648,25 @@ call s:HL('VimBracket', 'dress', '', 'none')
 
 " }}}
 
+('hlLevel3', 'dress')
+call s:HL('hlLevel4', 'coffee')
+call s:HL('hlLevel5', 'dirtyblonde')
+call s:HL('hlLevel6', 'orange')
+call s:HL('hlLevel7', 'saltwatertaffy')
+call s:HL('hlLevel8', 'dress')
+call s:HL('hlLevel9', 'coffee')
+
+" }}}
+" Vim {{{
+
+call s:HL('VimCommentTitle', 'lightgravel', '', 'bold')
+
+call s:HL('VimMapMod',    'dress', '', 'none')
+call s:HL('VimMapModKey', 'dress', '', 'none')
+call s:HL('VimNotation', 'dress', '', 'none')
+call s:HL('VimBracket', 'dress', '', 'none')
+
+" }}}
+
+" }}}
+
