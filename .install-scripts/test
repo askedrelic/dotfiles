@@ -1,0 +1,124 @@
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/cask-versions"
+tap "homebrew/core"
+# Search tool like grep, but optimized for programmers
+brew "ack"
+# Strip or convert ANSI codes into HTML, (La)Tex, RTF, or BBCode
+brew "ansifilter"
+# Shell extension to jump to frequently used directories
+brew "autojump"
+# Bourne-Again SHell, a UNIX command interpreter
+brew "bash"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Reimplementation of ctags(1)
+brew "ctags"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Asynchronous event library
+brew "libev"
+# Powerful, lightweight programming language
+brew "lua"
+# Synchronize local directories with remote targets
+brew "lsyncd"
+# Keep your Mac's application settings in sync
+brew "mackup"
+# GUI for vim, made for macOS
+brew "macvim", args: ["with-override-system-vim"]
+# Mac App Store command-line interface
+brew "mas"
+# 'traceroute' and 'ping' in a single tool
+brew "mtr"
+# Mongrel of mail user agents (part elm, pine, mush, mh, etc.)
+brew "mutt"
+# NCurses Disk Usage
+brew "ncdu"
+# Port scanning utility for large networks
+brew "nmap"
+# Platform built on V8 to build network applications
+brew "node"
+# 7-Zip (high compression file archiver) implementation
+brew "p7zip"
+# Display the PID number for a given process name
+brew "pidof"
+# Manage compile and link flags for libraries
+brew "pkg-config"
+# Monitor data's progress through a pipe
+brew "pv"
+# Python version management
+brew "pyenv"
+# File browser
+brew "ranger"
+# Install various Ruby versions and implementations
+brew "ruby-build"
+# Ruby version manager
+brew "rbenv"
+# Reattach process (e.g., tmux) to background
+brew "reattach-to-user-namespace"
+# Persistent key-value database, with built-in net interface
+brew "redis"
+# Perl-powered file rename script with many helpful built-ins
+brew "rename"
+# Readline wrapper: adds readline support to tools that lack it
+brew "rlwrap"
+# Command-line tool for the Amazon S3 service
+brew "s3cmd"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
+# Proxy server that works as a poor man's VPN
+brew "sshuttle"
+# Send macOS User Notifications from the command-line
+brew "terminal-notifier"
+# Code-search similar to ack
+brew "the_silver_searcher"
+# Text interface for Git repositories
+brew "tig", args: ["HEAD"]
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# URL extractor/launcher
+brew "urlview"
+# Pager/text based browser
+brew "w3m"
+# Internet file retriever
+brew "wget"
+cask "1password"
+cask "appcleaner"
+cask "arq"
+cask "battle-net"
+cask "beardedspice"
+cask "calibre"
+cask "charles"
+cask "coconutbattery"
+cask "dropbox"
+cask "fantastical"
+cask "firefox-developer-edition"
+cask "flux"
+cask "font-hack"
+cask "hazel"
+cask "hex-fiend"
+cask "imageoptim"
+cask "istat-menus"
+cask "iterm2"
+cask "karabiner-elements"
+cask "rowanj-gitx"
+cask "skype"
+cask "spotify"
+cask "steam"
+cask "transmit"
+cask "vlc"
+mas "Bear", id: 1091189122
+mas "Day One", id: 1055511498
+mas "Keynote", id: 409183694
+mas "Mactracker", id: 430255202
+mas "Numbers", id: 409203825
+mas "OmniFocus", id: 1346203938
+mas "OmniOutliner", id: 1142578772
+mas "Pages", id: 409201541
+mas "Paprika Recipe Manager 3", id: 1303222628
+mas "Xcode", id: 497799835
