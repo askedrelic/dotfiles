@@ -131,8 +131,9 @@ export HOMEBREW_AUTO_UPDATE_SECS=604800
 # enable python virtualenv wrapper
 # [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
 
-__GIT_PROMPT_DIR=~/.bash-git-prompt/
-source ~/.bash-git-prompt/gitprompt.sh
+PS1='$(gbt $?)'
+# __GIT_PROMPT_DIR=~/.bash-git-prompt/
+# source ~/.bash-git-prompt/gitprompt.sh
 
 # enable python autoenv
 [ -f /usr/local/opt/autoenv/activate.sh ] && source /usr/local/opt/autoenv/activate.sh

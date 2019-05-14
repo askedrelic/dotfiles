@@ -39,4 +39,9 @@ set convert-meta off
 # Use Alt/Meta + Delete to delete the preceding word
 "\e[3;3~": kill-word
 
+# Disable bracketed paste mode. This always breaks my tmux randomly; I've never
+# needed it?
+# https://askubuntu.com/questions/662222/why-bracketed-paste-mode-is-enabled-sporadically-in-my-terminal-screen
+set enable-bracketed-paste off
+
 # $include /etc/inputrc
