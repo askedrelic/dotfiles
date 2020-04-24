@@ -104,7 +104,7 @@ oa() {
     else
         ARGS="$@"
     fi
-    osascript -e "tell application \"Alfred 3\" to search \"$ARGS\""
+    osascript -e "tell application \"Alfred 4\" to search \"$ARGS\""
 }
 
 # OSX: send finder window to console
