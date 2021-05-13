@@ -107,6 +107,9 @@ fi
 if [[ -d ~/bin ]]; then
   export PATH=~/bin:$PATH
 fi
+if [[ -d ~/.local/bin ]]; then
+  export PATH=~/.local/bin:$PATH
+fi
 if [[ -e ~/.dotfiles/bin ]]; then
   export PATH=~/.dotfiles/bin:$PATH
 fi
