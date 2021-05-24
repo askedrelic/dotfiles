@@ -1,0 +1,34 @@
+# Default format
+# https://starship.rs/config/#default-prompt-format
+format = "$all"
+
+[username]
+style_user = "blue"
+style_root = "red bold"
+format = "[$user]($style) at "
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format =  "[$hostname](fg:white) in "
+#format =  "[$hostname]($style) in "
+trim_at = "."
+disabled = false
+
+[status]
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+[directory]
+style = "green bold"
+truncation_length = "5"
+truncate_to_repo = false
+
+[time]
+disabled = false
+format = "[$time]($style) "
+
+[nodejs]
+disabled = true
