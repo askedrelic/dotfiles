@@ -1698,7 +1698,7 @@ map <silent> <leader>gp :!git push<CR>
 map <silent> <leader>ge :Gedit<CR>
 map <silent> <leader>gl :Glog<CR>
 map <silent> <leader>gr :Gread<CR>
-map <silent> <leader>gs :Gstatus<CR>
+map <silent> <leader>gs :Git<CR>
 map <silent> <leader>gd :Gdiff<CR>
 map <silent> <leader>gx :!gitx<CR>
 map <silent> <leader>ga :Git add --patch -- %<CR>
