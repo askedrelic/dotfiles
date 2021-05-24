@@ -28,6 +28,7 @@ truncate_to_repo = false
 
 [time]
 disabled = false
+style = ""
 format = "[$time]($style) "
 
 [nodejs]
