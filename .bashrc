@@ -122,6 +122,15 @@ export PIP_RESPECT_VIRTUALENV=true
 # Only auto-update every 7 days
 export HOMEBREW_AUTO_UPDATE_SECS=604800
 
+# Prompt -----------------------------------------------------------------------------------------------
+
+#PS1='$(gbt $?)'
+# __GIT_PROMPT_DIR=~/.bash-git-prompt/
+# source ~/.bash-git-prompt/gitprompt.sh
+
+# https://starship.rs/
+eval "$(starship init bash)"
+
 # Imports ----------------------------------------------------------------------------------------------
 
 # Add fuzzy finder scripts
@@ -130,10 +139,6 @@ export HOMEBREW_AUTO_UPDATE_SECS=604800
 
 # enable python virtualenv wrapper
 # [ -f /usr/local/bin/virtualenvwrapper.sh ] && source /usr/local/bin/virtualenvwrapper.sh
-
-PS1='$(gbt $?)'
-# __GIT_PROMPT_DIR=~/.bash-git-prompt/
-# source ~/.bash-git-prompt/gitprompt.sh
 
 # enable python autoenv
 [ -f /usr/local/opt/autoenv/activate.sh ] && source /usr/local/opt/autoenv/activate.sh
