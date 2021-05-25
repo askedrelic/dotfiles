@@ -38,8 +38,8 @@ Plug 'Lokaltog/vim-easymotion'
 " A Vim plugin which shows a git diff in the gutter (sign column) and
 " stages/undoes hunks.
 Plug 'airblade/vim-gitgutter'
-nmap gh <Plug>GitGutterNextHunk
-nmap gH <Plug>GitGutterPrevHunk
+nmap gh <Plug>(GitGutterNextHunk)
+nmap gH <Plug>(GitGutterPrevHunk)
 " let g:gitgutter_realtime = 0
 let g:gitgutter_max_signs = 1000
 set updatetime=100
@@ -881,6 +881,12 @@ function! File_Types()
 
     augroup END
 
+    " Puppet
+    augroup ft_puppet
+        autocmd!
+        autocmd BufNewFile,BufRead *.pp setlocal filetype=puppet
+    augroup END
+
     " Python
     augroup ft_python
         autocmd!
@@ -1692,11 +1698,11 @@ let g:miniBufExplSplitBelow   = 0
 
 " Fugutive
 " ignore whitespace by default
-map <silent> <leader>gb :Gblame -w<CR>
-map <silent> <leader>gc :Gcommit -v<CR>
+map <silent> <leader>gb :Git blame -w<CR>
+map <silent> <leader>gc :Git commit -v<CR>
 map <silent> <leader>gp :!git push<CR>
 map <silent> <leader>ge :Gedit<CR>
-map <silent> <leader>gl :Glog<CR>
+map <silent> <leader>gl :Gclog<CR>
 map <silent> <leader>gr :Gread<CR>
 map <silent> <leader>gs :Git<CR>
 map <silent> <leader>gd :Gdiff<CR>
