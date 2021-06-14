@@ -44,7 +44,8 @@ if [ `uname` = FreeBSD ]; then
     export LS_OPTIONS='-G'
 else
     # Probably have GNU utils installed
-    export LS_OPTIONS="--color=always"
+    #export LS_OPTIONS="--color=always"
+    export LS_OPTIONS=""
 fi
 
 # History -----------------------------------------------------------------------

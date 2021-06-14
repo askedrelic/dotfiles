@@ -79,7 +79,7 @@ alias ......="cd ../../../../.."
 cl() { cd $1; ls -la; }
 
 #ls and its options
-alias ls="ls -Fh $LS_OPTIONS"
+alias ls="ls -Fh"
 alias la='ls -al'          # show hidden files
 # alias ll='ls -al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
