@@ -66,6 +66,10 @@ fi
 if [ -d /usr/local/sbin ]; then
   export PATH=/usr/local/sbin:$PATH
 fi
+# 2021: M1 macbook homebrew uses /opt/ now
+if [ -d /opt/homebrew/bin ]; then
+  export PATH=/opt/homebrew/bin:$PATH
+fi
 
 
 # Cache these because homebrew is hella slow
