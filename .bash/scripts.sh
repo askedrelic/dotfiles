@@ -59,27 +59,27 @@ alias cp_folder="cp -Rpv"
 alias own="sudo chown -R $USER"
 
 # Searching: Use ag for grepping, if available
-if type -P ag &>/dev/null ; then
-  g() {
-    ag "$*" --smart-case
-  }
-  gw() {
-    ag "$*" --smart-case --word-regexp
-  }
-  f() {
-    #ack 1.X doesn't support case insensitive file searching, switching back to find
-    #ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
-    # find . -ipath "*$**" | highlight blue ".*/" green "$*[^/]"
-    ag -g "$*" -t --nocolor | highlight blue ".*/" green "$*[^/]"
-  }
-else
-  g() {
-    grep -Ri "$1" *
-  }
-  f() {
-    find . -iname "*$**" | highlight blue ".*/" green "$*[^/]"
-  }
-fi
+#if type -P ag &>/dev/null ; then
+#  g() {
+#    ag "$*" --smart-case
+#  }
+#  gw() {
+#    ag "$*" --smart-case --word-regexp
+#  }
+#  f() {
+#    #ack 1.X doesn't support case insensitive file searching, switching back to find
+#    #ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
+#    # find . -ipath "*$**" | highlight blue ".*/" green "$*[^/]"
+#    ag -g "$*" -t --nocolor | highlight blue ".*/" green "$*[^/]"
+#  }
+#else
+#  g() {
+#    grep -Ri "$1" *
+#  }
+#  f() {
+#    find . -iname "*$**" | highlight blue ".*/" green "$*[^/]"
+#  }
+#fi
 
 # Shows most used commands, from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
@@ -98,9 +98,9 @@ alias simpletree="ls -aR | grep ':$' | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' 
 
 # If tree is installed; use it or fallback
 if [[ -n $(command -v tree) ]] ; then
-    alias tree=tree
+    alias tree=tree | less
 else
-    alias tree=simpletree
+    alias tree=simpletree | less
 fi
 
 #great for finding the current "real" size of all folders/files
@@ -161,18 +161,6 @@ alias mkpass='echo `</dev/random tr -dc A-Za-z0-9 | head -c8`'
 
 
 ### Python
-# simple menu system for python virtualenv
-menuvirtualenv() {
-    select env in `lsvirtualenv -b`; do
-        if [ -n "$env" ]; then
-            workon "$env"
-        fi;
-        break;
-    done;
-}
-# alias vmenu='menuvirtualenv'
-# alias vm='menuvirtualenv'
-
 # goto the source dir of any python module
 cdp () {
     cd "$(python -c "import os.path as _, ${1}; \
@@ -180,16 +168,10 @@ cdp () {
     )"
 }
 
-# Print OSX wifi history
-wifi_history() {
-    defaults read /Library/Preferences/SystemConfiguration/com.apple.airport.preferences | grep LastConnected -A 7
-}
-
 # Git ------------------------------------------------------------------------
 
-alias gs='git status '
-# short status
-alias gg='gs -s'
+alias gs='git status'
+alias gg='gs -s' # short status
 alias ga='git add -v'
 alias gr='git remote -v'
 alias gc='git commit'

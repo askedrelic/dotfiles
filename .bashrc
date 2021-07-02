@@ -7,7 +7,6 @@
 # If not running interactively, don't do anything, to stop bind errors
 [ -z "$PS1" ] && return
 
-# UTF-8 everything
 # Prefer US English and use UTF-8
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
@@ -101,24 +100,6 @@ export MANPAGER="less -X"
 export EDITOR="vim"
 export PAGER=less
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
-
-# Python
-export PIP_RESPECT_VIRTUALENV=true
-#export PIP_DOWNLOAD_CACHE=$HOME/.pip_download_cache
-
-# Ruby
-# Using rbenv currently
-#export RBENV_ROOT=/usr/local/var/rbenv
-#if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# Python
-# Ditto for pyenv
-#export PYENV_ROOT=/usr/local/var/pyenv
-#if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
-#if [[ -e ~/.gopath/bin ]]; then
-#   export PATH=~/.gopath/bin:$PATH
-#fi
 
 # Only auto-update every 7 days
 export HOMEBREW_AUTO_UPDATE_SECS=604800

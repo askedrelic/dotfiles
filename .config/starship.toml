@@ -31,5 +31,8 @@ disabled = false
 style = ""
 format = "[$time]($style) "
 
+[python]
+disabled = true
+
 [nodejs]
 disabled = true

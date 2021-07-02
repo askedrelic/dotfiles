@@ -80,7 +80,7 @@ Plug 'ervandew/supertab' ", {'commit': 'feb2a5f8'}
 
 " I like this; it doesn't work with completor.vim
 "Plug 'garbas/vim-snipmate' ", {'commit': '2d3e8ddc'}
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'godlygeek/tabular'
 Plug 'gregsexton/MatchTag'
