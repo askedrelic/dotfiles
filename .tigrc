@@ -6,7 +6,7 @@
 # set show-id           = yes
 
 # Order commits topologically
-set commit-order = topo  
+set commit-order = topo
 
 
 # Show line numbers for every 10th line in the pager view
@@ -25,13 +25,14 @@ set tab-size             = 4
 color cursor white black
 
 # bind
-bind generic g move-first-line
-bind generic G move-last-line
+bind main g move-first-line
+bind main G move-last-line
+
 bind generic r refresh
 bind generic n next
 bind generic p previous
 bind generic N find-next
-# bind generic P find-previous
+bind generic P find-prev
 bind generic h scroll-left
 bind generic l scroll-right
 bind generic ? view-help
