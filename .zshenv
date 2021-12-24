@@ -1,17 +1,13 @@
 # setup PATH vars here
 # https://zsh.sourceforge.io/Intro/intro_3.html
 
-# Identify OS and Machine -----------------------------------------
-export OS=`uname -s | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
-export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0-9]*\)'`
-export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
-export PLATFORM="$MACHINE-$OS-$OSVERSION"
-
 # SSH Agent ------------------------------------------------------------
 # TODO
 
 # Path ------------------------------------------------------------
-# In reverse priority, so that they are prepended properly
+
+# unique paths!
+typeset -U path
 
 # brew installed node/npm modules
 if [ -d /usr/local/share/npm/bin ]; then
@@ -81,12 +77,16 @@ if [[ -e ~/.dotfiles/bin ]]; then
   export PATH=~/.dotfiles/bin:$PATH
 fi
 
-# pathlight fixes
-export PATH="/usr/local/opt/python@3.8/bin:$PATH"
-export PATH="/usr/local/opt/node@10/bin:$PATH"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-# Hello Messsage --------------------------------------------------
-echo -e "Kernel Information: " `uname -smr`
-#echo -e "${COLOR_BROWN}`bash --version`"
-echo -ne "${COLOR_GRAY}Uptime: "; uptime
-echo -ne "${COLOR_GRAY}Server time is: "; date
+#fix color/control character issues with git, enable wrapping
+#defaut : export LESS="-FXRS"
+export LESS="-FXR"
+
+# Don’t clear the screen after quitting a manual page
+export MANPAGER="less -X"
+
+export EDITOR="vim"
+export PAGER=less
+
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc

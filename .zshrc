@@ -1,6 +1,3 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
@@ -62,11 +59,7 @@ export PROMPT_EOL_MARK=''
 
 export ZSH_DISABLE_COMPFIX="true"
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# plugins here: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
 plugins=(
   autojump
   common-aliases
@@ -74,16 +67,20 @@ plugins=(
   fzf
   git
   git-auto-fetch
-  gitfast # git completiions https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitfast
+  gitfast # git / tig completiions https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitfast
   github
-  osx
+  macos
   tmux
-  zsh_reload
 )
 
 source $ZSH/oh-my-zsh.sh
 
+alias rm=rm
+
 # User configuration
+
+# use slow autofetch? seconds
+GIT_AUTO_FETCH_INTERVAL=300
 
 # Prefer US English and use UTF-8
 export LANG="en_US.UTF-8"
@@ -105,7 +102,8 @@ export LC_ALL="en_US.UTF-8"
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-alias brewr="arch -x86_64 /usr/local/bin/brew $@"
+alias ibrew="arch -x86_64 /usr/local/bin/brew $@"
+alias brewr=ibrew
 alias leg="arch -x86_64 $@"
 
 # Use acctivator for python venvs
@@ -126,43 +124,78 @@ eval "$(starship init zsh)"
 
 # Colors -----------------------------------------------------------------------
 
-# ls colors
+# set colors for displaying directories and files when the ls command is used
+export LSCOLORS='GxFxCxDxBxegedabagaced'
 export CLICOLOR=1
+
+# Setup some colors to use later in interactive shell or scripts
+export COLOR_NC='\033[0m' # No Color
+export NC=$COLOR_NC
+export COLOR_WHITE='\033[1;37m'
+export COLOR_BLACK='\033[0;30m'
+export COLOR_BLUE='\033[0;34m'
+export COLOR_LIGHT_BLUE='\033[1;34m'
+export COLOR_GREEN='\033[0;32m'
+export COLOR_LIGHT_GREEN='\033[1;32m'
+export COLOR_CYAN='\033[0;36m'
+export COLOR_LIGHT_CYAN='\033[1;36m'
+export COLOR_RED='\033[0;31m'
+export COLOR_LIGHT_RED='\033[1;31m'
+export COLOR_PURPLE='\033[0;35m'
+export COLOR_LIGHT_PURPLE='\033[1;35m'
+export COLOR_BROWN='\033[0;33m'
+export COLOR_YELLOW='\033[1;33m'
+export COLOR_GRAY='\033[1;30m'
+export COLOR_LIGHT_GRAY='\033[0;37m'
+alias colorslist="set | egrep 'COLOR_\w*'" # lists all the colors
 
 # History -----------------------------------------------------------------------
 # https://zsh.sourceforge.io/Doc/Release/Options.html#Options
 
-# Ignore common things
+export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
+setopt EXTENDED_HISTORY
+# Ignore common things; bash only?
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:.....:cd -:pwd:exit:date:* --help"
-# ignore lines beginnging a space in the history file
+# ignore lines beginning with a space in the history file
 setopt HIST_IGNORE_SPACE
 # Larger history
 export HISTSIZE=100000
 
+# expire duplicates first
+setopt HIST_EXPIRE_DUPS_FIRST
+# # do not store duplications
+setopt HIST_IGNORE_DUPS
+# #ignore duplicates when searching
+setopt HIST_FIND_NO_DUPS
+# # removes blank lines from history
+setopt HIST_REDUCE_BLANKS
+
+# share history across multiple zsh sessions
+setopt SHARE_HISTORY
+# # append to history
+setopt APPEND_HISTORY
+# adds commands as they are typed, not at shell exit
+setopt INC_APPEND_HISTORY
+
 # Misc -------------------------------------------------------------------------
-#fix color/control character issues with git, enable wrapping
-#defaut : export LESS="-FXRS"
-export LESS="-FXR"
-
-# Don’t clear the screen after quitting a manual page
-export MANPAGER="less -X"
-
-export EDITOR="vim"
-export PAGER=less
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'
 
 # Only auto-update every 7 days
 export HOMEBREW_AUTO_UPDATE_SECS=604800
 
-
+# Identify OS and Machine -----------------------------------------
+export OS=`uname -s | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
+export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0-9]*\)'`
+export MACHINE=`uname -m | sed -e 's/ *//g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
+export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
 # Imports ----------------------------------------------------------------------------------------------
 
 # enable python autoenv
-[ -f /usr/local/opt/autoenv/activate.sh ] && source /usr/local/opt/autoenv/activate.sh
+[ -f /usr/local/opt/autoenv/activate.sh ] && . /usr/local/opt/autoenv/activate.sh
 
 # Local bash file for machine specific tweaks/passwords
-[ -f ~/.bash_local ] && source ~/.bash_local
+[ -f ~/.bash_local ] && . ~/.bash_local
 
 # enable brew autojump
 [ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
@@ -174,3 +207,9 @@ for file in ~/.bash/*.sh; do
     source "$file"
   fi
 done
+
+# Hello Messsage --------------------------------------------------
+echo -e "Kernel Information: " `uname -smr`
+#echo -e "${COLOR_BROWN}`bash --version`"
+echo -ne "${COLOR_GRAY}Uptime: "; uptime
+echo -ne "${COLOR_GRAY}Server time is: "; date
