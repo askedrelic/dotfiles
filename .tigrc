@@ -1,13 +1,8 @@
-# set - show
-# set main-view = date:relative commit-title:yes,yes
-# set show-rev-graph    = yes
-# set show-refs         = yes
-# set show-line-numbers = no
-# set show-id           = yes
+# defaults here
+# https://github.com/jonas/tig/blob/master/tigrc
 
 # Order commits topologically
 set commit-order = topo
-
 
 # Show line numbers for every 10th line in the pager view
 # set pager-view = line-number:yes,interval=1 text
@@ -28,6 +23,7 @@ color cursor white black
 bind main g move-first-line
 bind main G move-last-line
 
+bind main F view-grep
 bind generic r refresh
 bind generic n next
 bind generic p previous

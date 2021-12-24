@@ -16,7 +16,7 @@ test_file=".scp-test-file"
 if test -z "$2"
 then
   # default size is 10kB ~ 10mB
-  test_size="1000"
+  test_size="100000"
 else
   test_size=$2
 fi

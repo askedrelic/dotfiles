@@ -116,7 +116,7 @@ alias openapps='lsof -P -i -n'
 
 # Print $PATH in a useful way
 function path(){
-    echo $PATH | sed 's#:#\n#g'
+    echo $PATH | tr ':' '\n'
 }
 
 # honestly, who really remembers these flags? I don't anymore
@@ -166,27 +166,6 @@ cdp () {
     cd "$(python -c "import os.path as _, ${1}; \
         print _.dirname(_.realpath(${1}.__file__[:-1]))"
     )"
-}
-
-# Git ------------------------------------------------------------------------
-
-alias gs='git status'
-alias gg='gs -s' # short status
-alias ga='git add -v'
-alias gr='git remote -v'
-alias gc='git commit'
-alias gd='git diff'
-
-#mine
-# alias gts='gs'
-alias gb='git branch -a -v'
-# alias gtr='gr'
-
-function gtb() {
-    select branch in $(git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname)' | sed 's/refs\/heads\///g'); do
-        git checkout "$branch"
-        break;
-    done;
 }
 
 # Pylint ---------------------------------------------------------------------

@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# up
+#
+# `up` handles installation, updates, things like that. Run it periodically
+# to make sure you're on the latest and greatest.
+#export ZSH=$HOME/.dotfiles
+
+# Set OS X defaults
+# $ZSH/osx/set-defaults.sh
+
+# Install homebrew
+#$ZSH/homebrew/install.sh 2>&1
+
+# Upgrade homebrew
+echo "› brew update"
+brew update
+
+# We always want latest
+echo "› brew upgrade"
+brew upgrade
+
+# Install software
+# Maybe only do this for bootstrap?
+# echo "› $ZSH/script/install"
+# $ZSH/script/install
+
+echo "› pipx upgrade"
+pipx upgrade-all
+
+# make sure dot symlinks correct`
+echo "› dot status/upgrade"
+$HOME/.dotfiles/bin/dot status
+$HOME/.dotfiles/bin/dot update

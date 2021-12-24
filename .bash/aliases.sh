@@ -1,17 +1,15 @@
 #Aliases and scripts
-
 alias c="clear"
 alias v='vim'
 alias t='tig'
+alias tib='tig blame -C'
 
-alias bc='bc -lq'
 alias df='df -h' # human disk usage
-alias gx='gitx'
-alias st='sourcetree'
 alias vg="vim -g"
 alias vi='vim'
 alias py="python"
 
+alias bc='bc -lq'
 alias man="man -a"
 alias dig='dig +nocomments +nocmd +nostats'
 alias free="free -m"
@@ -43,7 +41,7 @@ alias dotfiles="cd ~/.dotfiles"
 
 alias h='history | tail -n 30'
 # History Find
-hf(){ grep "$@" ~/.bash_history; }
+hf(){ grep "$@" ~/.zsh_history; }
 
 # Navigation ----------------------------------------------------------------------------------------------
 
