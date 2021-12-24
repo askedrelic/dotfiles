@@ -41,7 +41,7 @@ Plug 'airblade/vim-gitgutter'
 nmap gh <Plug>(GitGutterNextHunk)
 nmap gH <Plug>(GitGutterPrevHunk)
 " let g:gitgutter_realtime = 0
-let g:gitgutter_max_signs = 1000
+let g:gitgutter_max_signs = 2000
 set updatetime=100
 
 Plug 'ap/vim-css-color'
@@ -150,7 +150,11 @@ runtime autoload/grepper.vim
 " Jump to first result
 let g:grepper.jump = 1
 " Limit to 500 results
-let g:grepper.stop = 500
+let g:grepper.stop = 1000
+" let g:grepper.rg.grepprg .= '--block-buffered'
+let g:grepper = extend(get(g:, 'grepper', {}), {
+      \ 'rg': {'grepprg': 'rg -H --no-heading --vimgrep $*'},
+      \ })
 noremap <C-g> :Grepper -tool rg -query<Space>""<Left>
 nmap gv <plug>(GrepperOperator)
 xmap gv <plug>(GrepperOperator)
@@ -1376,7 +1380,8 @@ function! Mini_Scripts()
     endfunction
 
     " <leader>rt retabs the file, preserve cursor position
-    nnoremap <silent> <leader>rt :call Preserve(":retab")<CR>
+    " nnoremap <silent> <leader>rt :call Preserve(":retab")<CR>
+    nnoremap <silent> <leader>rt :%s/^\t\+/    /g<CR>
 
     " <leader>w removes trailing whitespaces
     nnoremap <silent> <leader>w :call Preserve("%s/\\s\\+$//e")<CR>
