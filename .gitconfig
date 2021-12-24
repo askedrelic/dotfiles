@@ -34,7 +34,7 @@
     excludesfile   = ~/.gitignore
 
     # Force pager to work with colors
-    pager          = less -FRSX
+    #pager          = less -FRSX
 
     # Treat spaces before tabs and all kinds of trailing whitespace as an error
     # [default] trailing-space: looks for spaces at the end of a line
@@ -156,9 +156,9 @@
 
 
     sp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git stash pop
-    spp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git push && git stash pop
-    pp = !git pull && git push
-    ppu = !git pp && git submodule sync && git submodule update --init
+    #spp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git push && git stash pop
+    pp = !git pull || true && git pull
+    #ppu = !git pp && git submodule sync && git submodule update --init
 
     prune-all = !git prune-remote && git prune-merged
     prune-remote = !git remote | xargs -n 1 git remote prune
@@ -172,10 +172,27 @@
 
     # list git aliases
     la = "!git config -l | grep alias | cut -c 7-"
-    dsf = "!git diff --color $@ | diff-so-fancy"
 
     # alias I prefer
     publish = "!git push origin $(git branch-name)"
+
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    features = side-by-side line-numbers decorations
+    whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
 
 [branch]
     #When branching off a remote branch, automatically let the local branch track the remote branch:
@@ -214,10 +231,15 @@
 [credential "https://github.com"]
     username = askedrelic
 [http "https://gopkg.in"]
-	followRedirects = true
+    followRedirects = true
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+    insteadOf = https://github.com/
 [pull]
-	ff = only
+    ff = only
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
