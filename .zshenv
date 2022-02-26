@@ -27,6 +27,7 @@ fi
 # 2021: M1 macbook homebrew uses /opt/ now
 if [ -d /opt/homebrew/bin ]; then
   export PATH=/opt/homebrew/bin:$PATH
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
 # Cache these because homebrew is hella slow
@@ -76,8 +77,6 @@ fi
 if [[ -e ~/.dotfiles/bin ]]; then
   export PATH=~/.dotfiles/bin:$PATH
 fi
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"
