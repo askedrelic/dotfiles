@@ -664,7 +664,8 @@ function! Colors()
 
     if has("gui_running")
         " set guifont=Monaco:h12
-        set guifont=Hack:h12
+        " set guifont=HackNerdFontCompleteMono-Regular:h12
+        set guifont=JetBrains_Mono_Regular_Nerd_Font_Complete_Mono:h12
         " set guifont=Inconsolata:h14
 
         " Orange :()
@@ -1045,6 +1046,8 @@ function! Normal_Mappings()
     " easy tab movement
     nnoremap { :tabp<CR>
     nnoremap } :tabn<CR>
+    nnoremap <D-[> :tabp<CR>
+    nnoremap <D-]> :tabn<CR>
 
     " fix ctrl-k to delete to end of line in ex mode; bash style
     cnoremap <C-k> <C-\>estrpart(getcmdline(),0,getcmdpos()-1)<CR>
