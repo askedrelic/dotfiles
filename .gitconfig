@@ -214,8 +214,11 @@
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
-    # diff3 is better?
+    # diff3 is better than default
     conflictStyle = diff3
+    # zdiff3 requires 2.35 https://github.blog/2022-01-24-highlights-from-git-2-35/
+    # zdiff3 doesn't wrok in rowanj-gitx :(
+    # conflictStyle = zdiff3
 [difftool]
     prompt = false
 [grep]

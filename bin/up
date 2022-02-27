@@ -29,6 +29,9 @@ echo "› pipx upgrade"
 pipx upgrade-all
 
 # make sure dot symlinks correct`
-echo "› dot status/upgrade"
-$HOME/.dotfiles/bin/dot status
-$HOME/.dotfiles/bin/dot update
+# echo "› dot status/upgrade"
+# $HOME/.dotfiles/bin/dot status
+# $HOME/.dotfiles/bin/dot update
+
+# add backup things?
+cp ~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/links.txt ~/Dropbox/settings/golinks/links.txt
