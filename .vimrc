@@ -190,6 +190,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired', {'commit': 'bacf154'}
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-rhubarb'
 
 " https://github.com/yssl/QFEnter
 " make Enter work in the QF window
@@ -2154,3 +2155,6 @@ command! -nargs=+ -complete=command WinMessage call RedirMessages(<q-args>, 'new
 command! -nargs=+ -complete=command TabMessage call RedirMessages(<q-args>, 'tabnew' )
 
 " end redir_messages.vim
+
+nnoremap <Leader>gy :.GBrowse!<CR>
+xnoremap <Leader>gy :'<'>GBrowse!<CR>

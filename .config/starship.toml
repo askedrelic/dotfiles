@@ -25,7 +25,7 @@ disabled = false
 
 [directory]
 style = "green bold"
-truncation_length = "5"
+truncation_length = 5
 truncate_to_repo = false
 
 [time]
