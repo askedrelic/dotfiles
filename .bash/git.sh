@@ -11,7 +11,7 @@ alias gr='git remote -v'
 alias gs='git status'
 alias gg='gs -s' # short status
 
-alias gtm='git checkout master'
+alias gtm='git checkout master || git checkout main'
 function gtb() {
     LOCAL="$(git branch --sort=-committerdate)"
     REMOTE="$(git branch --remote --sort=-committerdate)"

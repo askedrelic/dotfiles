@@ -85,7 +85,7 @@ alias own="sudo chown -R $USER"
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
 # Share current dir
-alias sharethisdir="echo 'now sharing cur directory at port 9000'; python -m SimpleHTTPServer 9000"
+alias sharethisdir="echo 'now sharing $PWD at http://localhost:9000/'; python -m SimpleHTTPServer 9000"
 
 # External IP lookup, my own app
 alias myip='curl https://ipster.apps.asktherelic.com'
