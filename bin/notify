@@ -1,2 +1,0 @@
-#!/bin/bash
-terminal-notifier -message "$@"
