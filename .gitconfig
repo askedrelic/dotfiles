@@ -211,6 +211,8 @@
     default = tracking
     # Make `git push` push relevant annotated tags when pushing branches out.
     followTags = true
+    # Git 2.37.0 - automatically "--set-upstream origin"
+	autoSetupRemote = true
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true

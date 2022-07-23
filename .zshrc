@@ -68,7 +68,6 @@ plugins=(
   git
   git-auto-fetch
   gitfast # git / tig completiions https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitfast
-  github
   macos
   tmux
 )

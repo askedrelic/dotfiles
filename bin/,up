@@ -34,4 +34,5 @@ pipx upgrade-all
 # $HOME/.dotfiles/bin/dot update
 
 # add backup things?
+echo "› backup golinks"
 cp ~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/links.txt ~/Dropbox/settings/golinks/links.txt

@@ -5,7 +5,7 @@ alias t='tig'
 alias tib='tig blame -C'
 
 alias df='df -h' # human disk usage
-alias vg="vim -g"
+# alias vg="vim -g"
 alias vi='vim'
 alias py="python"
 
@@ -41,7 +41,7 @@ alias dotfiles="cd ~/.dotfiles"
 
 alias h='history | tail -n 30'
 # History Find
-hf(){ grep "$@" ~/.zsh_history; }
+hf(){ grep "$*" ~/.zsh_history; }
 
 # Navigation ----------------------------------------------------------------------------------------------
 

@@ -84,8 +84,8 @@ alias own="sudo chown -R $USER"
 # Shows most used commands, from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$5}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
-# Share current dir
-alias sharethisdir="echo 'now sharing $PWD at http://localhost:9000/'; python -m SimpleHTTPServer 9000"
+# Share current dir, using python2/3 fallback
+alias sharethisdir="echo 'now sharing $PWD at http://localhost:9000/'; python -m SimpleHTTPServer 9000 || python3 -m http.server 9000"
 
 # External IP lookup, my own app
 alias myip='curl https://ipster.apps.asktherelic.com'
