@@ -42,8 +42,23 @@ disabled = true
 [nodejs]
 disabled = true
 
+[golang]
+disabled = true
+
 [aws]
-disabled = false
+disabled = true
 
 [package]
 disabled = true
+
+[terraform]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[kubernetes]
+# format = 'on [⛵ ($user on )($cluster in )$context \($namespace\)](dimmed green) '
+format = '[$symbol$context\($namespace\)]($style) in '
+symbol = "☸️  "
+disabled = false
