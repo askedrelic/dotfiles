@@ -126,7 +126,7 @@ eval "$(starship init bash)"
 [ -f /usr/local/opt/autoenv/activate.sh ] && source /usr/local/opt/autoenv/activate.sh
 
 # Local bash file for machine specific tweaks/passwords
-[ -f ~/.bash_local ] && source ~/.bash_local
+# [ -f ~/.bash_local ] && source ~/.bash_local
 
 # try enabling brew autojump
 if [[ -n $(command -v brew) && -f $(brew --prefix)/etc/autojump.sh ]] ; then

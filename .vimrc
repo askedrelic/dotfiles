@@ -158,6 +158,8 @@ let g:grepper = extend(get(g:, 'grepper', {}), {
 noremap <C-g> :Grepper -tool rg -query<Space>""<Left>
 nmap gv <plug>(GrepperOperator)
 xmap gv <plug>(GrepperOperator)
+" Override default K man page grep
+vmap K <plug>(GrepperOperator)
 
 " File/buffer/MRU search
 Plug 'ctrlpvim/ctrlp.vim'
@@ -326,6 +328,9 @@ let g:rainbow_levels = [
 " Send commands to tmux
 " VtrSendCommandToRunner
 Plug 'christoomey/vim-tmux-runner'
+
+" https://github.com/fatih/vim-go
+" Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
@@ -666,7 +671,7 @@ function! Colors()
     if has("gui_running")
         " set guifont=Monaco:h12
         " set guifont=HackNerdFontCompleteMono-Regular:h12
-        set guifont=JetBrains_Mono_Regular_Nerd_Font_Complete_Mono:h12
+        set guifont=JetBrains_Mono_Regular_Nerd_Font_Complete_Mono:h13
         " set guifont=Inconsolata:h14
 
         " Orange :()

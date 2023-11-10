@@ -35,4 +35,7 @@ pipx upgrade-all
 
 # add backup things?
 echo "› backup golinks"
-cp ~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/links.txt ~/Dropbox/settings/golinks/links.txt
+mkdir -p "/Users/mbehrens/Library/Application Support/Alfred/Workflow Data/com.benzi.golink/"
+# TODO check if file mtime is newer?
+set -x
+cp ~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/links.txt ~/Dropbox/settings/golinks/links.txt || true

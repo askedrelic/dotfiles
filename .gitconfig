@@ -1,6 +1,6 @@
 [user]
-    email = askedrelic@gmail.com
-    name = Matt Behrens
+	email = askedrelic@gmail.com
+	name = Matt Behrens
 [apply]
     # Detect whitespace errors when applying a patch
     whitespace = fix
@@ -31,7 +31,7 @@
     newHighlight = "green bold 22"
     whitespace = fix
 [core]
-    excludesfile   = ~/.gitignore
+	excludesfile = /Users/mbehrens/.gitignore
 
     # Force pager to work with colors
     #pager          = less -FRSX
@@ -160,9 +160,10 @@
     pp = !git pull || true && git pull
     #ppu = !git pp && git submodule sync && git submodule update --init
 
-    prune-all = !git prune-remote && git prune-merged
+    prune-all = !git prune-remote && git prune-merged && git prune-squashed
     prune-remote = !git remote | xargs -n 1 git remote prune
     prune-merged = !git branch --merged | grep -v \\* | xargs -n 1 git branch -d
+    prune-squashed = "!f() { local targetBranch=${1:-master} && git checkout -q $targetBranch && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done; }; f"
 
     edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
     add-unmerged  = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
@@ -175,6 +176,7 @@
 
     # alias I prefer
     publish = "!git push origin $(git branch-name)"
+    search = "!git log -S"$1" --no-merges -c --pretty=format:'%h %s [%an]'"
 
 [pager]
     diff = delta
@@ -212,7 +214,7 @@
     # Make `git push` push relevant annotated tags when pushing branches out.
     followTags = true
     # Git 2.37.0 - automatically "--set-upstream origin"
-	autoSetupRemote = true
+    autoSetupRemote = true
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
@@ -239,7 +241,7 @@
     followRedirects = true
 [init]
     defaultBranch = main
-[url "git@github.com:"]
+[url "ssh://git@github.com/"]
     insteadOf = https://github.com/
 [pull]
     ff = only

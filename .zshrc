@@ -1,85 +1,5 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="ys"
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
-
-# Uncomment the following line to automatically update without prompting.
-DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-export DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
-
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-HIST_STAMPS="yyyy-mm-dd"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
-# do not add % to highlight partial lines
-export PROMPT_EOL_MARK=''
-
-export ZSH_DISABLE_COMPFIX="true"
-
-# plugins here: https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
-plugins=(
-  autojump
-  common-aliases
-  extract
-  fzf
-  git
-  git-auto-fetch
-  gitfast # git / tig completiions https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitfast
-  macos
-  tmux
-)
-
-source $ZSH/oh-my-zsh.sh
-
-alias rm=rm
-
 # User configuration
 
-# use slow autofetch? seconds
-GIT_AUTO_FETCH_INTERVAL=300
 
 # Prefer US English and use UTF-8
 export LANG="en_US.UTF-8"
@@ -96,6 +16,32 @@ export LC_ALL="en_US.UTF-8"
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+
+# do not add % to highlight partial lines
+export PROMPT_EOL_MARK=''
+
+export ZSH_DISABLE_COMPFIX="true"
+export DISABLE_AUTO_TITLE='true'
+
+# Antidote --------------------------------------------------------------------
+
+# use slower 5m interval
+GIT_AUTO_FETCH_INTERVAL=300
+
+# Enable completions from brew
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+  autoload -Uz compinit && compinit
+fi
+
+# init antidote from brew
+# https://getantidote.github.io/install
+source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
+antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
+
+# reset rm -i flag from common-aliases plugin
+alias rm=rm
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -105,26 +51,34 @@ alias ibrew="arch -x86_64 /usr/local/bin/brew $@"
 alias brewr=ibrew
 alias leg="arch -x86_64 $@"
 
-# Use acctivator for python venvs
-# https://github.com/Yelp/aactivator
-eval "$(aactivator init)"
+# enable emacs bindings for ctrl-a/ctrl-e
+bindkey -e
 
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+# reverse history serach
+bindkey "^[[A" history-beginning-search-backward
+bindkey "^[[B" history-beginning-search-forward
 
-  autoload -Uz compinit
-  compinit
-fi
+# Setup useful history format
+alias history="history -i"
+export HIST_STAMPS="yyyy-mm-dd"
 
 # Prompt -----------------------------------------------------------------------------------------------
 
 # https://starship.rs/
 eval "$(starship init zsh)"
 
+# Use acctivator for python venvs
+# https://github.com/Yelp/aactivator
+eval "$(aactivator init)"
+
 # Colors -----------------------------------------------------------------------
 
 # set colors for displaying directories and files when the ls command is used
-export LSCOLORS='GxFxCxDxBxegedabagaced'
+# export LSCOLORS='GxFxCxDxBxegedabagaced'
+
+LS_COLORS='di=1;36:ln=1;35:so=1;32:pi=1;33:ex=1;31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=34;43'
+export LS_COLORS
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 export CLICOLOR=1
 
 # Setup some colors to use later in interactive shell or scripts
@@ -152,29 +106,28 @@ alias colorslist="set | egrep 'COLOR_\w*'" # lists all the colors
 # https://zsh.sourceforge.io/Doc/Release/Options.html#Options
 
 export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-setopt EXTENDED_HISTORY
 # Ignore common things; bash only?
 export HISTIGNORE="ls:ll:l:cd:p:[bf]g:exit:.:..:...:....:.....:cd -:pwd:exit:date:* --help"
-# ignore lines beginning with a space in the history file
+# remove unnecessary blanks
 setopt HIST_IGNORE_SPACE
-# Larger history
-export HISTSIZE=100000
-
-# expire duplicates first
-setopt HIST_EXPIRE_DUPS_FIRST
-# # do not store duplications
-setopt HIST_IGNORE_DUPS
-# #ignore duplicates when searching
-setopt HIST_FIND_NO_DUPS
-# # removes blank lines from history
+# ignore lines beginning with a space in the history file
 setopt HIST_REDUCE_BLANKS
+# record command start time
+setopt EXTENDED_HISTORY
+# append command to history file immediately after execution
+setopt INC_APPEND_HISTORY_TIME
+# Larger history
+export HISTSIZE=1000000
+export SAVEHIST=1000000
 
 # share history across multiple zsh sessions
 setopt SHARE_HISTORY
-# # append to history
+# append to history
 setopt APPEND_HISTORY
-# adds commands as they are typed, not at shell exit
-setopt INC_APPEND_HISTORY
+
+# https://stackoverflow.com/questions/26292192/zsh-shell-does-not-recognize-git-head
+# Let me use git HEAD^
+unsetopt nomatch
 
 # Misc -------------------------------------------------------------------------
 export TIMEFORMAT=$'\nreal %3R\tuser %3U\tsys %3S\tpcpu %P\n'

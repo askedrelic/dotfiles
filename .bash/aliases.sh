@@ -27,10 +27,12 @@ alias searchy="apt-cache search"
 alias sourcetree='open -a SourceTree'
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 alias watch="watch -d"
+alias utcdate="date -u '+%Y-%m-%d %H:%M:%S'"
 
 # osx personal aliases
 alias mate="mate -d"
 alias mou="open -a Mou.app $*"
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 # QuickFolders  ----------------------------------------------------------------------------------------------
 
@@ -41,7 +43,7 @@ alias dotfiles="cd ~/.dotfiles"
 
 alias h='history | tail -n 30'
 # History Find
-hf(){ grep "$*" ~/.zsh_history; }
+hf(){ rg "$*" ~/.zsh_history; }
 
 # Navigation ----------------------------------------------------------------------------------------------
 
@@ -77,7 +79,7 @@ alias ......="cd ../../../../.."
 cl() { cd $1; ls -la; }
 
 #ls and its options
-alias ls="ls -Fh"
+alias ls="ls -Fh --color=auto"
 alias la='ls -al'          # show hidden files
 # alias ll='ls -al'          # show hidden files
 alias lx='ls -lXB'         # sort by extension
@@ -89,7 +91,9 @@ alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
 
 alias ll='tree --dirsfirst -ChAFL 1'
-alias l="la"
+alias l="exa"
+
+alias sd='cd $(find * -type d | fzf)'
 
 # OSX: Open Finder window at your current location
 alias of="open ."
