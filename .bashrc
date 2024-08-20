@@ -156,3 +156,20 @@ done
 
 # Add local tmuxinator bash completion
 # [ -f ~/.tmuxinator.bash ] && source ~/.tmuxinator.bash
+
+
+
+function command_not_found_handle {
+	printf "not found"
+	# check because c-n-f could've been removed in the meantime
+	if [ -x /usr/lib/command-not-found ]; then
+		/usr/lib/command-not-found -- "$1"
+		return $?
+	elif [ -x /usr/share/command-not-found/command-not-found ]; then
+		/usr/share/command-not-found/command-not-found -- "$1"
+		return $?
+	else
+		printf "%s: command not found\n" "$1" >&2
+		return 127
+	fi
+}

@@ -42,8 +42,11 @@ disabled = true
 [nodejs]
 disabled = true
 
-[golang]
+[ruby]
 disabled = true
+
+# [golang]
+# disabled = true
 
 [aws]
 disabled = true
@@ -57,8 +60,11 @@ disabled = true
 [gcloud]
 disabled = true
 
+[rust]
+disabled = true
+
 [kubernetes]
 # format = 'on [⛵ ($user on )($cluster in )$context \($namespace\)](dimmed green) '
 format = '[$symbol$context\($namespace\)]($style) in '
-symbol = "☸️  "
+symbol = "☸️"
 disabled = false

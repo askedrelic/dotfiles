@@ -341,7 +341,7 @@ augroup END
 
 function! General_Settings()
     " Restore the screen when we're exiting and set correct terminal
-    behave xterm
+    " behave xterm
     if &term == "xterm"
         let &term = "xtermc"
         set rs
@@ -2163,3 +2163,7 @@ command! -nargs=+ -complete=command TabMessage call RedirMessages(<q-args>, 'tab
 
 nnoremap <Leader>gy :.GBrowse!<CR>
 xnoremap <Leader>gy :'<'>GBrowse!<CR>
+
+
+" set t_TI=^[[4?h
+" set t_TE=^[[4?l

@@ -1,6 +1,6 @@
 [user]
-	email = askedrelic@gmail.com
-	name = Matt Behrens
+    email = askedrelic@gmail.com
+    name = Matt Behrens
 [apply]
     # Detect whitespace errors when applying a patch
     whitespace = fix
@@ -31,7 +31,7 @@
     newHighlight = "green bold 22"
     whitespace = fix
 [core]
-	excludesfile = /Users/mbehrens/.gitignore
+	excludesfile = /Users/askedrelic/.gitignore
 
     # Force pager to work with colors
     #pager          = less -FRSX
@@ -71,6 +71,7 @@
 
     # WIP commit. Don't abuse this! Ignores precommit hook
     wip = commit --no-verify -am "WIP"
+    wipp = "!git commit --no-verify -am 'WIP'; git push"
 
     # remove the top commit, to unstaged index
     pop = reset HEAD^
@@ -241,7 +242,7 @@
     followRedirects = true
 [init]
     defaultBranch = main
-[url "ssh://git@github.com/"]
+[url "git@github.com:"]
     insteadOf = https://github.com/
 [pull]
     ff = only
@@ -250,3 +251,9 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

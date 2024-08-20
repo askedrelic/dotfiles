@@ -45,18 +45,27 @@ if [[ -n $HAS_HOMEBREW && -d $GETTEXT_PATH ]] ; then
 fi
 
 # if homebrew rbenv is present, configure it for use
-if which rbenv > /dev/null; then
-    # enable shims and auto-completion
-    eval "$(rbenv init -)"
-fi
+# if which rbenv > /dev/null; then
+#     # enable shims and auto-completion
+#     eval "$(rbenv init -)"
+# fi
 
 # ditto for pyenv
-if which pyenv > /dev/null; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init -)"
-fi
+# if which pyenv > /dev/null; then
+#     export PYENV_ROOT="$HOME/.pyenv"
+#     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+#     eval "$(pyenv init -)"
+# fi
 
+# prefer asdf
+# if which asdf > /dev/null; then
+#     . /opt/homebrew/opt/asdf/libexec/asdf.sh
+# fi
+
+# maybe prefer mise over asdf?
+if which mise > /dev/null; then
+    export PATH="$HOME/.local/share/mise/shims:$PATH"
+fi
 
 
 # Add Go paths next
@@ -78,6 +87,10 @@ fi
 
 if [[ -e ~/.dotfiles/bin ]]; then
   export PATH=~/.dotfiles/bin:$PATH
+fi
+# rust bins
+if [[ -e ~/.cargo/bin ]]; then
+  export PATH=~/.cargo/bin:$PATH
 fi
 
 #fix color/control character issues with git, enable wrapping

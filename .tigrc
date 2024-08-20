@@ -32,5 +32,9 @@ bind generic P find-prev
 bind generic h scroll-left
 bind generic l scroll-right
 bind generic ? view-help
+bind generic J move-half-page-down
+bind generic K move-half-page-up
 
 set log-options = --simplify-merges --pretty=fuller
+
+set mouse            = yes # Enable mouse support?

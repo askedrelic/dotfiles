@@ -1,0 +1,5 @@
+--max-columns=250
+--max-columns-preview
+
+# Because who cares about case!?
+--smart-case

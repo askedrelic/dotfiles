@@ -1,0 +1,24 @@
+# .zsh_plugins.txt
+# you can even use Oh My Zsh plugins
+# ohmyzsh/ohmyzsh path:lib
+# ohmyzsh/ohmyzsh path:plugins/extract
+
+ohmyzsh/ohmyzsh path:plugins/autojump
+ohmyzsh/ohmyzsh path:plugins/common-aliases
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/fzf
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/git-auto-fetch
+ohmyzsh/ohmyzsh path:plugins/gitfast # git / tig completiions https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/gitfast
+ohmyzsh/ohmyzsh path:plugins/macos
+ohmyzsh/ohmyzsh path:plugins/tmux
+
+wintermi/zsh-mise
+
+# add fish-like features
+# zsh-users/zsh-syntax-highlighting
+# zsh-users/zsh-autosuggestions
+# zsh-users/zsh-history-substring-search
+#
+zdharma-continuum/fast-syntax-highlighting kind:defer
+#marlonrichert/zsh-autocomplete

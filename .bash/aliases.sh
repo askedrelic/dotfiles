@@ -91,7 +91,8 @@ alias lr='ls -lR'          # recursive ls
 alias lo="ls -o"
 
 alias ll='tree --dirsfirst -ChAFL 1'
-alias l="exa"
+alias l="ls"
+# alias l="exa"
 
 alias sd='cd $(find * -type d | fzf)'
 

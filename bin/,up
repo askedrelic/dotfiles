@@ -33,9 +33,11 @@ pipx upgrade-all
 # $HOME/.dotfiles/bin/dot status
 # $HOME/.dotfiles/bin/dot update
 
-# add backup things?
-echo "› backup golinks"
-mkdir -p "/Users/mbehrens/Library/Application Support/Alfred/Workflow Data/com.benzi.golink/"
-# TODO check if file mtime is newer?
+echo "› link golinks to dropbox"
+ORIG="~/Dropbox/settings/golinks/links.txt"
+COPY="~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/"
+COPY_FILE="${COPY}links.txt"
 set -x
-cp ~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/links.txt ~/Dropbox/settings/golinks/links.txt || true
+# mkdir -p "${COPY}"
+# [[ ! -e "${COPY_FILE}" ]] && ln -s $ORIG "${COPY_FILE}"
+# ls -la "${COPY}"
