@@ -92,6 +92,9 @@ fi
 if [[ -e ~/.cargo/bin ]]; then
   export PATH=~/.cargo/bin:$PATH
 fi
+if [[ -e /opt/homebrew/opt/rustup/bin ]]; then
+  export PATH=/opt/homebrew/opt/rustup/bin:$PATH
+fi
 
 #fix color/control character issues with git, enable wrapping
 #defaut : export LESS="-FXRS"

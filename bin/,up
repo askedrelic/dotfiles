@@ -33,11 +33,28 @@ pipx upgrade-all
 # $HOME/.dotfiles/bin/dot status
 # $HOME/.dotfiles/bin/dot update
 
-echo "› link golinks to dropbox"
-ORIG="~/Dropbox/settings/golinks/links.txt"
-COPY="~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/"
-COPY_FILE="${COPY}links.txt"
-set -x
+# set osx defaults
+defaults write NSGlobalDomain KeyRepeat -int 2
+defaults write NSGlobalDomain InitialKeyRepeat -int 15
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+
+# https://dev.to/darrinndeal/setting-mac-hot-corners-in-the-terminal-3de
+# top left corner, mission control
+defaults write com.apple.dock wvous-tl-corner -int 2
+# bot left, desktop
+defaults write com.apple.dock wvous-bl-corner -int 4
+killall Dock
+
+# install non-default things
+git clone https://github.com/DevOpsHiveHQ/kubech ~/.kubech 2&>1 || true
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm/ 2&>1 || true
+
+#echo "› link golinks to dropbox"
+# golinks is now gomarks, all in workflow folder
+# ORIG="~/Dropbox/settings/golinks/links.txt"
+# COPY="~/Library/Application\ Support/Alfred/Workflow\ Data/com.benzi.golink/"
+# COPY_FILE="${COPY}links.txt"
+# set -x
 # mkdir -p "${COPY}"
 # [[ ! -e "${COPY_FILE}" ]] && ln -s $ORIG "${COPY_FILE}"
 # ls -la "${COPY}"

@@ -13,6 +13,7 @@ ohmyzsh/ohmyzsh path:plugins/gitfast # git / tig completiions https://github.com
 ohmyzsh/ohmyzsh path:plugins/macos
 ohmyzsh/ohmyzsh path:plugins/tmux
 
+# mise support
 wintermi/zsh-mise
 
 # add fish-like features

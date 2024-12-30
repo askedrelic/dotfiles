@@ -48,6 +48,9 @@ disabled = true
 # [golang]
 # disabled = true
 
+[conda]
+disabled = true
+
 [aws]
 disabled = true
 

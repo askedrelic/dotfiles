@@ -31,7 +31,7 @@
     newHighlight = "green bold 22"
     whitespace = fix
 [core]
-	excludesfile = /Users/askedrelic/.gitignore
+	excludesfile = ~/.gitignore
 
     # Force pager to work with colors
     #pager          = less -FRSX
@@ -178,6 +178,24 @@
     # alias I prefer
     publish = "!git push origin $(git branch-name)"
     search = "!git log -S"$1" --no-merges -c --pretty=format:'%h %s [%an]'"
+    open = "!f() { \
+        remote=${1:-origin}; \
+        url=$(git remote get-url $remote); \
+        if [[ $url =~ ^git@([^:]+):([^/]+)/(.+).git$ ]]; then \
+            host=${BASH_REMATCH[1]}; \
+            user=${BASH_REMATCH[2]}; \
+            repo=${BASH_REMATCH[3]}; \
+            http_url="https://$host/$user/$repo"; \
+            case "$(uname -s)" in \
+                Darwin) open "$http_url" ;; \
+                Linux) xdg-open "$http_url" ;; \
+                MINGW*|MSYS*) start "$http_url" ;; \
+                *) echo "Unsupported operating system" ;; \
+            esac; \
+        else \
+            echo "Could not parse Git URL"; \
+        fi; \
+    }; f"
 
 [pager]
     diff = delta

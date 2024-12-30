@@ -28,6 +28,7 @@ alias sourcetree='open -a SourceTree'
 alias svndiffvim='svn diff --diff-cmd ~/bin/svnvimdiff'
 alias watch="watch -d"
 alias utcdate="date -u '+%Y-%m-%d %H:%M:%S'"
+alias yh="bat -l yaml" # yaml highlight
 
 # osx personal aliases
 alias mate="mate -d"
