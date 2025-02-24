@@ -135,6 +135,15 @@ config.keys = {
             args = { 'nvim', wezterm.config_file },
         },
     },
+    -- Rebind search to not retain search selection
+    {
+        key = 'f',
+        mods = 'SUPER',
+        action = wezterm.action_callback(function(window, pane)
+            window:perform_action(act.Search 'CurrentSelectionOrEmptyString', pane)
+            window:perform_action(act.CopyMode 'ClearPattern', pane)
+        end),
+    },
 }
 
 -- Returns our config to be evaluated. We must always do this at the bottom of this file
