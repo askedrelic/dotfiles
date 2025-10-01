@@ -66,8 +66,12 @@ disabled = true
 [rust]
 disabled = true
 
+[pixi]
+disabled = true
+
 [kubernetes]
 # format = 'on [⛵ ($user on )($cluster in )$context \($namespace\)](dimmed green) '
 format = '[$symbol$context\($namespace\)]($style) in '
-symbol = "☸️"
+#symbol = "☸️"
+symbol = "☸ "
 disabled = false

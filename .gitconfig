@@ -1,6 +1,18 @@
 [user]
     email = askedrelic@gmail.com
     name = Matt Behrens
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+[commit]
+    verbose = true
 [apply]
     # Detect whitespace errors when applying a patch
     whitespace = fix
@@ -181,7 +193,7 @@
     open = "!f() { \
         remote=${1:-origin}; \
         url=$(git remote get-url $remote); \
-        if [[ $url =~ ^git@([^:]+):([^/]+)/(.+).git$ ]]; then \
+        if [[ $url =~ ^git@([^:]+):([^/]+)/(.+)$ ]]; then \
             host=${BASH_REMATCH[1]}; \
             user=${BASH_REMATCH[2]}; \
             repo=${BASH_REMATCH[3]}; \
@@ -224,7 +236,7 @@
     user = askedrelic
 [diff]
     #Allow git diff to do basic rename and copy detection
-    renames = copies
+    renames = true
     #Tell git diff to use mnemonic prefixes (index, work tree, commit, object) instead of the standard a and b notation
     mnemonicprefix = true
 [push]
@@ -271,7 +283,7 @@
     required = true
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true

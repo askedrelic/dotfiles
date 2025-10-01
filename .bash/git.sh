@@ -13,9 +13,27 @@ alias gg='gs -s' # short status
 
 alias gtm='git checkout master || git checkout main'
 function gtb() {
-    LOCAL="$(git branch --sort=-committerdate)"
-    REMOTE="$(git branch --remote --sort=-committerdate)"
-    git checkout "$(echo $LOCAL$REMOTE | fzf | tr -d '[:space:]')"
+    # Get local branches, remove asterisk and clean whitespace
+    LOCAL=$(git branch --sort=-committerdate | sed 's/^[* ] *//' | sed 's/^/local: /')
+
+    # Get remote branches, filter out HEAD references, remove origin/ prefix, and mark as remote
+    REMOTE=$(git branch --remote --sort=-committerdate | grep -v 'HEAD ->' | sed 's|origin/||' | sed 's/^  *//' | sed 's/^/remote: /')
+
+    # Combine and pass to fzf, then extract just the branch name
+    SELECTED=$(printf "%s\n%s" "$LOCAL" "$REMOTE" | fzf --height=20 --reverse --preview 'git log --oneline -10 {2}' --preview-window=right:60%)
+
+    if [ -n "$SELECTED" ]; then
+        BRANCH=$(echo "$SELECTED" | cut -d' ' -f2)
+        TYPE=$(echo "$SELECTED" | cut -d':' -f1)
+
+        if [ "$TYPE" = "remote" ]; then
+            # For remote branches, create local tracking branch
+            git checkout -b "$BRANCH" "origin/$BRANCH" 2>/dev/null || git checkout "$BRANCH"
+        else
+            # For local branches, just checkout
+            git checkout "$BRANCH"
+        fi
+    fi
 }
 
 # OLD my manual select way

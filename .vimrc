@@ -52,6 +52,9 @@ Plug 'ap/vim-css-color'
 Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces = 1
 
+" nvim v0.7.2
+Plug 'kdheepak/lazygit.nvim'
+
 " tpope vinegar, but with nerdtree
 Plug 'askedrelic/vim-vinegar'
 " Trying filebeagle? faster and simpler than vinegar/nerdtree

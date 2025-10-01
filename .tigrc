@@ -20,10 +20,10 @@ set tab-size             = 4
 color cursor white black
 
 # bind
-bind main g move-first-line
-bind main G move-last-line
+bind generic g move-first-line
+bind generic G move-last-line
 
-bind main F view-grep
+bind generic F view-grep
 bind generic r refresh
 bind generic n next
 bind generic p previous
@@ -34,6 +34,9 @@ bind generic l scroll-right
 bind generic ? view-help
 bind generic J move-half-page-down
 bind generic K move-half-page-up
+
+bind main <Ctrl-n> find-next
+bind main <Ctrl-p> find-prev
 
 set log-options = --simplify-merges --pretty=fuller
 

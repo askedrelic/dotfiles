@@ -69,7 +69,7 @@ eval "$(starship init zsh)"
 
 # Use acctivator for python venvs
 # https://github.com/Yelp/aactivator
-eval "$(aactivator init)"
+# eval "$(aactivator init)"
 
 # Colors -----------------------------------------------------------------------
 
@@ -165,3 +165,6 @@ echo -e "Kernel Information: " `uname -smr`
 #echo -e "${COLOR_BROWN}`bash --version`"
 echo -ne "${COLOR_GRAY}Uptime: "; uptime
 echo -ne "${COLOR_GRAY}Server time is: "; date
+
+# Always complete files for unknown commands
+zstyle ':completion:*' completer _complete _files

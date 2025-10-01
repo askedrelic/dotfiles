@@ -38,6 +38,9 @@ defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
+# Disable .DS_Store files on network shares
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
+
 # https://dev.to/darrinndeal/setting-mac-hot-corners-in-the-terminal-3de
 # top left corner, mission control
 defaults write com.apple.dock wvous-tl-corner -int 2
