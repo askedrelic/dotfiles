@@ -9,9 +9,9 @@ alias gp='git pull || git pull' # git pull fails when git-fetch is running in th
 alias gr='git remote -v'
 
 alias gs='git status'
-alias gg='gs -s' # short status
+#alias gg='gs -s' # short status
 
-alias gtm='git checkout master || git checkout main'
+alias gtm='git checkout master 2>/dev/null || git checkout main'
 function gtb() {
     # Get local branches, remove asterisk and clean whitespace
     LOCAL=$(git branch --sort=-committerdate | sed 's/^[* ] *//' | sed 's/^/local: /')

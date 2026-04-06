@@ -1,14 +1,17 @@
 #Aliases and scripts
 alias c="clear"
 alias v='vim'
+
 alias t='tig'
 alias tib='tig blame -C'
 
 alias df='df -h' # human disk usage
+# vim gui
 # alias vg="vim -g"
 alias vi='vim'
 alias py="python"
 
+alias gg=lazygit
 alias bc='bc -lq'
 alias man="man -a"
 alias dig='dig +nocomments +nocmd +nostats'

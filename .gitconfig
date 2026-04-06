@@ -275,6 +275,7 @@
 [url "git@github.com:"]
     insteadOf = https://github.com/
 [pull]
+    rebase = true
     ff = only
 [filter "lfs"]
     clean = git-lfs clean -- %f
