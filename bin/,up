@@ -46,6 +46,7 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 defaults write com.apple.dock wvous-tl-corner -int 2
 # bot left, desktop
 defaults write com.apple.dock wvous-bl-corner -int 4
+
 killall Dock
 
 # install non-default things
@@ -61,3 +62,10 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm/ 2&>1 || true
 # mkdir -p "${COPY}"
 # [[ ! -e "${COPY_FILE}" ]] && ln -s $ORIG "${COPY_FILE}"
 # ls -la "${COPY}"
+
+# Source local overrides (not checked into dotfiles)
+LOCAL_UP="$(dirname "$0")/,up.local"
+if [[ -f "$LOCAL_UP" ]]; then
+  echo "› sourcing ,up.local"
+  source "$LOCAL_UP"
+fi
