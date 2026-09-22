@@ -37,6 +37,8 @@ pipx upgrade-all
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# Enable keyboard navigation
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
 # Disable .DS_Store files on network shares
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
@@ -46,6 +48,10 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
 defaults write com.apple.dock wvous-tl-corner -int 2
 # bot left, desktop
 defaults write com.apple.dock wvous-bl-corner -int 4
+
+# meh Tahoe Volume doesn't work with MonitorControl; use old style volume
+# selector
+defaults write com.apple.controlcenter EnableSystemBanners -bool false
 
 killall Dock
 

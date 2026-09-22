@@ -43,7 +43,7 @@
     newHighlight = "green bold 22"
     whitespace = fix
 [core]
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
 
     # Force pager to work with colors
     #pager          = less -FRSX
@@ -103,7 +103,7 @@
 
     # Remove branches that have already been merged with master
     # a.k.a. ‘delete merged’
-    dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+    dm = "!git for-each-ref --merged HEAD refs/heads/ '--format=%(refname:short) %(worktreepath)' | while read branch worktreepath; do if [ -z \"$worktreepath\" ]; then git branch -d \"$branch\"; fi; done"
 
     # Show verbose output about tags, branches or remotes
     tags = tag -l
@@ -170,13 +170,13 @@
 
     sp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git stash pop
     #spp = ![[ -z $(git status --porcelain -uno) ]] && git pull || git stash && git pull && git push && git stash pop
-    pp = !git pull || true && git pull
+    #pp = !git pull || true && git pull
     #ppu = !git pp && git submodule sync && git submodule update --init
 
     prune-all = !git prune-remote && git prune-merged && git prune-squashed
     prune-remote = !git remote | xargs -n 1 git remote prune
-    prune-merged = !git branch --merged | grep -v \\* | xargs -n 1 git branch -d
-    prune-squashed = "!f() { local targetBranch=${1:-main} && git checkout -q $targetBranch && git branch --merged | grep -v \"\\*\" | xargs -n 1 git branch -d && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base $targetBranch $branch) && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse $branch^{tree}) -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done; }; f"
+    prune-merged = "!git for-each-ref --merged HEAD refs/heads/ '--format=%(refname:short) %(worktreepath)' | while read branch worktreepath; do if [ -z \"$worktreepath\" ]; then git branch -d \"$branch\"; fi; done"
+    prune-squashed = "!f() { targetBranch=${1:-dev}; git for-each-ref --merged $targetBranch refs/heads/ '--format=%(refname:short) %(worktreepath)' | while read branch worktreepath; do if [ -z \"$worktreepath\" ] && [ \"$branch\" != \"$targetBranch\" ]; then git branch -d \"$branch\"; fi; done; git for-each-ref refs/heads/ '--format=%(refname:short) %(worktreepath)' | while read branch worktreepath; do if [ -z \"$worktreepath\" ] && [ \"$branch\" != \"$targetBranch\" ]; then mergeBase=$(git merge-base $targetBranch \"$branch\"); if [ -n \"$mergeBase\" ] && [[ $(git cherry $targetBranch $(git commit-tree $(git rev-parse \"$branch^{tree}\") -p $mergeBase -m _)) == \"-\"* ]]; then git branch -D \"$branch\"; fi; fi; done; }; f"
 
     edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
     add-unmerged  = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
@@ -241,7 +241,7 @@
     mnemonicprefix = true
 [push]
     #When pushing without giving a refspec, push the current branch to its upstream branch.
-    default = tracking
+    default = simple
     # Make `git push` push relevant annotated tags when pushing branches out.
     followTags = true
     # Git 2.37.0 - automatically "--set-upstream origin"
@@ -276,15 +276,11 @@
     insteadOf = https://github.com/
 [pull]
     rebase = true
-    #ff = only
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+    path =

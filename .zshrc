@@ -39,6 +39,30 @@ fi
 source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 
+# Override git-auto-fetch's fetcher to add --no-write-fetch-head: the
+# background fetch otherwise rewrites .git/FETCH_HEAD while a foreground
+# `git pull` is reading it ("fatal: Cannot rebase onto multiple branches").
+# Body copied from ohmyzsh/plugins/git-auto-fetch, only the flag added.
+function git-fetch-all {
+  (
+    if ! gitdir="$(command git rev-parse --git-dir 2>/dev/null)"; then
+      return 0
+    fi
+    if [[ ! -w "$gitdir" || -f "$gitdir/NO_AUTO_FETCH" ]] ||
+       [[ -f "$gitdir/FETCH_LOG" && ! -w "$gitdir/FETCH_LOG" ]]; then
+      return 0
+    fi
+    lastrun="$(zstat +mtime "$gitdir/FETCH_LOG" 2>/dev/null || echo 0)"
+    if (( EPOCHSECONDS - lastrun < $GIT_AUTO_FETCH_INTERVAL )); then
+      return 0
+    fi
+    date -R &>! "$gitdir/FETCH_LOG"
+    GIT_SSH_COMMAND="command ssh -o BatchMode=yes" \
+    GIT_TERMINAL_PROMPT=0 \
+      command git fetch --all --no-write-fetch-head --recurse-submodules=yes 2>/dev/null &>> "$gitdir/FETCH_LOG"
+  ) &|
+}
+
 # reset rm -i flag from common-aliases plugin
 alias rm=rm
 
@@ -168,3 +192,10 @@ echo -ne "${COLOR_GRAY}Server time is: "; date
 
 # Always complete files for unknown commands
 zstyle ':completion:*' completer _complete _files
+
+# brew tig ships a broken _tig wrapper (expects git's git-completion.zsh, which
+# isn't installed); zsh's builtin _git completes tig natively (like git log).
+# Drop the brew stub so _git's own tig helper takes over. Must run after the
+# LAST compinit (.bash_local runs compinit again, recreating the stub).
+unfunction _tig 2>/dev/null
+compdef _git tig

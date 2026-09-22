@@ -28,7 +28,9 @@ ohmyzsh/ohmyzsh path:plugins/direnv # try direnv for env loading
 zsh-users/zsh-completions
 
 # zsh-users/zsh-history-substring-search
-zdharma-continuum/fast-syntax-highlighting kind:defer
+
+# 2026 is this slow? prefer patina?
+# zdharma-continuum/fast-syntax-highlighting kind:defer
 
 # autocomplete last?
 zsh-users/zsh-completions

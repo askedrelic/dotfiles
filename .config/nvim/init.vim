@@ -5,8 +5,11 @@ let &packpath=&runtimepath
 
 " don't forget
 " :checkhealth provider
-" /usr/bin/python3 -m pip install neovim --user
-" let g:python3_host_prog = '/usr/bin/python3'
+" /opt/homebrew/bin/python3 -m pip install --user --break-system-packages pynvim
+
+if executable('/opt/homebrew/bin/python3')
+  let g:python3_host_prog = '/opt/homebrew/bin/python3'
+endif
 
 let g:loaded_ruby_provider = 0
 let g:loaded_node_provider = 0

@@ -56,7 +56,15 @@ config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 -- config.color_scheme = 'tokyonight_moon'
 -- Choose your favourite font, make sure it's installed on your machine
 -- config.font = wezterm.font({ family = 'JetBrainsMono Nerd Font' })
-config.font = wezterm.font({ family = 'Hack Nerd Font Mono' })
+-- Explicit fallback chain: Hack has no CJK coverage and wezterm's implicit
+-- fallback misses simplified-Chinese glyphs (rendered as .notdef boxes).
+config.font = wezterm.font_with_fallback({
+  'Hack Nerd Font Mono',
+  'Heiti SC',          -- simplified Chinese (PingFang is hidden from CoreText matching)
+  'Hiragino Sans',     -- Japanese
+  'Apple SD Gothic Neo', -- Korean
+  'Apple Color Emoji',
+})
 config.font_size = 12
 
 -- Slightly transparent and blurred background

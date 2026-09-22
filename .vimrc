@@ -312,7 +312,7 @@ Plug 'wellle/targets.vim'
 " colorscheme
 " Plug 'morhetz/gruvbox'
 
-Plug 'maralla/completor.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'thiagoalessio/rainbow_levels.vim'
 " map <leader>l :RainbowLevelsToggle<cr>
