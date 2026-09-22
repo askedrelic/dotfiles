@@ -10,6 +10,7 @@ alias gr='git remote -v'
 
 alias gs='git status'
 #alias gg='gs -s' # short status
+alias gpp='gp && git push -v'
 
 alias gtm='git checkout master 2>/dev/null || git checkout main'
 function gtb() {

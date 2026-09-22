@@ -22,6 +22,7 @@ alias wget="wget -c"
 alias paux="ps -A|grep -i"
 alias pine='alpine'
 alias mux=tmuxinator
+alias tf=terraform
 
 alias rscreen="screen -R"
 alias logout="clear; logout"
